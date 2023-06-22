@@ -1,0 +1,38 @@
+server:
+  port: 5000  # Elastic Beanstalk nginx 기본 포트
+  servlet:
+    encoding:
+      charset: utf-8
+      force: true
+
+spring:
+  datasource:
+    url: jdbc:mariadb://${rds.hostname}:${rds.port}/${rds.db.name}?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: ${rds.username}
+    password: ${rds.password}
+
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: none
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    properties:
+      hibernate:
+        default_batch_fetch_size: 1000
+
+  data:
+    web:
+      pageable:
+        default-page-size: 100
+        max-page-size: 2000
+        one-indexed-parameters: on
+
+logging.level:
+  org.hibernate.SQL: debug
+  org:
+    hibernate:
+      type:
+        descriptor:
+          sql: trace
