@@ -1,7 +1,6 @@
 package com.ddungja.app.users.apply.domain;
 
 import com.ddungja.app.posts.post.infrastructure.PostEntity;
-import com.ddungja.app.users.apply.infrastructure.Approval;
 import com.ddungja.app.users.user.infrastructure.UserEntity;
 import lombok.Builder;
 import lombok.Getter;
