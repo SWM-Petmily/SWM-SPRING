@@ -1,7 +1,7 @@
 package com.ddungja.app.user.service.port;
 
-import com.ddungja.app.user.infrastructure.KakaoProfile;
-import com.ddungja.app.user.infrastructure.KakaoToken;
+import com.ddungja.app.user.domain.KakaoProfile;
+import com.ddungja.app.user.domain.KakaoToken;
 
 import java.net.URI;
 

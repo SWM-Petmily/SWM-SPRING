@@ -1,7 +1,7 @@
 package com.ddungja.app.user.service;
 
 import com.ddungja.app.user.domain.User;
-import com.ddungja.app.user.infrastructure.KakaoProfile;
+import com.ddungja.app.user.domain.KakaoProfile;
 import com.ddungja.app.user.service.port.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

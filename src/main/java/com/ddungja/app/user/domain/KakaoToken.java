@@ -1,4 +1,4 @@
-package com.ddungja.app.user.infrastructure;
+package com.ddungja.app.user.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

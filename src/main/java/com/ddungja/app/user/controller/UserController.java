@@ -2,7 +2,7 @@ package com.ddungja.app.user.controller;
 
 import com.ddungja.app.global.jwt.JwtProvider;
 import com.ddungja.app.user.domain.User;
-import com.ddungja.app.user.infrastructure.KakaoProfile;
+import com.ddungja.app.user.domain.KakaoProfile;
 import com.ddungja.app.user.service.KakaoService;
 import com.ddungja.app.user.service.UserService;
 import jakarta.servlet.http.HttpServletResponse;
