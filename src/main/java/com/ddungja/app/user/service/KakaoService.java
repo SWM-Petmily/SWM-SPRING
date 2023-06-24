@@ -2,7 +2,7 @@ package com.ddungja.app.user.service;
 
 import com.ddungja.app.user.infrastructure.KakaoProfile;
 import com.ddungja.app.user.infrastructure.KakaoToken;
-import com.ddungja.app.user.service.port.KaKao;
+import com.ddungja.app.user.service.port.KaKaoApi;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,7 +16,7 @@ import java.net.URISyntaxException;
 @RequiredArgsConstructor
 public class KakaoService {
 
-    private final KaKao kakao;
+    private final KaKaoApi kakao;
 
     @Value("${kakao.tokenUrl}")
     private String kakaoTokenUrl;

@@ -1,7 +1,7 @@
 package com.ddungja.app.user.infrastructure;
 
 
-import com.ddungja.app.user.service.port.KaKao;
+import com.ddungja.app.user.service.port.KaKaoApi;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -9,7 +9,7 @@ import java.net.URI;
 
 @RequiredArgsConstructor
 @Component
-public class KakaoImpl implements KaKao {
+public class KakaoApiImpl implements KaKaoApi {
 
     private final KakaoOpenFeign kakaoOpenFeign;
 

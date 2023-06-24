@@ -5,7 +5,7 @@ import com.ddungja.app.user.infrastructure.KakaoToken;
 
 import java.net.URI;
 
-public interface KaKao {
+public interface KaKaoApi {
 
     KakaoProfile getInfo(URI baseUrl, String accessToken);
 
