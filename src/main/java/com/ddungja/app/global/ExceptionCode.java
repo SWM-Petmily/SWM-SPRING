@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
-@JsonFormat(shape = JsonFormat.Shape.OBJECT) // 추가
+@JsonFormat(shape = JsonFormat.Shape.OBJECT)
 @Getter
 public enum ExceptionCode {
     UN_AUTHENTICATION(HttpStatus.UNAUTHORIZED.value(), HttpStatus.UNAUTHORIZED, "로그인이 필요합니다."),
