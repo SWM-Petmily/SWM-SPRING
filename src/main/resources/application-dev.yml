@@ -23,20 +23,13 @@ spring:
   h2:
     console:
       enabled: true
+
   # MYSQL
   #  datasource:
   #    url: jdbc:mysql://localhost:3306/gongguiljeong?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
   #    username: root
   #    password: 1234
   #    driver-class-name: com.mysql.cj.jdbc.Driver
-  #    hikari:
-  #      connection-timeout: 3000
-  #      validation-timeout: 3000
-  #      minimum-idle: 5
-  #      maximum-pool-size: 20
-  #      idle-timeout: 200000
-  #      max-lifetime: 240000
-  #      pool-name: hikari_pool
 
   jpa:
     hibernate:
@@ -57,11 +50,6 @@ spring:
         one-indexed-parameters: on # paging 1부터 시작하기
 
 logging.level:
-  #  root: info
-  #  org.springframework:
-  #    web: info
-  #    security: info
-  #    boot: info
   org.hibernate.SQL: debug
   org.hibernate.type: trace
 
@@ -79,12 +67,6 @@ springdoc:
     path: /ui
     operations-sorter: alpha, method
     tags-sorter: alpha, method
-#로깅 파일
-#logging:
-#  file:
-#    name: ./logs/log.log
-#org.hibernate.type: trace
-
 
 kakao:
   restApiKey: c78d60a3b466b1b1c743a2bb745a1731

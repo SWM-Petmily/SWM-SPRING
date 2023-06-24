@@ -1,5 +1,5 @@
 server:
-  port: 5000  # Elastic Beanstalk nginx 기본 포트
+  port: 5000
   servlet:
     encoding:
       charset: utf-8
@@ -13,14 +13,15 @@ spring:
     password: ${rds.password}
 
   jpa:
-    open-in-view: false
     hibernate:
-      ddl-auto: none
-      naming:
-        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+      ddl-auto: create
     properties:
       hibernate:
-        default_batch_fetch_size: 1000
+        default_batch_fetch_size: 50
+        use_sql_comments: true
+        format_sql: true
+        show_sql: true
+    open-in-view: false
 
   data:
     web:
@@ -29,10 +30,3 @@ spring:
         max-page-size: 2000
         one-indexed-parameters: on
 
-logging.level:
-  org.hibernate.SQL: debug
-  org:
-    hibernate:
-      type:
-        descriptor:
-          sql: trace
