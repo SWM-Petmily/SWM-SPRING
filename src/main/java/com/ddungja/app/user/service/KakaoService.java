@@ -1,8 +1,8 @@
 package com.ddungja.app.user.service;
 
-import com.ddungja.app.user.infrastructure.KakaoOpenFeignClient;
 import com.ddungja.app.user.infrastructure.KakaoProfile;
 import com.ddungja.app.user.infrastructure.KakaoToken;
+import com.ddungja.app.user.service.port.KaKao;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,7 +16,7 @@ import java.net.URISyntaxException;
 @RequiredArgsConstructor
 public class KakaoService {
 
-    private final KakaoOpenFeignClient client;
+    private final KaKao kakao;
 
     @Value("${kakao.tokenUrl}")
     private String kakaoTokenUrl;
@@ -31,17 +31,17 @@ public class KakaoService {
     private String redirectUrl;
 
     public KakaoProfile getInfo(String tokenType, String accessToken) throws URISyntaxException {
-        return client.getInfo(new URI(kakaoUserInfoURl), tokenType + " " + accessToken);
+        return kakao.getInfo(new URI(kakaoUserInfoURl), tokenType + " " + accessToken);
     }
 
     public KakaoProfile getInfo(final String code) throws URISyntaxException {
         final KakaoToken token = getToken(code);
         log.debug("token = {}", token);
-        return client.getInfo(new URI(kakaoUserInfoURl), token.getToken_type() + " " + token.getAccess_token());
+        return kakao.getInfo(new URI(kakaoUserInfoURl), token.getToken_type() + " " + token.getAccess_token());
     }
 
     private KakaoToken getToken(final String code) throws URISyntaxException {
-        return client.getToken(new URI(kakaoTokenUrl), restapiKey, redirectUrl, code, "authorization_code");
+        return kakao.getToken(new URI(kakaoTokenUrl), restapiKey, redirectUrl, code, "authorization_code");
     }
 
 
