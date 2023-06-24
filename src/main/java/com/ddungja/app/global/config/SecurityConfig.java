@@ -1,6 +1,6 @@
 package com.ddungja.app.global.config;
 
-import com.ddungja.app.global.CustomResponse;
+import com.ddungja.app.global.SecurityResponse;
 import com.ddungja.app.global.jwt.JwtAuthorizationFilter;
 import com.ddungja.app.global.jwt.JwtProvider;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +23,7 @@ public class SecurityConfig {
     @RequiredArgsConstructor
     public static class CustomSecurityFilterManager extends AbstractHttpConfigurer<CustomSecurityFilterManager, HttpSecurity> {
         private final JwtProvider jwtProvider;
+
         @Override
         public void configure(HttpSecurity http) {
             AuthenticationManager authenticationManager = http.getSharedObject(AuthenticationManager.class);
@@ -38,9 +39,9 @@ public class SecurityConfig {
         http.csrf(AbstractHttpConfigurer::disable);
         http.headers(httpSecurityHeadersConfigurer -> httpSecurityHeadersConfigurer.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable));
         http.apply(new CustomSecurityFilterManager(jwtProvider));
-        http.exceptionHandling(configurer -> configurer.authenticationEntryPoint((request, response, accessDeniedException) -> CustomResponse.unAuthentication(response, "로그인이 필요합니다.")));
-        http.exceptionHandling(configurer -> configurer.accessDeniedHandler((request, response, accessDeniedException) -> CustomResponse.forbidden(response)));
-        http.authorizeHttpRequests(authorize -> authorize.anyRequest().permitAll());
+        http.exceptionHandling(configurer -> configurer.authenticationEntryPoint((request, response, accessDeniedException) -> SecurityResponse.unAuthentication(response)));
+        http.exceptionHandling(configurer -> configurer.accessDeniedHandler((request, response, accessDeniedException) -> SecurityResponse.forbidden(response)));
+        http.authorizeHttpRequests(authorize -> authorize.anyRequest().authenticated());
         return http.build();
     }
 }
