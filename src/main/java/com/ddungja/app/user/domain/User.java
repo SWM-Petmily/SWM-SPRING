@@ -23,7 +23,7 @@ public class User implements UserDetails {
     private final LocalDateTime updateDate;
 
     @Builder
-    public User(Long id, String email, String nickName, String birth, String phone, String provider, boolean isProfile, LocalDateTime createDate, LocalDateTime updateDate) {
+    private User(Long id, String email, String nickName, String birth, String phone, String provider, boolean isProfile, LocalDateTime createDate, LocalDateTime updateDate) {
         this.id = id;
         this.email = email;
         this.nickName = nickName;

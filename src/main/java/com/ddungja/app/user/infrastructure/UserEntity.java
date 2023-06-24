@@ -1,6 +1,7 @@
 package com.ddungja.app.user.infrastructure;
 
 
+import com.ddungja.app.common.domain.BaseEntity;
 import com.ddungja.app.user.domain.User;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -16,9 +17,8 @@ import java.time.LocalDateTime;
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-@EntityListeners(AuditingEntityListener.class)
 @Table(name = "users")
-public class UserEntity {
+public class UserEntity extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
@@ -30,15 +30,8 @@ public class UserEntity {
     private String provider;
     private boolean isProfile;
 
-    @CreatedDate
-    private LocalDateTime createDate;
-
-    @LastModifiedDate
-    private LocalDateTime updateDate;
-
-
     @Builder
-    public UserEntity(Long id, String email, String nickName, String birth, String phone, String provider, boolean isProfile, LocalDateTime createDate, LocalDateTime updateDate) {
+    private UserEntity(Long id, String email, String nickName, String birth, String phone, String provider, boolean isProfile, LocalDateTime createDate, LocalDateTime updateDate) {
         this.id = id;
         this.email = email;
         this.nickName = nickName;
