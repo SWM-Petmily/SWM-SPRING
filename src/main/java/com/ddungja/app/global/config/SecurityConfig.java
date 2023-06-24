@@ -41,7 +41,7 @@ public class SecurityConfig {
         http.apply(new CustomSecurityFilterManager(jwtProvider));
         http.exceptionHandling(configurer -> configurer.authenticationEntryPoint((request, response, accessDeniedException) -> SecurityResponse.unAuthentication(response)));
         http.exceptionHandling(configurer -> configurer.accessDeniedHandler((request, response, accessDeniedException) -> SecurityResponse.forbidden(response)));
-        http.authorizeHttpRequests(authorize -> authorize.anyRequest().authenticated());
+        http.authorizeHttpRequests(authorize -> authorize.anyRequest().permitAll());
         return http.build();
     }
 }
