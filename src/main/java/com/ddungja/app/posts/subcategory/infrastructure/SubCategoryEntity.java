@@ -2,10 +2,15 @@ package com.ddungja.app.posts.subcategory.infrastructure;
 
 import com.ddungja.app.common.domain.BaseTimeEntity;
 import com.ddungja.app.posts.maincategory.infrastructure.MainCategoryEntity;
+import com.ddungja.app.posts.subcategory.domain.SubCategory;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.time.LocalDateTime;
+
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
@@ -22,5 +27,34 @@ public class SubCategoryEntity extends BaseTimeEntity{
     @ManyToOne
     private MainCategoryEntity mainCategory;
 
+    @Builder
+    private SubCategoryEntity(Long id, String name, MainCategoryEntity mainCategory, LocalDateTime createDate, LocalDateTime updateDate) {
+        this.id = id;
+        this.name = name;
+        this.mainCategory = mainCategory;
+        this.createDate = createDate;
+        this.updateDate = updateDate;
+    }
+
+
+    public static SubCategoryEntity from(SubCategory subCategory) {
+        return SubCategoryEntity.builder()
+                .id(subCategory.getId())
+                .name(subCategory.getName())
+                .mainCategory(subCategory.getMainCategory())
+                .createDate(subCategory.getCreateDate())
+                .updateDate(subCategory.getUpdateDate())
+                .build();
+    }
+
+    public SubCategory toDomain() {
+        return SubCategory.builder()
+                .id(id)
+                .name(name)
+                .mainCategory(mainCategory)
+                .createDate(createDate)
+                .updateDate(updateDate)
+                .build();
+    }
 }
 
