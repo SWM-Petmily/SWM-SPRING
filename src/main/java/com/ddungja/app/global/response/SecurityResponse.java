@@ -1,10 +1,10 @@
-package com.ddungja.app.global;
+package com.ddungja.app.global.response;
 
+import com.ddungja.app.common.domain.exception.ExceptionCode;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 
 import java.io.IOException;
 

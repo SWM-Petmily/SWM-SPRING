@@ -1,4 +1,4 @@
-package com.ddungja.app.global;
+package com.ddungja.app.common.domain.exception;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;

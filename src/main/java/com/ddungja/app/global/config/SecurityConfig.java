@@ -1,6 +1,6 @@
 package com.ddungja.app.global.config;
 
-import com.ddungja.app.global.SecurityResponse;
+import com.ddungja.app.global.response.SecurityResponse;
 import com.ddungja.app.global.jwt.JwtAuthorizationFilter;
 import com.ddungja.app.global.jwt.JwtProvider;
 import lombok.RequiredArgsConstructor;

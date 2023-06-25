@@ -1,9 +1,8 @@
-package com.ddungja.app.global;
+package com.ddungja.app.common.controller;
 
 
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
-public class GlobalControllerAdvice {
-
+public class GlobalExceptionController {
 }
