@@ -33,9 +33,11 @@ public class ProfileEntity extends BaseTimeEntity {
     private String region;
     private boolean isExperience;
 
-    @OneToOne
+    @JoinColumn(name = "profile_image_id")
+    @ManyToOne
     private ProfileImageEntity profileImage;
 
+    @JoinColumn(name = "user_id")
     @OneToOne
     private UserEntity user;
 
