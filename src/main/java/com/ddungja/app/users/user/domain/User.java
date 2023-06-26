@@ -14,7 +14,7 @@ public class User implements UserDetails {
 
     private final Long id;
     private final String email;
-    private final String nickName;
+    private final String nickname;
     private final String birth;
     private final String phone;
     private final String provider;
@@ -26,7 +26,7 @@ public class User implements UserDetails {
     private User(Long id, String email, String nickName, String birth, String phone, String provider, boolean isProfile, LocalDateTime createDate, LocalDateTime updateDate) {
         this.id = id;
         this.email = email;
-        this.nickName = nickName;
+        this.nickname = nickName;
         this.birth = birth;
         this.phone = phone;
         this.provider = provider;

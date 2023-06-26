@@ -4,6 +4,8 @@ package com.ddungja.app.users.profile.infrastructure;
 import com.ddungja.app.common.domain.BaseTimeEntity;
 import com.ddungja.app.users.profile.domain.Profile;
 import com.ddungja.app.users.profileimage.infrastructure.ProfileImageEntity;
+import com.ddungja.app.users.user.domain.User;
+import com.ddungja.app.users.user.infrastructure.UserEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -24,18 +26,21 @@ public class ProfileEntity extends BaseTimeEntity {
     private Long id;
     private String job;
     private String environment;
-    private String people;
+    private int people;
     private String comment;
     private String color;
     private String openTalk;
     private String region;
-    private String isExperience;
+    private boolean isExperience;
 
     @OneToOne
     private ProfileImageEntity profileImage;
 
+    @OneToOne
+    private UserEntity user;
+
     @Builder
-    private ProfileEntity(Long id, String job, String environment, String people, String comment, String color, String openTalk, String region, String isExperience, ProfileImageEntity profileImage, LocalDateTime createDate, LocalDateTime updateDate) {
+    private ProfileEntity(Long id, String job, String environment, int people, String comment, String color, String openTalk, String region, boolean isExperience, UserEntity user, ProfileImageEntity profileImage, LocalDateTime createDate, LocalDateTime updateDate) {
         this.id = id;
         this.job = job;
         this.environment = environment;
@@ -45,6 +50,7 @@ public class ProfileEntity extends BaseTimeEntity {
         this.openTalk = openTalk;
         this.region = region;
         this.isExperience = isExperience;
+        this.user = user;
         this.profileImage = profileImage;
         this.createDate = createDate;
         this.updateDate = updateDate;
@@ -60,8 +66,9 @@ public class ProfileEntity extends BaseTimeEntity {
                 .color(profile.getColor())
                 .openTalk(profile.getOpenTalk())
                 .region(profile.getRegion())
-                .isExperience(profile.getIsExperience())
-                .profileImage(profile.getProfileImage())
+                .isExperience(profile.isExperience())
+                .user(UserEntity.from(profile.getUser()))
+                .profileImage(ProfileImageEntity.from(profile.getProfileImage()))
                 .createDate(profile.getCreateDate())
                 .updateDate(profile.getUpdateDate())
                 .build();
@@ -78,7 +85,8 @@ public class ProfileEntity extends BaseTimeEntity {
                 .openTalk(openTalk)
                 .region(region)
                 .isExperience(isExperience)
-                .profileImage(profileImage)
+                .user(user.toDomain())
+                .profileImage(profileImage.toDomain())
                 .createDate(createDate)
                 .updateDate(updateDate)
                 .build();

@@ -22,6 +22,7 @@ public class ProfileImageEntity extends BaseTimeEntity {
     @Column(name = "profile_image_id")
     private Long id;
 
+    @Lob
     private String url;
 
 

@@ -21,7 +21,7 @@ public class UserEntity extends BaseTimeEntity {
     @Column(name = "user_id")
     private Long id;
     private String email;
-    private String nickName;
+    private String nickname;
     private String birth;
     private String phone;
     private String provider;
@@ -31,7 +31,7 @@ public class UserEntity extends BaseTimeEntity {
     private UserEntity(Long id, String email, String nickName, String birth, String phone, String provider, boolean isProfile, LocalDateTime createDate, LocalDateTime updateDate) {
         this.id = id;
         this.email = email;
-        this.nickName = nickName;
+        this.nickname = nickName;
         this.birth = birth;
         this.phone = phone;
         this.provider = provider;
@@ -46,7 +46,7 @@ public class UserEntity extends BaseTimeEntity {
                 .email(user.getEmail())
                 .birth(user.getBirth())
                 .phone(user.getPhone())
-                .nickName(user.getNickName())
+                .nickName(user.getNickname())
                 .provider(user.getProvider())
                 .isProfile(user.isProfile())
                 .createDate(user.getCreateDate())
@@ -60,7 +60,7 @@ public class UserEntity extends BaseTimeEntity {
                 .email(email)
                 .birth(birth)
                 .phone(phone)
-                .nickName(nickName)
+                .nickName(nickname)
                 .provider(provider)
                 .isProfile(isProfile)
                 .createDate(createDate)
