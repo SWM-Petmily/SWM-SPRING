@@ -11,7 +11,16 @@ public enum ExceptionCode {
     FORBIDDEN(HttpStatus.FORBIDDEN.value(), HttpStatus.FORBIDDEN, "권한이 없습니다."),
     NOT_FOUND(HttpStatus.NOT_FOUND.value(), HttpStatus.NOT_FOUND, "찾을 수 없습니다."),
     BAD_REQUEST(HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST, "잘못된 요청입니다."),
-    INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR.value(), HttpStatus.INTERNAL_SERVER_ERROR, "서버에 오류가 발생했습니다.");
+    INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR.value(), HttpStatus.INTERNAL_SERVER_ERROR, "서버에 오류가 발생했습니다."),
+
+
+    //profile
+    PROFILE_IMAGE_NOT_FOUND(1001, HttpStatus.NOT_FOUND, "프로필 이미지를 찾을 수 없습니다."),
+
+
+    //user
+    USER_NOT_FOUND(2001, HttpStatus.NOT_FOUND, "유저를 찾을 수 없습니다.");
+
 
     private final int code;
     private final HttpStatus status;

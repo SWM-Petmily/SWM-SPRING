@@ -2,6 +2,7 @@ package com.ddungja.app.users.experience.infrastructure;
 
 import com.ddungja.app.common.domain.BaseTimeEntity;
 import com.ddungja.app.users.experience.domain.Experience;
+import com.ddungja.app.users.profile.domain.Profile;
 import com.ddungja.app.users.profile.infrastructure.ProfileEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -43,7 +44,7 @@ public class ExperienceEntity extends BaseTimeEntity {
                 .id(experience.getId())
                 .species(experience.getSpecies())
                 .period(experience.getPeriod())
-                .profile(experience.getProfile())
+                .profile(ProfileEntity.from(experience.getProfile()))
                 .createDate(experience.getCreateDate())
                 .updateDate(experience.getUpdateDate())
                 .build();
@@ -54,7 +55,7 @@ public class ExperienceEntity extends BaseTimeEntity {
                 .id(id)
                 .species(species)
                 .period(period)
-                .profile(profile)
+                .profile(profile.toDomain())
                 .createDate(createDate)
                 .updateDate(updateDate)
                 .build();

@@ -1,6 +1,7 @@
 package com.ddungja.app.users.user.infrastructure;
 
 
+import com.ddungja.app.common.domain.exception.CustomException;
 import com.ddungja.app.users.user.domain.User;
 import com.ddungja.app.users.user.service.port.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -23,5 +24,10 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public User save(User user) {
         return userJpaRepository.save(UserEntity.from(user)).toDomain();
+    }
+
+    @Override
+    public Optional<User> findById(Long id) {
+        return userJpaRepository.findById(id).map(UserEntity::toDomain);
     }
 }
