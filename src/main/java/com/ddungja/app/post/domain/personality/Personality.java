@@ -1,27 +1,27 @@
-package com.ddungja.app.users.interest.domain;
+package com.ddungja.app.post.domain.personality;
 
 
 import com.ddungja.app.post.infrastructure.entity.PostEntity;
-import com.ddungja.app.users.user.infrastructure.entity.UserEntity;
 import lombok.Builder;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
 
 @Getter
-public class Interest {
+public class Personality {
     private final Long id;
-    private final UserEntity user;
     private final PostEntity post;
+    private final String personality;
+    private final PersonalityType type;
     private final LocalDateTime createDate;
     private final LocalDateTime updateDate;
 
-
     @Builder
-    private Interest(Long id, UserEntity user, PostEntity post, LocalDateTime createDate, LocalDateTime updateDate) {
+    private Personality(Long id, PostEntity post, String personality, PersonalityType type, LocalDateTime createDate, LocalDateTime updateDate) {
         this.id = id;
-        this.user = user;
         this.post = post;
+        this.personality = personality;
+        this.type = type;
         this.createDate = createDate;
         this.updateDate = updateDate;
     }

@@ -2,7 +2,7 @@ package com.ddungja.app.users.apply.infrastructure;
 
 
 import com.ddungja.app.common.domain.BaseTimeEntity;
-import com.ddungja.app.posts.post.infrastructure.PostEntity;
+import com.ddungja.app.post.infrastructure.entity.PostEntity;
 import com.ddungja.app.users.apply.domain.Apply;
 import com.ddungja.app.users.apply.domain.Approval;
 import com.ddungja.app.users.user.infrastructure.entity.UserEntity;
