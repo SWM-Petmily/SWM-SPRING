@@ -5,7 +5,7 @@ import com.ddungja.app.common.domain.BaseTimeEntity;
 import com.ddungja.app.posts.post.infrastructure.PostEntity;
 import com.ddungja.app.users.apply.domain.Apply;
 import com.ddungja.app.users.apply.domain.Approval;
-import com.ddungja.app.users.user.infrastructure.UserEntity;
+import com.ddungja.app.users.user.infrastructure.entity.UserEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;

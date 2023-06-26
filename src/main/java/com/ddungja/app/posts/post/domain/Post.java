@@ -2,7 +2,7 @@ package com.ddungja.app.posts.post.domain;
 
 import com.ddungja.app.posts.maincategory.infrastructure.MainCategoryEntity;
 import com.ddungja.app.posts.subcategory.infrastructure.SubCategoryEntity;
-import com.ddungja.app.users.user.infrastructure.UserEntity;
+import com.ddungja.app.users.user.infrastructure.entity.UserEntity;
 import lombok.Builder;
 import lombok.Getter;
 

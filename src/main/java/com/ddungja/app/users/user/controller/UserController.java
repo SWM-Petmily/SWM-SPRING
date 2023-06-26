@@ -1,12 +1,12 @@
 package com.ddungja.app.users.user.controller;
 
 import com.ddungja.app.global.jwt.JwtProvider;
-import com.ddungja.app.posts.post.domain.Post;
-import com.ddungja.app.users.profile.domain.Profile;
+import com.ddungja.app.users.user.controller.response.ProfileCreateResponse;
+import com.ddungja.app.users.user.domain.Profile;
 import com.ddungja.app.users.user.domain.User;
 import com.ddungja.app.users.user.domain.KakaoProfile;
 import com.ddungja.app.users.user.service.KakaoService;
-import com.ddungja.app.users.user.service.ProfileCreateRequest;
+import com.ddungja.app.users.user.domain.ProfileCreateRequest;
 import com.ddungja.app.users.user.service.UserService;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
@@ -17,7 +17,6 @@ import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.net.URISyntaxException;

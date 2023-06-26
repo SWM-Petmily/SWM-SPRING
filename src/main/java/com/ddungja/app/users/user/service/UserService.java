@@ -1,15 +1,10 @@
 package com.ddungja.app.users.user.service;
 
 import com.ddungja.app.common.domain.exception.CustomException;
-import com.ddungja.app.common.domain.exception.ExceptionCode;
-import com.ddungja.app.users.experience.domain.Experience;
-import com.ddungja.app.users.experience.service.port.ExperienceRepository;
-import com.ddungja.app.users.profile.domain.Profile;
-import com.ddungja.app.users.profile.service.port.ProfileRepository;
-import com.ddungja.app.users.profileimage.domain.ProfileImage;
-import com.ddungja.app.users.profileimage.service.port.ProfileImageRepository;
-import com.ddungja.app.users.user.domain.User;
-import com.ddungja.app.users.user.domain.KakaoProfile;
+import com.ddungja.app.users.user.domain.*;
+import com.ddungja.app.users.user.service.port.ExperienceRepository;
+import com.ddungja.app.users.user.service.port.ProfileRepository;
+import com.ddungja.app.users.user.service.port.ProfileImageRepository;
 import com.ddungja.app.users.user.service.port.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

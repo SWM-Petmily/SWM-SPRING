@@ -8,7 +8,7 @@ import com.ddungja.app.posts.post.domain.Neutered;
 import com.ddungja.app.posts.post.domain.Post;
 import com.ddungja.app.posts.post.domain.Status;
 import com.ddungja.app.posts.subcategory.infrastructure.SubCategoryEntity;
-import com.ddungja.app.users.user.infrastructure.UserEntity;
+import com.ddungja.app.users.user.infrastructure.entity.UserEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
