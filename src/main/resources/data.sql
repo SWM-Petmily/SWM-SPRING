@@ -26,14 +26,10 @@ insert into profiles(profile_id, user_id, profile_image_id, job, environment, pe
 values (1, 1 ,1, '학생', '아파트', 4, '잘 키울 자신 있음', 'ORANGE', 'wwww.opentalk.com', '서울', TRUE, now(), now());
 
 insert into profiles(profile_id, user_id, profile_image_id, job, environment, people, comment, color, open_talk, region, is_experience, create_date, update_date)
-values (2, 2 ,2, '직장인', '오피스텔', 2, '키울 자신 없음', 'RED', 'wwww.opentalk.com', '경기', TRUE, now(), now());
-
-insert into profiles(profile_id, user_id, profile_image_id, job, environment, people, comment, color, open_talk, region, is_experience, create_date, update_date)
 values (3, 3 ,2, '주부', '주택', 1, '잘 키울게', 'BLACK', 'wwww.opentalk.com', '광주', FALSE, now(), now());
 
 
 --- experience
-
 insert into experiences (experience_id, profile_id, species, period, create_date, update_date)
 values (1, 1, '불독', 12, now(), now());
 
@@ -43,11 +39,7 @@ values (2, 1, '리트리버', 23, now(), now());
 insert into experiences (experience_id, profile_id, species, period, create_date, update_date)
 values (3, 1, '불독', 5, now(), now());
 
-insert into experiences (experience_id, profile_id, species, period, create_date, update_date)
-values (4, 2, '말티즈', 7, now(), now());
 
-insert into experiences (experience_id, profile_id, species, period, create_date, update_date)
-values (5, 2, '푸들', 12, now(), now());
 
 
 -- main_categories

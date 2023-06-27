@@ -2,11 +2,13 @@ package com.ddungja.app.users.user.controller;
 
 import com.ddungja.app.global.jwt.JwtProvider;
 import com.ddungja.app.users.user.controller.response.ProfileCreateResponse;
+import com.ddungja.app.users.user.controller.response.ProfileResponse;
 import com.ddungja.app.users.user.domain.Profile;
 import com.ddungja.app.users.user.domain.User;
 import com.ddungja.app.users.user.domain.KakaoProfile;
 import com.ddungja.app.users.user.service.KakaoService;
 import com.ddungja.app.users.user.domain.ProfileCreateRequest;
+import com.ddungja.app.users.user.service.ProfileService;
 import com.ddungja.app.users.user.service.UserService;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
@@ -30,6 +32,7 @@ public class UserController {
     private final KakaoService kakaoService;
     private final UserService userService;
     private final JwtProvider jwtProvider;
+    private final ProfileService profileService;
 
 
     //카카오 로그인 되는지 확인용 코드
@@ -72,10 +75,16 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<?> createProfile(@AuthenticationPrincipal User user, @Valid @RequestBody ProfileCreateRequest profileCreateRequest) {
-        Profile profile = userService.createProfile(profileCreateRequest, 1L);
+        log.info("프로필 생성 요청 userId = {}", user.getId());
+        Profile profile = profileService.createProfile(profileCreateRequest, user.getId());
         return ResponseEntity.ok(ProfileCreateResponse.from(profile));
     }
 
+    @GetMapping("/{userId}")
+    public ResponseEntity<?> getProfileByUserId(@PathVariable Long userId) {
+        log.info("프로필 상세보기  userId = {}", userId);
+        return ResponseEntity.ok(ProfileResponse.from(profileService.getProfileByUserId(userId)));
+    }
 
 
 }

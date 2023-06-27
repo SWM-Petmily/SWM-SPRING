@@ -2,6 +2,7 @@ package com.ddungja.app.users.user.infrastructure.entity;
 
 import com.ddungja.app.common.domain.BaseTimeEntity;
 import com.ddungja.app.users.user.domain.Experience;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -53,7 +54,6 @@ public class ExperienceEntity extends BaseTimeEntity {
                 .id(id)
                 .species(species)
                 .period(period)
-                .profile(profile.toDomain())
                 .createDate(createDate)
                 .updateDate(updateDate)
                 .build();

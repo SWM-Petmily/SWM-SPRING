@@ -32,4 +32,11 @@ public class Experience {
                 .profile(profile)
                 .build();
     }
+
+    public static Experience from(Experience experience) {
+        return Experience.builder()
+                .species(experience.getSpecies())
+                .period(experience.getPeriod())
+                .build();
+    }
 }
