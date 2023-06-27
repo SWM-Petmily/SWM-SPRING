@@ -39,22 +39,4 @@ public class Interest extends BaseTimeEntity {
         this.updateDate = updateDate;
     }
 
-    public static Interest from(Interest interest) {
-        return Interest.builder()
-                .user(interest.getUser())
-                .post(interest.getPost())
-                .build();
-    }
-
-    public Interest toDomain() {
-        return Interest.builder()
-                .id(id)
-                .user(user)
-                .post(post)
-                .createDate(createDate)
-                .updateDate(updateDate)
-                .build();
-    }
-
-
 }
