@@ -46,7 +46,7 @@ public class ProfileService {
                 experiences.add(Experience.from(experience, profile));
             experienceRepository.saveAll(experiences);
         }
-        user = user.createProfile();
+        user.createProfile();
         userRepository.save(user);
         return profile;
     }

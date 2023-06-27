@@ -1,18 +1,28 @@
 package com.ddungja.app.users.user.domain;
 
-
+import com.ddungja.app.common.domain.BaseTimeEntity;
+import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
+@Entity
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-public class ProfileImage {
+@Table(name = "profile_images")
+public class ProfileImage extends BaseTimeEntity {
 
-    private final Long id;
-    private final String url;
-    private final LocalDateTime createDate;
-    private final LocalDateTime updateDate;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "profile_image_id")
+    private Long id;
+
+    @Lob
+    private String url;
+
 
     @Builder
     private ProfileImage(Long id, String url, LocalDateTime createDate, LocalDateTime updateDate) {
@@ -21,4 +31,7 @@ public class ProfileImage {
         this.createDate = createDate;
         this.updateDate = updateDate;
     }
+
+
+
 }

@@ -1,7 +1,6 @@
 package com.ddungja.app.users.user.infrastructure.adapter;
 
 import com.ddungja.app.users.user.domain.Experience;
-import com.ddungja.app.users.user.infrastructure.entity.ExperienceEntity;
 import com.ddungja.app.users.user.infrastructure.jpa.ExperienceJpaRepository;
 import com.ddungja.app.users.user.service.port.ExperienceRepository;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +16,6 @@ public class ExperienceRepositoryImpl implements ExperienceRepository {
 
     @Override
     public List<Experience> saveAll(List<Experience> experiences) {
-        List<ExperienceEntity> list = experiences.stream().map(ExperienceEntity::from).toList();
-        return experienceJpaRepository.saveAll(list).stream().map(ExperienceEntity::toDomain).toList();
+        return experienceJpaRepository.saveAll(experiences);
     }
 }

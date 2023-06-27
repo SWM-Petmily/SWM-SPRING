@@ -3,7 +3,7 @@ package com.ddungja.app.users.interest.infrastructure;
 import com.ddungja.app.common.domain.BaseTimeEntity;
 import com.ddungja.app.post.infrastructure.entity.PostEntity;
 import com.ddungja.app.users.interest.domain.Interest;
-import com.ddungja.app.users.user.infrastructure.entity.UserEntity;
+import com.ddungja.app.users.user.domain.User;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -24,7 +24,7 @@ public class InterestEntity extends BaseTimeEntity {
 
     @JoinColumn(name = "user_id")
     @ManyToOne(fetch = FetchType.LAZY)
-    private UserEntity user;
+    private User user;
 
     @JoinColumn(name = "post_id")
     @ManyToOne(fetch = FetchType.LAZY)
@@ -32,7 +32,7 @@ public class InterestEntity extends BaseTimeEntity {
 
 
     @Builder
-    private InterestEntity(Long id, UserEntity user, PostEntity post, LocalDateTime createDate, LocalDateTime updateDate) {
+    private InterestEntity(Long id, User user, PostEntity post, LocalDateTime createDate, LocalDateTime updateDate) {
         this.id = id;
         this.user = user;
         this.post = post;
