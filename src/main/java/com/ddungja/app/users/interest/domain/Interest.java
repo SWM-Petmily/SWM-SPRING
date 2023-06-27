@@ -1,28 +1,60 @@
 package com.ddungja.app.users.interest.domain;
 
-
-import com.ddungja.app.post.infrastructure.entity.PostEntity;
+import com.ddungja.app.common.domain.BaseTimeEntity;
+import com.ddungja.app.post.domain.post.Post;
 import com.ddungja.app.users.user.domain.User;
+import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
+@Entity
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-public class Interest {
-    private final Long id;
-    private final User user;
-    private final PostEntity post;
-    private final LocalDateTime createDate;
-    private final LocalDateTime updateDate;
+@Table(name = "interests")
+public class Interest extends BaseTimeEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "interest_id")
+    private Long id;
+
+    @JoinColumn(name = "user_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private User user;
+
+    @JoinColumn(name = "post_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Post post;
 
 
     @Builder
-    private Interest(Long id, User user, PostEntity post, LocalDateTime createDate, LocalDateTime updateDate) {
+    private Interest(Long id, User user, Post post, LocalDateTime createDate, LocalDateTime updateDate) {
         this.id = id;
         this.user = user;
         this.post = post;
         this.createDate = createDate;
         this.updateDate = updateDate;
     }
+
+    public static Interest from(Interest interest) {
+        return Interest.builder()
+                .user(interest.getUser())
+                .post(interest.getPost())
+                .build();
+    }
+
+    public Interest toDomain() {
+        return Interest.builder()
+                .id(id)
+                .user(user)
+                .post(post)
+                .createDate(createDate)
+                .updateDate(updateDate)
+                .build();
+    }
+
+
 }

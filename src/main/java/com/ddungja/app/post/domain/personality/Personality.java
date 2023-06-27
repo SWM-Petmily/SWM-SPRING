@@ -1,23 +1,35 @@
 package com.ddungja.app.post.domain.personality;
 
-
-import com.ddungja.app.post.infrastructure.entity.PostEntity;
+import com.ddungja.app.common.domain.BaseTimeEntity;
+import com.ddungja.app.post.domain.post.Post;
+import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
+@Entity
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-public class Personality {
-    private final Long id;
-    private final PostEntity post;
-    private final String personality;
-    private final PersonalityType type;
-    private final LocalDateTime createDate;
-    private final LocalDateTime updateDate;
+@Table(name = "personalities")
+public class Personality extends BaseTimeEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "personality_id")
+    private Long id;
+
+    @JoinColumn(name = "post_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Post post;
+
+    private String personality;
+
+    private PersonalityType type;
 
     @Builder
-    private Personality(Long id, PostEntity post, String personality, PersonalityType type, LocalDateTime createDate, LocalDateTime updateDate) {
+    private Personality(Long id, Post post, String personality, PersonalityType type, LocalDateTime createDate, LocalDateTime updateDate) {
         this.id = id;
         this.post = post;
         this.personality = personality;
@@ -25,4 +37,8 @@ public class Personality {
         this.createDate = createDate;
         this.updateDate = updateDate;
     }
+
+
+
 }
+
