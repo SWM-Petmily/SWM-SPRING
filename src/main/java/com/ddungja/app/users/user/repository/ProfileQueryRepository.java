@@ -1,4 +1,4 @@
-package com.ddungja.app.users.user.infrastructure.jpa;
+package com.ddungja.app.users.user.repository;
 
 import com.ddungja.app.users.user.domain.Profile;
 

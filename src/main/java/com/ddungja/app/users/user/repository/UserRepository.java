@@ -1,10 +1,10 @@
-package com.ddungja.app.users.user.infrastructure.jpa;
+package com.ddungja.app.users.user.repository;
 
 import com.ddungja.app.users.user.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 
-public interface UserJpaRepository extends JpaRepository<User, Long> {
+public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findByEmail(String email);
 }

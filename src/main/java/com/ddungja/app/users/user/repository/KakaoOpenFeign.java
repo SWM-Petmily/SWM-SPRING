@@ -1,4 +1,4 @@
-package com.ddungja.app.users.user.infrastructure;
+package com.ddungja.app.users.user.repository;
 
 import com.ddungja.app.global.config.OpenFeignConfig;
 import com.ddungja.app.users.user.domain.KakaoProfile;
