@@ -6,7 +6,7 @@ import com.ddungja.app.post.domain.post.Gender;
 import com.ddungja.app.post.domain.post.Neutered;
 import com.ddungja.app.post.domain.post.Post;
 import com.ddungja.app.post.domain.post.PostStatus;
-import com.ddungja.app.users.user.infrastructure.entity.UserEntity;
+import com.ddungja.app.users.user.domain.User;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -29,7 +29,7 @@ public class PostEntity extends BaseTimeEntity {
 
     @JoinColumn(name = "user_id")
     @ManyToOne(fetch = FetchType.LAZY)
-    private UserEntity user;
+    private User user;
 
     @JoinColumn(name = "main_category_id")
     @ManyToOne(fetch = FetchType.LAZY)
@@ -63,7 +63,7 @@ public class PostEntity extends BaseTimeEntity {
 
 
     @Builder
-    private PostEntity(Long id, UserEntity user, MainCategoryEntity mainCategory, SubCategoryEntity subCategory, Gender gender, String birth, String name, String region, Neutered neutered, int money, String breeding, String environment, String reason, String vaccination, int views, int likes, int reports, int completion, int applys, PostStatus status, LocalDateTime createDate, LocalDateTime updateDate) {
+    private PostEntity(Long id, User user, MainCategoryEntity mainCategory, SubCategoryEntity subCategory, Gender gender, String birth, String name, String region, Neutered neutered, int money, String breeding, String environment, String reason, String vaccination, int views, int likes, int reports, int completion, int applys, PostStatus status, LocalDateTime createDate, LocalDateTime updateDate) {
         this.id = id;
         this.user = user;
         this.mainCategory = mainCategory;

@@ -1,26 +1,30 @@
 package com.ddungja.app.users.user.domain;
 
+
+import com.ddungja.app.common.domain.BaseTimeEntity;
+import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.Collection;
 
-
+@Entity
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-public class User implements UserDetails {
-
-    private final Long id;
-    private final String email;
-    private final String nickname;
-    private final String birth;
-    private final String phone;
-    private final String provider;
-    private final boolean isProfile;
-    private final LocalDateTime createDate;
-    private final LocalDateTime updateDate;
+@Table(name = "users")
+public class User extends BaseTimeEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id")
+    private Long id;
+    private String email;
+    private String nickname;
+    private String birth;
+    private String phone;
+    private String provider;
+    private boolean isProfile;
 
     @Builder
     private User(Long id, String email, String nickName, String birth, String phone, String provider, boolean isProfile, LocalDateTime createDate, LocalDateTime updateDate) {
@@ -35,52 +39,8 @@ public class User implements UserDetails {
         this.updateDate = updateDate;
     }
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
-    }
 
-    @Override
-    public String getPassword() {
-        return null;
-    }
-
-    @Override
-    public String getUsername() {
-        return email;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true;
-    }
-
-    public User createProfile() {
-        return User.builder()
-                .id(id)
-                .email(email)
-                .nickName(nickname)
-                .birth(birth)
-                .phone(phone)
-                .provider(provider)
-                .isProfile(true)
-                .createDate(createDate)
-                .updateDate(updateDate)
-                .build();
+    public void createProfile() {
+        this.isProfile = true;
     }
 }

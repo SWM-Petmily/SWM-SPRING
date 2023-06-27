@@ -1,7 +1,6 @@
 package com.ddungja.app.users.user.infrastructure.adapter;
 
 import com.ddungja.app.users.user.domain.Profile;
-import com.ddungja.app.users.user.infrastructure.entity.ProfileEntity;
 import com.ddungja.app.users.user.infrastructure.jpa.ProfileJpaRepository;
 import com.ddungja.app.users.user.service.port.ProfileRepository;
 import lombok.RequiredArgsConstructor;
@@ -18,11 +17,11 @@ public class ProfileRepositoryImpl implements ProfileRepository {
 
     @Override
     public Profile save(Profile profile) {
-        return profileJpaRepository.save(ProfileEntity.from(profile)).toDomain();
+        return profileJpaRepository.save(profile);
     }
 
     @Override
     public Optional<Profile> findByUserId(Long userId) {
-        return profileJpaRepository.findByUserId(userId).map(ProfileEntity::toDomainExperience);
+        return profileJpaRepository.findByUserId(userId);
     }
 }

@@ -1,32 +1,49 @@
 package com.ddungja.app.users.user.domain;
 
 
-import com.ddungja.app.users.user.infrastructure.entity.ExperienceEntity;
+import com.ddungja.app.common.domain.BaseTimeEntity;
+import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-public class Profile {
-    private final Long id;
-    private final String job;
-    private final String environment;
-    private final int people;
-    private final String comment;
-    private final String color;
-    private final String openTalk;
-    private final String region;
-    private final boolean isExperience;
-    private final User user;
-    private final ProfileImage profileImage;
-    private final LocalDateTime createDate;
-    private final LocalDateTime updateDate;
+@Table(name = "profiles")
+public class Profile extends BaseTimeEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "profile_id")
+    private Long id;
+    private String job;
+    private String environment;
+    private int people;
+    private String comment;
+    private String color;
+    private String openTalk;
+    private String region;
+    private boolean isExperience;
+
+    @JoinColumn(name = "profile_image_id")
+    @ManyToOne
+    private ProfileImage profileImage;
+
+    @JoinColumn(name = "user_id")
+    @OneToOne
+    private User user;
+
+    @OneToMany(mappedBy = "profile")
     private List<Experience> experiences = new ArrayList<>();
+
     @Builder
-    private Profile(Long id, String job, String environment, int people, String comment, String color, String openTalk, String region, boolean isExperience, User user,     List<Experience> experiences, ProfileImage profileImage, LocalDateTime createDate, LocalDateTime updateDate) {
+    private Profile(Long id, String job, String environment, int people, String comment, String color, String openTalk, String region, boolean isExperience, User user, List<Experience> experiences, ProfileImage profileImage, LocalDateTime createDate, LocalDateTime updateDate) {
         this.id = id;
         this.job = job;
         this.environment = environment;
@@ -36,12 +53,13 @@ public class Profile {
         this.openTalk = openTalk;
         this.region = region;
         this.isExperience = isExperience;
+        this.experiences = experiences;
         this.user = user;
         this.profileImage = profileImage;
-        this.experiences = experiences;
         this.createDate = createDate;
         this.updateDate = updateDate;
     }
+
 
     public static Profile from(ProfileCreateRequest profileCreateRequest, ProfileImage profileImage, User user) {
         return Profile.builder()
@@ -53,9 +71,8 @@ public class Profile {
                 .openTalk(profileCreateRequest.getOpenTalk())
                 .region(profileCreateRequest.getRegion())
                 .isExperience(profileCreateRequest.isExperience())
-                .experiences(profileCreateRequest.getExperiences())
-                .user(user)
                 .profileImage(profileImage)
+                .user(user)
                 .build();
 
     }

@@ -2,7 +2,7 @@ package com.ddungja.app.post.domain.post;
 
 import com.ddungja.app.post.infrastructure.entity.MainCategoryEntity;
 import com.ddungja.app.post.infrastructure.entity.SubCategoryEntity;
-import com.ddungja.app.users.user.infrastructure.entity.UserEntity;
+import com.ddungja.app.users.user.domain.User;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @Getter
 public class Post {
     private final Long id;
-    private final UserEntity user;
+    private final User user;
     private final MainCategoryEntity mainCategory;
     private final SubCategoryEntity subCategory;
     private final Gender gender;
@@ -34,7 +34,7 @@ public class Post {
     private final LocalDateTime updateDate;
 
     @Builder
-    private Post(Long id, UserEntity user, MainCategoryEntity mainCategory, SubCategoryEntity subCategory, Gender gender, String birth, String name, String region, Neutered neutered, int money, String breeding, String environment, String reason, String vaccination, int views, int likes, int reports, int completion, int applys, PostStatus status, LocalDateTime createDate, LocalDateTime updateDate) {
+    private Post(Long id, User user, MainCategoryEntity mainCategory, SubCategoryEntity subCategory, Gender gender, String birth, String name, String region, Neutered neutered, int money, String breeding, String environment, String reason, String vaccination, int views, int likes, int reports, int completion, int applys, PostStatus status, LocalDateTime createDate, LocalDateTime updateDate) {
         this.id = id;
         this.user = user;
         this.mainCategory = mainCategory;
