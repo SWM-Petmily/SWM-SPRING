@@ -2,6 +2,8 @@ package com.ddungja.app.users.user.domain;
 
 
 import com.ddungja.app.common.domain.BaseTimeEntity;
+import com.ddungja.app.users.user.domain.request.ProfileCreateRequest;
+import com.ddungja.app.users.user.domain.request.ProfileUpdateRequest;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -75,5 +77,17 @@ public class Profile extends BaseTimeEntity {
                 .user(user)
                 .build();
 
+    }
+
+    public void update(ProfileUpdateRequest profileUpdateRequest, ProfileImage profileImage) {
+        this.job = profileUpdateRequest.getJob();
+        this.environment = profileUpdateRequest.getEnvironment();
+        this.people = profileUpdateRequest.getPeople();
+        this.comment = profileUpdateRequest.getComment();
+        this.color = profileUpdateRequest.getColor();
+        this.openTalk = profileUpdateRequest.getOpenTalk();
+        this.region = profileUpdateRequest.getRegion();
+        this.profileImage = profileImage;
+        this.isExperience = profileUpdateRequest.isExperience();
     }
 }
