@@ -7,6 +7,8 @@ import com.ddungja.app.users.user.service.port.ProfileRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 
 @Repository
 @RequiredArgsConstructor
@@ -17,5 +19,10 @@ public class ProfileRepositoryImpl implements ProfileRepository {
     @Override
     public Profile save(Profile profile) {
         return profileJpaRepository.save(ProfileEntity.from(profile)).toDomain();
+    }
+
+    @Override
+    public Optional<Profile> findByUserId(Long userId) {
+        return profileJpaRepository.findByUserId(userId).map(ProfileEntity::toDomainExperience);
     }
 }

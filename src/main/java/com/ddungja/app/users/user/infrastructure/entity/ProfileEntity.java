@@ -10,6 +10,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -38,8 +40,11 @@ public class ProfileEntity extends BaseTimeEntity {
     @OneToOne
     private UserEntity user;
 
+    @OneToMany(mappedBy = "profile")
+    private List<ExperienceEntity> experiences = new ArrayList<>();
+
     @Builder
-    private ProfileEntity(Long id, String job, String environment, int people, String comment, String color, String openTalk, String region, boolean isExperience, UserEntity user, ProfileImageEntity profileImage, LocalDateTime createDate, LocalDateTime updateDate) {
+    private ProfileEntity(Long id, String job, String environment, int people, String comment, String color, String openTalk, String region, boolean isExperience, UserEntity user,  List<ExperienceEntity> experiences, ProfileImageEntity profileImage, LocalDateTime createDate, LocalDateTime updateDate) {
         this.id = id;
         this.job = job;
         this.environment = environment;
@@ -49,6 +54,7 @@ public class ProfileEntity extends BaseTimeEntity {
         this.openTalk = openTalk;
         this.region = region;
         this.isExperience = isExperience;
+        this.experiences = experiences;
         this.user = user;
         this.profileImage = profileImage;
         this.createDate = createDate;
@@ -72,6 +78,26 @@ public class ProfileEntity extends BaseTimeEntity {
                 .updateDate(profile.getUpdateDate())
                 .build();
     }
+
+    public Profile toDomainExperience() {
+        return Profile.builder()
+                .id(id)
+                .job(job)
+                .environment(environment)
+                .people(people)
+                .comment(comment)
+                .color(color)
+                .openTalk(openTalk)
+                .region(region)
+                .isExperience(isExperience)
+                .user(user.toDomain())
+                .profileImage(profileImage.toDomain())
+                .createDate(createDate)
+                .updateDate(updateDate)
+                .experiences(experiences.stream().map(ExperienceEntity::toDomain).toList())
+                .build();
+    }
+
 
     public Profile toDomain() {
         return Profile.builder()

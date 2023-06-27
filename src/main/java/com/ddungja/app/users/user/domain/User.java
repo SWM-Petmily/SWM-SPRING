@@ -69,4 +69,18 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+    public User createProfile() {
+        return User.builder()
+                .id(id)
+                .email(email)
+                .nickName(nickname)
+                .birth(birth)
+                .phone(phone)
+                .provider(provider)
+                .isProfile(true)
+                .createDate(createDate)
+                .updateDate(updateDate)
+                .build();
+    }
 }
