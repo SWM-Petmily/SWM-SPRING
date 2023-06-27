@@ -50,24 +50,5 @@ public class Apply extends BaseTimeEntity {
         this.updateDate = updateDate;
     }
 
-    public static Apply from(com.ddungja.app.users.apply.domain.Apply apply) {
-        return Apply.builder()
-                .user(apply.getUser())
-                .seller(apply.getSeller())
-                .post(apply.getPost())
-                .approval(apply.getApproval())
-                .build();
-    }
 
-    public com.ddungja.app.users.apply.domain.Apply toDomain() {
-        return builder()
-                .id(id)
-                .user(user)
-                .seller(seller)
-                .post(post)
-                .approval(approval)
-                .createDate(createDate)
-                .updateDate(updateDate)
-                .build();
-    }
 }
