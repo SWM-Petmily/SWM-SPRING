@@ -2,7 +2,7 @@ package com.ddungja.app.users.user.service;
 
 import com.ddungja.app.users.user.domain.KakaoProfile;
 import com.ddungja.app.users.user.domain.User;
-import com.ddungja.app.users.user.service.port.UserRepository;
+import com.ddungja.app.users.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

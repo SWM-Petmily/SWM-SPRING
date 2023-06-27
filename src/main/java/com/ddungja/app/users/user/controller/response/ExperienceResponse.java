@@ -4,9 +4,6 @@ package com.ddungja.app.users.user.controller.response;
 import com.ddungja.app.users.user.domain.Experience;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-
-import java.util.List;
 
 @Getter
 public class ExperienceResponse {

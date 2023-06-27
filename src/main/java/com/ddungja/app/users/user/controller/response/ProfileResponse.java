@@ -9,7 +9,6 @@ import java.util.List;
 
 @Getter
 public class ProfileResponse {
-
     private final String job;
     private final String environment;
     private final int people;
