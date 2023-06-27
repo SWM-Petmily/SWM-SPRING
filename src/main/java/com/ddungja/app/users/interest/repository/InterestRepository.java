@@ -1,4 +1,4 @@
-package com.ddungja.app.users.interest.infrastructure;
+package com.ddungja.app.users.interest.repository;
 
 import com.ddungja.app.users.interest.domain.Interest;
 import org.springframework.data.jpa.repository.JpaRepository;

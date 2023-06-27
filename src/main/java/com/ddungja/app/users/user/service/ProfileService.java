@@ -31,19 +31,17 @@ public class ProfileService {
     private final ExperienceRepository experienceRepository;
     private final ProfileImageRepository profileImageRepository;
 
-
+    @Transactional(readOnly = true)
     public Profile get(Long userId) {
         return profileRepository.findByUserId(userId).orElseThrow(() -> new CustomException(ExceptionCode.PROFILE_NOT_FOUND));
     }
-
-
     @Transactional
     public Profile create(ProfileCreateRequest profileCreateRequest, Long id) {
         User user = userRepository.findById(id).orElseThrow(() -> new CustomException(USER_NOT_FOUND));
         if (user.isProfile()) throw new CustomException(ExceptionCode.PROFILE_ALREADY_EXISTS);
         ProfileImage profileImage = profileImageRepository.findById(profileCreateRequest.getProfileImageId()).orElseThrow(() -> new CustomException(PROFILE_IMAGE_NOT_FOUND));
         Profile profile = Profile.from(profileCreateRequest, profileImage, user);
-        profile = profileRepository.save(profile);
+        profileRepository.save(profile);
         if (profileCreateRequest.isExperience()) {
             List<Experience> experiences = new ArrayList<>();
             for (ExperienceCreateRequest experience : profileCreateRequest.getExperiences()) {
@@ -54,8 +52,6 @@ public class ProfileService {
         user.createProfile();
         return profile;
     }
-
-
     @Transactional
     public Profile update(ProfileUpdateRequest profileUpdateRequest, Long id) {
         Profile profile = profileRepository.findByUserId(id).orElseThrow(() -> new CustomException(ExceptionCode.PROFILE_NOT_FOUND));
