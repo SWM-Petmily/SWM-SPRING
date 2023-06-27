@@ -1,26 +1,46 @@
 package com.ddungja.app.users.apply.domain;
 
-import com.ddungja.app.post.infrastructure.entity.PostEntity;
+
+import com.ddungja.app.common.domain.BaseTimeEntity;
+import com.ddungja.app.post.domain.post.Post;
 import com.ddungja.app.users.user.domain.User;
+import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
-
+@Entity
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-public class Apply {
+@Table(name = "applys")
+public class Apply extends BaseTimeEntity {
 
-    private final Long id;
-    private final User user;
-    private final User seller;
-    private final PostEntity post;
-    private final Approval approval;
-    private final LocalDateTime createDate;
-    private final LocalDateTime updateDate;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "apply_id")
+    private Long id;
+
+
+    @JoinColumn(name = "user_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private User user;
+
+    @JoinColumn(name = "seller_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private User seller;
+
+    @JoinColumn(name = "post_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Post post;
+
+    @Enumerated(EnumType.STRING)
+    private Approval approval;
 
     @Builder
-    private Apply(Long id, User user, User seller, PostEntity post, Approval approval, LocalDateTime createDate, LocalDateTime updateDate) {
+    private Apply(Long id, User user, User seller, Post post, Approval approval, LocalDateTime createDate, LocalDateTime updateDate) {
         this.id = id;
         this.user = user;
         this.seller = seller;
@@ -28,5 +48,26 @@ public class Apply {
         this.approval = approval;
         this.createDate = createDate;
         this.updateDate = updateDate;
+    }
+
+    public static Apply from(com.ddungja.app.users.apply.domain.Apply apply) {
+        return Apply.builder()
+                .user(apply.getUser())
+                .seller(apply.getSeller())
+                .post(apply.getPost())
+                .approval(apply.getApproval())
+                .build();
+    }
+
+    public com.ddungja.app.users.apply.domain.Apply toDomain() {
+        return builder()
+                .id(id)
+                .user(user)
+                .seller(seller)
+                .post(post)
+                .approval(approval)
+                .createDate(createDate)
+                .updateDate(updateDate)
+                .build();
     }
 }
