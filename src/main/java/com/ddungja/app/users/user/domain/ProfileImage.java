@@ -33,5 +33,7 @@ public class ProfileImage extends BaseTimeEntity {
     }
 
 
-
+    public void update(Long profileImageId) {
+        this.id = profileImageId;
+    }
 }

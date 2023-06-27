@@ -1,6 +1,8 @@
 package com.ddungja.app.users.user.domain;
 
 import com.ddungja.app.common.domain.BaseTimeEntity;
+import com.ddungja.app.users.user.domain.request.ExperienceCreateRequest;
+import com.ddungja.app.users.user.domain.request.ExperienceUpdateRequest;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -37,15 +39,25 @@ public class Experience extends BaseTimeEntity {
     }
 
 
-
-    public static Experience from(Experience experience, Profile profile) {
+    public static Experience from(ExperienceCreateRequest experienceRequest, Profile profile) {
         return Experience.builder()
-                .id(experience.getId())
-                .species(experience.getSpecies())
-                .period(experience.getPeriod())
+                .species(experienceRequest.getSpecies())
+                .period(experienceRequest.getPeriod())
                 .profile(profile)
-                .createDate(experience.getCreateDate())
-                .updateDate(experience.getUpdateDate())
                 .build();
+    }
+
+    public static Experience from(ExperienceUpdateRequest experienceRequest, Profile profile) {
+        return Experience.builder()
+                .species(experienceRequest.getSpecies())
+                .period(experienceRequest.getPeriod())
+                .profile(profile)
+                .build();
+    }
+
+
+    public void update(ExperienceUpdateRequest experience) {
+        this.species = experience.getSpecies();
+        this.period = experience.getPeriod();
     }
 }

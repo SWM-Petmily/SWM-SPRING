@@ -1,7 +1,6 @@
-package com.ddungja.app.users.user.domain;
+package com.ddungja.app.users.user.domain.request;
 
 
-import com.ddungja.app.users.user.domain.Experience;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -19,6 +18,6 @@ public class ProfileCreateRequest {
     private final String openTalk;
     private final String region;
     private final boolean isExperience;
-    private final List<Experience> experiences;
+    private final List<ExperienceCreateRequest> experiences;
 
 }

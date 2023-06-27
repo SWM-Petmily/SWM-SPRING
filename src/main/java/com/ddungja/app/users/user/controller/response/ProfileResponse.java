@@ -1,7 +1,6 @@
 package com.ddungja.app.users.user.controller.response;
 
 import com.ddungja.app.users.user.domain.Profile;
-import com.querydsl.core.annotations.QueryProjection;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -16,7 +15,7 @@ public class ProfileResponse {
     private final String color;
     private final String openTalk;
     private final String region;
-    private final boolean isExperience;
+    private final Boolean isExperience;
     private final UserResponse user;
     private final ProfileImageResponse profileImage;
     private final List<ExperienceResponse> experiences;
