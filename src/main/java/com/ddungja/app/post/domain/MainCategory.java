@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Table(name = "main_categories")
-public class MainCategory extends BaseTimeEntity {
+public class MainCategory {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,14 +23,10 @@ public class MainCategory extends BaseTimeEntity {
 
     private String name;
 
-
     @Builder
-    private MainCategory(Long id, String name, LocalDateTime createDate, LocalDateTime updateDate) {
+    private MainCategory(Long id, String name) {
         this.id = id;
         this.name = name;
-        this.createDate = createDate;
-        this.updateDate = updateDate;
     }
-
 
 }
