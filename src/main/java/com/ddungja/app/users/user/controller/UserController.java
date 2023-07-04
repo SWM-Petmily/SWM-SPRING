@@ -3,11 +3,12 @@ package com.ddungja.app.users.user.controller;
 import com.ddungja.app.global.jwt.JwtProvider;
 import com.ddungja.app.users.user.domain.KakaoProfile;
 import com.ddungja.app.users.user.domain.User;
-import com.ddungja.app.users.user.domain.request.KaKaoLoginRequest;
 import com.ddungja.app.users.user.service.KakaoService;
+import com.ddungja.app.users.user.service.ProfileService;
 import com.ddungja.app.users.user.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
@@ -15,6 +16,7 @@ import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.net.URISyntaxException;
 import java.time.Duration;
 
@@ -26,10 +28,9 @@ public class UserController {
     private final KakaoService kakaoService;
     private final UserService userService;
     private final JwtProvider jwtProvider;
-
-    @PostMapping("/kakao")
-    public ResponseEntity<?> kakaoLogin(@RequestBody KaKaoLoginRequest kaKaoLoginRequest) throws URISyntaxException {
-        KakaoProfile kakaoProfile = kakaoService.getInfo(kaKaoLoginRequest);
+    @GetMapping("/kakao")
+    public ResponseEntity<?> kakaoLogin(@RequestParam String tokenType, @RequestParam String kakaoAccessToken) throws URISyntaxException {
+        KakaoProfile kakaoProfile = kakaoService.getInfo(tokenType, kakaoAccessToken);
         User user = userService.login(kakaoProfile);
         String accessToken = jwtProvider.createAccessToken(user);
         String refreshToken = jwtProvider.createRefreshToken(user);
