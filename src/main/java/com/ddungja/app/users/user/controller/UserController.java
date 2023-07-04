@@ -44,7 +44,7 @@ public class UserController {
         KakaoProfile kakaoProfile = kakaoService.getInfo(code);
         User user = userService.login(kakaoProfile);
         String accessToken = jwtProvider.createAccessToken(user);
-        log.info("accessToken = {}", accessToken);
+        log.debug("accessToken = {}", accessToken);
         String refreshToken = jwtProvider.createRefreshToken(user);
         ResponseCookie refreshTokenCookie = getRefreshTokenCookie(refreshToken);
         return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, refreshTokenCookie.toString()).header(HttpHeaders.AUTHORIZATION, accessToken).build();

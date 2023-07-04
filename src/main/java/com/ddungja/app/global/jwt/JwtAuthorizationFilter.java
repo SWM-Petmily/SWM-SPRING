@@ -29,9 +29,9 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
-        log.info("jwt 인가 필터");
+        log.debug("jwt 인가 필터");
         String accessToken = resolveToken(request);
-        log.info("accessToken : {}", accessToken);
+        log.debug("accessToken : {}", accessToken);
         if (StringUtils.hasText(accessToken) && jwtProvider.validateAccessToken(accessToken)) {
             User user = jwtProvider.accessTokenVerify(accessToken);
             Authentication authentication = new UsernamePasswordAuthenticationToken(user, null, null);
