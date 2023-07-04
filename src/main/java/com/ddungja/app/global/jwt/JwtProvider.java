@@ -23,7 +23,6 @@ public class JwtProvider {
     private String REFRESH_TOKEN_SECRET_KEY;
     private static final long ACCESS_TOKEN_EXPIRATION_TIME = Duration.ofDays(1).toMillis();
     private static final long REFRESH_TOKEN_EXPIRATION_TIME = Duration.ofDays(14).toMillis();
-    private static final long TEST_ACCESS_TOKEN_EXPIRATION_TIME = Duration.ofSeconds(30).toMillis();
     public static final String PREFIX = "Bearer ";
 
     public String createAccessToken(User user) {
@@ -34,10 +33,9 @@ public class JwtProvider {
     }
 
     public String createRefreshToken(User user) {
-        String refreshToken = JWT.create().withSubject("jwt").withExpiresAt(new Date(System.currentTimeMillis() + REFRESH_TOKEN_EXPIRATION_TIME))
+        return JWT.create().withSubject("jwt").withExpiresAt(new Date(System.currentTimeMillis() + REFRESH_TOKEN_EXPIRATION_TIME))
                 .withClaim("id", user.getId())
                 .sign(Algorithm.HMAC512(REFRESH_TOKEN_SECRET_KEY));
-        return PREFIX + refreshToken;
     }
 
     public User accessTokenVerify(String accessToken) {
@@ -72,13 +70,5 @@ public class JwtProvider {
         } catch (JWTVerificationException e) {
             return false;
         }
-    }
-
-
-    public String createTestAccessToken() {
-        String jwtToken = JWT.create().withSubject("jwt").withExpiresAt(new Date(System.currentTimeMillis() + TEST_ACCESS_TOKEN_EXPIRATION_TIME))
-                .withClaim("id", 1L)
-                .sign(Algorithm.HMAC512(ACCESS_TOKEN_SECRET_KEY));
-        return PREFIX + jwtToken;
     }
 }

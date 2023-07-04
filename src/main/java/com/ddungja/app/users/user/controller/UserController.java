@@ -1,5 +1,6 @@
 package com.ddungja.app.users.user.controller;
 
+import com.ddungja.app.common.domain.exception.CustomException;
 import com.ddungja.app.global.jwt.JwtProvider;
 import com.ddungja.app.users.user.domain.KakaoProfile;
 import com.ddungja.app.users.user.domain.User;
@@ -11,16 +12,14 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URISyntaxException;
 import java.time.Duration;
 
-import static com.ddungja.app.common.domain.exception.ExceptionCode.REFRESH_TOKEN_NOT_FOUND;
+import static com.ddungja.app.common.domain.exception.ExceptionCode.REFRESH_TOKEN_VALIDATION_FAILED;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.http.HttpHeaders.SET_COOKIE;
-import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @RestController
 @RequiredArgsConstructor
@@ -46,13 +45,15 @@ public class UserController {
 //                .secure(true) //https를 쓸때 사용
 //                .sameSite("None") //csrf 공격을 방지하기 위해 설정
 //                .domain("localhost:3000") // 도메인이 다르면 쿠키를 못받는다.
-                .httpOnly(true).build();
+                .httpOnly(true)
+                .build();
     }
 
     @Operation(summary = "리프레쉬 토큰 검증하고 엑세스토큰 반환")
     @PostMapping("/refresh")
     public ResponseEntity<?> getRefreshToken(@CookieValue(value = "refreshToken") Cookie cookie) {
-        String refreshToken = resolveRefreshToken(cookie.getValue());
+        String refreshToken = cookie.getValue();
+        log.debug("refreshToken = {}", refreshToken);
         if (jwtProvider.validateRefreshToken(refreshToken)) {
             User user = jwtProvider.refreshTokenVerify(refreshToken);
             String accessToken = jwtProvider.createAccessToken(user);
@@ -60,23 +61,10 @@ public class UserController {
             ResponseCookie refreshTokenCookie = getRefreshTokenCookie(refreshToken);
             return ResponseEntity.ok().header(SET_COOKIE, refreshTokenCookie.toString()).header(AUTHORIZATION, accessToken).build();
         }
-        return ResponseEntity.status(NOT_FOUND).body(REFRESH_TOKEN_NOT_FOUND);
+        throw new CustomException(REFRESH_TOKEN_VALIDATION_FAILED);
     }
 
-    @Operation(summary = "테스트용토큰")
-    @GetMapping("/token")
-    public ResponseEntity<?> testAccessToken(){
-        String testAccessToken = jwtProvider.createTestAccessToken();
-        log.debug("testAccessToken = {}", testAccessToken);
-        return ResponseEntity.ok(testAccessToken);
-    }
-    private String resolveRefreshToken(String refreshToken) {
-        if (StringUtils.hasText(refreshToken) && refreshToken.startsWith(JwtProvider.PREFIX)) {
-            return refreshToken.replace(JwtProvider.PREFIX, "");
-        }
-        return null;
-    }
-    
+    @Operation(summary = "권한테스트")
     @GetMapping("/authorization")
     public ResponseEntity<?> authroizationtest(){
         return ResponseEntity.ok("토큰이 존재합니다");

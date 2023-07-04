@@ -11,7 +11,7 @@ public enum ExceptionCode {
     UN_AUTHENTICATION(0001, HttpStatus.UNAUTHORIZED, "로그인이 필요합니다."),
     FORBIDDEN(0002, HttpStatus.FORBIDDEN, "권한이 없습니다."),
     REFRESH_TOKEN_NOT_FOUND(0003, HttpStatus.NOT_FOUND, "리프레시 토큰을 찾을 수 없습니다." ),
-
+    REFRESH_TOKEN_VALIDATION_FAILED(0004, HttpStatus.UNAUTHORIZED, "리프레시 토큰이 유효하지 않습니다." ),
 
     //user
     USER_NOT_FOUND(2001, HttpStatus.NOT_FOUND, "유저를 찾을 수 없습니다."),
