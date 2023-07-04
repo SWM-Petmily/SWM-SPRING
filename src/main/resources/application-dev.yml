@@ -70,8 +70,8 @@ springdoc:
     tags-sorter: alpha, method
 
 kakao:
-  restApiKey: c78d60a3b466b1b1c743a2bb745a1731
-  redirectUrl: http://localhost:8080/users/kakao/callback
+  restApiKey: ee34f16978b76a36b7c087376c6bbef2
+  redirectUrl: http://localhost:8080/users/kakao
   tokenUrl: https://kauth.kakao.com/oauth/token
   userInfoUrl: https://kapi.kakao.com/v2/user/me
 
