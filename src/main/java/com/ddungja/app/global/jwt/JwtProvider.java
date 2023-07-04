@@ -34,6 +34,7 @@ public class JwtProvider {
 
     public String createRefreshToken(User user) {
         return JWT.create().withSubject("jwt").withExpiresAt(new Date(System.currentTimeMillis() + REFRESH_TOKEN_EXPIRATION_TIME))
+                .withClaim("id", user.getId())
                 .sign(Algorithm.HMAC512(REFRESH_TOKEN_SECRET_KEY));
     }
 

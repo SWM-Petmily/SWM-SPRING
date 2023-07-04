@@ -4,20 +4,16 @@ import com.ddungja.app.global.jwt.JwtProvider;
 import com.ddungja.app.users.user.domain.KakaoProfile;
 import com.ddungja.app.users.user.domain.User;
 import com.ddungja.app.users.user.service.KakaoService;
-import com.ddungja.app.users.user.service.ProfileService;
 import com.ddungja.app.users.user.service.UserService;
-import jakarta.servlet.http.HttpServletResponse;
+import io.swagger.v3.oas.annotations.Operation;
+import jakarta.servlet.http.Cookie;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
 import java.net.URISyntaxException;
 import java.time.Duration;
 
@@ -29,30 +25,7 @@ public class UserController {
     private final KakaoService kakaoService;
     private final UserService userService;
     private final JwtProvider jwtProvider;
-    private final ProfileService profileService;
-
-
-    //카카오 로그인 되는지 확인용 코드
     @GetMapping("/kakao")
-    public void login(HttpServletResponse response) throws IOException {
-        response.sendRedirect("https://kauth.kakao.com/oauth/authorize?client_id=c78d60a3b466b1b1c743a2bb745a1731&redirect_uri=http://localhost:8080/users/kakao/callback&response_type=code");
-    }
-
-    //카카오 로그인 되는지 확인용 코드
-    @GetMapping("/kakao/callback")
-    public ResponseEntity<?> kakaoLogin(@RequestParam(value = "code") String code) throws URISyntaxException {
-        KakaoProfile kakaoProfile = kakaoService.getInfo(code);
-        User user = userService.login(kakaoProfile);
-        String accessToken = jwtProvider.createAccessToken(user);
-        log.debug("accessToken = {}", accessToken);
-        String refreshToken = jwtProvider.createRefreshToken(user);
-        ResponseCookie refreshTokenCookie = getRefreshTokenCookie(refreshToken);
-        return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, refreshTokenCookie.toString()).header(HttpHeaders.AUTHORIZATION, accessToken).build();
-    }
-
-
-    //백엔드에서 카카오 로그인 받기
-    @GetMapping("/kakao/login")
     public ResponseEntity<?> kakaoLogin(@RequestParam String tokenType, @RequestParam String kakaoAccessToken) throws URISyntaxException {
         KakaoProfile kakaoProfile = kakaoService.getInfo(tokenType, kakaoAccessToken);
         User user = userService.login(kakaoProfile);
@@ -70,5 +43,18 @@ public class UserController {
                 .httpOnly(true).build();
     }
 
+    @Operation(summary = "리프레쉬 토큰 검증하고 엑세스토큰 반환")
+    @PostMapping("/refresh")
+    public ResponseEntity<?> getRefreshToken(@CookieValue(value = "refreshToken") Cookie cookie) {
+        String refreshToken = cookie.getValue();
+        if (jwtProvider.validateRefreshToken(refreshToken)) {
+            User user = jwtProvider.refreshTokenVerify(refreshToken);
+            String accessToken = jwtProvider.createAccessToken(user);
+            refreshToken = jwtProvider.createRefreshToken(user);
+            ResponseCookie refreshTokenCookie = getRefreshTokenCookie(refreshToken);
+            return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, refreshTokenCookie.toString()).header(HttpHeaders.AUTHORIZATION, accessToken).build();
+        }
+        return ResponseEntity.badRequest().body("refreshtoken 없음");
+    }
 
 }
