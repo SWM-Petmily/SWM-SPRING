@@ -69,3 +69,10 @@ values (5, 2, '러시안블루');
 
 insert into sub_categories(sub_category_id,main_category_id, name)
 values (6, 2, '페르시안');
+
+-- post
+insert into posts (birth,breeding,completion,create_date,environment,gender,main_category_id,money,name,neutered,personality,reason,region,registration,reports,status,sub_category_id,update_date,user_id,vaccination,views,post_id)
+values ('2022-08','양육',0,now(),'사육환경','MALE',1,10000,'뚱자','Y','성격','파양이유','서울','Y',0,'Y','1',now(),1,'Y',0,1);
+
+insert into posts (birth,breeding,completion,create_date,environment,gender,main_category_id,money,name,neutered,personality,reason,region,registration,reports,status,sub_category_id,update_date,user_id,vaccination,views,post_id)
+values ('2022-08','양육',0,now(),'사육환경','MALE',1,10000,'뚱자','Y','성격','파양이유','서울','Y',0,'Y','1',now(),1,'Y',0,2);

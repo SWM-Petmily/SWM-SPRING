@@ -46,11 +46,11 @@ public class PostService {
         MainCategory mainCategory = mainCategoryRepository.findById(request.getMainCategory()).orElseThrow(() -> new CustomException(MAIN_CATEGORY_NOT_FOUND));
         SubCategory subCategory = subCategoryRepository.findById(request.getSubCategory()).orElseThrow(() -> new CustomException(SUB_CATEGORY_NOT_FOUND));
 
-        Post post = request.toEntity(user,mainCategory,subCategory);
+        Post post = request.toEntity(user, mainCategory, subCategory);
         postRepository.save(post);
 
         /*질병 업로드*/
-        if(request.getDiseases() != null){
+        if (request.getDiseases() != null) {
             for (DiseaseDto.DiseaseRequest disease : request.getDiseases()) {
                 Disease uploadDisease = Disease.builder()
                         .post(post)
@@ -61,7 +61,7 @@ public class PostService {
         }
 
         /*이미지 업로드*/
-        if(request.getPostImages() != null) {
+        if (request.getPostImages() != null) {
             for (ImageDto.ImageRequest image : request.getPostImages()) {
                 Image uploadimage = Image.builder()
                         .post(post)
@@ -73,7 +73,7 @@ public class PostService {
         }
 
         /*예방접종 인증 - 사진만*/
-        if(request.getVaccination()== Type.Y){
+        if (request.getVaccination() == Type.Y) {
             for (ImageDto.ImageRequest image : request.getVaccinationImages()) {
                 Image uploadimage = Image.builder()
                         .post(post)
@@ -85,7 +85,7 @@ public class PostService {
         }
 
         /*건강검진 정보 인증 - 사진만*/
-        if(request.getMedicalCheckImages() != null){
+        if (request.getMedicalCheckImages() != null) {
             for (ImageDto.ImageRequest image : request.getMedicalCheckImages()) {
                 Image uploadimage = Image.builder()
                         .post(post)
@@ -95,5 +95,11 @@ public class PostService {
                 imageRepository.save(uploadimage);
             }
         }
+    }
+
+    /*포스트 보기*/
+    public PostDto.PostResponse get(Long id) {
+        Post post = postRepository.findById(id).orElseThrow(() -> new CustomException(POST_NOT_FOUND));
+        return PostDto.PostResponse.from(post);
     }
 }
