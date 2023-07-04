@@ -34,15 +34,5 @@ public class KakaoService {
         return kakao.getInfo(new URI(kakaoUserInfoURl), tokenType + " " + accessToken);
     }
 
-    public KakaoProfile getInfo(final String code) throws URISyntaxException {
-        final KakaoToken token = getToken(code);
-        log.debug("token = {}", token);
-        return kakao.getInfo(new URI(kakaoUserInfoURl), token.getToken_type() + " " + token.getAccess_token());
-    }
-
-    private KakaoToken getToken(final String code) throws URISyntaxException {
-        return kakao.getToken(new URI(kakaoTokenUrl), restapiKey, redirectUrl, code, "authorization_code");
-    }
-
 
 }

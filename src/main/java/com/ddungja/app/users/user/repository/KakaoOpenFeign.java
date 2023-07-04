@@ -16,10 +16,6 @@ public interface KakaoOpenFeign {
     @PostMapping
     KakaoProfile getInfo(URI baseUrl, @RequestHeader("Authorization") String accessToken);
 
-    @PostMapping
-    KakaoToken getToken(URI baseUrl, @RequestParam("client_id") String restApiKey,
-                        @RequestParam("redirect_uri") String redirectUrl,
-                        @RequestParam("code") String code,
-                        @RequestParam("grant_type") String grantType);
+
 
 }
