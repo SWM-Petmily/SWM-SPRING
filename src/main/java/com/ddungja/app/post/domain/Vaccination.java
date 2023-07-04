@@ -13,24 +13,21 @@ import java.time.LocalDateTime;
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-@Table(name = "diseases")
-public class Disease extends BaseTimeEntity {
+@Table(name = "vaccination")
+public class Vaccination extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "disease_id")
+    @Column(name = "vaccination_id")
     private Long id;
 
     @JoinColumn(name = "post_id")
     @ManyToOne(fetch = FetchType.LAZY)
     private Post post;
 
-    private String name;
-
     @Builder
-    private Disease(Long id, Post post, String name, LocalDateTime createDate, LocalDateTime updateDate) {
+    private Vaccination(Long id, Post post, LocalDateTime createDate, LocalDateTime updateDate) {
         this.id = id;
         this.post = post;
-        this.name = name;
         this.createDate = createDate;
         this.updateDate = updateDate;
     }

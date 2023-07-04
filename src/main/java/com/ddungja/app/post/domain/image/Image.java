@@ -1,6 +1,8 @@
 package com.ddungja.app.post.domain.image;
 
 import com.ddungja.app.common.domain.BaseTimeEntity;
+import com.ddungja.app.post.domain.SubCategory;
+import com.ddungja.app.post.domain.post.Post;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -22,13 +24,18 @@ public class Image extends BaseTimeEntity {
     private String url;
 
     @Enumerated(EnumType.STRING)
-    private Type imageType;
+    private ImageType imageType;
+
+    @JoinColumn(name = "post_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Post post;
 
     @Builder
-    private Image(Long id, String url, Type imageType, LocalDateTime createDate, LocalDateTime updateDate) {
+    private Image(Long id, String url, ImageType imageType, Post post, LocalDateTime createDate, LocalDateTime updateDate) {
         this.id = id;
         this.url = url;
         this.imageType = imageType;
+        this.post = post;
         this.createDate = createDate;
         this.updateDate = updateDate;
     }

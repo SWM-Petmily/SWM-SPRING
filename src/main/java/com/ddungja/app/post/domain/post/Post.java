@@ -24,7 +24,6 @@ public class Post extends BaseTimeEntity {
     @Column(name = "post_id")
     private Long id;
 
-
     @JoinColumn(name = "user_id")
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
@@ -49,19 +48,26 @@ public class Post extends BaseTimeEntity {
     private String breeding;
     private String environment;
     private String reason;
-    private String vaccination;
+    private String personality ;
+
+    @Enumerated(EnumType.STRING)
+    private Type vaccination;
+
+    @Enumerated(EnumType.STRING)
+    private Type registration;
+
+
+
     private int views;
-    private int likes;
     private int reports;
-    private int completion;
-    private int applys;
+    private int completion; // 0 : 미완료 1 : 완료
 
     @Enumerated(EnumType.STRING)
     private PostStatus status;
 
 
     @Builder
-    private Post(Long id, User user, MainCategory mainCategory, SubCategory subCategory, Gender gender, String birth, String name, String region, Neutered neutered, int money, String breeding, String environment, String reason, String vaccination, int views, int likes, int reports, int completion, int applys, PostStatus status, LocalDateTime createDate, LocalDateTime updateDate) {
+    private Post(Long id, User user, MainCategory mainCategory, SubCategory subCategory, Gender gender, String birth, String name, String region, Neutered neutered, int money, String breeding, String environment, String reason, String personality, Type vaccination, Type registration, int views, int likes, int reports, int completion, int applys, PostStatus status, LocalDateTime createDate, LocalDateTime updateDate) {
         this.id = id;
         this.user = user;
         this.mainCategory = mainCategory;
@@ -75,12 +81,12 @@ public class Post extends BaseTimeEntity {
         this.breeding = breeding;
         this.environment = environment;
         this.reason = reason;
+        this.personality = personality;
         this.vaccination = vaccination;
+        this.registration = registration;
         this.views = views;
-        this.likes = likes;
         this.reports = reports;
         this.completion = completion;
-        this.applys = applys;
         this.status = status;
         this.createDate = createDate;
         this.updateDate = updateDate;
@@ -101,12 +107,11 @@ public class Post extends BaseTimeEntity {
                 .breeding(post.getBreeding())
                 .environment(post.getEnvironment())
                 .reason(post.getReason())
+                .personality(post.getPersonality())
                 .vaccination(post.getVaccination())
                 .views(post.getViews())
-                .likes(post.getLikes())
                 .reports(post.getReports())
                 .completion(post.getCompletion())
-                .applys(post.getApplys())
                 .status(post.getStatus())
                 .createDate(post.getCreateDate())
                 .updateDate(post.getUpdateDate())
@@ -130,10 +135,8 @@ public class Post extends BaseTimeEntity {
                 .reason(reason)
                 .vaccination(vaccination)
                 .views(views)
-                .likes(likes)
                 .reports(reports)
                 .completion(completion)
-                .applys(applys)
                 .status(status)
                 .createDate(createDate)
                 .updateDate(updateDate)
