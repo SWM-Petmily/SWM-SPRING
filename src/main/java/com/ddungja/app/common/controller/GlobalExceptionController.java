@@ -2,7 +2,7 @@ package com.ddungja.app.common.controller;
 
 
 import com.ddungja.app.common.domain.exception.CustomException;
-import com.ddungja.app.common.domain.exception.ExceptionCode;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -36,6 +36,6 @@ public class GlobalExceptionController {
 
     @ExceptionHandler(MissingRequestCookieException.class)
     public ResponseEntity<?> cookieException(MissingRequestCookieException e) {
-        return ResponseEntity.badRequest().body(REFRESH_TOKEN_NOT_FOUND);
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(REFRESH_TOKEN_NOT_FOUND);
     }
 }

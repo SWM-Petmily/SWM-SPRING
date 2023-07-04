@@ -32,6 +32,7 @@ public class UserController {
 
     @GetMapping("/kakao")
     public ResponseEntity<?> kakaoLogin(@RequestParam String tokenType, @RequestParam String kakaoAccessToken) throws URISyntaxException {
+        log.info("카카오 로그인 요청 tokenType = {}, kakaoAccessToken = {}", tokenType, kakaoAccessToken);
         KakaoProfile kakaoProfile = kakaoService.getInfo(tokenType, kakaoAccessToken);
         User user = userService.login(kakaoProfile);
         String accessToken = jwtProvider.createAccessToken(user);
@@ -52,6 +53,7 @@ public class UserController {
     @Operation(summary = "리프레쉬 토큰 검증하고 엑세스토큰 반환")
     @PostMapping("/refresh")
     public ResponseEntity<?> getRefreshToken(@CookieValue(value = "refreshToken") Cookie cookie) {
+        log.info("refresh 요청 = {}", cookie.getValue());
         String refreshToken = cookie.getValue();
         log.debug("refreshToken = {}", refreshToken);
         if (jwtProvider.validateRefreshToken(refreshToken)) {
@@ -67,6 +69,7 @@ public class UserController {
     @Operation(summary = "권한테스트")
     @GetMapping("/authorization")
     public ResponseEntity<?> authroizationtest(){
+        log.debug("권한 테스트");
         return ResponseEntity.ok("토큰이 존재합니다");
     }
 }
