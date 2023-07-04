@@ -33,7 +33,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.cloud:spring-cloud-starter-openfeign:4.0.3'
 
-	//lombock
+	//lombok
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 
@@ -69,7 +69,6 @@ dependencyManagement {
 tasks.named('test') {
 	useJUnitPlatform()
 }
-
 
 def querydslDir = "$buildDir/generated/querydsl"
 
