@@ -28,7 +28,6 @@ public class Profile extends BaseTimeEntity {
     private String environment;
     private int people;
     private String comment;
-    private String color;
     private String openTalk;
     private String region;
     private boolean isExperience;
@@ -45,13 +44,12 @@ public class Profile extends BaseTimeEntity {
     private List<Experience> experiences = new ArrayList<>();
 
     @Builder
-    private Profile(Long id, String job, String environment, int people, String comment, String color, String openTalk, String region, boolean isExperience, User user, List<Experience> experiences, ProfileImage profileImage, LocalDateTime createDate, LocalDateTime updateDate) {
+    private Profile(Long id, String job, String environment, int people, String comment, String openTalk, String region, boolean isExperience, User user, List<Experience> experiences, ProfileImage profileImage, LocalDateTime createDate, LocalDateTime updateDate) {
         this.id = id;
         this.job = job;
         this.environment = environment;
         this.people = people;
         this.comment = comment;
-        this.color = color;
         this.openTalk = openTalk;
         this.region = region;
         this.isExperience = isExperience;
@@ -69,7 +67,6 @@ public class Profile extends BaseTimeEntity {
                 .environment(profileCreateRequest.getEnvironment())
                 .people(profileCreateRequest.getPeople())
                 .comment(profileCreateRequest.getComment())
-                .color(profileCreateRequest.getColor())
                 .openTalk(profileCreateRequest.getOpenTalk())
                 .region(profileCreateRequest.getRegion())
                 .isExperience(profileCreateRequest.isExperience())
@@ -84,7 +81,6 @@ public class Profile extends BaseTimeEntity {
         this.environment = profileUpdateRequest.getEnvironment();
         this.people = profileUpdateRequest.getPeople();
         this.comment = profileUpdateRequest.getComment();
-        this.color = profileUpdateRequest.getColor();
         this.openTalk = profileUpdateRequest.getOpenTalk();
         this.region = profileUpdateRequest.getRegion();
         this.profileImage = profileImage;
