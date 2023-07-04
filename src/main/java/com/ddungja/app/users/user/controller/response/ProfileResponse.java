@@ -42,7 +42,6 @@ public class ProfileResponse {
                 .environment(profile.getEnvironment())
                 .people(profile.getPeople())
                 .comment(profile.getComment())
-                .color(profile.getColor())
                 .openTalk(profile.getOpenTalk())
                 .region(profile.getRegion())
                 .isExperience(profile.isExperience())

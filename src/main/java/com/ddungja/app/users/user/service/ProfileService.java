@@ -19,8 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.ddungja.app.common.domain.exception.ExceptionCode.PROFILE_IMAGE_NOT_FOUND;
-import static com.ddungja.app.common.domain.exception.ExceptionCode.USER_NOT_FOUND;
+import static com.ddungja.app.common.domain.exception.ExceptionCode.*;
 
 @Service
 @RequiredArgsConstructor
@@ -33,12 +32,12 @@ public class ProfileService {
 
     @Transactional(readOnly = true)
     public Profile get(Long userId) {
-        return profileRepository.findByUserId(userId).orElseThrow(() -> new CustomException(ExceptionCode.PROFILE_NOT_FOUND));
+        return profileRepository.findByUserId(userId).orElseThrow(() -> new CustomException(PROFILE_NOT_FOUND));
     }
     @Transactional
     public Profile create(ProfileCreateRequest profileCreateRequest, Long id) {
         User user = userRepository.findById(id).orElseThrow(() -> new CustomException(USER_NOT_FOUND));
-        if (user.isProfile()) throw new CustomException(ExceptionCode.PROFILE_ALREADY_EXISTS);
+        if (user.isProfile()) throw new CustomException(PROFILE_ALREADY_EXISTS);
         ProfileImage profileImage = profileImageRepository.findById(profileCreateRequest.getProfileImageId()).orElseThrow(() -> new CustomException(PROFILE_IMAGE_NOT_FOUND));
         Profile profile = Profile.from(profileCreateRequest, profileImage, user);
         profileRepository.save(profile);
@@ -52,9 +51,10 @@ public class ProfileService {
         user.createProfile();
         return profile;
     }
+
     @Transactional
     public Profile update(ProfileUpdateRequest profileUpdateRequest, Long id) {
-        Profile profile = profileRepository.findByUserId(id).orElseThrow(() -> new CustomException(ExceptionCode.PROFILE_NOT_FOUND));
+        Profile profile = profileRepository.findByUserId(id).orElseThrow(() -> new CustomException(PROFILE_NOT_FOUND));
         ProfileImage profileImage = profileImageRepository.findById(profileUpdateRequest.getProfileImageId()).orElseThrow(() -> new CustomException(PROFILE_IMAGE_NOT_FOUND));
 
         profile.update(profileUpdateRequest, profileImage);
@@ -63,7 +63,7 @@ public class ProfileService {
             return profile;
         }
         for (ExperienceUpdateRequest experience : profileUpdateRequest.getExperiences()) {
-            Experience updateExperience = experienceRepository.findById(experience.getId()).orElseThrow(() -> new CustomException(ExceptionCode.EXPERIENCE_NOT_FOUND));
+            Experience updateExperience = experienceRepository.findById(experience.getId()).orElseThrow(() -> new CustomException(EXPERIENCE_NOT_FOUND));
             updateExperience.update(experience);
         }
         return profile;
