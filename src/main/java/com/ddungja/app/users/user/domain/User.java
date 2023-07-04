@@ -23,11 +23,11 @@ public class User extends BaseTimeEntity {
     private String nickname;
     private String birth;
     private String phone;
-    private Provider provider;
+    private String provider;
     private boolean isProfile;
 
     @Builder
-    private User(Long id, String email, String nickName, String birth, String phone, Provider provider, boolean isProfile, LocalDateTime createDate, LocalDateTime updateDate) {
+    private User(Long id, String email, String nickName, String birth, String phone, String provider, boolean isProfile, LocalDateTime createDate, LocalDateTime updateDate) {
         this.id = id;
         this.email = email;
         this.nickname = nickName;

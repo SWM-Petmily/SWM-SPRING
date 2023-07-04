@@ -26,10 +26,10 @@ public class JwtProvider {
     public static final String PREFIX = "Bearer ";
 
     public String createAccessToken(User user) {
-        String jwtToken = JWT.create().withSubject("jwt").withExpiresAt(new Date(System.currentTimeMillis() + ACCESS_TOKEN_EXPIRATION_TIME))
+        String accessToken = JWT.create().withSubject("jwt").withExpiresAt(new Date(System.currentTimeMillis() + ACCESS_TOKEN_EXPIRATION_TIME))
                 .withClaim("id", user.getId())
                 .sign(Algorithm.HMAC512(ACCESS_TOKEN_SECRET_KEY));
-        return PREFIX + jwtToken;
+        return PREFIX + accessToken;
     }
 
     public String createRefreshToken(User user) {
@@ -71,6 +71,4 @@ public class JwtProvider {
             return false;
         }
     }
-
-
 }

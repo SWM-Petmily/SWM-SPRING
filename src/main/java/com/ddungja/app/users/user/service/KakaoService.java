@@ -2,7 +2,6 @@ package com.ddungja.app.users.user.service;
 
 import com.ddungja.app.users.user.domain.KakaoProfile;
 import com.ddungja.app.users.user.domain.KakaoToken;
-import com.ddungja.app.users.user.domain.request.KaKaoLoginRequest;
 import com.ddungja.app.users.user.repository.KakaoOpenFeign;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -31,8 +30,8 @@ public class KakaoService {
     @Value("${kakao.redirectUrl}")
     private String redirectUrl;
 
-    public KakaoProfile getInfo(KaKaoLoginRequest kaKaoLoginRequest) throws URISyntaxException {
-        return kakao.getInfo(new URI(kakaoUserInfoURl), kaKaoLoginRequest.getAccessToken() + " " + kaKaoLoginRequest.getAccessToken());
+    public KakaoProfile getInfo(String tokenType, String accessToken) throws URISyntaxException {
+        return kakao.getInfo(new URI(kakaoUserInfoURl), tokenType + " " + accessToken);
     }
 
 
