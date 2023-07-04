@@ -3,6 +3,7 @@ package com.ddungja.app.users.user.controller;
 import com.ddungja.app.global.jwt.JwtProvider;
 import com.ddungja.app.users.user.domain.KakaoProfile;
 import com.ddungja.app.users.user.domain.User;
+import com.ddungja.app.users.user.domain.request.KaKaoLoginRequest;
 import com.ddungja.app.users.user.service.KakaoService;
 import com.ddungja.app.users.user.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -25,9 +26,10 @@ public class UserController {
     private final KakaoService kakaoService;
     private final UserService userService;
     private final JwtProvider jwtProvider;
-    @GetMapping("/kakao")
-    public ResponseEntity<?> kakaoLogin(@RequestParam String tokenType, @RequestParam String kakaoAccessToken) throws URISyntaxException {
-        KakaoProfile kakaoProfile = kakaoService.getInfo(tokenType, kakaoAccessToken);
+
+    @PostMapping("/kakao")
+    public ResponseEntity<?> kakaoLogin(@RequestBody KaKaoLoginRequest kaKaoLoginRequest) throws URISyntaxException {
+        KakaoProfile kakaoProfile = kakaoService.getInfo(kaKaoLoginRequest);
         User user = userService.login(kakaoProfile);
         String accessToken = jwtProvider.createAccessToken(user);
         String refreshToken = jwtProvider.createRefreshToken(user);
