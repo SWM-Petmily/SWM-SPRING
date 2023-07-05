@@ -1,4 +1,4 @@
-name: Fatmily
+name: Petmily
 on:
   push:
     branches:
@@ -47,8 +47,8 @@ jobs:
         with:
           aws_access_key: ${{ secrets.AWS_ACCESS_KEY }}
           aws_secret_key: ${{ secrets.AWS_SECRET_KEY }}
-          application_name: aws-v5-beanstalk # Elastic Beanstalk 애플리케이션 이름
-          environment_name: Aws-v5-beanstalk-env # Elastic Beanstalk 환경 이름
+          application_name: SWM-Petmily # Elastic Beanstalk 애플리케이션 이름
+          environment_name: SWM-Petmily-env-2 # Elastic Beanstalk 환경 이름
           version_label: aws-v5-${{steps.current-time.outputs.formattedTime}}
           region: ap-northeast-2
           deployment_package: deploy/deploy.zip
