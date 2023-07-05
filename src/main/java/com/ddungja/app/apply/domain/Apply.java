@@ -1,4 +1,4 @@
-package com.ddungja.app.users.apply.domain;
+package com.ddungja.app.apply.domain;
 
 
 import com.ddungja.app.common.domain.BaseTimeEntity;
@@ -10,8 +10,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
-
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
@@ -22,7 +20,6 @@ public class Apply extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "apply_id")
     private Long id;
-
 
     @JoinColumn(name = "user_id")
     @ManyToOne(fetch = FetchType.LAZY)
@@ -37,18 +34,31 @@ public class Apply extends BaseTimeEntity {
     private Post post;
 
     @Enumerated(EnumType.STRING)
-    private Approval approval;
+    private ApprovalType approval;
+
+    private String job;
+    private String environment;
+    private int people;
+    private String comment;
+    private String openTalk;
+    private String region;
+    private boolean isExperience;
+    private String url;
 
     @Builder
-    private Apply(Long id, User user, User seller, Post post, Approval approval, LocalDateTime createDate, LocalDateTime updateDate) {
+    private Apply(Long id, User user, User seller, Post post, ApprovalType approval, String job, String environment, int people, String comment, String openTalk, String region, boolean isExperience, String url) {
         this.id = id;
         this.user = user;
         this.seller = seller;
         this.post = post;
         this.approval = approval;
-        this.createDate = createDate;
-        this.updateDate = updateDate;
+        this.job = job;
+        this.environment = environment;
+        this.people = people;
+        this.comment = comment;
+        this.openTalk = openTalk;
+        this.region = region;
+        this.isExperience = isExperience;
+        this.url = url;
     }
-
-
 }
