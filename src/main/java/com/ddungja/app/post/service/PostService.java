@@ -58,12 +58,12 @@ public class PostService {
         }
 
         /*이미지 업로드*/
-        if (request.getPostImages() != null) {
-            for (ImageDto.ImageRequest image : request.getPostImages()) {
+        if (postCreateRequest.getPostImages() != null) {
+            for (ImageCreateRequest image : postCreateRequest.getPostImages()) {
                 Image uploadimage = Image.builder()
                         .post(post)
                         .url(image.getUrl())
-                        .imageType(ImageType.POST)
+                        .imageType(POST)
                         .build();
                 imageRepository.save(uploadimage);
             }
@@ -82,16 +82,18 @@ public class PostService {
         }
 
         /*건강검진 정보 인증 - 사진만*/
-        if (request.getMedicalCheckImages() != null) {
-            for (ImageDto.ImageRequest image : request.getMedicalCheckImages()) {
+        if (postCreateRequest.getMedicalCheckImages() != null) {
+            for (ImageCreateRequest image : postCreateRequest.getMedicalCheckImages()) {
                 Image uploadimage = Image.builder()
                         .post(post)
                         .url(image.getUrl())
-                        .imageType(ImageType.MEDICAL_CHECK)
+                        .imageType(MEDICAL_CHECK)
                         .build();
                 imageRepository.save(uploadimage);
             }
         }
+
+        return post;
     }
 
     /*포스트 보기*/

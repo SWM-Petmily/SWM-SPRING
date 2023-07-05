@@ -1,5 +1,5 @@
 package com.ddungja.app.post.domain.post;
 
-public enum Gender {
+public enum GenderType {
     MALE, FEMALE
 }

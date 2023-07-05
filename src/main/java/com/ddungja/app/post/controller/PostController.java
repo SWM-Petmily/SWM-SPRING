@@ -22,7 +22,7 @@ public class PostController {
     private final PostService postService;
 
     @PostMapping
-    public ResponseEntity<?> create(@AuthenticationPrincipal User user, @Valid @RequestBody PostDto.PostCreateRequest postRequest) {
+    public ResponseEntity<?> create(@AuthenticationPrincipal User user, @Valid @RequestBody PostCreateRequest postRequest) {
         if(user==null) { // 로그인 연동 전 임의의 값 확인
             log.info("포스트 생성 요청 userId = {}", 1);
             Post post = postService.create(postRequest, 1L);

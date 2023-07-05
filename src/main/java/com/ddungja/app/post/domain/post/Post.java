@@ -37,13 +37,13 @@ public class Post extends BaseTimeEntity {
     private SubCategory subCategory;
 
     @Enumerated(EnumType.STRING)
-    private Gender gender;
+    private GenderType gender;
     private String birth;
     private String name;
     private String region;
 
     @Enumerated(EnumType.STRING)
-    private Neutered neutered;
+    private NeuteredType neutered;
     private int money;
     private String breeding;
     private String environment;
@@ -51,7 +51,7 @@ public class Post extends BaseTimeEntity {
     private String personality ;
 
     @Enumerated(EnumType.STRING)
-    private Type vaccination;
+    private VaccinatedType vaccination;
 
     @Enumerated(EnumType.STRING)
     private PostStatusType registration;
@@ -64,7 +64,7 @@ public class Post extends BaseTimeEntity {
 
 
     @Builder
-    private Post(Long id, User user, MainCategory mainCategory, SubCategory subCategory, Gender gender, String birth, String name, String region, Neutered neutered, int money, String breeding, String environment, String reason, String personality, Type vaccination, Type registration, int views, int likes, int reports, int completion, int applys, PostStatus status, LocalDateTime createDate, LocalDateTime updateDate) {
+    private Post(Long id, User user, MainCategory mainCategory, SubCategory subCategory, GenderType gender, String birth, String name, String region, NeuteredType neutered, int money, String breeding, String environment, String reason, String personality, VaccinatedType vaccination, PostStatusType registration, int views, int likes, int reports, int completion, int applys, PostStatusType status, LocalDateTime createDate, LocalDateTime updateDate) {
         this.id = id;
         this.user = user;
         this.mainCategory = mainCategory;
