@@ -4,7 +4,7 @@ package com.ddungja.petmily.apply.service;
 import com.ddungja.petmily.post.repository.PostRepository;
 import com.ddungja.petmily.apply.repository.ApplyExperienceRepository;
 import com.ddungja.petmily.apply.repository.ApplyRepository;
-import com.ddungja.petmily.users.user.repository.UserRepository;
+import com.ddungja.petmily.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
