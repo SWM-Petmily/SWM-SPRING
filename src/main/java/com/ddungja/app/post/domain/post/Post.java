@@ -54,16 +54,13 @@ public class Post extends BaseTimeEntity {
     private Type vaccination;
 
     @Enumerated(EnumType.STRING)
-    private Type registration;
-
-
-
+    private PostStatusType registration;
     private int views;
     private int reports;
     private int completion; // 0 : 미완료 1 : 완료
 
     @Enumerated(EnumType.STRING)
-    private PostStatus status;
+    private PostStatusType status;
 
 
     @Builder
@@ -90,57 +87,6 @@ public class Post extends BaseTimeEntity {
         this.status = status;
         this.createDate = createDate;
         this.updateDate = updateDate;
-    }
-
-    public static Post from(com.ddungja.app.post.domain.post.Post post) {
-        return Post.builder()
-                .id(post.getId())
-                .user(post.getUser())
-                .mainCategory(post.getMainCategory())
-                .subCategory(post.getSubCategory())
-                .gender(post.getGender())
-                .birth(post.getBirth())
-                .name(post.getName())
-                .region(post.getRegion())
-                .neutered(post.getNeutered())
-                .money(post.getMoney())
-                .breeding(post.getBreeding())
-                .environment(post.getEnvironment())
-                .reason(post.getReason())
-                .personality(post.getPersonality())
-                .vaccination(post.getVaccination())
-                .views(post.getViews())
-                .reports(post.getReports())
-                .completion(post.getCompletion())
-                .status(post.getStatus())
-                .createDate(post.getCreateDate())
-                .updateDate(post.getUpdateDate())
-                .build();
-    }
-
-    public com.ddungja.app.post.domain.post.Post toDomain() {
-        return builder()
-                .id(id)
-                .user(user)
-                .mainCategory(mainCategory)
-                .subCategory(subCategory)
-                .gender(gender)
-                .birth(birth)
-                .name(name)
-                .region(region)
-                .neutered(neutered)
-                .money(money)
-                .breeding(breeding)
-                .environment(environment)
-                .reason(reason)
-                .vaccination(vaccination)
-                .views(views)
-                .reports(reports)
-                .completion(completion)
-                .status(status)
-                .createDate(createDate)
-                .updateDate(updateDate)
-                .build();
     }
 
 }

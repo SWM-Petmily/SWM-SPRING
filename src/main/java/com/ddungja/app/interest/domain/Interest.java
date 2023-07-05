@@ -1,4 +1,4 @@
-package com.ddungja.app.users.interest.domain;
+package com.ddungja.app.interest.domain;
 
 import com.ddungja.app.common.domain.BaseTimeEntity;
 import com.ddungja.app.post.domain.post.Post;

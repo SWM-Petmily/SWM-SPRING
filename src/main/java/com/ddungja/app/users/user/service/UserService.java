@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import static com.ddungja.app.users.user.domain.Provider.KAKAO;
+import static com.ddungja.app.users.user.domain.ProviderType.KAKAO;
 
 @Service
 @RequiredArgsConstructor

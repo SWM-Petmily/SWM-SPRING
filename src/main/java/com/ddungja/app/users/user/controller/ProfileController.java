@@ -3,6 +3,7 @@ package com.ddungja.app.users.user.controller;
 import com.ddungja.app.users.user.controller.response.ProfileCreateResponse;
 import com.ddungja.app.users.user.controller.response.ProfileResponse;
 import com.ddungja.app.users.user.controller.response.ProfileUpdateResponse;
+import com.ddungja.app.users.user.domain.Experience;
 import com.ddungja.app.users.user.domain.Profile;
 import com.ddungja.app.users.user.domain.request.ProfileCreateRequest;
 import com.ddungja.app.users.user.domain.request.ProfileUpdateRequest;
