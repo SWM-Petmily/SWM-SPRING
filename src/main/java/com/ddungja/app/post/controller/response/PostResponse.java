@@ -8,12 +8,12 @@ import lombok.Getter;
 
 
 @Getter
-public  class PostResponse{
+public class PostResponse{
 
-    private Long id;
-    private Long mainCategory;
-    private Long subCategory;
-    private String region;
+    private final Long id;
+    private final Long mainCategory;
+    private final Long subCategory;
+    private final String region;
     @Enumerated(EnumType.STRING)
     private GenderType gender;
     private String birth;
