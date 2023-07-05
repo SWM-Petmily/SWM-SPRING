@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Table(name = "sub_categories")
-public class SubCategory extends BaseTimeEntity{
+public class SubCategory{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "sub_category_id")
@@ -26,14 +26,16 @@ public class SubCategory extends BaseTimeEntity{
     private MainCategory mainCategory;
 
     @Builder
-    private SubCategory(Long id, String name, MainCategory mainCategory, LocalDateTime createDate, LocalDateTime updateDate) {
+    private SubCategory(Long id, String name, MainCategory mainCategory) {
         this.id = id;
         this.name = name;
         this.mainCategory = mainCategory;
-        this.createDate = createDate;
-        this.updateDate = updateDate;
     }
 
+    public interface SubcategoryResponse {
+        Long getId();
+        String getName();
+    }
 
 }
 

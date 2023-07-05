@@ -25,8 +25,15 @@ public enum ExceptionCode {
 
 
     //experience
-    EXPERIENCE_NOT_FOUND(4001, HttpStatus.NOT_FOUND, "반려동물 경험을 찾을 수 없습니다." );
+    EXPERIENCE_NOT_FOUND(4001, HttpStatus.NOT_FOUND, "반려동물 경험을 찾을 수 없습니다." ),
 
+
+    //category
+    MAIN_CATEGORY_NOT_FOUND(4001, HttpStatus.NOT_FOUND, "메인 카테고리를 찾을 수 없습니다." ),
+    SUB_CATEGORY_NOT_FOUND(4002, HttpStatus.NOT_FOUND, "서브 카테고리를 찾을 수 없습니다." ),
+
+    //post
+    POST_NOT_FOUND(5001, HttpStatus.NOT_FOUND, "게시글을 찾을 수 없습니다.");
 
 
 

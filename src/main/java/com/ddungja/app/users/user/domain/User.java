@@ -3,16 +3,14 @@ package com.ddungja.app.users.user.domain;
 
 import com.ddungja.app.common.domain.BaseTimeEntity;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
+@Setter
 @Table(name = "users")
 public class User extends BaseTimeEntity {
     @Id

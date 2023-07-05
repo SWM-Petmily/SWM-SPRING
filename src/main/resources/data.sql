@@ -43,20 +43,36 @@ values (3, 1, '불독', 5, now(), now());
 
 
 -- main_categories
-insert into main_categories(main_category_id, name, create_date, update_date)
-values (1, '강아지', now(), now());
+insert into main_categories(main_category_id, name)
+values (1, '강아지');
 
 
-insert into main_categories(main_category_id, name, create_date, update_date)
-values (2, '고양이', now(), now());
+insert into main_categories(main_category_id, name)
+values (2, '고양이');
 
 
 --sub_categories
-insert into sub_categories(sub_category_id, main_category_id, name, create_date, update_date)
-values (1, 1, '불독', now(), now());
+insert into sub_categories(sub_category_id, main_category_id, name)
+values (1, 1, '불독');
 
-insert into sub_categories(sub_category_id,main_category_id, name, create_date, update_date)
-values (2, 1, '골든 리트리버', now(), now());
+insert into sub_categories(sub_category_id,main_category_id, name)
+values (2, 1, '골든 리트리버');
 
-insert into sub_categories(sub_category_id,main_category_id, name, create_date, update_date)
-values (3, 1, '닥스훈트', now(), now());
+insert into sub_categories(sub_category_id,main_category_id, name)
+values (3, 1, '닥스훈트');
+
+insert into sub_categories(sub_category_id, main_category_id, name)
+values (4, 2, '믹스묘');
+
+insert into sub_categories(sub_category_id,main_category_id, name)
+values (5, 2, '러시안블루');
+
+insert into sub_categories(sub_category_id,main_category_id, name)
+values (6, 2, '페르시안');
+
+-- post
+insert into posts (birth,breeding,completion,create_date,environment,gender,main_category_id,money,name,neutered,personality,reason,region,registration,reports,status,sub_category_id,update_date,user_id,vaccination,views,post_id)
+values ('2022-08','양육',0,now(),'사육환경','MALE',1,10000,'뚱자','Y','성격','파양이유','서울','Y',0,'Y','1',now(),1,'Y',0,1);
+
+insert into posts (birth,breeding,completion,create_date,environment,gender,main_category_id,money,name,neutered,personality,reason,region,registration,reports,status,sub_category_id,update_date,user_id,vaccination,views,post_id)
+values ('2022-08','양육',0,now(),'사육환경','MALE',1,10000,'뚱자','Y','성격','파양이유','서울','Y',0,'Y','1',now(),1,'Y',0,2);
