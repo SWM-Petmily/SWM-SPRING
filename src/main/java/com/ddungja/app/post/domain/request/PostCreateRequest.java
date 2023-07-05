@@ -13,27 +13,27 @@ import java.util.List;
 
 @Getter
 public class PostCreateRequest {
-    private Long mainCategory;
-    private Long subCategory;
-    private String region;
+    private final Long mainCategory;
+    private final Long subCategory;
+    private final String region;
     @Enumerated(EnumType.STRING)
-    private GenderType gender;
-    private String birth;
+    private final GenderType gender;
+    private final String birth;
     @Enumerated(EnumType.STRING)
-    private NeuteredType neutered;
-    private int money;
-    private String breeding;
-    private String environment;
-    private String reason;
-    private String personality;
+    private final NeuteredType neutered;
+    private final int money;
+    private final String breeding;
+    private final String environment;
+    private final String reason;
+    private final String personality;
     @Enumerated(EnumType.STRING)
-    private VaccinatedType vaccination;
+    private final VaccinatedType vaccination;
     @Enumerated(EnumType.STRING)
-    private PostStatusType registration;
-    private List<ImageCreateRequest> postImages;
-    private List<ImageCreateRequest> vaccinationImages;
-    private List<ImageCreateRequest> medicalCheckImages;
-    private List<DiseaseRequest> diseases;
+    private final PostStatusType registration;
+    private final List<ImageCreateRequest> postImages;
+    private final List<ImageCreateRequest> vaccinationImages;
+    private final List<ImageCreateRequest> medicalCheckImages;
+    private final List<DiseaseRequest> diseases;
 
     @Builder
     private PostCreateRequest(Long mainCategory, Long subCategory, String region, GenderType gender, String birth, NeuteredType neutered, int money, String breeding, String environment, String reason, String personality, VaccinatedType vaccination, PostStatusType registration, List<ImageCreateRequest> postImages, List<ImageCreateRequest> vaccinationImages, List<ImageCreateRequest> medicalCheckImages, List<DiseaseRequest> diseases) {

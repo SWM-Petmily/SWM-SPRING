@@ -8,8 +8,8 @@ import lombok.NoArgsConstructor;
 
 @Getter
 public class DiseaseRequest {
-    private String name;
-    private String dasdf;
+    private final String name;
+    private final String dasdf;
 
     @Builder
     public DiseaseRequest(String name, String dasdf) {
