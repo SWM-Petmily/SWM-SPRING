@@ -83,3 +83,7 @@ tasks.withType(JavaCompile) {
 clean.doLast {
 	file(querydslDir).deleteDir()
 }
+
+jar{
+	enable = false;
+}
