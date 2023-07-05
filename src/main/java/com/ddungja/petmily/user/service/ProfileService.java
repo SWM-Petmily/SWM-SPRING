@@ -6,7 +6,6 @@ import com.ddungja.petmily.user.domain.Experience;
 import com.ddungja.petmily.user.domain.Profile;
 import com.ddungja.petmily.user.domain.ProfileImage;
 import com.ddungja.petmily.user.domain.User;
-import com.ddungja.petmily.users.user.domain.*;
 import com.ddungja.petmily.user.domain.request.ExperienceCreateRequest;
 import com.ddungja.petmily.user.domain.request.ExperienceUpdateRequest;
 import com.ddungja.petmily.user.domain.request.ProfileCreateRequest;
