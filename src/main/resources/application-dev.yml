@@ -51,12 +51,12 @@ spring:
         one-indexed-parameters: on # paging 1부터 시작하기
 
 logging.level:
-  com.ddungja.app : debug
+  com.ddungja.petmily: debug
   org.hibernate.SQL: debug
   org.hibernate.type: trace
 
 springdoc:
-  packages-to-scan: com.ddungja.app
+  packages-to-scan: com.ddungja.petmily
   default-consumes-media-type: application/json;charset=UTF-8
   default-produces-media-type: application/json;charset=UTF-8
   api-docs:
