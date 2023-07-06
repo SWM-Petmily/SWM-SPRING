@@ -10,6 +10,9 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
@@ -36,6 +39,9 @@ public class Apply extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private ApprovalType approval;
 
+    @OneToMany(mappedBy = "apply")
+    private List<ApplyExperience> applyExperiences = new ArrayList<>();
+
     private String job;
     private String environment;
     private int people;
@@ -46,12 +52,13 @@ public class Apply extends BaseTimeEntity {
     private String url;
 
     @Builder
-    private Apply(Long id, User user, User seller, Post post, ApprovalType approval, String job, String environment, int people, String comment, String openTalk, String region, boolean isExperience, String url) {
+    private Apply(Long id, User user, User seller, Post post, ApprovalType approval, List<ApplyExperience> applyExperiences, String job, String environment, int people, String comment, String openTalk, String region, boolean isExperience, String url) {
         this.id = id;
         this.user = user;
         this.seller = seller;
         this.post = post;
         this.approval = approval;
+        this.applyExperiences = applyExperiences;
         this.job = job;
         this.environment = environment;
         this.people = people;

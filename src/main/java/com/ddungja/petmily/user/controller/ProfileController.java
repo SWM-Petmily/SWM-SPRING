@@ -42,7 +42,7 @@ public class ProfileController {
 
     @Operation(summary = "내 프로필 가져오기")
     @GetMapping
-    public ResponseEntity<?> getMyProfile(@AuthenticationPrincipal User user) {
+    public ResponseEntity<?> getMyProfile(@AuthenticationPrincipal User user, @PathVariable Long userId) {
         log.info("내 프로필 가져오기 userId = {}", user.getId());
         return ResponseEntity.ok(ProfileResponse.from(profileService.get(user.getId())));
     }
