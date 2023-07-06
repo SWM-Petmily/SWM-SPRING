@@ -16,6 +16,10 @@ public class UserService {
 
     @Transactional
     public User login(KakaoProfile kakaoProfile) {
-        return userRepository.findByEmail(kakaoProfile.getEmail()).orElseGet(() -> userRepository.save(User.builder().email(kakaoProfile.getEmail()).provider(ProviderType.KAKAO.name()).build()));
+        return userRepository.findByEmail(kakaoProfile.getEmail())
+                .orElseGet(() -> userRepository.save(User.builder()
+                .email(kakaoProfile.getEmail())
+                .provider(ProviderType.KAKAO.name())
+                .build()));
     }
 }
