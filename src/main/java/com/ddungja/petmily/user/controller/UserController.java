@@ -30,6 +30,7 @@ public class UserController {
     private final UserService userService;
     private final JwtProvider jwtProvider;
 
+    @Operation(summary = "카카오 로그인하기")
     @GetMapping("/kakao")
     public ResponseEntity<?> kakaoLogin(@RequestParam String tokenType, @RequestParam String kakaoAccessToken) throws URISyntaxException {
         log.info("카카오 로그인 요청 tokenType = {}, kakaoAccessToken = {}", tokenType, kakaoAccessToken);
@@ -71,5 +72,12 @@ public class UserController {
     public ResponseEntity<?> authroizationtest(){
         log.debug("권한 테스트");
         return ResponseEntity.ok("토큰이 존재합니다");
+    }
+
+    @Operation(summary = "테스트용 엑세스토큰 반환")
+    @GetMapping("/test/token")
+    public ResponseEntity<?> testAccessToken() {
+        String testAccessToken = jwtProvider.createTestAccessToken(1L);
+        return ResponseEntity.ok(testAccessToken);
     }
 }
