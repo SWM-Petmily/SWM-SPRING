@@ -19,10 +19,11 @@ public class ProfileResponse {
     private final UserResponse user;
     private final ProfileImageResponse profileImage;
     private final List<ExperienceResponse> experiences;
+    private final Boolean isMyProfile;
 
 
     @Builder
-    public ProfileResponse(String job, String environment, int people, String comment, String color, String openTalk, String region, boolean isExperience, UserResponse user, ProfileImageResponse profileImage, List<ExperienceResponse> experiences) {
+    public ProfileResponse(String job, String environment, int people, String comment, String color, String openTalk, String region, Boolean isExperience, UserResponse user, ProfileImageResponse profileImage, List<ExperienceResponse> experiences, Boolean isMyProfile) {
         this.job = job;
         this.environment = environment;
         this.people = people;
@@ -34,9 +35,12 @@ public class ProfileResponse {
         this.user = user;
         this.profileImage = profileImage;
         this.experiences = experiences;
+        this.isMyProfile = isMyProfile;
     }
 
-    public static ProfileResponse from(Profile profile) {
+
+
+    public static ProfileResponse from(Profile profile, boolean isMyProfile) {
         return ProfileResponse.builder()
                 .job(profile.getJob())
                 .environment(profile.getEnvironment())
@@ -48,6 +52,7 @@ public class ProfileResponse {
                 .user(UserResponse.from(profile.getUser()))
                 .profileImage(ProfileImageResponse.from(profile.getProfileImage()))
                 .experiences(profile.getExperiences().stream().map(ExperienceResponse::from).toList())
+                .isMyProfile(isMyProfile)
                 .build();
     }
 }
