@@ -25,18 +25,18 @@ public class ProfileController {
 
     private final ProfileService profileService;
     
-    @Operation(summary = "프로필 생성하기")
+    @Operation(summary = "내 프로필 생성하기")
     @PostMapping
     public ResponseEntity<?> create(@AuthenticationPrincipal User user, @Valid @RequestBody ProfileCreateRequest profileCreateRequest) {
-        log.info("프로필 생성 요청 userId = {}", user.getId());
+        log.info("내 프로필 생성하기 userId = {}", user.getId());
         Profile profile = profileService.create(profileCreateRequest, user.getId());
         return ResponseEntity.ok(ProfileCreateResponse.from(profile));
     }
 
-    @Operation(summary = "프로필 상세보기")
+    @Operation(summary = "유저 프로필 상세보기")
     @GetMapping("/{userId}")
     public ResponseEntity<?> get(@PathVariable Long userId) {
-        log.info("프로필 상세보기  userId = {}", userId);
+        log.info("유저 프로필 상세보기  userId = {}", userId);
         return ResponseEntity.ok(ProfileResponse.from(profileService.get(userId)));
     }
 
@@ -47,10 +47,10 @@ public class ProfileController {
         return ResponseEntity.ok(ProfileResponse.from(profileService.get(user.getId())));
     }
 
-    @Operation(summary = "프로필 수정하기")
+    @Operation(summary = "내 프로필 수정하기")
     @PutMapping
     public ResponseEntity<?> update(@AuthenticationPrincipal User user, @Valid @RequestBody ProfileUpdateRequest profileUpdateRequest) {
-        log.info("프로필 수정하기  userId = {}", user.getId());
+        log.info("내 프로필 수정하기  userId = {}", user.getId());
         Profile profile = profileService.update(profileUpdateRequest, user.getId());
         return ResponseEntity.ok(ProfileUpdateResponse.from(profile));
     }
