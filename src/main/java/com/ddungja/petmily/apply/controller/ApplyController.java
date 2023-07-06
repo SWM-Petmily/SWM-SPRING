@@ -2,6 +2,7 @@ package com.ddungja.petmily.apply.controller;
 
 import com.ddungja.petmily.apply.controller.response.ApplyPostResponse;
 import com.ddungja.petmily.apply.controller.response.ApplySupportResponse;
+import com.ddungja.petmily.apply.domain.Apply;
 import com.ddungja.petmily.apply.service.ApplyService;
 import com.ddungja.petmily.user.domain.User;
 import io.swagger.v3.oas.annotations.Operation;
@@ -27,17 +28,21 @@ public class ApplyController {
         log.info("내 게시글 지원 받은 목록 보기 userId : {}", user.getId());
         return ResponseEntity.ok( ApplyPostResponse.from(postId, applyService.getByPostId(user.getId(), postId, pageable).map(ApplySupportResponse::from)));
     }
-    @Operation(summary = "내가 지원한 목록 보기")
+    @Operation(summary = "내가 지원한 게시글 목록 목록 보기")
     @GetMapping
     public ResponseEntity<?> getByUserId(@AuthenticationPrincipal User user, Pageable pageable) {
         log.info("내가 지원한 목록 보기 userId : {}", user.getId());
-        return ResponseEntity.ok(applyService.getByUserId(user.getId(), pageable).map(ApplySupportResponse::from));
+
+        return ResponseEntity.ok(applyService.getByUserId(user.getId(), pageable).map(ApplyPostListResponse::from));
     }
-//    @Operation(summary = "지원 상세 보기")
-//    @GetMapping("/{applyId}")
-//    public ResponseEntity<?> getDetail(@AuthenticationPrincipal User user, @PathVariable Long applyId) {
-//        applyService.findById(applyId);
-//        return ResponseEntity.ok();
-//    }
+    @Operation(summary = "지원 상세 보기")
+    @GetMapping("/detail/{applyId}")
+    public ResponseEntity<?> getDetail(@AuthenticationPrincipal User user, @PathVariable Long applyId) {
+        Apply apply = applyService.findById(applyId);
+        if (apply.getUser().getId().equals(user.getId())) {
+            return ResponseEntity.ok(ApplyDetailResponse.from(apply, true));
+        }
+        return ResponseEntity.ok(ApplyDetailResponse.from(apply, false));
+    }
 
 }
