@@ -40,10 +40,10 @@ public class ProfileController {
 //        return ResponseEntity.ok(ProfileResponse.from(profileService.get(userId)));
 //    }
 
-    @Operation(summary = "내 프로필 가져오기")
+    @Operation(summary = "프로필 가져오기")
     @GetMapping("/{userId}")
     public ResponseEntity<?> getMyProfile(@AuthenticationPrincipal User user, @PathVariable Long userId) {
-        log.info("내 프로필 가져오기 userId = {}", user.getId());
+        log.info("프로필 가져오기 userId = {}", user.getId());
         if (user.getId().equals(userId)) {
             return ResponseEntity.ok(ProfileResponse.from(profileService.get(user.getId()), true));
         }
