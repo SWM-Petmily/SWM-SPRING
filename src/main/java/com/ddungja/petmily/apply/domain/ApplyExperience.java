@@ -1,6 +1,7 @@
 package com.ddungja.petmily.apply.domain;
 
 
+import com.ddungja.petmily.common.domain.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -11,7 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Table(name = "apply_experiences")
-public class ApplyExperience {
+public class ApplyExperience extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "apply_experience_id")
