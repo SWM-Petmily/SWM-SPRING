@@ -32,12 +32,13 @@ public class ApplyController {
     @GetMapping
     public ResponseEntity<?> getByUserId(@AuthenticationPrincipal User user, Pageable pageable) {
         log.info("내가 지원한 목록 보기 userId : {}", user.getId());
-
         return ResponseEntity.ok(applyService.getByUserId(user.getId(), pageable).map(ApplyPostListResponse::from));
     }
+
     @Operation(summary = "지원 상세 보기")
     @GetMapping("/detail/{applyId}")
     public ResponseEntity<?> getDetail(@AuthenticationPrincipal User user, @PathVariable Long applyId) {
+        log.info("지원 상세 보기 : userId = {}, applyId = {} ", user.getId(), applyId);
         Apply apply = applyService.findById(applyId);
         if (apply.getUser().getId().equals(user.getId())) {
             return ResponseEntity.ok(ApplyDetailResponse.from(apply, true));

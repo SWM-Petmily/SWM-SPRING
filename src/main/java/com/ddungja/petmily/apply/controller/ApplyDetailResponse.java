@@ -20,7 +20,7 @@ public class ApplyDetailResponse {
     private final Boolean isExperience;
     private final String url;
     private final ApprovalType approval;
-    private List<ApplyExperienceResponse> applyExperienceResponses;
+    private final List<ApplyExperienceResponse> applyExperiences;
     private final Boolean isMyApply;
 
     @Builder
@@ -35,7 +35,7 @@ public class ApplyDetailResponse {
         this.isExperience = isExperience;
         this.url = url;
         this.approval = approval;
-        this.applyExperienceResponses = applyExperienceResponses;
+        this.applyExperiences = applyExperienceResponses;
         this.isMyApply = isMyApply;
     }
 
