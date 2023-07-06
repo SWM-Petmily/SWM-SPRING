@@ -36,7 +36,6 @@ public class ProfileService {
     public Profile get(Long userId) {
         return profileRepository.findByUserId(userId).orElseThrow(() -> new CustomException(PROFILE_NOT_FOUND));
     }
-
     @Transactional
     public Profile create(ProfileCreateRequest profileCreateRequest, Long id) {
         User user = userRepository.findById(id).orElseThrow(() -> new CustomException(USER_NOT_FOUND));

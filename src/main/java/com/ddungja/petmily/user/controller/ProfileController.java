@@ -33,13 +33,6 @@ public class ProfileController {
         return ResponseEntity.ok(ProfileCreateResponse.from(profile));
     }
 
-//    @Operation(summary = "유저 프로필 상세보기")
-//    @GetMapping("/{userId}")
-//    public ResponseEntity<?> get(@PathVariable Long userId) {
-//        log.info("유저 프로필 상세보기  userId = {}", userId);
-//        return ResponseEntity.ok(ProfileResponse.from(profileService.get(userId)));
-//    }
-
     @Operation(summary = "프로필 가져오기")
     @GetMapping("/{userId}")
     public ResponseEntity<?> getMyProfile(@AuthenticationPrincipal User user, @PathVariable Long userId) {
