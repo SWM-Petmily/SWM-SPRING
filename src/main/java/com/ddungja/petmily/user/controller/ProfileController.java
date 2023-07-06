@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.*;
 public class ProfileController {
 
     private final ProfileService profileService;
-    
+
     @Operation(summary = "내 프로필 생성하기")
     @PostMapping
     public ResponseEntity<?> create(@AuthenticationPrincipal User user, @Valid @RequestBody ProfileCreateRequest profileCreateRequest) {
@@ -33,18 +33,21 @@ public class ProfileController {
         return ResponseEntity.ok(ProfileCreateResponse.from(profile));
     }
 
-    @Operation(summary = "유저 프로필 상세보기")
-    @GetMapping("/{userId}")
-    public ResponseEntity<?> get(@PathVariable Long userId) {
-        log.info("유저 프로필 상세보기  userId = {}", userId);
-        return ResponseEntity.ok(ProfileResponse.from(profileService.get(userId)));
-    }
+//    @Operation(summary = "유저 프로필 상세보기")
+//    @GetMapping("/{userId}")
+//    public ResponseEntity<?> get(@PathVariable Long userId) {
+//        log.info("유저 프로필 상세보기  userId = {}", userId);
+//        return ResponseEntity.ok(ProfileResponse.from(profileService.get(userId)));
+//    }
 
     @Operation(summary = "내 프로필 가져오기")
-    @GetMapping
+    @GetMapping("/{userId}")
     public ResponseEntity<?> getMyProfile(@AuthenticationPrincipal User user, @PathVariable Long userId) {
         log.info("내 프로필 가져오기 userId = {}", user.getId());
-        return ResponseEntity.ok(ProfileResponse.from(profileService.get(user.getId())));
+        if (user.getId().equals(userId)) {
+            return ResponseEntity.ok(ProfileResponse.from(profileService.get(user.getId()), true));
+        }
+        return ResponseEntity.ok(ProfileResponse.from(profileService.get(user.getId()), false));
     }
 
     @Operation(summary = "내 프로필 수정하기")
