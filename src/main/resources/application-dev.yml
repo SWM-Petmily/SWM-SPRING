@@ -51,7 +51,6 @@ spring:
         one-indexed-parameters: on # paging 1부터 시작하기
 
 logging.level:
-  com.ddungja.petmily: debug
   org.hibernate.SQL: debug
   org.hibernate.type: trace
 
