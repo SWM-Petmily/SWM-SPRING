@@ -49,7 +49,6 @@ spring:
         default-page-size: 100
         max-page-size: 2000
         one-indexed-parameters: on # paging 1부터 시작하기
-
 logging.level:
   org.hibernate.SQL: debug
   org.hibernate.type: trace
