@@ -36,11 +36,14 @@ public class ProfileController {
     @Operation(summary = "프로필 가져오기")
     @GetMapping("/{userId}")
     public ResponseEntity<?> getMyProfile(@AuthenticationPrincipal User user, @PathVariable Long userId) {
-        log.info("프로필 가져오기 userId = {}", user.getId());
-        if (user.getId().equals(userId)) {
-            return ResponseEntity.ok(ProfileResponse.from(profileService.get(user.getId()), true));
+        log.info("프로필 가져오기 userId = {}", userId);
+        if(user != null){
+            if (user.getId().equals(userId)) {
+                return ResponseEntity.ok(ProfileResponse.from(profileService.get(user.getId()), true));
+            }
         }
-        return ResponseEntity.ok(ProfileResponse.from(profileService.get(user.getId()), false));
+
+        return ResponseEntity.ok(ProfileResponse.from(profileService.get(userId), false));
     }
 
     @Operation(summary = "내 프로필 수정하기")
