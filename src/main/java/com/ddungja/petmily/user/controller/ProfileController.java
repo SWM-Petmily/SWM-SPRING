@@ -48,9 +48,9 @@ public class ProfileController {
 
     @Operation(summary = "내 프로필 수정하기")
     @PutMapping
-    public ResponseEntity<?> update(@AuthenticationPrincipal User user, @Valid @RequestBody ProfileUpdateRequest profileUpdateRequest) {
-        log.info("내 프로필 수정하기  userId = {}", user.getId());
-        Profile profile = profileService.update(profileUpdateRequest, user.getId());
+    public ResponseEntity<?> update(@Valid @RequestBody ProfileUpdateRequest profileUpdateRequest) {
+//        log.info("내 프로필 수정하기  userId = {}", user.getId());
+        Profile profile = profileService.update(profileUpdateRequest, 1L);
         return ResponseEntity.ok(ProfileUpdateResponse.from(profile));
     }
 }
