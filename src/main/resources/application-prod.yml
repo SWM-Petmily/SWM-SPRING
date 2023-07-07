@@ -27,6 +27,10 @@ spring:
         default_batch_fetch_size: 50
     open-in-view: false
 
+  sql:
+    init:
+      mode: never
+
   data:
     web:
       pageable:
