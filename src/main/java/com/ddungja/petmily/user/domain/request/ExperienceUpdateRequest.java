@@ -6,9 +6,9 @@ import lombok.Getter;
 @Getter
 public class ExperienceUpdateRequest {
 
-    private final Long id;
-    private final String species;
-    private final int period;
+    private Long id;
+    private String species;
+    private int period;
 
     @Builder
     public ExperienceUpdateRequest(Long id, String species, int period) {

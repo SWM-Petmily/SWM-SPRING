@@ -3,22 +3,24 @@ package com.ddungja.petmily.user.domain.request;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.ToString;
 
 import java.util.List;
 
 @Getter
+@ToString
 public class ProfileUpdateRequest {
 
-    private final Long profileImageId;
-    private final String job;
-    private final String environment;
-    private final int people;
-    private final String comment;
-    private final String color;
-    private final String openTalk;
-    private final String region;
-    private final boolean isExperience;
-    private final List<ExperienceUpdateRequest> experiences;
+    private Long profileImageId;
+    private String job;
+    private String environment;
+    private int people;
+    private String comment;
+    private String color;
+    private String openTalk;
+    private String region;
+    private boolean isExperience;
+    private List<ExperienceUpdateRequest> experiences;
 
     @Builder
     public ProfileUpdateRequest(Long profileImageId, String job, String environment, int people, String comment, String color, String openTalk, String region, boolean isExperience, List<ExperienceUpdateRequest> experiences) {
