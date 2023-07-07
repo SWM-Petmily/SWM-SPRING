@@ -8,7 +8,6 @@ import java.util.List;
 
 @Getter
 public class ProfileUpdateRequest {
-
     private final Long profileImageId;
     private final String job;
     private final String environment;
