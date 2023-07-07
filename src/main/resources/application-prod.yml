@@ -27,10 +27,6 @@ spring:
         default_batch_fetch_size: 50
     open-in-view: false
 
-  sql:
-    init:
-      mode: never
-
   data:
     web:
       pageable:
@@ -38,11 +34,9 @@ spring:
         max-page-size: 2000
         one-indexed-parameters: on
 
-
 logging:
   level:
     com.ddungja.petmily: info
-
 
 springdoc:
   packages-to-scan: com.ddungja.petmily
