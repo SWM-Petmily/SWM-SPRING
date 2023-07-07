@@ -30,6 +30,7 @@ spring:
         format_sql: true
         show_sql: true
     open-in-view: false
+    generate-ddl: true
 
   sql:
     init:
