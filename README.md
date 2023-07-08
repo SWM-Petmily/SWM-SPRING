@@ -2,4 +2,3 @@
 
 # Elastic BeansTalk 배포 완료 
 http://15.165.191.21/swagger-ui/index.html
-asdfㅁㄴㅇㄹ
