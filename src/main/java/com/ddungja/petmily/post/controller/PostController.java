@@ -28,9 +28,9 @@ public class PostController {
             Post post = postService.create(postRequest, 1L);
             return ResponseEntity.ok(PostCreateResponse.from(post));
         }else{
-            log.info("포스트 생성 요청 userId = {}", user.getId());
-            postService.create(postRequest, user.getId());
-            return ResponseEntity.ok(postRequest);
+            log.info("포스트 생성 요청 userId = {} ", user.getId());
+            Post post = postService.create(postRequest, user.getId());
+            return ResponseEntity.ok(PostCreateResponse.from(post));
         }
     }
 

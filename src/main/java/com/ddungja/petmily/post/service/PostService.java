@@ -15,6 +15,7 @@ import com.ddungja.petmily.users.user.domain.User;
 import com.ddungja.petmily.users.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import static com.ddungja.petmily.common.domain.exception.ExceptionCode.*;
 import static com.ddungja.petmily.post.domain.image.ImageType.MEDICAL_CHECK;
@@ -36,6 +37,7 @@ public class PostService {
 
 
     /*포스트 업로드*/
+    @Transactional
     public Post create(PostCreateRequest postCreateRequest, Long id) {
         User user = userRepository.findById(id).orElseThrow(() -> new CustomException(USER_NOT_FOUND));
 
@@ -96,6 +98,8 @@ public class PostService {
     }
 
     /*포스트 보기*/
+
+    @Transactional
     public Post get(Long id) {
         return postRepository.findById(id).orElseThrow(() -> new CustomException(POST_NOT_FOUND));
     }

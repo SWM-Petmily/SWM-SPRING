@@ -71,8 +71,8 @@ insert into sub_categories(sub_category_id,main_category_id, name)
 values (6, 2, '페르시안');
 
 -- post
-insert into posts (birth, breeding, completion, create_date,environment,gender,main_category_id,money,name,neutered,personality,reason,region,registration,reports,status,sub_category_id,update_date,user_id,vaccination,views,post_id)
-values ('2022-08','양육',0,now(),'사육환경','MALE',1,10000,'뚱자','YES','성격','파양이유','서울','SAVE',0,'SAVE','1',now(),1,'YES',0,1);
+insert into posts (birth, breeding, completion, create_date,environment,gender,main_category_id,money,name,neutered,personality,reason,region,registration,reports,status,sub_category_id,update_date,user_id,vaccination,views,post_id,thumbnail_image)
+values ('2022-08','양육',0,now(),'사육환경','MALE',1,10000,'뚱자','YES','성격','파양이유','서울','SAVE',0,'SAVE','1',now(),1,'YES',0,1, 'https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcREj22c-wMNL5IDmU99v8G7voUl17Yxm0JJqMLqttdPT4DnaB99zqVK7HWiNzjP3aZnzCEf-ikAqb2yiDk');
 
-insert into posts (birth, breeding, completion, create_date,environment,gender,main_category_id,money,name,neutered,personality,reason,region,registration,reports,status,sub_category_id,update_date,user_id,vaccination,views,post_id)
-values ('2022-08','양육',0,now(),'사육환경','MALE',1,10000,'뚱자','YES','성격','파양이유','서울','SAVE',0,'SAVE','1',now(),1,'YES',0,2);
+insert into posts (birth, breeding, completion, create_date,environment,gender,main_category_id,money,name,neutered,personality,reason,region,registration,reports,status,sub_category_id,update_date,user_id,vaccination,views,post_id,thumbnail_image)
+values ('2022-08','양육',0,now(),'사육환경','MALE',1,10000,'뚱자','YES','성격','파양이유','서울','SAVE',0,'SAVE','1',now(),1,'YES',0,2,'https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcREj22c-wMNL5IDmU99v8G7voUl17Yxm0JJqMLqttdPT4DnaB99zqVK7HWiNzjP3aZnzCEf-ikAqb2yiDk');

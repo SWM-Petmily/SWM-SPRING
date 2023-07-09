@@ -2,8 +2,10 @@ package com.ddungja.petmily.post.domain.post;
 
 
 import com.ddungja.petmily.common.domain.BaseTimeEntity;
+import com.ddungja.petmily.like.domain.Like;
 import com.ddungja.petmily.post.domain.MainCategory;
 import com.ddungja.petmily.post.domain.SubCategory;
+import com.ddungja.petmily.post.domain.image.Image;
 import com.ddungja.petmily.users.user.domain.User;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -12,6 +14,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -35,6 +38,14 @@ public class Post extends BaseTimeEntity {
     @JoinColumn(name = "sub_category_id")
     @ManyToOne(fetch = FetchType.LAZY)
     private SubCategory subCategory;
+
+    private String thumbnailImage;
+
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+    private List<Like> like;
+
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+    private List<Image> images;
 
     @Enumerated(EnumType.STRING)
     private GenderType gender;

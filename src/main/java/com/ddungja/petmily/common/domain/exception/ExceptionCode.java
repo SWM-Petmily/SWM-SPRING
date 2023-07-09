@@ -33,8 +33,11 @@ public enum ExceptionCode {
     SUB_CATEGORY_NOT_FOUND(4002, HttpStatus.NOT_FOUND, "서브 카테고리를 찾을 수 없습니다." ),
 
     //post
-    POST_NOT_FOUND(5001, HttpStatus.NOT_FOUND, "게시글을 찾을 수 없습니다.");
+    POST_NOT_FOUND(5001, HttpStatus.NOT_FOUND, "게시글을 찾을 수 없습니다."),
 
+    //like
+    LIKE_NOT_FOUND(6001, HttpStatus.NOT_FOUND, "좋아요를 찾을 수 없습니다."),
+    LIKE_IS_EXISTS(6002, HttpStatus.BAD_REQUEST, "이미 좋아요를 눌렀습니다.");
 
 
     private final int code;
