@@ -8,10 +8,7 @@ import com.ddungja.petmily.post.domain.SubCategory;
 import com.ddungja.petmily.post.domain.image.Image;
 import com.ddungja.petmily.users.user.domain.User;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -19,6 +16,7 @@ import java.util.List;
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
+@Setter
 @Table(name = "posts")
 public class Post extends BaseTimeEntity {
 
@@ -56,48 +54,40 @@ public class Post extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private NeuteredType neutered;
     private int money;
-    private String breeding;
-    private String environment;
-    private String reason;
-    private String personality ;
+    private String reason; // 분양 이유
+    private String advantage; // 장점, 자랑
+    private String disadvantage; // 단점, 주의할 점
+    private String averageCost;// 평균비용
+    private String adopter; // 분양자
 
     @Enumerated(EnumType.STRING)
-    private VaccinatedType vaccination;
+    private PostStatusType status; // 분양상태
 
-    @Enumerated(EnumType.STRING)
-    private PostStatusType registration;
     private int views;
     private int reports;
-    private int completion; // 0 : 미완료 1 : 완료
-
-    @Enumerated(EnumType.STRING)
-    private PostStatusType status;
-
 
     @Builder
-    private Post(Long id, User user, MainCategory mainCategory, SubCategory subCategory, GenderType gender, String birth, String name, String region, NeuteredType neutered, int money, String breeding, String environment, String reason, String personality, VaccinatedType vaccination, PostStatusType registration, int views, int likes, int reports, int completion, int applys, PostStatusType status, LocalDateTime createDate, LocalDateTime updateDate) {
+    public Post(Long id, User user, MainCategory mainCategory, SubCategory subCategory, String thumbnailImage, List<Like> like, List<Image> images, GenderType gender, String birth, String name, String region, NeuteredType neutered, int money, String reason, String advantage, String disadvantage, String averageCost, String adopter, PostStatusType status, int views, int reports) {
         this.id = id;
         this.user = user;
         this.mainCategory = mainCategory;
         this.subCategory = subCategory;
+        this.thumbnailImage = thumbnailImage;
+        this.like = like;
+        this.images = images;
         this.gender = gender;
         this.birth = birth;
         this.name = name;
         this.region = region;
         this.neutered = neutered;
         this.money = money;
-        this.breeding = breeding;
-        this.environment = environment;
         this.reason = reason;
-        this.personality = personality;
-        this.vaccination = vaccination;
-        this.registration = registration;
+        this.advantage = advantage;
+        this.disadvantage = disadvantage;
+        this.averageCost = averageCost;
+        this.adopter = adopter;
+        this.status = status;
         this.views = views;
         this.reports = reports;
-        this.completion = completion;
-        this.status = status;
-        this.createDate = createDate;
-        this.updateDate = updateDate;
     }
-
 }

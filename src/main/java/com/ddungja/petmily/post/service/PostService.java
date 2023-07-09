@@ -45,7 +45,6 @@ public class PostService {
         SubCategory subCategory = subCategoryRepository.findById(postCreateRequest.getSubCategory()).orElseThrow(() -> new CustomException(SUB_CATEGORY_NOT_FOUND));
 
         Post post = postCreateRequest.toEntity(user, mainCategory, subCategory);
-        postRepository.save(post);
 
         /*질병 업로드*/
         if (postCreateRequest.getDiseases() != null) {
@@ -60,6 +59,7 @@ public class PostService {
 
         /*이미지 업로드*/
         if (postCreateRequest.getPostImages() != null) {
+            post.setThumbnailImage(postCreateRequest.getPostImages().get(0).getUrl());
             for (ImageCreateRequest image : postCreateRequest.getPostImages()) {
                 Image uploadimage = Image.builder()
                         .post(post)
@@ -93,6 +93,8 @@ public class PostService {
                 imageRepository.save(uploadimage);
             }
         }
+
+        postRepository.save(post);
 
         return post;
     }

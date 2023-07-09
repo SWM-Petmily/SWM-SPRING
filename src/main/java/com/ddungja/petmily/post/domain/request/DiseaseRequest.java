@@ -2,16 +2,15 @@ package com.ddungja.petmily.post.domain.request;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 
 @Getter
+@NoArgsConstructor
 public class DiseaseRequest {
-    private final String name;
-    private final String dasdf;
-
+    private String name;
     @Builder
     public DiseaseRequest(String name, String dasdf) {
         this.name = name;
-        this.dasdf = dasdf;
     }
 }

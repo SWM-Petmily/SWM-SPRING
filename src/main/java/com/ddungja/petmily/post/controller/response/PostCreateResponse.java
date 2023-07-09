@@ -20,17 +20,18 @@ public class PostCreateResponse {
     @Enumerated(EnumType.STRING)
     private final NeuteredType neutered;
     private final int money;
-    private final String breeding;
-    private final String environment;
-    private final String reason;
-    private final String personality;
+
+    private final String reason; // 분양 이유
+    private final String advantage; // 장점, 자랑
+    private final String disadvantage; // 단점, 주의할 점
+    private final String averageCost;// 평균비용
+    private final String adopter; // 분양자
+
     @Enumerated(EnumType.STRING)
-    private final VaccinatedType vaccination;
-    @Enumerated(EnumType.STRING)
-    private final PostStatusType registration;
+    private PostStatusType status; // 분양상태
 
     @Builder
-    public PostCreateResponse(Long id, Long mainCategory, Long subCategory, String region, GenderType gender, String birth, NeuteredType neutered, int money, String breeding, String environment, String reason, String personality, VaccinatedType vaccination, PostStatusType registration) {
+    public PostCreateResponse(Long id, Long mainCategory, Long subCategory, String region, GenderType gender, String birth, NeuteredType neutered, int money, String reason, String advantage, String disadvantage, String averageCost, String adopter, PostStatusType status) {
         this.id = id;
         this.mainCategory = mainCategory;
         this.subCategory = subCategory;
@@ -39,13 +40,16 @@ public class PostCreateResponse {
         this.birth = birth;
         this.neutered = neutered;
         this.money = money;
-        this.breeding = breeding;
-        this.environment = environment;
         this.reason = reason;
-        this.personality = personality;
-        this.vaccination = vaccination;
-        this.registration = registration;
+        this.advantage = advantage;
+        this.disadvantage = disadvantage;
+        this.averageCost = averageCost;
+        this.adopter = adopter;
+        this.status = status;
     }
+
+    @Builder
+
 
     public static PostCreateResponse from(Post post) {
         return PostCreateResponse.builder()
@@ -57,12 +61,12 @@ public class PostCreateResponse {
                 .birth(post.getBirth())
                 .neutered(post.getNeutered())
                 .money(post.getMoney())
-                .breeding(post.getBreeding())
-                .environment(post.getEnvironment())
                 .reason(post.getReason())
-                .personality(post.getPersonality())
-                .vaccination(post.getVaccination())
-                .registration(post.getRegistration())
+                .advantage(post.getAdvantage())
+                .disadvantage(post.getDisadvantage())
+                .averageCost(post.getAverageCost())
+                .adopter(post.getAdopter())
+                .status(post.getStatus())
                 .build();
     }
 
