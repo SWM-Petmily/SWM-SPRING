@@ -74,10 +74,17 @@ public class UserController {
         return ResponseEntity.ok("토큰이 존재합니다");
     }
 
-    @Operation(summary = "테스트용 엑세스토큰 반환")
-    @GetMapping("/test/token")
-    public ResponseEntity<?> testAccessToken() {
+    @Operation(summary = "테스트용 엑세스토큰 반환 userId = 1")
+    @GetMapping("/test/token/1")
+    public ResponseEntity<?> testAccessToken1() {
         String testAccessToken = jwtProvider.createTestAccessToken(1L);
+        return ResponseEntity.ok(testAccessToken);
+    }
+
+    @Operation(summary = "테스트용 엑세스토큰 반환 userId = 2")
+    @GetMapping("/test/token/2")
+    public ResponseEntity<?> testAccessToken2() {
+        String testAccessToken = jwtProvider.createTestAccessToken(2L);
         return ResponseEntity.ok(testAccessToken);
     }
 }
