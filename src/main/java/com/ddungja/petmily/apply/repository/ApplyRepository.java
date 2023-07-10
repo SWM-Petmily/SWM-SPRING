@@ -21,4 +21,6 @@ public interface ApplyRepository extends JpaRepository<Apply, Long> {
 
     @Query("select a from Apply a left join fetch a.applyExperiences where a.id = :applyId")
     Optional<Apply> findByApplyId(Long applyId);
+
+    Optional<Apply> findByIdAndSellerId(Long applyId, Long sellerId);
 }

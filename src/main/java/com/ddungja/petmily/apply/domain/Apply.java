@@ -39,7 +39,7 @@ public class Apply extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private ApprovalType approval;
 
-    @OneToMany(mappedBy = "apply")
+    @OneToMany(mappedBy = "apply", cascade = CascadeType.ALL)
     private List<ApplyExperience> applyExperiences = new ArrayList<>();
 
     private String job;
@@ -67,5 +67,15 @@ public class Apply extends BaseTimeEntity {
         this.region = region;
         this.isExperience = isExperience;
         this.url = url;
+    }
+
+    public void approve(ApprovalType approval) {
+        if (this.approval == ApprovalType.WAITING) {
+            if (approval == ApprovalType.APPROVED) {
+                this.approval = ApprovalType.APPROVED;
+            } else {
+                this.approval = ApprovalType.REJECTED;
+            }
+        }
     }
 }
