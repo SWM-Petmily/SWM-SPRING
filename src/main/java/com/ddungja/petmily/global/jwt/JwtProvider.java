@@ -4,7 +4,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.ddungja.petmily.users.user.domain.User;
+import com.ddungja.petmily.user.domain.User;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -31,7 +31,12 @@ public class JwtProvider {
                 .sign(Algorithm.HMAC512(ACCESS_TOKEN_SECRET_KEY));
         return PREFIX + accessToken;
     }
-
+    public String createTestAccessToken(Long userId) {
+        String accessToken = JWT.create().withSubject("jwt").withExpiresAt(new Date(System.currentTimeMillis() + ACCESS_TOKEN_EXPIRATION_TIME))
+                .withClaim("id", userId)
+                .sign(Algorithm.HMAC512(ACCESS_TOKEN_SECRET_KEY));
+        return PREFIX + accessToken;
+    }
     public String createRefreshToken(User user) {
         return JWT.create().withSubject("jwt").withExpiresAt(new Date(System.currentTimeMillis() + REFRESH_TOKEN_EXPIRATION_TIME))
                 .withClaim("id", user.getId())

@@ -8,7 +8,7 @@ import com.ddungja.petmily.post.domain.post.Post;
 import com.ddungja.petmily.post.domain.request.PostCreateRequest;
 import com.ddungja.petmily.post.service.ImageService;
 import com.ddungja.petmily.post.service.PostService;
-import com.ddungja.petmily.users.user.domain.User;
+import com.ddungja.petmily.user.domain.User;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

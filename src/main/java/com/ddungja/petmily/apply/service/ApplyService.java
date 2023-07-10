@@ -1,29 +1,45 @@
 package com.ddungja.petmily.apply.service;
 
 
-import com.ddungja.petmily.post.repository.PostRepository;
-import com.ddungja.petmily.apply.repository.ApplyExperienceRepository;
+import com.ddungja.petmily.apply.domain.Apply;
 import com.ddungja.petmily.apply.repository.ApplyRepository;
-import com.ddungja.petmily.users.user.repository.UserRepository;
+import com.ddungja.petmily.common.domain.exception.CustomException;
+import com.ddungja.petmily.common.domain.exception.ExceptionCode;
+import com.ddungja.petmily.post.domain.post.Post;
+import com.ddungja.petmily.post.repository.PostRepository;
+import com.ddungja.petmily.user.domain.User;
+import com.ddungja.petmily.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import static com.ddungja.petmily.common.domain.exception.ExceptionCode.POST_NOT_FOUND;
+import static com.ddungja.petmily.common.domain.exception.ExceptionCode.USER_NOT_FOUND;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class ApplyService {
     private final ApplyRepository applyRepository;
     private final UserRepository userRepository;
     private final PostRepository postRepository;
-    private final ApplyExperienceRepository applyExperienceRepository;
 
-//    public Apply getByPostId(Long id, Long postId) {
-//        User user = userRepository.findById(id).orElseThrow(() -> new CustomException(USER_NOT_FOUND));
-//        Post post = postRepository.findById(postId).orElseThrow(() -> new CustomException(POST_NOT_FOUND));
-//        List<Apply> applies = applyRepository.findBySellerId(user.getId());
-//        if (apply.isExperience()) {
-//            List<ApplyExperience> applyExperiences = applyExperienceRepository.findByApplyId(apply.getId());
-//        }
-//
-//
-//    }
+
+    public Page<Apply> getByPostId(Long id, Long postId, Pageable pageable) {
+        User user = userRepository.findById(id).orElseThrow(() -> new CustomException(USER_NOT_FOUND));
+        Post post = postRepository.findById(postId).orElseThrow(() -> new CustomException(POST_NOT_FOUND));
+        return applyRepository.findBySellerIdAndPostId(user.getId(),  post.getId(), pageable);
+    }
+
+    public Page<Apply>  getByUserId(Long userId, Pageable pageable) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new CustomException(USER_NOT_FOUND));
+        return applyRepository.findByUserId(user.getId(), pageable);
+    }
+
+
+    public Apply findById(Long applyId) {
+        return applyRepository.findByApplyId(applyId).orElseThrow(() -> new CustomException(ExceptionCode.APPLY_NOT_FOUND));
+    }
 }

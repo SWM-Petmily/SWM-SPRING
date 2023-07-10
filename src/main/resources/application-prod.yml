@@ -6,7 +6,6 @@ server:
       enabled: true
       force: true
 
-
 spring:
   servlet:
     multipart:
@@ -22,13 +21,10 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: validate
     properties:
       hibernate:
         default_batch_fetch_size: 50
-        use_sql_comments: true
-        format_sql: true
-        show_sql: true
     open-in-view: false
 
   sql:
@@ -42,13 +38,14 @@ spring:
         max-page-size: 2000
         one-indexed-parameters: on
 
+
 logging:
   level:
     com.ddungja.petmily: info
 
 
 springdoc:
-  packages-to-scan: com.ddungja.app
+  packages-to-scan: com.ddungja.petmily
   default-consumes-media-type: application/json;charset=UTF-8
   default-produces-media-type: application/json;charset=UTF-8
   api-docs:
@@ -73,4 +70,4 @@ jwt:
     secret: 7b190110066d09a1f88c5970fa55d5c2a61e52a2e4b984c7704966ab6bebad9791b5984136695239a67d98027ebcea2f36ba00ce628c662d7e0d43b5066d6567
   access:
     secret: 8937d7116cd6b9f184586f367e596d44661d838421db2fc23f7be1355df04d50838c9fbec843ef67cfe5856da75559ff69e48c3e6e00652f448fb975cc1c46d4
-
+debug:

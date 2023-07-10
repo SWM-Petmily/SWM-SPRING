@@ -1,6 +1,6 @@
 package com.ddungja.petmily.global.jwt;
 
-import com.ddungja.petmily.users.user.domain.User;
+import com.ddungja.petmily.user.domain.User;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
