@@ -69,7 +69,7 @@ public class Profile extends BaseTimeEntity {
                 .comment(profileCreateRequest.getComment())
                 .openTalk(profileCreateRequest.getOpenTalk())
                 .region(profileCreateRequest.getRegion())
-                .isExperience(profileCreateRequest.isExperience())
+                .isExperience(profileCreateRequest.getIsExperience())
                 .profileImage(profileImage)
                 .user(user)
                 .build();

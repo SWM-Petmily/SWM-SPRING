@@ -43,7 +43,7 @@ public class ProfileService {
         ProfileImage profileImage = profileImageRepository.findById(profileCreateRequest.getProfileImageId()).orElseThrow(() -> new CustomException(PROFILE_IMAGE_NOT_FOUND));
         Profile profile = Profile.from(profileCreateRequest, profileImage, user);
         profileRepository.save(profile);
-        if (profileCreateRequest.isExperience()) {
+        if (profileCreateRequest.getIsExperience()) {
             List<Experience> experiences = new ArrayList<>();
             for (ExperienceCreateRequest experience : profileCreateRequest.getExperiences()) {
                 experiences.add(Experience.from(experience, profile));

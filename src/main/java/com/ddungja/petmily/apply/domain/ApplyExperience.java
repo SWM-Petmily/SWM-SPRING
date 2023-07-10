@@ -1,12 +1,15 @@
 package com.ddungja.petmily.apply.domain;
 
 
+import com.ddungja.petmily.apply.domain.request.ApplyExperienceCreateRequest;
 import com.ddungja.petmily.common.domain.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -30,5 +33,14 @@ public class ApplyExperience extends BaseTimeEntity {
         this.species = species;
         this.period = period;
         this.apply = apply;
+    }
+
+
+    public static List<ApplyExperience> from(List<ApplyExperienceCreateRequest> experiences) {
+        return experiences.stream().map(applyExperienceCreateRequest -> ApplyExperience.builder()
+                .species(applyExperienceCreateRequest.getSpecies())
+                .period(applyExperienceCreateRequest.getPeriod())
+                .build()).toList();
+
     }
 }

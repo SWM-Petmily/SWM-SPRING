@@ -1,19 +1,22 @@
 package com.ddungja.petmily.apply.controller;
 
-import com.ddungja.petmily.apply.controller.response.ApplyPostResponse;
-import com.ddungja.petmily.apply.controller.response.ApplySupportResponse;
-import com.ddungja.petmily.apply.controller.response.ApprovalResponse;
+import com.ddungja.petmily.apply.controller.response.*;
 import com.ddungja.petmily.apply.domain.Apply;
-import com.ddungja.petmily.apply.domain.response.ApproveRequest;
+import com.ddungja.petmily.apply.domain.request.ApplyCreateRequest;
+import com.ddungja.petmily.apply.domain.request.ApproveRequest;
 import com.ddungja.petmily.apply.service.ApplyService;
 import com.ddungja.petmily.user.domain.User;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+
+import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.http.HttpStatus.NO_CONTENT;
 
 @RestController
 @RequiredArgsConstructor
@@ -35,7 +38,6 @@ public class ApplyController {
         log.info("내가 지원한 목록 보기 userId : {}", user.getId());
         return ResponseEntity.ok(applyService.getByUserId(user.getId(), pageable).map(ApplyPostListResponse::from));
     }
-
     @Operation(summary = "지원 상세 보기")
     @GetMapping("/detail/{applyId}")
     public ResponseEntity<?> getDetail(@AuthenticationPrincipal User user, @PathVariable Long applyId) {
@@ -46,8 +48,6 @@ public class ApplyController {
         }
         return ResponseEntity.ok(ApplyDetailResponse.from(apply, false));
     }
-
-
     @Operation(summary = "지원 승인/거절")
     @PostMapping("/{applyId}")
     public ResponseEntity<?> approve(@AuthenticationPrincipal User user, @PathVariable Long applyId, @RequestBody ApproveRequest approveRequest) {
@@ -55,6 +55,19 @@ public class ApplyController {
         Apply apply = applyService.approve(user.getId(), applyId, approveRequest);
         return ResponseEntity.ok(ApprovalResponse.from(apply));
     }
+    @Operation(summary = "지원 하기")
+    @PostMapping("/{postId}")
+    public ResponseEntity<?> apply(@AuthenticationPrincipal User user, @PathVariable Long postId, ApplyCreateRequest applyCreateRequest) {
+        log.info("지원 하기 userId = {}, postId = {}", user.getId(), postId);
+        Apply apply = applyService.apply(user.getId(), postId, applyCreateRequest);
+        return ResponseEntity.status(CREATED).body(ApplyCreateResponse.from(apply));
+    }
 
-
+    @Operation(summary = "지원 취소하기")
+    @PostMapping("/{postId}/cancel")
+    public ResponseEntity<?> cancel(@AuthenticationPrincipal User user, @PathVariable Long postId) {
+        log.info("지원 취소하기 userId = {}, postId = {}", user.getId(), postId);
+        applyService.cancel(user.getId(), postId);
+        return ResponseEntity.status(NO_CONTENT).build();
+    }
 }

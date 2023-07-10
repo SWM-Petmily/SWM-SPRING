@@ -1,6 +1,7 @@
 package com.ddungja.petmily.apply.domain;
 
 
+import com.ddungja.petmily.apply.domain.request.ApplyCreateRequest;
 import com.ddungja.petmily.common.domain.BaseTimeEntity;
 import com.ddungja.petmily.post.domain.post.Post;
 import com.ddungja.petmily.user.domain.User;
@@ -69,6 +70,24 @@ public class Apply extends BaseTimeEntity {
         this.url = url;
     }
 
+    public static Apply from(ApplyCreateRequest applyCreateRequest, User user, Post post) {
+        return Apply.builder()
+                .user(user)
+                .post(post)
+                .approval(ApprovalType.WAITING)
+                .job(applyCreateRequest.getJob())
+                .environment(applyCreateRequest.getEnvironment())
+                .people(applyCreateRequest.getPeople())
+                .comment(applyCreateRequest.getComment())
+                .openTalk(applyCreateRequest.getOpenTalk())
+                .region(applyCreateRequest.getRegion())
+                .isExperience(applyCreateRequest.getIsExperience())
+                .url(applyCreateRequest.getUrl())
+                .applyExperiences(ApplyExperience.from(applyCreateRequest.getExperiences()))
+                .build();
+
+    }
+
     public void approve(ApprovalType approval) {
         if (this.approval == ApprovalType.WAITING) {
             if (approval == ApprovalType.APPROVED) {
@@ -76,6 +95,12 @@ public class Apply extends BaseTimeEntity {
             } else {
                 this.approval = ApprovalType.REJECTED;
             }
+        }
+    }
+
+    public void cancel() {
+        if (this.approval == ApprovalType.WAITING) {
+            this.approval = ApprovalType.CANCEL;
         }
     }
 }
