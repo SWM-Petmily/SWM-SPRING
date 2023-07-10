@@ -37,7 +37,7 @@ public class ProfileController {
     @GetMapping("/{userId}")
     public ResponseEntity<?> getMyProfile(@AuthenticationPrincipal User user, @PathVariable Long userId) {
         log.info("프로필 가져오기 userId = {}", userId);
-        if(user != null){
+        if (user != null) {
             if (user.getId().equals(userId)) {
                 return ResponseEntity.ok(ProfileResponse.from(profileService.get(user.getId()), true));
             }
@@ -48,10 +48,9 @@ public class ProfileController {
 
     @Operation(summary = "내 프로필 수정하기")
     @PutMapping
-    public ResponseEntity<?> update(@RequestBody ProfileUpdateRequest profileUpdateRequest) {
-        log.info("내 프로필 수정하기  profileUpdateRequest = {}", profileUpdateRequest);
-//        log.info("내 프로필 수정하기  userId = {}", user.getId());
-        Profile profile = profileService.update(profileUpdateRequest, 1L);
+    public ResponseEntity<?> update(@AuthenticationPrincipal User user, @RequestBody ProfileUpdateRequest profileUpdateRequest) {
+        log.info("내 프로필 수정하기 user = {},  profileUpdateRequest = {}", profileUpdateRequest, user);
+        Profile profile = profileService.update(profileUpdateRequest, user.getId());
         return ResponseEntity.ok(ProfileUpdateResponse.from(profile));
     }
 }

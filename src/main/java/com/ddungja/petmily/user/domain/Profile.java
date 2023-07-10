@@ -40,7 +40,7 @@ public class Profile extends BaseTimeEntity {
     @OneToOne
     private User user;
 
-    @OneToMany(mappedBy = "profile")
+    @OneToMany(mappedBy = "profile", cascade = CascadeType.ALL)
     private List<Experience> experiences = new ArrayList<>();
 
     @Builder

@@ -20,8 +20,6 @@ public class ProfileResponse {
     private final ProfileImageResponse profileImage;
     private final List<ExperienceResponse> experiences;
     private final Boolean isMyProfile;
-
-
     @Builder
     public ProfileResponse(String job, String environment, int people, String comment, String color, String openTalk, String region, Boolean isExperience, UserResponse user, ProfileImageResponse profileImage, List<ExperienceResponse> experiences, Boolean isMyProfile) {
         this.job = job;
@@ -37,9 +35,6 @@ public class ProfileResponse {
         this.experiences = experiences;
         this.isMyProfile = isMyProfile;
     }
-
-
-
     public static ProfileResponse from(Profile profile, boolean isMyProfile) {
         return ProfileResponse.builder()
                 .job(profile.getJob())

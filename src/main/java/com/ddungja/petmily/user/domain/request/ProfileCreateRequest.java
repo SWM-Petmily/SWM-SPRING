@@ -17,7 +17,6 @@ public class ProfileCreateRequest {
     private final String region;
     private final boolean isExperience;
     private final List<ExperienceCreateRequest> experiences;
-
     @Builder
     private ProfileCreateRequest(Long profileImageId, String job, String environment, int people, String comment, String openTalk, String region, boolean isExperience, List<ExperienceCreateRequest> experiences) {
         this.profileImageId = profileImageId;

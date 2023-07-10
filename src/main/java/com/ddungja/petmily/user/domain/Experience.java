@@ -37,8 +37,6 @@ public class Experience extends BaseTimeEntity {
         this.createDate = createDate;
         this.updateDate = updateDate;
     }
-
-
     public static Experience from(ExperienceCreateRequest experienceRequest, Profile profile) {
         return Experience.builder()
                 .species(experienceRequest.getSpecies())
@@ -46,7 +44,6 @@ public class Experience extends BaseTimeEntity {
                 .profile(profile)
                 .build();
     }
-
     public static Experience from(ExperienceUpdateRequest experienceRequest, Profile profile) {
         return Experience.builder()
                 .species(experienceRequest.getSpecies())
@@ -55,9 +52,4 @@ public class Experience extends BaseTimeEntity {
                 .build();
     }
 
-
-    public void update(ExperienceUpdateRequest experience) {
-        this.species = experience.getSpecies();
-        this.period = experience.getPeriod();
-    }
 }

@@ -19,11 +19,8 @@ public class ProfileImage extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "profile_image_id")
     private Long id;
-
     @Lob
     private String url;
-
-
     @Builder
     private ProfileImage(Long id, String url, LocalDateTime createDate, LocalDateTime updateDate) {
         this.id = id;
@@ -31,8 +28,6 @@ public class ProfileImage extends BaseTimeEntity {
         this.createDate = createDate;
         this.updateDate = updateDate;
     }
-
-
     public void update(Long profileImageId) {
         this.id = profileImageId;
     }

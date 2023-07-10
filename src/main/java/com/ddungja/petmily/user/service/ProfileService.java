@@ -37,8 +37,8 @@ public class ProfileService {
         return profileRepository.findByUserId(userId).orElseThrow(() -> new CustomException(PROFILE_NOT_FOUND));
     }
     @Transactional
-    public Profile create(ProfileCreateRequest profileCreateRequest, Long id) {
-        User user = userRepository.findById(id).orElseThrow(() -> new CustomException(USER_NOT_FOUND));
+    public Profile create(ProfileCreateRequest profileCreateRequest, Long userId) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new CustomException(USER_NOT_FOUND));
         if (user.isProfile()) throw new CustomException(PROFILE_ALREADY_EXISTS);
         ProfileImage profileImage = profileImageRepository.findById(profileCreateRequest.getProfileImageId()).orElseThrow(() -> new CustomException(PROFILE_IMAGE_NOT_FOUND));
         Profile profile = Profile.from(profileCreateRequest, profileImage, user);
@@ -55,18 +55,17 @@ public class ProfileService {
     }
 
     @Transactional
-    public Profile update(ProfileUpdateRequest profileUpdateRequest, Long id) {
-        Profile profile = profileRepository.findByUserId(id).orElseThrow(() -> new CustomException(PROFILE_NOT_FOUND));
+    public Profile update(ProfileUpdateRequest profileUpdateRequest, Long userId) {
+        Profile profile = profileRepository.findByUserId(userId).orElseThrow(() -> new CustomException(PROFILE_NOT_FOUND));
         ProfileImage profileImage = profileImageRepository.findById(profileUpdateRequest.getProfileImageId()).orElseThrow(() -> new CustomException(PROFILE_IMAGE_NOT_FOUND));
-
         profile.update(profileUpdateRequest, profileImage);
-        if (!profileUpdateRequest.isExperience()) {
-            experienceRepository.deleteAll(profile.getExperiences());
-            return profile;
-        }
-        for (ExperienceUpdateRequest experience : profileUpdateRequest.getExperiences()) {
-            Experience updateExperience = experienceRepository.findById(experience.getId()).orElseThrow(() -> new CustomException(EXPERIENCE_NOT_FOUND));
-            updateExperience.update(experience);
+        experienceRepository.deleteAll(profile.getExperiences());
+        if (profileUpdateRequest.isExperience()) {
+            List<Experience> experiences = new ArrayList<>();
+            for (ExperienceUpdateRequest experience : profileUpdateRequest.getExperiences()) {
+                experiences.add(Experience.from(experience, profile));
+            }
+            experienceRepository.saveAll(experiences);
         }
         return profile;
     }
