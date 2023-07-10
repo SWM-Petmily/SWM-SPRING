@@ -1,6 +1,5 @@
-package com.ddungja.petmily.apply.controller;
+package com.ddungja.petmily.apply.controller.response;
 
-import com.ddungja.petmily.apply.controller.response.ApplyExperienceResponse;
 import com.ddungja.petmily.apply.domain.Apply;
 import com.ddungja.petmily.apply.domain.ApprovalType;
 import lombok.Builder;

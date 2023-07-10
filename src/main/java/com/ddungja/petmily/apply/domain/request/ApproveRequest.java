@@ -1,0 +1,19 @@
+package com.ddungja.petmily.apply.domain.request;
+
+import com.ddungja.petmily.apply.domain.ApprovalType;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
+@Getter
+@NoArgsConstructor
+@ToString
+public class ApproveRequest {
+    private ApprovalType approval;
+
+    @Builder
+    private ApproveRequest(ApprovalType approval) {
+        this.approval = approval;
+    }
+}

@@ -5,7 +5,6 @@ import lombok.Getter;
 
 @Getter
 public class KaKaoLoginRequest {
-
     private final String tokenType;
     private final String accessToken;
 
