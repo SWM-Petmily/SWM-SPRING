@@ -2,6 +2,7 @@ package com.ddungja.petmily.post.controller.response;
 
 import com.ddungja.petmily.post.domain.post.GenderType;
 import com.ddungja.petmily.post.domain.post.Post;
+import com.ddungja.petmily.post.domain.post.PostStatusType;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -18,9 +19,10 @@ public class MyPostListResponse {
     private final String birth;
     private final int like;
     private final String createdDate;
+    private final PostStatusType status;
 
     @Builder
-    public MyPostListResponse(Long id, String name, String thumbnailImage, String subCategory, String region, GenderType gender, String birth, int like, String createdDate) {
+    public MyPostListResponse(Long id, String name, String thumbnailImage, String subCategory, String region, GenderType gender, String birth, int like, String createdDate, PostStatusType status) {
         this.postId = id;
         this.name = name;
         this.thumbnailImage = thumbnailImage;
@@ -30,6 +32,7 @@ public class MyPostListResponse {
         this.birth = birth;
         this.like = like;
         this.createdDate = createdDate;
+        this.status = status;
     }
 
     public static MyPostListResponse from(Post post) {
@@ -38,6 +41,8 @@ public class MyPostListResponse {
                 .name(post.getName())
                 .thumbnailImage(post.getThumbnailImage())
                 .subCategory(post.getSubCategory().getName())
+                .gender(post.getGender())
+                .status(post.getStatus())
                 .region(post.getRegion())
                 .birth(post.getBirth())
                 .like(post.getLike().size())

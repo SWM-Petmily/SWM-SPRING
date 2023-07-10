@@ -6,6 +6,7 @@ import com.ddungja.petmily.post.controller.response.PostCreateResponse;
 import com.ddungja.petmily.post.controller.response.PostGetResponse;
 import com.ddungja.petmily.post.domain.image.Image;
 import com.ddungja.petmily.post.domain.post.Post;
+import com.ddungja.petmily.post.domain.post.PostStatusType;
 import com.ddungja.petmily.post.domain.request.PostCreateRequest;
 import com.ddungja.petmily.post.service.ImageService;
 import com.ddungja.petmily.post.service.PostService;
@@ -55,8 +56,8 @@ public class PostController {
 
     @Operation(summary = "내가 작성한 게시글 불러오기")
     @GetMapping("/user")
-    public ResponseEntity<?> getMyPost(@AuthenticationPrincipal User user, Pageable pageable) {
+    public ResponseEntity<?> getMyPost(@AuthenticationPrincipal User user, PostStatusType status, Pageable pageable) {
         log.info("내가 작성한 게시글 불러오기 userId = {}", user.getId());
-        return ResponseEntity.ok(postService.getMyPost(user.getId(), pageable).map(MyPostListResponse::from));
+        return ResponseEntity.ok(postService.getMyPost(user.getId(), status, pageable).map(MyPostListResponse::from));
     }
 }
