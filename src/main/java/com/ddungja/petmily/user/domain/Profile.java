@@ -40,7 +40,7 @@ public class Profile extends BaseTimeEntity {
     @OneToOne
     private User user;
 
-    @OneToMany(mappedBy = "profile", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "profile", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Experience> experiences = new ArrayList<>();
 
     @Builder
@@ -84,6 +84,10 @@ public class Profile extends BaseTimeEntity {
         this.openTalk = profileUpdateRequest.getOpenTalk();
         this.region = profileUpdateRequest.getRegion();
         this.profileImage = profileImage;
-        this.isExperience = profileUpdateRequest.isExperience();
+        this.isExperience = profileUpdateRequest.getIsExperience();
+    }
+
+    public void deleteExperiences() {
+        this.experiences.clear();
     }
 }

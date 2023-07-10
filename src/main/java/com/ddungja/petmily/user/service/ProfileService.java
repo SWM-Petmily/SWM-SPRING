@@ -59,8 +59,8 @@ public class ProfileService {
         Profile profile = profileRepository.findByUserId(userId).orElseThrow(() -> new CustomException(PROFILE_NOT_FOUND));
         ProfileImage profileImage = profileImageRepository.findById(profileUpdateRequest.getProfileImageId()).orElseThrow(() -> new CustomException(PROFILE_IMAGE_NOT_FOUND));
         profile.update(profileUpdateRequest, profileImage);
-        experienceRepository.deleteAll(profile.getExperiences());
-        if (profileUpdateRequest.isExperience()) {
+        profile.deleteExperiences();
+        if (profileUpdateRequest.getIsExperience()) {
             List<Experience> experiences = new ArrayList<>();
             for (ExperienceUpdateRequest experience : profileUpdateRequest.getExperiences()) {
                 experiences.add(Experience.from(experience, profile));
