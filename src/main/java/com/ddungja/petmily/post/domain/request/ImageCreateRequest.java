@@ -4,13 +4,12 @@ import lombok.*;
 
 
 @Getter
+@NoArgsConstructor
 public class ImageCreateRequest {
-    private final String url;
-    private final String name;
+    private  String url;
 
     @Builder
     public ImageCreateRequest(String url, String name) {
         this.url = url;
-        this.name = name;
     }
 }

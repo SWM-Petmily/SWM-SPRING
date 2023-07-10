@@ -1,4 +1,4 @@
-package com.ddungja.petmily.interest.domain;
+package com.ddungja.petmily.like.domain;
 
 import com.ddungja.petmily.common.domain.BaseTimeEntity;
 import com.ddungja.petmily.post.domain.post.Post;
@@ -14,11 +14,11 @@ import java.time.LocalDateTime;
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-@Table(name = "interests")
-public class Interest extends BaseTimeEntity {
+@Table(name = "likes")
+public class Like extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "interest_id")
+    @Column(name = "like_id")
     private Long id;
 
     @JoinColumn(name = "user_id")
@@ -31,7 +31,7 @@ public class Interest extends BaseTimeEntity {
 
 
     @Builder
-    private Interest(Long id, User user, Post post, LocalDateTime createDate, LocalDateTime updateDate) {
+    private Like(Long id, User user, Post post, LocalDateTime createDate, LocalDateTime updateDate) {
         this.id = id;
         this.user = user;
         this.post = post;
@@ -39,4 +39,10 @@ public class Interest extends BaseTimeEntity {
         this.updateDate = updateDate;
     }
 
+    public static Like from(User user, Post post){
+        return Like.builder()
+                .user(user)
+                .post(post)
+                .build();
+    }
 }

@@ -15,6 +15,8 @@ import java.util.List;
 public class PostCreateRequest {
     private final Long mainCategory;
     private final Long subCategory;
+    private final String name;
+
     private final String region;
     @Enumerated(EnumType.STRING)
     private final GenderType gender;
@@ -22,34 +24,35 @@ public class PostCreateRequest {
     @Enumerated(EnumType.STRING)
     private final NeuteredType neutered;
     private final int money;
-    private final String breeding;
-    private final String environment;
-    private final String reason;
-    private final String personality;
+    private final String reason; // 분양 이유
+    private final String advantage; // 장점, 자랑
+    private final String disadvantage; // 단점, 주의할 점
+    private final String averageCost;// 평균비용
+    private final String adopter; // 분양자
+
     @Enumerated(EnumType.STRING)
-    private final VaccinatedType vaccination;
-    @Enumerated(EnumType.STRING)
-    private final PostStatusType registration;
+    private final PostStatusType status;
     private final List<ImageCreateRequest> postImages;
     private final List<ImageCreateRequest> vaccinationImages;
     private final List<ImageCreateRequest> medicalCheckImages;
     private final List<DiseaseRequest> diseases;
 
     @Builder
-    private PostCreateRequest(Long mainCategory, Long subCategory, String region, GenderType gender, String birth, NeuteredType neutered, int money, String breeding, String environment, String reason, String personality, VaccinatedType vaccination, PostStatusType registration, List<ImageCreateRequest> postImages, List<ImageCreateRequest> vaccinationImages, List<ImageCreateRequest> medicalCheckImages, List<DiseaseRequest> diseases) {
+    public PostCreateRequest(Long mainCategory, Long subCategory, String name, String region, GenderType gender, String birth, NeuteredType neutered, int money, String reason, String advantage, String disadvantage, String averageCost, String adopter, PostStatusType status, List<ImageCreateRequest> postImages, List<ImageCreateRequest> vaccinationImages, List<ImageCreateRequest> medicalCheckImages, List<DiseaseRequest> diseases) {
         this.mainCategory = mainCategory;
         this.subCategory = subCategory;
+        this.name = name;
         this.region = region;
         this.gender = gender;
         this.birth = birth;
         this.neutered = neutered;
         this.money = money;
-        this.breeding = breeding;
-        this.environment = environment;
         this.reason = reason;
-        this.personality = personality;
-        this.vaccination = vaccination;
-        this.registration = registration;
+        this.advantage = advantage;
+        this.disadvantage = disadvantage;
+        this.averageCost = averageCost;
+        this.adopter = adopter;
+        this.status = status;
         this.postImages = postImages;
         this.vaccinationImages = vaccinationImages;
         this.medicalCheckImages = medicalCheckImages;
@@ -61,21 +64,20 @@ public class PostCreateRequest {
                 .user(user)
                 .mainCategory(mainCategory)
                 .subCategory(subCategory)
+                .name(name)
                 .gender(gender)
                 .birth(birth)
                 .region(region)
                 .neutered(neutered)
                 .money(money)
-                .breeding(breeding)
-                .environment(environment)
                 .reason(reason)
-                .personality(personality)
-                .registration(registration)
-                .vaccination(vaccination)
+                .advantage(advantage)
+                .disadvantage(disadvantage)
+                .averageCost(averageCost)
+                .adopter(adopter)
                 .views(0)
                 .reports(0)
-                .completion(0)
-                .status(PostStatusType.SAVE)
+                .status(status)
                 .build();
     }
 

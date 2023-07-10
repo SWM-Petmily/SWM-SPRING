@@ -15,6 +15,7 @@ import com.ddungja.petmily.user.domain.User;
 import com.ddungja.petmily.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import static com.ddungja.petmily.common.domain.exception.ExceptionCode.*;
 import static com.ddungja.petmily.post.domain.image.ImageType.MEDICAL_CHECK;
@@ -36,6 +37,7 @@ public class PostService {
 
 
     /*포스트 업로드*/
+    @Transactional
     public Post create(PostCreateRequest postCreateRequest, Long id) {
         User user = userRepository.findById(id).orElseThrow(() -> new CustomException(USER_NOT_FOUND));
 
@@ -43,7 +45,6 @@ public class PostService {
         SubCategory subCategory = subCategoryRepository.findById(postCreateRequest.getSubCategory()).orElseThrow(() -> new CustomException(SUB_CATEGORY_NOT_FOUND));
 
         Post post = postCreateRequest.toEntity(user, mainCategory, subCategory);
-        postRepository.save(post);
 
         /*질병 업로드*/
         if (postCreateRequest.getDiseases() != null) {
@@ -58,6 +59,7 @@ public class PostService {
 
         /*이미지 업로드*/
         if (postCreateRequest.getPostImages() != null) {
+            post.setThumbnailImage(postCreateRequest.getPostImages().get(0).getUrl());
             for (ImageCreateRequest image : postCreateRequest.getPostImages()) {
                 Image uploadimage = Image.builder()
                         .post(post)
@@ -92,10 +94,14 @@ public class PostService {
             }
         }
 
+        postRepository.save(post);
+
         return post;
     }
 
     /*포스트 보기*/
+
+    @Transactional
     public Post get(Long id) {
         return postRepository.findById(id).orElseThrow(() -> new CustomException(POST_NOT_FOUND));
     }
