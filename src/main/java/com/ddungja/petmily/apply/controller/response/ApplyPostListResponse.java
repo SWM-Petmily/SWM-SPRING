@@ -1,6 +1,7 @@
 package com.ddungja.petmily.apply.controller.response;
 
 import com.ddungja.petmily.apply.domain.Apply;
+import com.ddungja.petmily.apply.domain.ApprovalType;
 import com.ddungja.petmily.post.domain.post.GenderType;
 import lombok.Builder;
 import lombok.Getter;
@@ -17,9 +18,10 @@ public class ApplyPostListResponse {
     private final String birth;
     private final int like;
     private final String createdDate;
+    private final ApprovalType approval;
 
     @Builder
-    private ApplyPostListResponse(Long applyId, Long postId, String name, String thumbnailImage, String subCategory, String region, GenderType gender, String birth, int like, String createdDate) {
+    private ApplyPostListResponse(Long applyId, Long postId, String name, String thumbnailImage, String subCategory, String region, GenderType gender, String birth, int like, String createdDate, ApprovalType approval) {
         this.applyId = applyId;
         this.postId = postId;
         this.name = name;
@@ -30,6 +32,7 @@ public class ApplyPostListResponse {
         this.birth = birth;
         this.like = like;
         this.createdDate = createdDate;
+        this.approval = approval;
     }
 
 
@@ -44,6 +47,7 @@ public class ApplyPostListResponse {
                 .gender(apply.getPost().getGender())
                 .birth(apply.getPost().getBirth())
                 .like(apply.getPost().getLike().size())
+                .approval(apply.getApproval())
                 .createdDate(apply.getPost().getCreateDate().toString())
                 .build();
     }
