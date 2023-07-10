@@ -1,54 +1,50 @@
 package com.ddungja.petmily.apply.controller.response;
 
 import com.ddungja.petmily.apply.domain.Apply;
-import com.ddungja.petmily.apply.domain.ApprovalType;
 import com.ddungja.petmily.post.domain.post.GenderType;
-import com.ddungja.petmily.post.domain.post.PostStatusType;
 import lombok.Builder;
 import lombok.Getter;
-
-import java.time.LocalDateTime;
 
 @Getter
 public class ApplyPostListResponse {
     private final Long applyId;
     private final Long postId;
-    private final String region;
-    //    private final String mainImageUrl;
     private final String name;
+    private final String thumbnailImage;
+    private final String subCategory;
+    private final String region;
     private final GenderType gender;
     private final String birth;
-    private final PostStatusType status;
-    private final int likes;
-    private final LocalDateTime createDate;
-    private final ApprovalType approval;
+    private final int like;
+    private final String createdDate;
 
     @Builder
-    public ApplyPostListResponse(Long applyId, Long postId, String region, String name, GenderType gender, String birth, PostStatusType status, int likes, LocalDateTime createDate, ApprovalType approval) {
+    private ApplyPostListResponse(Long applyId, Long postId, String name, String thumbnailImage, String subCategory, String region, GenderType gender, String birth, int like, String createdDate) {
         this.applyId = applyId;
         this.postId = postId;
-        this.region = region;
         this.name = name;
+        this.thumbnailImage = thumbnailImage;
+        this.subCategory = subCategory;
+        this.region = region;
         this.gender = gender;
         this.birth = birth;
-        this.status = status;
-        this.likes = likes;
-        this.createDate = createDate;
-        this.approval = approval;
+        this.like = like;
+        this.createdDate = createdDate;
     }
 
+
     public static ApplyPostListResponse from(Apply apply) {
-        return ApplyPostListResponse.builder()
+        return  ApplyPostListResponse.builder()
                 .applyId(apply.getId())
                 .postId(apply.getPost().getId())
-                .region(apply.getPost().getRegion())
                 .name(apply.getPost().getName())
+                .thumbnailImage(apply.getPost().getThumbnailImage())
+                .subCategory(apply.getPost().getSubCategory().getName())
+                .region(apply.getRegion())
                 .gender(apply.getPost().getGender())
-                .status(apply.getPost().getStatus())
-                .likes(0)
-                .createDate(apply.getPost().getCreateDate())
-                .approval(apply.getApproval())
                 .birth(apply.getPost().getBirth())
+                .like(apply.getPost().getLike().size())
+                .createdDate(apply.getPost().getCreateDate().toString())
                 .build();
     }
 }

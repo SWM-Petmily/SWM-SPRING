@@ -6,8 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import java.util.List;
-
 @Getter
 @NoArgsConstructor
 @ToString
@@ -15,11 +13,7 @@ public class ApproveRequest {
     private ApprovalType approval;
 
     @Builder
-    public ApproveRequest(ApprovalType approval) {
+    private ApproveRequest(ApprovalType approval) {
         this.approval = approval;
     }
-
-
-
-
 }

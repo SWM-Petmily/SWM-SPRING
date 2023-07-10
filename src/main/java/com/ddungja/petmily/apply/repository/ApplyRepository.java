@@ -1,20 +1,18 @@
 package com.ddungja.petmily.apply.repository;
 
 import com.ddungja.petmily.apply.domain.Apply;
-import com.ddungja.petmily.apply.domain.ApprovalType;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import java.util.List;
 import java.util.Optional;
 
 public interface ApplyRepository extends JpaRepository<Apply, Long> {
 
 
-    @EntityGraph(attributePaths = {"post"})
+    @EntityGraph(attributePaths = {"post", "post.subCategory" , "post.like"})
     Page<Apply> findByUserId(Long userId, Pageable pageable);
 
 
@@ -25,8 +23,9 @@ public interface ApplyRepository extends JpaRepository<Apply, Long> {
 
 
     @EntityGraph(attributePaths = {"applyExperiences"})
-    Page<Apply> findBySellerIdAndPostIdAndApproval(Long id, Long id1, Pageable pageable, ApprovalType approval);
+    Page<Apply> findBySellerIdAndPostId(Long sellerId, Long postId, Pageable pageable);
 
     Optional<Apply> findByUserIdAndPostId(Long userId, Long postId);
+
 
 }
