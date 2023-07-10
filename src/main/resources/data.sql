@@ -79,6 +79,10 @@ insert
 into posts (adopter,advantage,average_cost,birth,create_date,disadvantage,gender,main_category_id,money,name,neutered,reason,region,reports,status,sub_category_id,thumbnail_image,update_date,user_id,views,post_id)
 values ('입양자', '장점','평균비용','2022-03',now(),'단점','MALE',1,'100000','테스트','NO','이유','서울',1,'SAVE',1,'https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcREj22c-wMNL5IDmU99v8G7voUl17Yxm0JJqMLqttdPT4DnaB99zqVK7HWiNzjP3aZnzCEf-ikAqb2yiDk',now(),1,1,2);
 
+insert
+into posts (adopter,advantage,average_cost,birth,create_date,disadvantage,gender,main_category_id,money,name,neutered,reason,region,reports,status,sub_category_id,thumbnail_image,update_date,user_id,views,post_id)
+values ('입양자', '장점','평균비용','2022-03',now(),'단점','MALE',1,'100000','테스트','NO','이유','서울',1,'SAVE',1,'https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcREj22c-wMNL5IDmU99v8G7voUl17Yxm0JJqMLqttdPT4DnaB99zqVK7HWiNzjP3aZnzCEf-ikAqb2yiDk',now(),2,1,3);
+
 
 -- post_images
 insert
@@ -101,13 +105,13 @@ values (now(),'질병2',1,now(),default);
 
 -- applys
 insert into applys (apply_id, user_id, post_id, seller_id, approval, create_date, update_date, job, environment, people, open_talk,region, is_experience, url ,comment)
-values(1, 2, 1, 1, 'APPROVED', now(), now(), '직장인', '집', 3, 'www.naver.com', '서울', true,  'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBxMSEBUQEBIVEhAPFQ8PEBAQFRAPFQ8PFRUWFhUVFRUYHSggGBolGxUVITEhJSkrLi4uFx8zODMsNygtLisBCgoKDg0OGhAQGi0dHR0tKy0tLS0rLS0tKystLS0tKystLSstLS0tLS0tLS0rLS0tLS0tLSstLS0tLS0rLS0tLf', '잘 키울 수 있음');
+values(1, 2, 1, 1, 'WAITING', now(), now(), '직장인', '집', 3, 'www.naver.com', '서울', true,  'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBxMSEBUQEBIVEhAPFQ8PEBAQFRAPFQ8PFRUWFhUVFRUYHSggGBolGxUVITEhJSkrLi4uFx8zODMsNygtLisBCgoKDg0OGhAQGi0dHR0tKy0tLS0rLS0tKystLS0tKystLSstLS0tLS0tLS0rLS0tLS0tLSstLS0tLS0rLS0tLf', '잘 키울 수 있음');
 
 insert into applys (apply_id, user_id, post_id, seller_id, approval, create_date, update_date, job, environment, people, open_talk,region, is_experience, url ,comment)
-values(2, 1, 2, 2, 'APPROVED', now(), now(), '직장인', '집', 3, 'www.naver.com', '서울', false,  'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBxMSEBUQEBIVEhAPFQ8PEBAQFRAPFQ8PFRUWFhUVFRUYHSggGBolGxUVITEhJSkrLi4uFx8zODMsNygtLisBCgoKDg0OGhAQGi0dHR0tKy0tLS0rLS0tKystLS0tKystLSstLS0tLS0tLS0rLS0tLS0tLSstLS0tLS0rLS0tLf', '잘 키울 수 있음');
+values(2, 1, 2, 2, 'WAITING', now(), now(), '직장인', '집', 3, 'www.naver.com', '서울', false,  'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBxMSEBUQEBIVEhAPFQ8PEBAQFRAPFQ8PFRUWFhUVFRUYHSggGBolGxUVITEhJSkrLi4uFx8zODMsNygtLisBCgoKDg0OGhAQGi0dHR0tKy0tLS0rLS0tKystLS0tKystLSstLS0tLS0tLS0rLS0tLS0tLSstLS0tLS0rLS0tLf', '잘 키울 수 있음');
 
 insert into applys (apply_id, user_id, post_id, seller_id, approval, create_date, update_date, job, environment, people, open_talk,region, is_experience, url ,comment)
-values(3, 3, 1, 1, 'APPROVED', now(), now(), '직장인', '집', 3, 'www.naver.com', '서울', true,  'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBxMSEBUQEBIVEhAPFQ8PEBAQFRAPFQ8PFRUWFhUVFRUYHSggGBolGxUVITEhJSkrLi4uFx8zODMsNygtLisBCgoKDg0OGhAQGi0dHR0tKy0tLS0rLS0tKystLS0tKystLSstLS0tLS0tLS0rLS0tLS0tLSstLS0tLS0rLS0tLf', '잘 키울 수 있음');
+values(3, 3, 1, 1, 'WAITING', now(), now(), '직장인', '집', 3, 'www.naver.com', '서울', true,  'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBxMSEBUQEBIVEhAPFQ8PEBAQFRAPFQ8PFRUWFhUVFRUYHSggGBolGxUVITEhJSkrLi4uFx8zODMsNygtLisBCgoKDg0OGhAQGi0dHR0tKy0tLS0rLS0tKystLS0tKystLSstLS0tLS0tLS0rLS0tLS0tLSstLS0tLS0rLS0tLf', '잘 키울 수 있음');
 
 -- apply_experiences
 insert into apply_experiences(apply_experience_id, apply_id, species, period, create_date, update_date)
@@ -127,6 +131,5 @@ values (5, 3, '말티즈', 15, now(), now());
 
 insert into apply_experiences(apply_experience_id, apply_id, species, period, create_date, update_date)
 values (6, 3, '리트리버', 6, now(), now());
-
 
 
