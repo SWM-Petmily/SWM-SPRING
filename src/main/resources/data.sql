@@ -71,11 +71,33 @@ insert into sub_categories(sub_category_id,main_category_id, name)
 values (6, 2, '페르시안');
 
 -- posts
-insert into posts (birth, breeding, completion, create_date,environment,gender,main_category_id,money,name,neutered,personality,reason,region,registration,reports,status,sub_category_id,update_date,user_id,vaccination,views,post_id)
-values ('2022-08','양육',0,now(),'사육환경','MALE',1,10000,'뚱자','YES','성격','파양이유','서울','SAVE',0,'SAVE','1',now(),1,'YES',0,1);
+insert
+into posts (adopter,advantage,average_cost,birth,create_date,disadvantage,gender,main_category_id,money,name,neutered,reason,region,reports,status,sub_category_id,thumbnail_image,update_date,user_id,views,post_id)
+values ('입양자', '장점','평균비용','2022-03',now(),'단점','MALE',1,'100000','테스트','YES','이유','서울',1,'SAVE',1,'https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcREj22c-wMNL5IDmU99v8G7voUl17Yxm0JJqMLqttdPT4DnaB99zqVK7HWiNzjP3aZnzCEf-ikAqb2yiDk',now(),1,1,1);
 
-insert into posts (birth, breeding, completion, create_date,environment,gender,main_category_id,money,name,neutered,personality,reason,region,registration,reports,status,sub_category_id,update_date,user_id,vaccination,views,post_id)
-values ('2022-08','양육',0,now(),'사육환경','MALE',1,10000,'뚱자','YES','성격','파양이유','서울','SAVE',0,'SAVE','1',now(),2,'YES',0,2);
+insert
+into posts (adopter,advantage,average_cost,birth,create_date,disadvantage,gender,main_category_id,money,name,neutered,reason,region,reports,status,sub_category_id,thumbnail_image,update_date,user_id,views,post_id)
+values ('입양자', '장점','평균비용','2022-03',now(),'단점','MALE',1,'100000','테스트','NO','이유','서울',1,'SAVE',1,'https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcREj22c-wMNL5IDmU99v8G7voUl17Yxm0JJqMLqttdPT4DnaB99zqVK7HWiNzjP3aZnzCEf-ikAqb2yiDk',now(),1,1,2);
+
+
+-- post_images
+insert
+into images (create_date,image_type,post_id,update_date,url,image_id)
+values (now(),'POST',1,now(),'https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcREj22c-wMNL5IDmU99v8G7voUl17Yxm0JJqMLqttdPT4DnaB99zqVK7HWiNzjP3aZnzCEf-ikAqb2yiDk',default);
+
+insert
+into images (create_date,image_type,post_id,update_date,url,image_id)
+values (now(),'POST',1,now(),'https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcREj22c-wMNL5IDmU99v8G7voUl17Yxm0JJqMLqttdPT4DnaB99zqVK7HWiNzjP3aZnzCEf-ikAqb2yiDk',default);
+
+
+-- diseases
+insert
+into diseases (create_date,name,post_id,update_date,disease_id)
+values (now(),'질병1',1,now(),default);
+
+insert
+into diseases (create_date,name,post_id,update_date,disease_id)
+values (now(),'질병2',1,now(),default);
 
 -- applys
 insert into applys (apply_id, user_id, post_id, seller_id, approval, create_date, update_date, job, environment, people, open_talk,region, is_experience, url ,comment)

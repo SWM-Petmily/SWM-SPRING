@@ -1,20 +1,15 @@
 package com.ddungja.petmily.like.controller;
 
 
-import com.ddungja.petmily.common.domain.exception.CustomException;
-import com.ddungja.petmily.common.domain.exception.ExceptionCode;
 import com.ddungja.petmily.like.controller.response.LikeCreateResponse;
 import com.ddungja.petmily.like.controller.response.LikeListResponse;
 import com.ddungja.petmily.like.domain.Like;
 import com.ddungja.petmily.like.service.LikeService;
-import com.ddungja.petmily.post.controller.response.PostCreateResponse;
 import com.ddungja.petmily.post.domain.post.Post;
-import com.ddungja.petmily.post.domain.request.PostCreateRequest;
 import com.ddungja.petmily.post.service.PostService;
-import com.ddungja.petmily.users.user.domain.User;
-import com.ddungja.petmily.users.user.service.UserService;
+import com.ddungja.petmily.user.domain.User;
+import com.ddungja.petmily.user.service.UserService;
 import jakarta.transaction.Transactional;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -22,9 +17,6 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
-import static com.ddungja.petmily.common.domain.exception.ExceptionCode.REFRESH_TOKEN_VALIDATION_FAILED;
-import static com.ddungja.petmily.common.domain.exception.ExceptionCode.USER_NOT_FOUND;
 
 @RestController
 @RequiredArgsConstructor
