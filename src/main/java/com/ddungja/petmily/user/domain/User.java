@@ -2,11 +2,10 @@ package com.ddungja.petmily.user.domain;
 
 
 import com.ddungja.petmily.common.domain.BaseTimeEntity;
-import com.ddungja.petmily.user.controller.UserCreateRequest;
+import com.ddungja.petmily.user.domain.request.UserCreateRequest;
+import com.ddungja.petmily.user.domain.request.UserUpdateRequest;
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.time.LocalDateTime;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -47,5 +46,10 @@ public class User extends BaseTimeEntity {
         this.phone = userCreateRequest.getPhone();
         this.birth = userCreateRequest.getBirth();
         this.isCertification = true;
+    }
+
+    public void update(UserUpdateRequest userUpdateRequest) {
+        this.nickname = userUpdateRequest.getNickname();
+
     }
 }
