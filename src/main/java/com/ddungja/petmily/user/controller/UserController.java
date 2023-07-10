@@ -3,6 +3,7 @@ package com.ddungja.petmily.user.controller;
 import com.ddungja.petmily.common.domain.exception.CustomException;
 import com.ddungja.petmily.global.jwt.JwtProvider;
 import com.ddungja.petmily.user.controller.response.UserCreateResponse;
+import com.ddungja.petmily.user.controller.response.UserLoginResponse;
 import com.ddungja.petmily.user.domain.KakaoProfile;
 import com.ddungja.petmily.user.domain.User;
 import com.ddungja.petmily.user.domain.request.UserCreateRequest;
@@ -44,7 +45,7 @@ public class UserController {
         String accessToken = jwtProvider.createAccessToken(user);
         String refreshToken = jwtProvider.createRefreshToken(user);
         ResponseCookie refreshTokenCookie = getRefreshTokenCookie(refreshToken);
-        return ResponseEntity.ok().header(SET_COOKIE, refreshTokenCookie.toString()).header(AUTHORIZATION, accessToken).build();
+        return ResponseEntity.ok().header(SET_COOKIE, refreshTokenCookie.toString()).header(AUTHORIZATION, accessToken).body(UserLoginResponse.from(user));
     }
 
     private static ResponseCookie getRefreshTokenCookie(String refreshToken) {
