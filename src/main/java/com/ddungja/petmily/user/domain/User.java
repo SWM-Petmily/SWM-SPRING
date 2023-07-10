@@ -2,6 +2,7 @@ package com.ddungja.petmily.user.domain;
 
 
 import com.ddungja.petmily.common.domain.BaseTimeEntity;
+import com.ddungja.petmily.user.controller.UserCreateRequest;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -23,22 +24,28 @@ public class User extends BaseTimeEntity {
     private String phone;
     private String provider;
     private boolean isProfile;
+    private boolean isCertification;
 
     @Builder
-    private User(Long id, String email, String nickName, String birth, String phone, String provider, boolean isProfile, LocalDateTime createDate, LocalDateTime updateDate) {
+    public User(Long id, String email, String nickname, String birth, String phone, String provider, boolean isProfile, boolean isCertification) {
         this.id = id;
         this.email = email;
-        this.nickname = nickName;
+        this.nickname = nickname;
         this.birth = birth;
         this.phone = phone;
         this.provider = provider;
         this.isProfile = isProfile;
-        this.createDate = createDate;
-        this.updateDate = updateDate;
+        this.isCertification = isCertification;
     }
-
 
     public void createProfile() {
         this.isProfile = true;
+    }
+
+    public void certicate(UserCreateRequest userCreateRequest) {
+        this.nickname = userCreateRequest.getNickname();
+        this.phone = userCreateRequest.getPhone();
+        this.birth = userCreateRequest.getBirth();
+        this.isCertification = true;
     }
 }

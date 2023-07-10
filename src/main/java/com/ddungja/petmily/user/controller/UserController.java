@@ -2,6 +2,7 @@ package com.ddungja.petmily.user.controller;
 
 import com.ddungja.petmily.common.domain.exception.CustomException;
 import com.ddungja.petmily.global.jwt.JwtProvider;
+import com.ddungja.petmily.user.controller.response.UserCreateResponse;
 import com.ddungja.petmily.user.domain.KakaoProfile;
 import com.ddungja.petmily.user.domain.User;
 import com.ddungja.petmily.user.service.KakaoService;
@@ -10,8 +11,10 @@ import io.swagger.v3.oas.annotations.Operation;
 import jakarta.servlet.http.Cookie;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URISyntaxException;
@@ -47,8 +50,7 @@ public class UserController {
 //                .secure(true) //https를 쓸때 사용
 //                .sameSite("None") //csrf 공격을 방지하기 위해 설정
 //                .domain("localhost:3000") // 도메인이 다르면 쿠키를 못받는다.
-                .httpOnly(true)
-                .build();
+                .httpOnly(true).build();
     }
 
     @Operation(summary = "리프레쉬 토큰 검증하고 엑세스토큰 반환")
@@ -69,7 +71,7 @@ public class UserController {
 
     @Operation(summary = "권한테스트")
     @GetMapping("/authorization")
-    public ResponseEntity<?> authroizationtest(){
+    public ResponseEntity<?> authroizationtest() {
         log.debug("권한 테스트");
         return ResponseEntity.ok("토큰이 존재합니다");
     }
@@ -86,5 +88,12 @@ public class UserController {
     public ResponseEntity<?> testAccessToken2() {
         String testAccessToken = jwtProvider.createTestAccessToken(2L);
         return ResponseEntity.ok(testAccessToken);
+    }
+
+    @Operation(summary = "카카오 회원가입 후 추가적인 정보와 휴대전화 인증")
+    @PostMapping("/signup")
+    public ResponseEntity<?> signUp(@AuthenticationPrincipal User user, @RequestBody UserCreateRequest userCreateRequest) {
+        userService.signUp(user.getId(), userCreateRequest);
+        return ResponseEntity.status(HttpStatus.CREATED).body(UserCreateResponse.from(user));
     }
 }
