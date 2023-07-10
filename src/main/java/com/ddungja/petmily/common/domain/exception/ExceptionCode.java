@@ -17,6 +17,8 @@ public enum ExceptionCode {
 
     //user
     USER_NOT_FOUND(2001, HttpStatus.NOT_FOUND, "유저를 찾을 수 없습니다."),
+    USER_ALREADY_EXISTS(2002, HttpStatus.BAD_REQUEST, "유저가 이미 존재합니다."),
+    USER_ALREADY_CERTIFICATION(2003, HttpStatus.BAD_REQUEST, "이미 인증을 받았습니다."),
 
 
     //profile
@@ -45,6 +47,7 @@ public enum ExceptionCode {
     //like
     LIKE_NOT_FOUND(6001, HttpStatus.NOT_FOUND, "좋아요를 찾을 수 없습니다."),
     LIKE_IS_EXISTS(6002, HttpStatus.BAD_REQUEST, "이미 좋아요를 눌렀습니다.");
+
 
 
     private final int code;

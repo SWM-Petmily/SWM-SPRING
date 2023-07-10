@@ -9,18 +9,12 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.Optional;
 
-public interface ApplyRepository extends JpaRepository<Apply, Long> {
-
-
-    @EntityGraph(attributePaths = {"post", "post.subCategory" , "post.like"})
-    Page<Apply> findByUserId(Long userId, Pageable pageable);
-
+public interface ApplyRepository extends JpaRepository<Apply, Long>, ApplyCustomRepository {
 
     @Query("select a from Apply a left join fetch a.applyExperiences where a.id = :applyId")
     Optional<Apply> findByApplyId(Long applyId);
 
     Optional<Apply> findByIdAndSellerId(Long applyId, Long sellerId);
-
 
     @EntityGraph(attributePaths = {"applyExperiences"})
     Page<Apply> findBySellerIdAndPostId(Long sellerId, Long postId, Pageable pageable);

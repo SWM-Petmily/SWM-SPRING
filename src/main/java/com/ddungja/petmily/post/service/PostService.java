@@ -1,6 +1,7 @@
 package com.ddungja.petmily.post.service;
 
 import com.ddungja.petmily.common.domain.exception.CustomException;
+import com.ddungja.petmily.post.domain.post.PostStatusType;
 import com.ddungja.petmily.post.domain.request.DiseaseRequest;
 import com.ddungja.petmily.post.domain.request.ImageCreateRequest;
 import com.ddungja.petmily.post.domain.request.PostCreateRequest;
@@ -14,6 +15,8 @@ import com.ddungja.petmily.post.repository.*;
 import com.ddungja.petmily.user.domain.User;
 import com.ddungja.petmily.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -104,5 +107,10 @@ public class PostService {
     @Transactional
     public Post get(Long id) {
         return postRepository.findById(id).orElseThrow(() -> new CustomException(POST_NOT_FOUND));
+    }
+
+    public Page<Post> getMyPost(Long userId, PostStatusType postStatusType, Pageable pageable) {
+        userRepository.findById(userId).orElseThrow(() -> new CustomException(USER_NOT_FOUND));
+        return postRepository.getMypost(userId, postStatusType, pageable);
     }
 }
