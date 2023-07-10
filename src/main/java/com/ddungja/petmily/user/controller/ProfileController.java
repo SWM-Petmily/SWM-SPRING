@@ -42,7 +42,6 @@ public class ProfileController {
                 return ResponseEntity.ok(ProfileResponse.from(profileService.get(user.getId()), true));
             }
         }
-
         return ResponseEntity.ok(ProfileResponse.from(profileService.get(userId), false));
     }
 
