@@ -6,15 +6,12 @@ import lombok.Getter;
 
 @Getter
 public class UserResponse {
-
     private final String email;
     private final String nickname;
     private final String birth;
     private final String phone;
     private final String provider;
     private final boolean isProfile;
-
-
     @Builder
     public UserResponse(String email, String nickname, String birth, String phone, String provider, boolean isProfile) {
         this.email = email;
@@ -24,7 +21,6 @@ public class UserResponse {
         this.provider = provider;
         this.isProfile = isProfile;
     }
-
     public static UserResponse from(User user) {
         return UserResponse.builder()
                 .email(user.getEmail())

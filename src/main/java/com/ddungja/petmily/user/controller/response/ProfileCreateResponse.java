@@ -8,8 +8,6 @@ import lombok.Getter;
 @Getter
 public class ProfileCreateResponse {
     private final Long profileId;
-
-
     @Builder
     private ProfileCreateResponse(Long profileId) {
         this.profileId = profileId;

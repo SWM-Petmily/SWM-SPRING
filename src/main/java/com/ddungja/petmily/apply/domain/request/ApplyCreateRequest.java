@@ -1,5 +1,4 @@
-package com.ddungja.petmily.user.domain.request;
-
+package com.ddungja.petmily.apply.domain.request;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -7,7 +6,7 @@ import lombok.Getter;
 import java.util.List;
 
 @Getter
-public class ProfileCreateRequest {
+public class ApplyCreateRequest {
     private final Long profileImageId;
     private final String job;
     private final String environment;
@@ -16,9 +15,11 @@ public class ProfileCreateRequest {
     private final String openTalk;
     private final String region;
     private final Boolean isExperience;
-    private final List<ExperienceCreateRequest> experiences;
+    private final String url;
+    private final List<ApplyExperienceCreateRequest> experiences;
+
     @Builder
-    private ProfileCreateRequest(Long profileImageId, String job, String environment, int people, String comment, String openTalk, String region, Boolean isExperience, List<ExperienceCreateRequest> experiences) {
+    private ApplyCreateRequest(Long profileImageId, String job, String environment, int people, String comment, String openTalk, String region, Boolean isExperience, String url, List<ApplyExperienceCreateRequest> experiences) {
         this.profileImageId = profileImageId;
         this.job = job;
         this.environment = environment;
@@ -27,6 +28,7 @@ public class ProfileCreateRequest {
         this.openTalk = openTalk;
         this.region = region;
         this.isExperience = isExperience;
+        this.url = url;
         this.experiences = experiences;
     }
 }

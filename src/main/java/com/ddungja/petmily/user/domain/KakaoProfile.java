@@ -4,12 +4,10 @@ import lombok.Data;
 
 @Data
 public class KakaoProfile {
-
     public long id;
     public String connected_at;
     public Properties properties;
     public KakaoAccount kakao_account;
-
     @Data
     public static class KakaoAccount {
         public boolean profile_nickname_needs_agreement;
@@ -30,12 +28,10 @@ public class KakaoProfile {
         public boolean gender_needs_agreement;
         public String gender;
     }
-
     @Data
     public static class Profile {
         public String nickname;
     }
-
     @Data
     public static class Properties {
         public String nickname;
@@ -44,11 +40,9 @@ public class KakaoProfile {
     public String getEmail() {
         return kakao_account.getEmail();
     }
-
     public String getNickName() {
         return properties.getNickname();
     }
-
     public String getGender() {
         return kakao_account.getGender();
     }
