@@ -2,10 +2,12 @@ package com.ddungja.petmily.common.domain.exception;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
+import lombok.ToString;
 import org.springframework.http.HttpStatus;
 
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
 @Getter
+@ToString
 public enum ExceptionCode {
     //권한 관련
     UN_AUTHENTICATION(0001, HttpStatus.UNAUTHORIZED, "로그인이 필요합니다."),
