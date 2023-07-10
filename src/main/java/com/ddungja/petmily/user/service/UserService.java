@@ -41,6 +41,7 @@ public class UserService {
     }
 
 
+    @Transactional
     public void update(Long userId, UserUpdateRequest userUpdateRequest) {
         User user = userRepository.findById(userId).orElseThrow(() -> new CustomException(USER_NOT_FOUND));
         user.update(userUpdateRequest);

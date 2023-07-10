@@ -2,6 +2,7 @@ package com.ddungja.petmily.apply.controller;
 
 import com.ddungja.petmily.apply.controller.response.*;
 import com.ddungja.petmily.apply.domain.Apply;
+import com.ddungja.petmily.apply.domain.ApprovalType;
 import com.ddungja.petmily.apply.domain.request.ApplyCreateRequest;
 import com.ddungja.petmily.apply.domain.request.ApproveRequest;
 import com.ddungja.petmily.apply.service.ApplyService;
@@ -33,9 +34,9 @@ public class ApplyController {
 
     @Operation(summary = "내가 지원한 목록 보기")
     @GetMapping
-    public ResponseEntity<?> getByUserId(@AuthenticationPrincipal User user, Pageable pageable) {
+    public ResponseEntity<?> getByUserId(@AuthenticationPrincipal User user, ApprovalType approval, Pageable pageable) {
         log.info("내가 지원한 목록 보기 userId : {}", user.getId());
-        return ResponseEntity.ok(applyService.getAppliedList(user.getId(), pageable).map(ApplyPostListResponse::from));
+        return ResponseEntity.ok(applyService.getAppliedList(user.getId(), approval, pageable).map(ApplyPostListResponse::from));
     }
 
     @Operation(summary = "지원 상세 보기")
@@ -51,7 +52,7 @@ public class ApplyController {
 
     @Operation(summary = "지원 승인/거절")
     @PostMapping("/{applyId}/approval")
-    public ResponseEntity<?> approve(@AuthenticationPrincipal User user, @PathVariable Long applyId,@Valid @RequestBody ApproveRequest approveRequest) {
+    public ResponseEntity<?> approve(@AuthenticationPrincipal User user, @PathVariable Long applyId, @Valid @RequestBody ApproveRequest approveRequest) {
         log.info("지원 승인/거절 : userId = {}, applyId = {} , approvalRequest  = {}", user.getId(), applyId, approveRequest);
         Apply apply = applyService.approve(user.getId(), applyId, approveRequest);
         return ResponseEntity.ok(ApprovalResponse.from(apply));
@@ -59,7 +60,7 @@ public class ApplyController {
 
     @Operation(summary = "지원 하기")
     @PostMapping("/{postId}")
-    public ResponseEntity<?> apply(@AuthenticationPrincipal User user, @PathVariable Long postId,@Valid @RequestBody ApplyCreateRequest applyCreateRequest) {
+    public ResponseEntity<?> apply(@AuthenticationPrincipal User user, @PathVariable Long postId, @Valid @RequestBody ApplyCreateRequest applyCreateRequest) {
         log.info("지원 하기 userId = {}, postId = {}", user.getId(), postId);
         Apply apply = applyService.apply(user.getId(), postId, applyCreateRequest);
         return ResponseEntity.status(CREATED).body(ApplyCreateResponse.from(apply));
@@ -70,6 +71,6 @@ public class ApplyController {
     public ResponseEntity<?> cancel(@AuthenticationPrincipal User user, @PathVariable Long postId) {
         log.info("지원 취소하기 userId = {}, postId = {}", user.getId(), postId);
         Apply apply = applyService.cancel(user.getId(), postId);
-        return ResponseEntity.ok().body( ApplyCancelResponse.from(apply));
+        return ResponseEntity.ok().body(ApplyCancelResponse.from(apply));
     }
 }

@@ -2,6 +2,7 @@ package com.ddungja.petmily.apply.service;
 
 
 import com.ddungja.petmily.apply.domain.Apply;
+import com.ddungja.petmily.apply.domain.ApprovalType;
 import com.ddungja.petmily.apply.domain.request.ApplyCreateRequest;
 import com.ddungja.petmily.apply.domain.request.ApproveRequest;
 import com.ddungja.petmily.apply.repository.ApplyRepository;
@@ -33,9 +34,9 @@ public class ApplyService {
         return applyRepository.findBySellerIdAndPostId(user.getId(), post.getId(), pageable);
     }
 
-    public Page<Apply> getAppliedList(Long userId, Pageable pageable) {
+    public Page<Apply> getAppliedList(Long userId, ApprovalType approval, Pageable pageable) {
         User user = userRepository.findById(userId).orElseThrow(() -> new CustomException(USER_NOT_FOUND));
-        return applyRepository.findByUserId(user.getId(), pageable);
+        return applyRepository.getApplyList(user.getId(), approval, pageable);
     }
 
     public Apply getDetailInfo(Long applyId) {
