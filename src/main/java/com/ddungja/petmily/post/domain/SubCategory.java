@@ -19,7 +19,7 @@ public class SubCategory{
     private String name;
 
     @JoinColumn(name = "main_category_id")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private MainCategory mainCategory;
 
     @Builder

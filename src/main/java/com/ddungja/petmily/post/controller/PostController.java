@@ -30,7 +30,6 @@ import java.util.List;
 public class PostController {
 
     private final PostService postService;
-    private final ImageService imageService;
 
     @PostMapping
     public ResponseEntity<?> create(@AuthenticationPrincipal User user, @Valid @RequestBody PostCreateRequest postRequest) {
@@ -45,13 +44,11 @@ public class PostController {
         }
     }
 
-    @Transactional
     @GetMapping("/{postId}")
     public ResponseEntity<?> getSubCategory(@AuthenticationPrincipal User user, @PathVariable Long postId) {
         log.info("포스트 내용 불러오기 postId = {}", postId);
         Post post = postService.get(postId);
-        List<Image> images = imageService.getImages(postId);
-        return ResponseEntity.ok(PostGetResponse.from(user, post, images));
+        return ResponseEntity.ok(PostGetResponse.from(user, post));
     }
 
     @Operation(summary = "내가 작성한 게시글 불러오기")

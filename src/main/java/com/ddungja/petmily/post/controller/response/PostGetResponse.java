@@ -1,12 +1,9 @@
 package com.ddungja.petmily.post.controller.response;
 
-import com.ddungja.petmily.post.domain.image.Image;
 import com.ddungja.petmily.post.domain.post.GenderType;
 import com.ddungja.petmily.post.domain.post.Post;
 import com.ddungja.petmily.post.domain.post.PostStatusType;
 import com.ddungja.petmily.user.domain.User;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -19,11 +16,8 @@ public class PostGetResponse {
     private final String subCategory;
     private final String region;
     private final String name;
-    @Enumerated(EnumType.STRING)
     private final GenderType gender;
     private final String birth;
-
-    @Enumerated(EnumType.STRING)
     private final String neutered;
     private final int money;
     private final String reason; // 분양 이유
@@ -31,11 +25,8 @@ public class PostGetResponse {
     private final String disadvantage; // 단점, 주의할 점
     private final String averageCost;// 평균비용
     private final String adopter; // 분양자
-    @Enumerated(EnumType.STRING)
     private final PostStatusType status; // 분양상태
-
     private final List<ImageResponse> images;
-
     private final boolean isMine;
 
     @Builder
@@ -60,7 +51,7 @@ public class PostGetResponse {
     }
 
     @Builder
-    public static PostGetResponse from(User user, Post post, List<Image> images) {
+    public static PostGetResponse from(User user, Post post) {
         return PostGetResponse.builder()
                 .id(post.getId())
                 .mainCategory(post.getMainCategory().getName())
@@ -77,7 +68,7 @@ public class PostGetResponse {
                 .averageCost(post.getAverageCost())
                 .adopter(post.getAdopter())
                 .status(post.getStatus())
-                .images(ImageResponse.from(images))
+                .images(ImageResponse.from(post.getImages()))
                 .isMine(user==null?false:user.getId().equals(post.getUser().getId()))
                 .build();
     }
