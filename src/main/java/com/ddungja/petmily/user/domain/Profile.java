@@ -2,7 +2,7 @@ package com.ddungja.petmily.user.domain;
 
 
 import com.ddungja.petmily.common.domain.BaseTimeEntity;
-import com.ddungja.petmily.user.domain.request.ProfileCreateRequest;
+import com.ddungja.petmily.user.domain.request.MyProfileCreateRequest;
 import com.ddungja.petmily.user.domain.request.ProfileUpdateRequest;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -61,7 +61,7 @@ public class Profile extends BaseTimeEntity {
     }
 
 
-    public static Profile from(ProfileCreateRequest profileCreateRequest, ProfileImage profileImage, User user) {
+    public static Profile from(MyProfileCreateRequest profileCreateRequest, ProfileImage profileImage, User user) {
         return Profile.builder()
                 .job(profileCreateRequest.getJob())
                 .environment(profileCreateRequest.getEnvironment())

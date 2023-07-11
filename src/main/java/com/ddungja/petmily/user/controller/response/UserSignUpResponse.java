@@ -5,16 +5,16 @@ import lombok.Builder;
 import lombok.Getter;
 
 @Getter
-public class UserCreateResponse {
+public class UserSignUpResponse {
     private final Long userId;
 
     @Builder
-    private UserCreateResponse(Long userId) {
+    private UserSignUpResponse(Long userId) {
         this.userId = userId;
     }
 
-    public static UserCreateResponse from(User user) {
-        return UserCreateResponse.builder()
+    public static UserSignUpResponse from(User user) {
+        return UserSignUpResponse.builder()
                 .userId(user.getId())
                 .build();
     }

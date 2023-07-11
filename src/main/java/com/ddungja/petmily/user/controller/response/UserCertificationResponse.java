@@ -5,16 +5,16 @@ import lombok.Builder;
 import lombok.Getter;
 
 @Getter
-public class UserLoginResponse {
+public class UserCertificationResponse {
     private final Boolean isCertification;
 
     @Builder
-    private UserLoginResponse(Boolean isCertification) {
+    private UserCertificationResponse(Boolean isCertification) {
         this.isCertification = isCertification;
     }
 
-    public static UserLoginResponse from(User user) {
-        return UserLoginResponse.builder()
+    public static UserCertificationResponse from(User user) {
+        return UserCertificationResponse.builder()
                 .isCertification(user.isCertification())
                 .build();
     }

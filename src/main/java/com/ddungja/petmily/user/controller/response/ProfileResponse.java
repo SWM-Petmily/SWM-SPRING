@@ -15,12 +15,12 @@ public class ProfileResponse {
     private final String openTalk;
     private final String region;
     private final Boolean isExperience;
-    private final UserResponse user;
+    private final ProfileUserResponse user;
     private final ProfileImageResponse profileImage;
-    private final List<ExperienceResponse> experiences;
+    private final List<ProfileExperienceResponse> experiences;
     private final Boolean isMyProfile;
     @Builder
-    private ProfileResponse(String job, String environment, int people, String comment, String openTalk, String region, Boolean isExperience, UserResponse user, ProfileImageResponse profileImage, List<ExperienceResponse> experiences, Boolean isMyProfile) {
+    private ProfileResponse(String job, String environment, int people, String comment, String openTalk, String region, Boolean isExperience, ProfileUserResponse user, ProfileImageResponse profileImage, List<ProfileExperienceResponse> experiences, Boolean isMyProfile) {
         this.job = job;
         this.environment = environment;
         this.people = people;
@@ -42,9 +42,9 @@ public class ProfileResponse {
                 .openTalk(profile.getOpenTalk())
                 .region(profile.getRegion())
                 .isExperience(profile.isExperience())
-                .user(UserResponse.from(profile.getUser()))
+                .user(ProfileUserResponse.from(profile.getUser()))
                 .profileImage(ProfileImageResponse.from(profile.getProfileImage()))
-                .experiences(profile.getExperiences().stream().map(ExperienceResponse::from).toList())
+                .experiences(profile.getExperiences().stream().map(ProfileExperienceResponse::from).toList())
                 .isMyProfile(isMyProfile)
                 .build();
     }

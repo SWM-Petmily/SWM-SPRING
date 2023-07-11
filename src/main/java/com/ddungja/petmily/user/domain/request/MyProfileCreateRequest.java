@@ -7,7 +7,7 @@ import lombok.Getter;
 import java.util.List;
 
 @Getter
-public class ProfileCreateRequest {
+public class MyProfileCreateRequest {
     private final Long profileImageId;
     private final String job;
     private final String environment;
@@ -18,7 +18,7 @@ public class ProfileCreateRequest {
     private final Boolean isExperience;
     private final List<ExperienceCreateRequest> experiences;
     @Builder
-    private ProfileCreateRequest(Long profileImageId, String job, String environment, int people, String comment, String openTalk, String region, Boolean isExperience, List<ExperienceCreateRequest> experiences) {
+    private MyProfileCreateRequest(Long profileImageId, String job, String environment, int people, String comment, String openTalk, String region, Boolean isExperience, List<ExperienceCreateRequest> experiences) {
         this.profileImageId = profileImageId;
         this.job = job;
         this.environment = environment;

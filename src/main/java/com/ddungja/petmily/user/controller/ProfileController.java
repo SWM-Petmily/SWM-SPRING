@@ -3,10 +3,10 @@ package com.ddungja.petmily.user.controller;
 import com.ddungja.petmily.user.domain.Profile;
 import com.ddungja.petmily.user.domain.User;
 import com.ddungja.petmily.user.service.ProfileService;
-import com.ddungja.petmily.user.controller.response.ProfileCreateResponse;
+import com.ddungja.petmily.user.controller.response.MyProfileCreateResponse;
 import com.ddungja.petmily.user.controller.response.ProfileResponse;
-import com.ddungja.petmily.user.controller.response.ProfileUpdateResponse;
-import com.ddungja.petmily.user.domain.request.ProfileCreateRequest;
+import com.ddungja.petmily.user.controller.response.MyProfileUpdateResponse;
+import com.ddungja.petmily.user.domain.request.MyProfileCreateRequest;
 import com.ddungja.petmily.user.domain.request.ProfileUpdateRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
@@ -27,15 +27,15 @@ public class ProfileController {
 
     @Operation(summary = "내 프로필 생성하기")
     @PostMapping
-    public ResponseEntity<?> create(@AuthenticationPrincipal User user, @Valid @RequestBody ProfileCreateRequest profileCreateRequest) {
+    public ResponseEntity<?> create(@AuthenticationPrincipal User user, @Valid @RequestBody MyProfileCreateRequest myProfileCreateRequest) {
         log.info("내 프로필 생성하기 userId = {}", user.getId());
-        Profile profile = profileService.create(profileCreateRequest, user.getId());
-        return ResponseEntity.ok(ProfileCreateResponse.from(profile));
+        Profile profile = profileService.create(myProfileCreateRequest, user.getId());
+        return ResponseEntity.ok(MyProfileCreateResponse.from(profile));
     }
 
     @Operation(summary = "프로필 가져오기")
     @GetMapping("/{userId}")
-    public ResponseEntity<?> getMyProfile(@AuthenticationPrincipal User user, @PathVariable Long userId) {
+    public ResponseEntity<?> get(@AuthenticationPrincipal User user, @PathVariable Long userId) {
         log.info("프로필 가져오기 userId = {}", userId);
         if (user != null) {
             if (user.getId().equals(userId)) {
@@ -47,9 +47,9 @@ public class ProfileController {
 
     @Operation(summary = "내 프로필 수정하기")
     @PutMapping
-    public ResponseEntity<?> update(@AuthenticationPrincipal User user, @RequestBody ProfileUpdateRequest profileUpdateRequest) {
+    public ResponseEntity<?> modify(@AuthenticationPrincipal User user, @RequestBody ProfileUpdateRequest profileUpdateRequest) {
         log.info("내 프로필 수정하기 user = {},  profileUpdateRequest = {}", profileUpdateRequest, user);
-        Profile profile = profileService.update(profileUpdateRequest, user.getId());
-        return ResponseEntity.ok(ProfileUpdateResponse.from(profile));
+        Profile profile = profileService.modify(profileUpdateRequest, user.getId());
+        return ResponseEntity.ok(MyProfileUpdateResponse.from(profile));
     }
 }
