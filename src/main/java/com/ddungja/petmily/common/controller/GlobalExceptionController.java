@@ -23,7 +23,7 @@ public class GlobalExceptionController {
 
     @ExceptionHandler(CustomException.class)
     public ResponseEntity<?> exceptionHandler(CustomException exception) {
-        log.error("exceptionHandler exception = {}", exception.getExceptionCode());
+        log.error("exceptionHandler exception = {}", exception);
         return ResponseEntity.status(exception.getExceptionCode().getStatus()).body(exception.getExceptionCode());
     }
 
