@@ -23,13 +23,13 @@ public class GlobalExceptionController {
 
     @ExceptionHandler(CustomException.class)
     public ResponseEntity<?> exceptionHandler(CustomException exception) {
-        log.error("exceptionHandler exception = {}", exception);
+        log.error("CustomException = {}", exception);
         return ResponseEntity.status(exception.getExceptionCode().getStatus()).body(exception.getExceptionCode());
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<?> validation(MethodArgumentNotValidException e) {
-        log.error("validation exception = {}", e.getMessage());
+        log.error("ValidationException = {}", e);
         List<FieldError> fieldErrors = e.getBindingResult().getFieldErrors();
         Map<String, String> map = new HashMap<>();
         for (FieldError fieldError : fieldErrors) {
@@ -40,6 +40,7 @@ public class GlobalExceptionController {
 
     @ExceptionHandler(MissingRequestCookieException.class)
     public ResponseEntity<?> cookieException(MissingRequestCookieException e) {
+        log.error("RefreshTokenCookieException = {}", e);
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(REFRESH_TOKEN_NOT_FOUND);
     }
 }

@@ -21,8 +21,8 @@ public class JwtProvider {
 
     @Value("${jwt.refresh.secret}")
     private String REFRESH_TOKEN_SECRET_KEY;
-    private static final long ACCESS_TOKEN_EXPIRATION_TIME = Duration.ofDays(1).toMillis();
-    private static final long REFRESH_TOKEN_EXPIRATION_TIME = Duration.ofDays(14).toMillis();
+    private static final long ACCESS_TOKEN_EXPIRATION_TIME = Duration.ofDays(14).toMillis();
+    private static final long REFRESH_TOKEN_EXPIRATION_TIME = Duration.ofDays(30).toMillis();
     public static final String PREFIX = "Bearer ";
 
     public String createAccessToken(User user) {
