@@ -21,7 +21,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: none
     properties:
       hibernate:
         default_batch_fetch_size: 50
@@ -38,9 +38,14 @@ spring:
         max-page-size: 2000
         one-indexed-parameters: on
 
-logging:
-  level:
-    com.ddungja.petmily: info
+logging.level:
+  root: info
+  org.springframework:
+    web: info
+    security: info
+    boot: info
+  org.hibernate.SQL: off
+  org.hibernate.type: off
 
 springdoc:
   packages-to-scan: com.ddungja.petmily
