@@ -38,14 +38,9 @@ spring:
         max-page-size: 2000
         one-indexed-parameters: on
 
-
-logging.level:
-  root: info
-  org.springframework:
-    web: info
-    security: info
-    boot: info
-
+logging:
+  level:
+    com.ddungja.petmily: info
 
 springdoc:
   packages-to-scan: com.ddungja.petmily
