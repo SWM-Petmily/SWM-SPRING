@@ -51,7 +51,7 @@ insert into main_categories(main_category_id, name)
 values (2, '고양이');
 
 
---sub_categories
+-- sub_categories
 insert into sub_categories(sub_category_id, main_category_id, name)
 values (1, 1, '불독');
 
