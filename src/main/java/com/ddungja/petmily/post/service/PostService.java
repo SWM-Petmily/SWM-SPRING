@@ -104,9 +104,9 @@ public class PostService {
 
     /*포스트 보기*/
 
-    @Transactional
+    @Transactional(readOnly = true)
     public Post get(Long id) {
-        return postRepository.findById(id).orElseThrow(() -> new CustomException(POST_NOT_FOUND));
+        return postRepository.findPostById(id).orElseThrow(() -> new CustomException(POST_NOT_FOUND));
     }
 
     public Page<Post> getMyPost(Long userId, PostStatusType postStatusType, Pageable pageable) {

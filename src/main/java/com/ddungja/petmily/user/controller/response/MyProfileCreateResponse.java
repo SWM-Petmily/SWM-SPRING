@@ -6,14 +6,15 @@ import lombok.Getter;
 
 
 @Getter
-public class ProfileUpdateResponse {
+public class MyProfileCreateResponse {
     private final Long profileId;
     @Builder
-    private ProfileUpdateResponse(Long profileId) {
+    private MyProfileCreateResponse(Long profileId) {
         this.profileId = profileId;
     }
-    public static ProfileUpdateResponse from(Profile profile) {
-        return ProfileUpdateResponse.builder()
+
+    public static MyProfileCreateResponse from(Profile profile) {
+        return MyProfileCreateResponse.builder()
                 .profileId(profile.getId())
                 .build();
     }

@@ -30,7 +30,6 @@ public class LikeController {
     private final UserService userService;
 
 
-    @Transactional
     @GetMapping("/")
     public ResponseEntity<?> getLike(@AuthenticationPrincipal User user){
         log.info("좋아요 누른 게시글 불러오기");

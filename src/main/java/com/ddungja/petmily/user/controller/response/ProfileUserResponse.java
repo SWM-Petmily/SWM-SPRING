@@ -5,7 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 
 @Getter
-public class UserResponse {
+public class ProfileUserResponse {
     private final String email;
     private final String nickname;
     private final String birth;
@@ -13,7 +13,7 @@ public class UserResponse {
     private final String provider;
     private final boolean isProfile;
     @Builder
-    public UserResponse(String email, String nickname, String birth, String phone, String provider, boolean isProfile) {
+    public ProfileUserResponse(String email, String nickname, String birth, String phone, String provider, boolean isProfile) {
         this.email = email;
         this.nickname = nickname;
         this.birth = birth;
@@ -21,8 +21,8 @@ public class UserResponse {
         this.provider = provider;
         this.isProfile = isProfile;
     }
-    public static UserResponse from(User user) {
-        return UserResponse.builder()
+    public static ProfileUserResponse from(User user) {
+        return ProfileUserResponse.builder()
                 .email(user.getEmail())
                 .nickname(user.getNickname())
                 .birth(user.getBirth())

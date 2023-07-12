@@ -17,12 +17,12 @@ public class CategoryService {
     private final MainCategoryRepository mainCategoryRepository;
     private final SubCategoryRepository subCategoryRepository;
 
-    @Transactional
+    @Transactional(readOnly = true)
     public List<MainCategory> getMainCategory(){
         return mainCategoryRepository.findAll();
     }
-    @Transactional
-    public List<SubCategory.SubcategoryResponse> getSubCategory(Long categoryId){
-        return subCategoryRepository.findIdAndNameByMainCategory_Id(categoryId);
+    @Transactional(readOnly = true)
+    public List<SubCategory> getSubCategory(Long categoryId){
+        return subCategoryRepository.findByMainCategoryId(categoryId);
     }
 }

@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -36,7 +37,8 @@ public class ApplyController {
     @GetMapping
     public ResponseEntity<?> getByUserId(@AuthenticationPrincipal User user, ApprovalType approval, Pageable pageable) {
         log.info("내가 지원한 목록 보기 userId : {}", user.getId());
-        return ResponseEntity.ok(applyService.getAppliedList(user.getId(), approval, pageable).map(ApplyPostListResponse::from));
+        Page<ApplyPostListResponse> map = applyService.getAppliedList(user.getId(), approval, pageable).map(ApplyPostListResponse::from);
+        return ResponseEntity.ok(map);
     }
 
     @Operation(summary = "지원 상세 보기")

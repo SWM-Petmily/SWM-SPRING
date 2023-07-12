@@ -8,7 +8,7 @@ import com.ddungja.petmily.user.domain.ProfileImage;
 import com.ddungja.petmily.user.domain.User;
 import com.ddungja.petmily.user.domain.request.ExperienceCreateRequest;
 import com.ddungja.petmily.user.domain.request.ExperienceUpdateRequest;
-import com.ddungja.petmily.user.domain.request.ProfileCreateRequest;
+import com.ddungja.petmily.user.domain.request.MyProfileCreateRequest;
 import com.ddungja.petmily.user.domain.request.ProfileUpdateRequest;
 import com.ddungja.petmily.user.repository.ExperienceRepository;
 import com.ddungja.petmily.user.repository.ProfileImageRepository;
@@ -37,7 +37,7 @@ public class ProfileService {
         return profileRepository.findByUserId(userId).orElseThrow(() -> new CustomException(PROFILE_NOT_FOUND));
     }
     @Transactional
-    public Profile create(ProfileCreateRequest profileCreateRequest, Long userId) {
+    public Profile create(MyProfileCreateRequest profileCreateRequest, Long userId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new CustomException(USER_NOT_FOUND));
         if (user.isProfile()) throw new CustomException(PROFILE_ALREADY_EXISTS);
         ProfileImage profileImage = profileImageRepository.findById(profileCreateRequest.getProfileImageId()).orElseThrow(() -> new CustomException(PROFILE_IMAGE_NOT_FOUND));
@@ -55,7 +55,7 @@ public class ProfileService {
     }
 
     @Transactional
-    public Profile update(ProfileUpdateRequest profileUpdateRequest, Long userId) {
+    public Profile modify(ProfileUpdateRequest profileUpdateRequest, Long userId) {
         Profile profile = profileRepository.findByUserId(userId).orElseThrow(() -> new CustomException(PROFILE_NOT_FOUND));
         ProfileImage profileImage = profileImageRepository.findById(profileUpdateRequest.getProfileImageId()).orElseThrow(() -> new CustomException(PROFILE_IMAGE_NOT_FOUND));
         profile.update(profileUpdateRequest, profileImage);

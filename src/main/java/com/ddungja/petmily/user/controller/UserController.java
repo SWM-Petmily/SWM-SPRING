@@ -2,8 +2,8 @@ package com.ddungja.petmily.user.controller;
 
 import com.ddungja.petmily.common.domain.exception.CustomException;
 import com.ddungja.petmily.global.jwt.JwtProvider;
-import com.ddungja.petmily.user.controller.response.UserCreateResponse;
-import com.ddungja.petmily.user.controller.response.UserLoginResponse;
+import com.ddungja.petmily.user.controller.response.UserSignUpResponse;
+import com.ddungja.petmily.user.controller.response.UserCertificationResponse;
 import com.ddungja.petmily.user.domain.KakaoProfile;
 import com.ddungja.petmily.user.domain.User;
 import com.ddungja.petmily.user.domain.request.UserCreateRequest;
@@ -44,11 +44,11 @@ public class UserController {
         User user = userService.login(kakaoProfile);
         String accessToken = jwtProvider.createAccessToken(user);
         String refreshToken = jwtProvider.createRefreshToken(user);
-        ResponseCookie refreshTokenCookie = getRefreshTokenCookie(refreshToken);
-        return ResponseEntity.ok().header(SET_COOKIE, refreshTokenCookie.toString()).header(AUTHORIZATION, accessToken).body(UserLoginResponse.from(user));
+        ResponseCookie refreshTokenCookie = createRefreshTokenCookie(refreshToken);
+        return ResponseEntity.ok().header(SET_COOKIE, refreshTokenCookie.toString()).header(AUTHORIZATION, accessToken).body(UserCertificationResponse.from(user));
     }
 
-    private static ResponseCookie getRefreshTokenCookie(String refreshToken) {
+    private static ResponseCookie createRefreshTokenCookie(String refreshToken) {
         return ResponseCookie.from("refreshToken", refreshToken).maxAge(Duration.ofDays(14)).path("/")
 //                .secure(true) //https를 쓸때 사용
 //                .sameSite("None") //csrf 공격을 방지하기 위해 설정
@@ -66,7 +66,7 @@ public class UserController {
             User user = jwtProvider.refreshTokenVerify(refreshToken);
             String accessToken = jwtProvider.createAccessToken(user);
             refreshToken = jwtProvider.createRefreshToken(user);
-            ResponseCookie refreshTokenCookie = getRefreshTokenCookie(refreshToken);
+            ResponseCookie refreshTokenCookie = createRefreshTokenCookie(refreshToken);
             return ResponseEntity.ok().header(SET_COOKIE, refreshTokenCookie.toString()).header(AUTHORIZATION, accessToken).build();
         }
         throw new CustomException(REFRESH_TOKEN_VALIDATION_FAILED);
@@ -74,7 +74,7 @@ public class UserController {
 
     @Operation(summary = "권한테스트")
     @GetMapping("/authorization")
-    public ResponseEntity<?> authroizationtest() {
+    public ResponseEntity<?> authorizationTest() {
         log.debug("권한 테스트");
         return ResponseEntity.ok("토큰이 존재합니다");
     }
@@ -97,13 +97,13 @@ public class UserController {
     @PostMapping("/signup")
     public ResponseEntity<?> signUp(@AuthenticationPrincipal User user, @RequestBody UserCreateRequest userCreateRequest) {
         userService.signUp(user.getId(), userCreateRequest);
-        return ResponseEntity.status(HttpStatus.CREATED).body(UserCreateResponse.from(user));
+        return ResponseEntity.status(HttpStatus.CREATED).body(UserSignUpResponse.from(user));
     }
 
     @Operation(summary = "닉네임 수정")
     @PutMapping
-    public ResponseEntity<?> update(@AuthenticationPrincipal User user, @RequestBody UserUpdateRequest userUpdateRequest) {
-        userService.update(user.getId(), userUpdateRequest);
+    public ResponseEntity<?> modify(@AuthenticationPrincipal User user, @RequestBody UserUpdateRequest userUpdateRequest) {
+        userService.modifyNickname(user.getId(), userUpdateRequest);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }
