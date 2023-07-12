@@ -39,9 +39,12 @@ spring:
         one-indexed-parameters: on
 
 
-logging:
-  level:
-    com.ddungja.petmily: info
+logging.level:
+  root: info
+  org.springframework:
+    web: info
+    security: info
+    boot: info
 
 
 springdoc:
