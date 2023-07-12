@@ -21,7 +21,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: none
+      ddl-auto: create
     properties:
       hibernate:
         default_batch_fetch_size: 50
@@ -37,6 +37,10 @@ spring:
         default-page-size: 100
         max-page-size: 2000
         one-indexed-parameters: on
+
+  output:
+    ansi:
+      enabled: always
 
 
 logging.level:
