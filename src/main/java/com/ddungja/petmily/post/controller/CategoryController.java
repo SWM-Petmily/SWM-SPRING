@@ -1,5 +1,7 @@
 package com.ddungja.petmily.post.controller;
 
+import com.ddungja.petmily.post.domain.SubCategory;
+import com.ddungja.petmily.post.repository.SubCategoryRepository;
 import com.ddungja.petmily.post.service.CategoryService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -8,6 +10,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+
 
 @RestController
 @RequiredArgsConstructor
@@ -26,6 +31,7 @@ public class CategoryController {
     @GetMapping("/{categoryId}")
     public ResponseEntity<?> getSubCategory(@PathVariable Long categoryId){
         log.info("서브 카테고리 불러오기 categoryId = {}", categoryId);
-        return ResponseEntity.ok(categoryService.getSubCategory(categoryId));
+        List<SubCategoryRepository.SubCategoryNameAndId> subCategories = categoryService.getSubCategory(categoryId);
+        return ResponseEntity.ok(subCategories);
     }
 }

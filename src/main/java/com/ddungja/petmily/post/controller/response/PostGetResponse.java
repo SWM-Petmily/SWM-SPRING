@@ -1,8 +1,8 @@
 package com.ddungja.petmily.post.controller.response;
 
-import com.ddungja.petmily.post.domain.post.GenderType;
+import com.ddungja.petmily.post.domain.type.GenderType;
 import com.ddungja.petmily.post.domain.post.Post;
-import com.ddungja.petmily.post.domain.post.PostStatusType;
+import com.ddungja.petmily.post.domain.type.PostStatusType;
 import com.ddungja.petmily.user.domain.User;
 import lombok.Builder;
 import lombok.Getter;

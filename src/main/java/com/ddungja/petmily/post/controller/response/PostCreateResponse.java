@@ -1,6 +1,9 @@
 package com.ddungja.petmily.post.controller.response;
 
 import com.ddungja.petmily.post.domain.post.*;
+import com.ddungja.petmily.post.domain.type.GenderType;
+import com.ddungja.petmily.post.domain.type.NeuteredType;
+import com.ddungja.petmily.post.domain.type.PostStatusType;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import lombok.Builder;
