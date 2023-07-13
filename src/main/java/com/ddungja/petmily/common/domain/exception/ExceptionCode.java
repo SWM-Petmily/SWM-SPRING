@@ -20,7 +20,6 @@ public enum ExceptionCode {
     USER_ALREADY_EXISTS(2002, HttpStatus.BAD_REQUEST, "유저가 이미 존재합니다."),
     USER_ALREADY_CERTIFICATION(2003, HttpStatus.BAD_REQUEST, "이미 인증을 받았습니다."),
 
-
     //profile
     PROFILE_NOT_FOUND(3001, HttpStatus.NOT_FOUND, "프로필을 찾을 수 없습니다."),
     PROFILE_ALREADY_EXISTS(3002, HttpStatus.BAD_REQUEST, "프로필이 이미 존재합니다."),
@@ -46,7 +45,11 @@ public enum ExceptionCode {
 
     //like
     LIKE_NOT_FOUND(6001, HttpStatus.NOT_FOUND, "좋아요를 찾을 수 없습니다."),
-    LIKE_IS_EXISTS(6002, HttpStatus.BAD_REQUEST, "이미 좋아요를 눌렀습니다.");
+    LIKE_IS_EXISTS(6002, HttpStatus.BAD_REQUEST, "이미 좋아요를 눌렀습니다."),
+
+    //register
+    REGISTER_NOT_FOUND(7001, HttpStatus.NOT_FOUND, "해당 반려동물 등록 정보가 없습니다."),
+    REGISTER_ALREADY_EXISTS(7002, HttpStatus.BAD_REQUEST, "이미 등록했습니다.");
 
 
 

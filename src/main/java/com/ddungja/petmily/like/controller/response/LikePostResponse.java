@@ -2,6 +2,7 @@ package com.ddungja.petmily.like.controller.response;
 
 import com.ddungja.petmily.like.domain.Like;
 import com.ddungja.petmily.post.domain.post.*;
+import com.ddungja.petmily.post.domain.type.GenderType;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import lombok.Builder;

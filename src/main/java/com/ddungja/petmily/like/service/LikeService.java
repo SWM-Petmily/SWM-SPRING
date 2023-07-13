@@ -61,8 +61,4 @@ public class LikeService {
         return likeRepository.findAllByUserId(userId);
     }
 
-
-
-
-
 }

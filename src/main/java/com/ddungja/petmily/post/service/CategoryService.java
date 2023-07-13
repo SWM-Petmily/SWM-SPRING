@@ -22,7 +22,7 @@ public class CategoryService {
         return mainCategoryRepository.findAll();
     }
     @Transactional(readOnly = true)
-    public List<SubCategory> getSubCategory(Long categoryId){
+    public List<SubCategoryRepository.SubCategoryNameAndId> getSubCategory(Long categoryId){
         return subCategoryRepository.findByMainCategoryId(categoryId);
     }
 }
