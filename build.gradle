@@ -58,6 +58,9 @@ dependencies {
     //jwt
     implementation 'com.auth0:java-jwt:4.3.0'
 
+    //CoolSMS
+    implementation 'net.nurigo:sdk:4.3.0'
+
 }
 
 jar {
