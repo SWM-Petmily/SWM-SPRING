@@ -1,4 +1,4 @@
-package com.ddungja.petmily.global.config;
+package com.ddungja.petmily.common.config;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;

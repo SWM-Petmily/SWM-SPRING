@@ -1,4 +1,4 @@
-package com.ddungja.petmily.global.response;
+package com.ddungja.petmily.common.response;
 
 import com.ddungja.petmily.common.domain.exception.ExceptionCode;
 import com.fasterxml.jackson.core.JsonProcessingException;

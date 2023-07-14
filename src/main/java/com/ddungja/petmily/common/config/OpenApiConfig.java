@@ -1,4 +1,4 @@
-package com.ddungja.petmily.global.config;
+package com.ddungja.petmily.common.config;
 
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;

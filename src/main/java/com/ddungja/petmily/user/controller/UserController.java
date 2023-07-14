@@ -1,7 +1,7 @@
 package com.ddungja.petmily.user.controller;
 
 import com.ddungja.petmily.common.domain.exception.CustomException;
-import com.ddungja.petmily.global.jwt.JwtProvider;
+import com.ddungja.petmily.common.jwt.JwtProvider;
 import com.ddungja.petmily.user.controller.response.UserSignUpResponse;
 import com.ddungja.petmily.user.controller.response.UserCertificationResponse;
 import com.ddungja.petmily.user.domain.KakaoProfile;

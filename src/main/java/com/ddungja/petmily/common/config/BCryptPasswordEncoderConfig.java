@@ -1,4 +1,4 @@
-package com.ddungja.petmily.global.config;
+package com.ddungja.petmily.common.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

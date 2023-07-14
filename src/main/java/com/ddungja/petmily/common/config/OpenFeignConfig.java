@@ -1,4 +1,4 @@
-package com.ddungja.petmily.global.config;
+package com.ddungja.petmily.common.config;
 
 import feign.Client;
 import org.springframework.context.annotation.Bean;

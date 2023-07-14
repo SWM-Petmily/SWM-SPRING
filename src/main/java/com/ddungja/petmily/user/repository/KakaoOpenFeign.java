@@ -1,6 +1,6 @@
 package com.ddungja.petmily.user.repository;
 
-import com.ddungja.petmily.global.config.OpenFeignConfig;
+import com.ddungja.petmily.common.config.OpenFeignConfig;
 import com.ddungja.petmily.user.domain.KakaoProfile;
 import com.ddungja.petmily.user.domain.KakaoToken;
 import org.springframework.cloud.openfeign.FeignClient;

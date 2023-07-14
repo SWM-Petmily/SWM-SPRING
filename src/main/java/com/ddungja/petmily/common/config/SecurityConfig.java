@@ -1,8 +1,8 @@
-package com.ddungja.petmily.global.config;
+package com.ddungja.petmily.common.config;
 
-import com.ddungja.petmily.global.response.SecurityResponse;
-import com.ddungja.petmily.global.jwt.JwtAuthorizationFilter;
-import com.ddungja.petmily.global.jwt.JwtProvider;
+import com.ddungja.petmily.common.response.SecurityResponse;
+import com.ddungja.petmily.common.jwt.JwtAuthorizationFilter;
+import com.ddungja.petmily.common.jwt.JwtProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
