@@ -8,9 +8,11 @@ import com.ddungja.petmily.post.domain.type.PostStatusType;
 import com.ddungja.petmily.post.repository.PostRepository;
 import com.ddungja.petmily.user.domain.User;
 import com.ddungja.petmily.user.repository.UserRepository;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import static com.ddungja.petmily.common.domain.exception.ExceptionCode.*;
 
@@ -32,9 +34,7 @@ public class LikeService {
         if(likeRepository.findByPostIdAndUserId(postId, userId).isPresent()){
             throw new CustomException(LIKE_IS_EXISTS);
         }
-        Like like = Like.from(user, post);
-        likeRepository.save(like);
-        return like;
+        return likeRepository.save(Like.from(user, post));
     }
 
     public Page<Like> getLikeList(Long userId, PostStatusType postStatusType, Pageable pageable) {

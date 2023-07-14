@@ -15,7 +15,7 @@ public class RegistrationApiItem {
     private final String dogRegNo;
 
     @Builder
-    public RegistrationApiItem(String dogRegNo, String rfidCd, String dogNm, String sexNm, String kindNm, String neuterYn, String orgNm, String officeTel, String aprGbNm) {
+    private RegistrationApiItem(String dogRegNo, String rfidCd, String dogNm, String sexNm, String kindNm, String neuterYn, String orgNm, String officeTel, String aprGbNm) {
         this.dogRegNo = dogRegNo;
         this.rfidCd = rfidCd;
         this.dogNm = dogNm;

@@ -28,11 +28,5 @@ public class SubCategory{
         this.name = name;
         this.mainCategory = mainCategory;
     }
-
-    public interface SubcategoryResponse {
-        Long getId();
-        String getName();
-    }
-
 }
 

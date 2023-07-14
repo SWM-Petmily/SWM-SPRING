@@ -12,12 +12,13 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class CategoryService {
 
     private final MainCategoryRepository mainCategoryRepository;
     private final SubCategoryRepository subCategoryRepository;
 
-    @Transactional(readOnly = true)
+
     public List<MainCategory> getMainCategory(){
         return mainCategoryRepository.findAll();
     }

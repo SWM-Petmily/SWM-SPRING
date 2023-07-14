@@ -47,10 +47,8 @@ public class PostService {
     @Transactional
     public Post create(PostCreateRequest postCreateRequest, Long id) {
         User user = userRepository.findById(id).orElseThrow(() -> new CustomException(USER_NOT_FOUND));
-
         MainCategory mainCategory = mainCategoryRepository.findById(postCreateRequest.getMainCategory()).orElseThrow(() -> new CustomException(MAIN_CATEGORY_NOT_FOUND));
         SubCategory subCategory = subCategoryRepository.findById(postCreateRequest.getSubCategory()).orElseThrow(() -> new CustomException(SUB_CATEGORY_NOT_FOUND));
-
         Post post = postCreateRequest.toEntity(user, mainCategory, subCategory);
 
         /*질병 업로드*/

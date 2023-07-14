@@ -13,11 +13,11 @@ import org.springframework.data.support.PageableExecutionUtils;
 import java.util.List;
 
 import static com.ddungja.petmily.like.domain.QLike.like;
+import static com.ddungja.petmily.post.domain.QPost.post;
 import static com.ddungja.petmily.post.domain.QSubCategory.subCategory;
-import static com.ddungja.petmily.post.domain.post.QPost.post;
 
 @RequiredArgsConstructor
-public class PostCustomRepositoryImpl implements PostCustomRepository {
+public class PostQueryRepositoryImpl implements PostQueryRepository {
 
     private final JPAQueryFactory jpaQueryFactory;
     @Override
@@ -25,6 +25,7 @@ public class PostCustomRepositoryImpl implements PostCustomRepository {
         List<Post> content = jpaQueryFactory.selectFrom(post)
                 .leftJoin(post.subCategory, subCategory).fetchJoin()
                 .leftJoin(post.like, like).fetchJoin()
+
                 .where(post.user.id.eq(userId).and(eqPostStatusType(postStatusType)))
                 .fetch();
 

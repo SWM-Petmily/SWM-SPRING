@@ -6,7 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.EntityGraph;
 
-public interface PostCustomRepository {
+public interface PostQueryRepository {
 
     @EntityGraph(attributePaths = {"like", "subCategory"})
     Page<Post> getMypost(Long userId, PostStatusType postStatusType, Pageable pageable);

@@ -29,12 +29,7 @@ public class RegistrationController {
 
     @PostMapping
     public ResponseEntity<?> create(@AuthenticationPrincipal User user, @Valid @RequestBody RegistrationCreateRequest registrationCreateRequest) {
-        if(user== null) throw new CustomException(USER_NOT_FOUND);
-
-        user = userService.get(user.getId());
         log.info("반려동물 등록 요청 userId = {}", user.getId());
-        Registration registration = registrationService.register(user, registrationCreateRequest);
-        return ResponseEntity.ok(registration);
-
+        return ResponseEntity.ok(RegisterCreateResponse.from(registrationService.register(user.getId(), registrationCreateRequest)));
     }
 }

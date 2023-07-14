@@ -11,6 +11,9 @@ import com.ddungja.petmily.user.domain.User;
 import com.ddungja.petmily.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -22,13 +25,9 @@ import org.springframework.web.bind.annotation.*;
 public class LikeController {
 
     private final LikeService likeService;
-    private final PostService postService;
 
-    private final UserService userService;
-
-
-    @GetMapping("/")
-    public ResponseEntity<?> getLike(@AuthenticationPrincipal User user){
+    @GetMapping
+    public ResponseEntity<?> getLike(@AuthenticationPrincipal User user, @RequestParam(value = "status") PostStatusType postStatusType, Pageable pageable){
         log.info("좋아요 누른 게시글 불러오기");
         Page<Like> likes = likeService.getLikeList(user.getId(),postStatusType, pageable);
         return ResponseEntity.ok(likes.map(LikePostResponse::from));

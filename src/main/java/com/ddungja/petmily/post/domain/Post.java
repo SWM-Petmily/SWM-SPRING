@@ -16,7 +16,6 @@ import java.util.List;
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-@Setter
 @Table(name = "posts")
 public class Post extends BaseTimeEntity {
 
@@ -67,7 +66,7 @@ public class Post extends BaseTimeEntity {
     private int reports;
 
     @Builder
-    public Post(Long id, User user, MainCategory mainCategory, SubCategory subCategory, String thumbnailImage, List<Like> like, List<Image> images, GenderType gender, String birth, String name, String region, NeuteredType neutered, int money, String reason, String advantage, String disadvantage, String averageCost, String adopter, PostStatusType status, int views, int reports) {
+    private Post(Long id, User user, MainCategory mainCategory, SubCategory subCategory, String thumbnailImage, List<Like> like, List<Image> images, GenderType gender, String birth, String name, String region, NeuteredType neutered, int money, String reason, String advantage, String disadvantage, String averageCost, String adopter, PostStatusType status, int views, int reports) {
         this.id = id;
         this.user = user;
         this.mainCategory = mainCategory;

@@ -4,8 +4,6 @@ import com.ddungja.petmily.post.domain.Post;
 import com.ddungja.petmily.post.domain.type.GenderType;
 import com.ddungja.petmily.post.domain.type.NeuteredType;
 import com.ddungja.petmily.post.domain.type.PostStatusType;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -13,7 +11,7 @@ import lombok.Getter;
 @Getter
 public class PostCreateResponse {
 
-    private final Long id;
+    private final Long postId;
     private final Long mainCategory;
     private final Long subCategory;
     private final String region;
@@ -21,19 +19,16 @@ public class PostCreateResponse {
     private final String birth;
     private final NeuteredType neutered;
     private final int money;
-
     private final String reason; // 분양 이유
     private final String advantage; // 장점, 자랑
     private final String disadvantage; // 단점, 주의할 점
     private final String averageCost;// 평균비용
     private final String adopter; // 분양자
-
-    @Enumerated(EnumType.STRING)
     private PostStatusType status; // 분양상태
 
     @Builder
-    public PostCreateResponse(Long id, Long mainCategory, Long subCategory, String region, GenderType gender, String birth, NeuteredType neutered, int money, String reason, String advantage, String disadvantage, String averageCost, String adopter, PostStatusType status) {
-        this.id = id;
+    private PostCreateResponse(Long id, Long mainCategory, Long subCategory, String region, GenderType gender, String birth, NeuteredType neutered, int money, String reason, String advantage, String disadvantage, String averageCost, String adopter, PostStatusType status) {
+        this.postId = id;
         this.mainCategory = mainCategory;
         this.subCategory = subCategory;
         this.region = region;
