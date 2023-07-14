@@ -37,7 +37,7 @@ public class UserService {
         if (user.isCertification()) {
             throw new CustomException(ExceptionCode.USER_ALREADY_CERTIFICATION);
         }
-        user.certicate(userCreateRequest);
+        user.certificate(userCreateRequest);
         return user;
     }
 
