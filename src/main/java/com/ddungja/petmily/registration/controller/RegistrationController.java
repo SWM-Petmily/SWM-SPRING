@@ -1,6 +1,7 @@
 package com.ddungja.petmily.registration.controller;
 
 import com.ddungja.petmily.common.domain.exception.CustomException;
+import com.ddungja.petmily.registration.domain.Registration;
 import com.ddungja.petmily.registration.domain.request.RegistrationCreateRequest;
 import com.ddungja.petmily.registration.service.RegistrationService;
 import com.ddungja.petmily.user.domain.User;
@@ -31,8 +32,8 @@ public class RegistrationController {
 
         user = userService.get(user.getId());
         log.info("반려동물 등록 요청 userId = {}", user.getId());
-        registrationService.register(user, registrationCreateRequest);
-        return ResponseEntity.ok(null);
+        Registration registration = registrationService.register(user, registrationCreateRequest);
+        return ResponseEntity.ok(registration);
 
     }
 }

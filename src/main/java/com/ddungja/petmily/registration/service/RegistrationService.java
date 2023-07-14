@@ -59,6 +59,7 @@ public class RegistrationService {
 
     public Registration register(User user, RegistrationCreateRequest registrationCreateRequest) {
         Registration registration = getApiResult(user, registrationCreateRequest);
-        return registrationRepository.save(registration);
+         registrationRepository.save(registration);
+         return registration;
     }
 }
