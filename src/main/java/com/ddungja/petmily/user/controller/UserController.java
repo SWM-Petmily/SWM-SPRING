@@ -96,9 +96,9 @@ public class UserController {
     @Operation(summary = "카카오 회원가입 후 추가적인 정보와 휴대전화 인증")
     @PostMapping("/signup")
     public ResponseEntity<?> signUp(@AuthenticationPrincipal User user, @RequestBody UserCreateRequest userCreateRequest) {
-        userService.signUp(user.getId(), userCreateRequest);
-        return ResponseEntity.status(HttpStatus.CREATED).body(UserSignUpResponse.from(user));
+        return ResponseEntity.status(HttpStatus.CREATED).body(UserSignUpResponse.from(userService.signUp(user.getId(), userCreateRequest)));
     }
+
     @Operation(summary = "닉네임 수정")
     @PutMapping
     public ResponseEntity<?> modify(@AuthenticationPrincipal User user, @RequestBody UserUpdateRequest userUpdateRequest) {
