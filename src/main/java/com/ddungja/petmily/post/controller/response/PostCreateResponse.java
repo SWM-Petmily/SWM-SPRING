@@ -1,6 +1,6 @@
 package com.ddungja.petmily.post.controller.response;
 
-import com.ddungja.petmily.post.domain.post.*;
+import com.ddungja.petmily.post.domain.Post;
 import com.ddungja.petmily.post.domain.type.GenderType;
 import com.ddungja.petmily.post.domain.type.NeuteredType;
 import com.ddungja.petmily.post.domain.type.PostStatusType;
@@ -17,10 +17,8 @@ public class PostCreateResponse {
     private final Long mainCategory;
     private final Long subCategory;
     private final String region;
-    @Enumerated(EnumType.STRING)
     private final GenderType gender;
     private final String birth;
-    @Enumerated(EnumType.STRING)
     private final NeuteredType neutered;
     private final int money;
 

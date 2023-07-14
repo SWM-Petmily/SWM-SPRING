@@ -1,11 +1,9 @@
-package com.ddungja.petmily.post.domain.post;
+package com.ddungja.petmily.post.domain;
 
 
 import com.ddungja.petmily.common.domain.BaseTimeEntity;
 import com.ddungja.petmily.like.domain.Like;
-import com.ddungja.petmily.post.domain.MainCategory;
-import com.ddungja.petmily.post.domain.SubCategory;
-import com.ddungja.petmily.post.domain.image.Image;
+import com.ddungja.petmily.post.domain.request.PostCreateRequest;
 import com.ddungja.petmily.post.domain.type.GenderType;
 import com.ddungja.petmily.post.domain.type.NeuteredType;
 import com.ddungja.petmily.post.domain.type.PostStatusType;
@@ -91,5 +89,9 @@ public class Post extends BaseTimeEntity {
         this.status = status;
         this.views = views;
         this.reports = reports;
+    }
+
+    public void createThumbnailImage(PostCreateRequest postCreateRequest) {
+        this.thumbnailImage = postCreateRequest.getPostImages().get(0).getUrl();
     }
 }

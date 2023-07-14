@@ -8,9 +8,9 @@ import com.ddungja.petmily.post.domain.request.PostCreateRequest;
 import com.ddungja.petmily.post.domain.Disease;
 import com.ddungja.petmily.post.domain.MainCategory;
 import com.ddungja.petmily.post.domain.SubCategory;
-import com.ddungja.petmily.post.domain.image.Image;
-import com.ddungja.petmily.post.domain.image.ImageType;
-import com.ddungja.petmily.post.domain.post.Post;
+import com.ddungja.petmily.post.domain.Image;
+import com.ddungja.petmily.post.domain.type.ImageType;
+import com.ddungja.petmily.post.domain.Post;
 import com.ddungja.petmily.post.repository.*;
 import com.ddungja.petmily.user.domain.User;
 import com.ddungja.petmily.user.repository.UserRepository;
@@ -20,12 +20,16 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static com.ddungja.petmily.common.domain.exception.ExceptionCode.*;
-import static com.ddungja.petmily.post.domain.image.ImageType.MEDICAL_CHECK;
-import static com.ddungja.petmily.post.domain.image.ImageType.POST;
+import static com.ddungja.petmily.post.domain.type.ImageType.MEDICAL_CHECK;
+import static com.ddungja.petmily.post.domain.type.ImageType.POST;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class PostService {
 
     private final UserRepository userRepository;
@@ -62,15 +66,17 @@ public class PostService {
 
         /*이미지 업로드*/
         if (postCreateRequest.getPostImages() != null) {
-            post.setThumbnailImage(postCreateRequest.getPostImages().get(0).getUrl());
+            post.createThumbnailImage(postCreateRequest);
+            List<Image> images = new ArrayList<>();
             for (ImageCreateRequest image : postCreateRequest.getPostImages()) {
-                Image uploadimage = Image.builder()
+                Image uploadImage = Image.builder()
                         .post(post)
                         .url(image.getUrl())
                         .imageType(POST)
                         .build();
-                imageRepository.save(uploadimage);
+                images.add(uploadImage);
             }
+            imageRepository.saveAll(images);
         }
 
         /*예방접종 인증 - 사진만*/
@@ -104,7 +110,6 @@ public class PostService {
 
     /*포스트 보기*/
 
-    @Transactional(readOnly = true)
     public Post get(Long id) {
         return postRepository.findPostById(id).orElseThrow(() -> new CustomException(POST_NOT_FOUND));
     }

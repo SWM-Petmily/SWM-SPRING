@@ -7,7 +7,7 @@ import com.ddungja.petmily.apply.domain.request.ApplyCreateRequest;
 import com.ddungja.petmily.apply.domain.request.ApproveRequest;
 import com.ddungja.petmily.apply.repository.ApplyRepository;
 import com.ddungja.petmily.common.domain.exception.CustomException;
-import com.ddungja.petmily.post.domain.post.Post;
+import com.ddungja.petmily.post.domain.Post;
 import com.ddungja.petmily.post.repository.PostRepository;
 import com.ddungja.petmily.user.domain.User;
 import com.ddungja.petmily.user.repository.UserRepository;

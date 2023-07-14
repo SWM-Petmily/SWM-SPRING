@@ -1,8 +1,8 @@
 package com.ddungja.petmily.post.domain.request;
 
 import com.ddungja.petmily.post.domain.MainCategory;
+import com.ddungja.petmily.post.domain.Post;
 import com.ddungja.petmily.post.domain.SubCategory;
-import com.ddungja.petmily.post.domain.post.*;
 import com.ddungja.petmily.post.domain.type.GenderType;
 import com.ddungja.petmily.post.domain.type.NeuteredType;
 import com.ddungja.petmily.post.domain.type.PostStatusType;

@@ -21,8 +21,7 @@ public class CategoryService {
     public List<MainCategory> getMainCategory(){
         return mainCategoryRepository.findAll();
     }
-    @Transactional(readOnly = true)
-    public List<SubCategoryRepository.SubCategoryNameAndId> getSubCategory(Long categoryId){
+    public List<SubCategory> getSubCategory(Long categoryId){
         return subCategoryRepository.findByMainCategoryId(categoryId);
     }
 }

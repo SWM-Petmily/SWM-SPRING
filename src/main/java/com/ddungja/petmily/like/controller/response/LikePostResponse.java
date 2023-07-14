@@ -1,7 +1,7 @@
 package com.ddungja.petmily.like.controller.response;
 
 import com.ddungja.petmily.like.domain.Like;
-import com.ddungja.petmily.post.domain.post.*;
+import com.ddungja.petmily.post.domain.Post;
 import com.ddungja.petmily.post.domain.type.GenderType;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -9,8 +9,6 @@ import lombok.Builder;
 import lombok.Getter;
 
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
 
 @Getter
 public class LikePostResponse {
@@ -43,25 +41,19 @@ public class LikePostResponse {
         this.createdDate = createdDate;
     }
 
-
-    public static List<LikePostResponse> from(List<Like> likes) {
-        List<LikePostResponse> likePostResponses = new ArrayList<>();
-        for(Like like : likes){
-            Post post = like.getPost();
-            LikePostResponse likePostResponse = LikePostResponse.builder()
-                    .id(post.getId())
-                    .name(post.getName())
-                    .image(post.getThumbnailImage())
-                    .subCategory(post.getSubCategory().getName())
-                    .region(post.getRegion())
-                    .birth(post.getBirth())
-                    .gender(post.getGender())
-                    .like(post.getLike().size())
-                    .isMine(post.getUser().getId().equals(like.getUser().getId()))
-                    .createdDate(post.getCreateDate().format(DateTimeFormatter.ofPattern("yyyy.MM.dd")))
-                    .build();
-            likePostResponses.add(likePostResponse);
-        }
-        return likePostResponses;
+    public static LikePostResponse from(Like like) {
+        Post post = like.getPost();
+        return LikePostResponse.builder()
+                .id(post.getId())
+                .name(post.getName())
+                .image(post.getThumbnailImage())
+                .subCategory(post.getSubCategory().getName())
+                .region(post.getRegion())
+                .birth(post.getBirth())
+                .gender(post.getGender())
+                .like(post.getLike().size())
+                .isMine(post.getUser().getId().equals(like.getUser().getId()))
+                .createdDate(post.getCreateDate().format(DateTimeFormatter.ofPattern("yyyy.MM.dd")))
+                .build();
     }
 }

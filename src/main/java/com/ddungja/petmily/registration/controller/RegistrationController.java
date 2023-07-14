@@ -1,6 +1,7 @@
 package com.ddungja.petmily.registration.controller;
 
 import com.ddungja.petmily.common.domain.exception.CustomException;
+import com.ddungja.petmily.registration.controller.response.RegisterCreateResponse;
 import com.ddungja.petmily.registration.domain.Registration;
 import com.ddungja.petmily.registration.domain.request.RegistrationCreateRequest;
 import com.ddungja.petmily.registration.service.RegistrationService;

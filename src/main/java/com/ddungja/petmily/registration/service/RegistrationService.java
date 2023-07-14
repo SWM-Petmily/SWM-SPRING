@@ -16,8 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
-import static com.ddungja.petmily.common.domain.exception.ExceptionCode.REGISTER_ALREADY_EXISTS;
-import static com.ddungja.petmily.common.domain.exception.ExceptionCode.REGISTER_NOT_FOUND;
+import static com.ddungja.petmily.common.domain.exception.ExceptionCode.*;
 
 @Service
 @RequiredArgsConstructor
@@ -44,9 +43,12 @@ public class RegistrationService {
 
         if(registrationRepository.findByDogRegNo(item.getDogRegNo()).isPresent()) throw new CustomException(REGISTER_ALREADY_EXISTS);
 
+        MainCategory mainCategory = mainCategoryRepository.findByName("강아지");
+
         SubCategory petSubcategory = subCategoryRepository.findByName(item.getKindNm()).orElseGet(() -> {
             SubCategory subCategory = SubCategory.builder()
                     .name(item.getKindNm())
+                    .mainCategory(mainCategory)
                     .build();
             return subCategoryRepository.save(subCategory);
         });
@@ -55,11 +57,5 @@ public class RegistrationService {
         log.debug("반려동물 등록 결과 = {}", registration);
 
         return registration;
-    }
-
-    public Registration register(User user, RegistrationCreateRequest registrationCreateRequest) {
-        Registration registration = getApiResult(user, registrationCreateRequest);
-         registrationRepository.save(registration);
-         return registration;
     }
 }

@@ -1,5 +1,6 @@
 package com.ddungja.petmily.post.controller;
 
+import com.ddungja.petmily.post.controller.response.SubCategoryResponse;
 import com.ddungja.petmily.post.domain.SubCategory;
 import com.ddungja.petmily.post.repository.SubCategoryRepository;
 import com.ddungja.petmily.post.service.CategoryService;

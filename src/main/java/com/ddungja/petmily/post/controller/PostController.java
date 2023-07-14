@@ -5,7 +5,7 @@ import com.ddungja.petmily.common.domain.exception.CustomException;
 import com.ddungja.petmily.post.controller.response.MyPostListResponse;
 import com.ddungja.petmily.post.controller.response.PostCreateResponse;
 import com.ddungja.petmily.post.controller.response.PostGetResponse;
-import com.ddungja.petmily.post.domain.post.Post;
+import com.ddungja.petmily.post.domain.Post;
 import com.ddungja.petmily.post.domain.type.PostStatusType;
 import com.ddungja.petmily.post.domain.request.PostCreateRequest;
 import com.ddungja.petmily.post.service.PostService;

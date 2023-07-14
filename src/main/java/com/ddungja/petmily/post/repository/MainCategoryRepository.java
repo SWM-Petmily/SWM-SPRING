@@ -1,6 +1,7 @@
 package com.ddungja.petmily.post.repository;
 
 import com.ddungja.petmily.post.domain.MainCategory;
+import com.ddungja.petmily.user.service.UserService;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -11,4 +12,5 @@ public interface MainCategoryRepository extends JpaRepository<MainCategory, Long
 
     Optional<MainCategory> findById(Long id);
 
+    MainCategory findByName(String name);
 }

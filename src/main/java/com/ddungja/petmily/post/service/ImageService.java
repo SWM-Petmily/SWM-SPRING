@@ -1,16 +1,15 @@
 package com.ddungja.petmily.post.service;
 
 
-import com.ddungja.petmily.post.domain.image.Image;
+import com.ddungja.petmily.post.domain.Image;
 import com.ddungja.petmily.post.repository.ImageRepository;
-import com.ddungja.petmily.post.repository.MainCategoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import static com.ddungja.petmily.post.domain.image.ImageType.POST;
+import static com.ddungja.petmily.post.domain.type.ImageType.POST;
 
 @Service
 @RequiredArgsConstructor
