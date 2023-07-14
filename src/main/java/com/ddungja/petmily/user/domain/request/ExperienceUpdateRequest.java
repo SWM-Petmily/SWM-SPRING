@@ -5,11 +5,11 @@ import lombok.Getter;
 
 @Getter
 public class ExperienceUpdateRequest {
-    private String species;
-    private int period;
+    private final String species;
+    private final int period;
 
     @Builder
-    public ExperienceUpdateRequest( String species, int period) {
+    private ExperienceUpdateRequest( String species, int period) {
         this.species = species;
         this.period = period;
     }

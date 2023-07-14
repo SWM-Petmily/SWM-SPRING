@@ -22,7 +22,7 @@ public class MyPostListResponse {
     private final PostStatusType status;
 
     @Builder
-    public MyPostListResponse(Long id, String name, String thumbnailImage, String subCategory, String region, GenderType gender, String birth, int like, String createdDate, PostStatusType status) {
+    private MyPostListResponse(Long id, String name, String thumbnailImage, String subCategory, String region, GenderType gender, String birth, int like, String createdDate, PostStatusType status) {
         this.postId = id;
         this.name = name;
         this.thumbnailImage = thumbnailImage;

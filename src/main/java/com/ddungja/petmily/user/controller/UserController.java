@@ -37,11 +37,6 @@ public class UserController {
     private final KakaoService kakaoService;
     private final UserService userService;
     private final JwtProvider jwtProvider;
-    @Operation(summary = "로컬에서 카카오 로그인 테스트")
-    @GetMapping("/sadfasdfsdfsdf")
-    public void login(HttpServletResponse response) throws IOException {
-        response.sendRedirect("https://kauth.kakao.com/oauth/authorize?client_id=ee34f16978b76a36b7c087376c6bbef2&redirect_uri=http://localhost:8080/users/kakao&response_type=code");
-    }
 
     @Operation(summary = "카카오 로그인")
     @GetMapping("/kakao")
@@ -49,31 +44,18 @@ public class UserController {
         log.debug("카카오 로그인 요청 code = {}", code);
         KakaoProfile kakaoProfile = kakaoService.getInfo(code);
         User user = userService.login(kakaoProfile);
-        log.debug("로그인 성공", user);
         String accessToken = jwtProvider.createAccessToken(user);
         String refreshToken = jwtProvider.createRefreshToken(user);
-        ResponseCookie refreshTokenCookie = createRefreshTokenCookie(refreshToken);
-        return ResponseEntity.ok().header(SET_COOKIE, refreshTokenCookie.toString()).header(AUTHORIZATION, accessToken).body(UserCertificationResponse.from(user));
+        String refreshTokenCookie = createRefreshTokenCookie(refreshToken);
+        return ResponseEntity.ok().header(SET_COOKIE, refreshTokenCookie).header(AUTHORIZATION, accessToken).body(UserCertificationResponse.from(user));
     }
 
-//    @Operation(summary = "카카오 로그인하기")
-//    @GetMapping("/kakao")
-//    public ResponseEntity<?> kakaoLogin(@RequestParam String tokenType, @RequestParam String kakaoAccessToken) throws URISyntaxException {
-//        log.info("카카오 로그인 요청 tokenType = {}, kakaoAccessToken = {}", tokenType, kakaoAccessToken);
-//        KakaoProfile kakaoProfile = kakaoService.getInfo(tokenType, kakaoAccessToken);
-//        User user = userService.login(kakaoProfile);
-//        String accessToken = jwtProvider.createAccessToken(user);
-//        String refreshToken = jwtProvider.createRefreshToken(user);
-//        ResponseCookie refreshTokenCookie = createRefreshTokenCookie(refreshToken);
-//        return ResponseEntity.ok().header(SET_COOKIE, refreshTokenCookie.toString()).header(AUTHORIZATION, accessToken).body(UserCertificationResponse.from(user));
-//    }
-
-    private static ResponseCookie createRefreshTokenCookie(String refreshToken) {
+    private static String createRefreshTokenCookie(String refreshToken) {
         return ResponseCookie.from("refreshToken", refreshToken).maxAge(Duration.ofDays(14)).path("/")
 //                .secure(true) //https를 쓸때 사용
-//                .sameSite("None") //csrf 공격을 방지하기 위해 설정
+//                .sameSite("lax") //csrf 공격을 방지하기 위해 설정
 //                .domain("localhost:3000") // 도메인이 다르면 쿠키를 못받는다.
-                .httpOnly(true).build();
+                .httpOnly(true).build().toString();
     }
 
     @Operation(summary = "리프레쉬 토큰 검증하고 엑세스토큰 반환")
@@ -86,8 +68,8 @@ public class UserController {
             User user = jwtProvider.refreshTokenVerify(refreshToken);
             String accessToken = jwtProvider.createAccessToken(user);
             refreshToken = jwtProvider.createRefreshToken(user);
-            ResponseCookie refreshTokenCookie = createRefreshTokenCookie(refreshToken);
-            return ResponseEntity.ok().header(SET_COOKIE, refreshTokenCookie.toString()).header(AUTHORIZATION, accessToken).build();
+            String refreshTokenCookie = createRefreshTokenCookie(refreshToken);
+            return ResponseEntity.ok().header(SET_COOKIE, refreshTokenCookie).header(AUTHORIZATION, accessToken).build();
         }
         throw new CustomException(REFRESH_TOKEN_VALIDATION_FAILED);
     }
@@ -105,25 +87,38 @@ public class UserController {
         String testAccessToken = jwtProvider.createTestAccessToken(1L);
         return ResponseEntity.ok(testAccessToken);
     }
-
     @Operation(summary = "테스트용 엑세스토큰 반환 userId = 2")
     @GetMapping("/test/token/2")
     public ResponseEntity<?> testAccessToken2() {
         String testAccessToken = jwtProvider.createTestAccessToken(2L);
         return ResponseEntity.ok(testAccessToken);
     }
-
     @Operation(summary = "카카오 회원가입 후 추가적인 정보와 휴대전화 인증")
     @PostMapping("/signup")
     public ResponseEntity<?> signUp(@AuthenticationPrincipal User user, @RequestBody UserCreateRequest userCreateRequest) {
         userService.signUp(user.getId(), userCreateRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(UserSignUpResponse.from(user));
     }
-
     @Operation(summary = "닉네임 수정")
     @PutMapping
     public ResponseEntity<?> modify(@AuthenticationPrincipal User user, @RequestBody UserUpdateRequest userUpdateRequest) {
         userService.modifyNickname(user.getId(), userUpdateRequest);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
+    @Operation(summary = "로컬에서 카카오 로그인 테스트")
+    @GetMapping("/sadfasdfsdfsdf")
+    public void login(HttpServletResponse response) throws IOException {
+        response.sendRedirect("https://kauth.kakao.com/oauth/authorize?client_id=ee34f16978b76a36b7c087376c6bbef2&redirect_uri=http://localhost:8080/users/kakao&response_type=code");
+    }
+//    @Operation(summary = "카카오 로그인하기")
+//    @GetMapping("/kakao")
+//    public ResponseEntity<?> kakaoLogin(@RequestParam String tokenType, @RequestParam String kakaoAccessToken) throws URISyntaxException {
+//        log.info("카카오 로그인 요청 tokenType = {}, kakaoAccessToken = {}", tokenType, kakaoAccessToken);
+//        KakaoProfile kakaoProfile = kakaoService.getInfo(tokenType, kakaoAccessToken);
+//        User user = userService.login(kakaoProfile);
+//        String accessToken = jwtProvider.createAccessToken(user);
+//        String refreshToken = jwtProvider.createRefreshToken(user);
+//        ResponseCookie refreshTokenCookie = createRefreshTokenCookie(refreshToken);
+//        return ResponseEntity.ok().header(SET_COOKIE, refreshTokenCookie.toString()).header(AUTHORIZATION, accessToken).body(UserCertificationResponse.from(user));
+//    }
 }

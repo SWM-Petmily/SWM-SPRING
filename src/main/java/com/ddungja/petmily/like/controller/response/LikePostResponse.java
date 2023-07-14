@@ -3,8 +3,6 @@ package com.ddungja.petmily.like.controller.response;
 import com.ddungja.petmily.like.domain.Like;
 import com.ddungja.petmily.post.domain.Post;
 import com.ddungja.petmily.post.domain.type.GenderType;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -17,18 +15,14 @@ public class LikePostResponse {
     private final String thumbnailImage;
     private final String subCategory;
     private final String region;
-    @Enumerated(EnumType.STRING)
     private final GenderType gender;
     private final String birth;
-
     private final int like;
-
-    private final boolean isMine;
-
+    private final Boolean isMine;
     private final String createdDate;
 
     @Builder
-    public LikePostResponse(Long id, String name, String image, String subCategory, String region, GenderType gender, String birth, int like, boolean isMine, String createdDate) {
+    private LikePostResponse(Long id, String name, String image, String subCategory, String region, GenderType gender, String birth, int like, Boolean isMine, String createdDate) {
         this.id = id;
         this.name = name;
         this.thumbnailImage = image;

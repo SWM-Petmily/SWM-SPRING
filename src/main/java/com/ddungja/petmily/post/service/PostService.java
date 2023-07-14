@@ -50,6 +50,7 @@ public class PostService {
         MainCategory mainCategory = mainCategoryRepository.findById(postCreateRequest.getMainCategory()).orElseThrow(() -> new CustomException(MAIN_CATEGORY_NOT_FOUND));
         SubCategory subCategory = subCategoryRepository.findById(postCreateRequest.getSubCategory()).orElseThrow(() -> new CustomException(SUB_CATEGORY_NOT_FOUND));
         Post post = postCreateRequest.toEntity(user, mainCategory, subCategory);
+        //TODO 여기 from 으로 고치기!!
 
         /*질병 업로드*/
         if (postCreateRequest.getDiseases() != null) {

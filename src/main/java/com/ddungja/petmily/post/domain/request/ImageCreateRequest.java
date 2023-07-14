@@ -9,7 +9,7 @@ public class ImageCreateRequest {
     private  String url;
 
     @Builder
-    public ImageCreateRequest(String url, String name) {
+    private ImageCreateRequest(String url, String name) {
         this.url = url;
     }
 }

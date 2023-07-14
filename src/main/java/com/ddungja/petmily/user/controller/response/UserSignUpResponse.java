@@ -6,8 +6,8 @@ import lombok.Getter;
 
 @Getter
 public class UserSignUpResponse {
-    private final Long userId;
 
+    private final Long userId;
     @Builder
     private UserSignUpResponse(Long userId) {
         this.userId = userId;

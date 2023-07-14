@@ -21,7 +21,7 @@ public class ProfileUpdateRequest {
     private final List<ExperienceUpdateRequest> experiences;
 
     @Builder
-    public ProfileUpdateRequest(Long profileImageId, String job, String environment, int people, String comment, String openTalk, String region, Boolean isExperience, List<ExperienceUpdateRequest> experiences) {
+    private ProfileUpdateRequest(Long profileImageId, String job, String environment, int people, String comment, String openTalk, String region, Boolean isExperience, List<ExperienceUpdateRequest> experiences) {
         this.profileImageId = profileImageId;
         this.job = job;
         this.environment = environment;

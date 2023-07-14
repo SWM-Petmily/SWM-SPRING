@@ -12,10 +12,8 @@ import java.net.URI;
 
 @FeignClient(name = "kakaoClient", configuration = OpenFeignConfig.class)
 public interface KakaoOpenFeign {
-
     @PostMapping
     KakaoProfile getInfo(URI baseUrl, @RequestHeader("Authorization") String accessToken);
-
     @PostMapping
     KakaoToken getToken(URI baseUrl, @RequestParam("client_id") String restApiKey,
                         @RequestParam("redirect_uri") String redirectUrl,

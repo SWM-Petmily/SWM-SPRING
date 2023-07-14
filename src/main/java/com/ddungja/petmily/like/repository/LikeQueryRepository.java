@@ -6,6 +6,5 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface LikeQueryRepository {
-
     Page<Like> adfs(Long userId, PostStatusType postStatusType, Pageable pageable);
 }

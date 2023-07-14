@@ -7,8 +7,6 @@ import com.ddungja.petmily.post.domain.type.GenderType;
 import com.ddungja.petmily.post.domain.type.NeuteredType;
 import com.ddungja.petmily.post.domain.type.PostStatusType;
 import com.ddungja.petmily.user.domain.User;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -19,12 +17,9 @@ public class PostCreateRequest {
     private final Long mainCategory;
     private final Long subCategory;
     private final String name;
-
     private final String region;
-    @Enumerated(EnumType.STRING)
     private final GenderType gender;
     private final String birth;
-    @Enumerated(EnumType.STRING)
     private final NeuteredType neutered;
     private final int money;
     private final String reason; // 분양 이유
@@ -32,8 +27,6 @@ public class PostCreateRequest {
     private final String disadvantage; // 단점, 주의할 점
     private final String averageCost;// 평균비용
     private final String adopter; // 분양자
-
-    @Enumerated(EnumType.STRING)
     private final PostStatusType status;
     private final List<ImageCreateRequest> postImages;
     private final List<ImageCreateRequest> vaccinationImages;
