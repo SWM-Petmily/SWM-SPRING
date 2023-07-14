@@ -48,8 +48,7 @@ public class PostService {
         User user = userRepository.findById(id).orElseThrow(() -> new CustomException(USER_NOT_FOUND));
         MainCategory mainCategory = mainCategoryRepository.findById(postCreateRequest.getMainCategory()).orElseThrow(() -> new CustomException(MAIN_CATEGORY_NOT_FOUND));
         SubCategory subCategory = subCategoryRepository.findById(postCreateRequest.getSubCategory()).orElseThrow(() -> new CustomException(SUB_CATEGORY_NOT_FOUND));
-        Post post = postCreateRequest.toEntity(user, mainCategory, subCategory);
-        //TODO 여기 from 으로 고치기!!
+        Post post = Post.from(postCreateRequest, user, mainCategory, subCategory);
 
         /*질병 업로드*/
         if (postCreateRequest.getDiseases() != null) {
@@ -61,6 +60,7 @@ public class PostService {
                 diseaseRepository.save(uploadDisease);
             }
         }
+
 
         /*이미지 업로드*/
         if (postCreateRequest.getPostImages() != null) {
@@ -76,6 +76,15 @@ public class PostService {
             }
             imageRepository.saveAll(images);
         }
+//        stream으로 코드 바꿔봄
+//        if (postCreateRequest.getPostImages() != null) {
+//            post.createThumbnailImage(postCreateRequest);
+//            postCreateRequest.getPostImages().stream().map(imageCreateRequest -> Image.builder()
+//                    .post(post)
+//                    .url(imageCreateRequest.getUrl())
+//                    .imageType(POST)
+//                    .build()).forEach(imageRepository::save);
+//        }
 
         /*예방접종 인증 - 사진만*/
         if (postCreateRequest.getVaccinationImages() != null) {

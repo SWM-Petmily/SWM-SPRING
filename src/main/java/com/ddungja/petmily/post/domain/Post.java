@@ -11,6 +11,9 @@ import com.ddungja.petmily.user.domain.User;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+import java.util.Arrays;
 import java.util.List;
 
 @Entity
@@ -88,6 +91,31 @@ public class Post extends BaseTimeEntity {
         this.status = status;
         this.views = views;
         this.reports = reports;
+    }
+
+    public static Post from(PostCreateRequest postCreateRequest, User user, MainCategory mainCategory, SubCategory subCategory) {
+        int[] date = Arrays.stream(postCreateRequest.getBirth().split("-")).mapToInt(Integer::parseInt).toArray();
+        LocalDate start = LocalDate.of(date[0], date[1], 1);
+        LocalDate end = LocalDate.now();
+        return Post.builder()
+                .user(user)
+                .mainCategory(mainCategory)
+                .subCategory(subCategory)
+                .name(postCreateRequest.getName())
+                .gender(postCreateRequest.getGender())
+                .birth(Long.toString(ChronoUnit.MONTHS.between(start, end)))
+                .region(postCreateRequest.getRegion())
+                .money(postCreateRequest.getMoney())
+                .neutered(postCreateRequest.getNeutered())
+                .reason(postCreateRequest.getReason())
+                .advantage(postCreateRequest.getAdvantage())
+                .disadvantage(postCreateRequest.getDisadvantage())
+                .averageCost(postCreateRequest.getAverageCost())
+                .adopter(postCreateRequest.getAdopter())
+                .status(postCreateRequest.getStatus())
+                .views(0)
+                .reports(0)
+                .build();
     }
 
     public void createThumbnailImage(PostCreateRequest postCreateRequest) {

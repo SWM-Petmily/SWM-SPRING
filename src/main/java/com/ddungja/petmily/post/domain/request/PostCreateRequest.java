@@ -1,12 +1,8 @@
 package com.ddungja.petmily.post.domain.request;
 
-import com.ddungja.petmily.post.domain.MainCategory;
-import com.ddungja.petmily.post.domain.Post;
-import com.ddungja.petmily.post.domain.SubCategory;
 import com.ddungja.petmily.post.domain.type.GenderType;
 import com.ddungja.petmily.post.domain.type.NeuteredType;
 import com.ddungja.petmily.post.domain.type.PostStatusType;
-import com.ddungja.petmily.user.domain.User;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -34,7 +30,7 @@ public class PostCreateRequest {
     private final List<DiseaseRequest> diseases;
 
     @Builder
-    public PostCreateRequest(Long mainCategory, Long subCategory, String name, String region, GenderType gender, String birth, NeuteredType neutered, int money, String reason, String advantage, String disadvantage, String averageCost, String adopter, PostStatusType status, List<ImageCreateRequest> postImages, List<ImageCreateRequest> vaccinationImages, List<ImageCreateRequest> medicalCheckImages, List<DiseaseRequest> diseases) {
+    private PostCreateRequest(Long mainCategory, Long subCategory, String name, String region, GenderType gender, String birth, NeuteredType neutered, int money, String reason, String advantage, String disadvantage, String averageCost, String adopter, PostStatusType status, List<ImageCreateRequest> postImages, List<ImageCreateRequest> vaccinationImages, List<ImageCreateRequest> medicalCheckImages, List<DiseaseRequest> diseases) {
         this.mainCategory = mainCategory;
         this.subCategory = subCategory;
         this.name = name;
@@ -53,28 +49,6 @@ public class PostCreateRequest {
         this.vaccinationImages = vaccinationImages;
         this.medicalCheckImages = medicalCheckImages;
         this.diseases = diseases;
-    }
-
-    public Post toEntity(User user, MainCategory mainCategory, SubCategory subCategory) {
-        return Post.builder()
-                .user(user)
-                .mainCategory(mainCategory)
-                .subCategory(subCategory)
-                .name(name)
-                .gender(gender)
-                .birth(birth)
-                .region(region)
-                .neutered(neutered)
-                .money(money)
-                .reason(reason)
-                .advantage(advantage)
-                .disadvantage(disadvantage)
-                .averageCost(averageCost)
-                .adopter(adopter)
-                .views(0)
-                .reports(0)
-                .status(status)
-                .build();
     }
 
 }
