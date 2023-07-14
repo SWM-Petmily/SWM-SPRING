@@ -9,15 +9,4 @@ public class HealthCheckController {
     public ResponseEntity<?> health() {
         return ResponseEntity.ok("LoadBalancer Health Check");
     }
-
-    @PostMapping("/health")
-    public ResponseEntity<?> test(@RequestBody String test){
-        return ResponseEntity.ok(test);
-    }
-
-    @PutMapping("/health/put")
-    public ResponseEntity<?> put(@RequestBody String test){
-        return ResponseEntity.ok(test);
-    }
-
 }
