@@ -16,12 +16,14 @@ import static com.ddungja.petmily.common.domain.exception.ExceptionCode.USER_NOT
 
 @Service
 @RequiredArgsConstructor
+
 public class UserService {
 
     private final UserRepository userRepository;
 
     @Transactional
     public User login(KakaoProfile kakaoProfile) {
+
         return userRepository.findByEmail(kakaoProfile.getEmail()).orElseGet(() -> userRepository.save(User.builder().email(kakaoProfile.getEmail()).provider(ProviderType.KAKAO.name()).build()));
     }
 

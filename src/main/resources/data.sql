@@ -1,13 +1,13 @@
 
 -- user
 insert into users (user_id, email, nickname, phone, provider, birth, create_date, update_date, is_profile, is_certification)
-values (1, 'rldh11111@naver.com', '권기오', '01063169037', 'kakao', '0713', now(), now(), true, false);
+values (1, 'kwon@naver.com', '권기오', '01063169037', 'kakao', '0713', now(), now(), true, false);
 
 insert into users (user_id, email, nickname, phone, provider, birth, create_date, update_date, is_profile, is_certification)
-values (2, 'rldh9037@naver.com', '김아란', '01012345678', 'kakao', '0613', now(), now(), false, false);
+values (2, 'aran@naver.com', '김아란', '01012345678', 'kakao', '0613', now(), now(), false, false);
 
 insert into users (user_id, email, nickname, phone, provider, birth, create_date, update_date, is_profile, is_certification)
-values (3, 'rldh6316@naver.com', '오승기', '01011112222', 'kakao', '0402', now(), now(), false, false);
+values (3, 'seongi@naver.com', '오승기', '01011112222', 'kakao', '0402', now(), now(), false, false);
 
 
 -- profile image
