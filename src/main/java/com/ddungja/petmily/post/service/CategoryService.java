@@ -18,7 +18,6 @@ public class CategoryService {
     private final MainCategoryRepository mainCategoryRepository;
     private final SubCategoryRepository subCategoryRepository;
 
-
     public List<MainCategory> getMainCategory(){
         return mainCategoryRepository.findAll();
     }

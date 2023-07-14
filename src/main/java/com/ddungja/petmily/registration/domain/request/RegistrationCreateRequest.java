@@ -5,12 +5,12 @@ import lombok.Getter;
 
 @Getter
 public class RegistrationCreateRequest {
-    private final String owner_nm;
-    private final String dog_reg_no;
+    private final String ownerName;
+    private final String dogRegistrationNumber;
 
     @Builder
     private RegistrationCreateRequest(String owner_nm, String dog_reg_no) {
-        this.owner_nm = owner_nm;
-        this.dog_reg_no = dog_reg_no;
+        this.ownerName = owner_nm;
+        this.dogRegistrationNumber = dog_reg_no;
     }
 }

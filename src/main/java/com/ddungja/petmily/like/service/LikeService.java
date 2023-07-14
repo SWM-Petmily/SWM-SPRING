@@ -39,7 +39,7 @@ public class LikeService {
 
     public Page<Like> getLikeList(Long userId, PostStatusType postStatusType, Pageable pageable) {
         userRepository.findById(userId).orElseThrow(() -> new CustomException(USER_NOT_FOUND));
-        return likeRepository.adfs(userId, postStatusType, pageable);
+        return likeRepository.findByUserIdAndPostStatus(userId, postStatusType, pageable);
     }
 
     @Transactional

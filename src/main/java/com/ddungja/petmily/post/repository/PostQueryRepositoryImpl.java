@@ -25,8 +25,9 @@ public class PostQueryRepositoryImpl implements PostQueryRepository {
         List<Post> content = jpaQueryFactory.selectFrom(post)
                 .leftJoin(post.subCategory, subCategory).fetchJoin()
                 .leftJoin(post.like, like).fetchJoin()
-
                 .where(post.user.id.eq(userId).and(eqPostStatusType(postStatusType)))
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
                 .fetch();
 
         JPAQuery<Long> countQuery = jpaQueryFactory.select(post.count())

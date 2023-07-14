@@ -37,7 +37,7 @@ public class RegistrationService {
     public Registration register(Long userId, RegistrationCreateRequest registrationCreateRequest) {
         User user = userRepository.findById(userId).orElseThrow(() -> new CustomException(USER_NOT_FOUND));
         MainCategory mainCategory = mainCategoryRepository.findByName("강아지").orElseThrow(() -> new CustomException(MAIN_CATEGORY_NOT_FOUND));
-        if (registrationRepository.findByDogRegNo(registrationCreateRequest.getDog_reg_no()).isPresent()) {
+        if (registrationRepository.findByDogRegNo(registrationCreateRequest.getDogRegistrationNumber()).isPresent()) {
             throw new CustomException(REGISTER_ALREADY_EXISTS);
         }
         RegistrationApiItem registerInfo = getRegistrationInfo(registrationCreateRequest);
@@ -51,7 +51,7 @@ public class RegistrationService {
 
 
     private RegistrationApiItem getRegistrationInfo(RegistrationCreateRequest registrationCreateRequest) {
-        RegistrationApiItem registerInfo = registrationApiClient.getAnimalInfo(registrationCreateRequest.getOwner_nm(), registrationCreateRequest.getDog_reg_no(), serviceKey, "json").getResponse().getBody().getItem();
+        RegistrationApiItem registerInfo = registrationApiClient.getAnimalInfo(registrationCreateRequest.getOwnerName(), registrationCreateRequest.getDogRegistrationNumber(), serviceKey, "json").getResponse().getBody().getItem();
         if (registerInfo == null) {
             throw new CustomException(REGISTER_NOT_FOUND);
         }

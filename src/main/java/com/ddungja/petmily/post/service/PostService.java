@@ -35,7 +35,6 @@ public class PostService {
     private final UserRepository userRepository;
 
     private final PostRepository postRepository;
-
     private final MainCategoryRepository mainCategoryRepository;
     private final SubCategoryRepository subCategoryRepository;
 
