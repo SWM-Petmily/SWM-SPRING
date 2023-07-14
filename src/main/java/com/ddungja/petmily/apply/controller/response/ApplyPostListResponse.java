@@ -2,7 +2,7 @@ package com.ddungja.petmily.apply.controller.response;
 
 import com.ddungja.petmily.apply.domain.Apply;
 import com.ddungja.petmily.apply.domain.ApprovalType;
-import com.ddungja.petmily.post.domain.post.GenderType;
+import com.ddungja.petmily.post.domain.type.GenderType;
 import lombok.Builder;
 import lombok.Getter;
 

@@ -12,6 +12,7 @@ import com.ddungja.petmily.user.service.KakaoService;
 import com.ddungja.petmily.user.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -20,6 +21,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.net.URISyntaxException;
 import java.time.Duration;
 
@@ -35,18 +37,36 @@ public class UserController {
     private final KakaoService kakaoService;
     private final UserService userService;
     private final JwtProvider jwtProvider;
+    @Operation(summary = "로컬에서 카카오 로그인 테스트")
+    @GetMapping("/sadfasdfsdfsdf")
+    public void login(HttpServletResponse response) throws IOException {
+        response.sendRedirect("https://kauth.kakao.com/oauth/authorize?client_id=ee34f16978b76a36b7c087376c6bbef2&redirect_uri=http://localhost:8080/users/kakao&response_type=code");
+    }
 
-    @Operation(summary = "카카오 로그인하기")
+    @Operation(summary = "카카오 로그인")
     @GetMapping("/kakao")
-    public ResponseEntity<?> kakaoLogin(@RequestParam String tokenType, @RequestParam String kakaoAccessToken) throws URISyntaxException {
-        log.info("카카오 로그인 요청 tokenType = {}, kakaoAccessToken = {}", tokenType, kakaoAccessToken);
-        KakaoProfile kakaoProfile = kakaoService.getInfo(tokenType, kakaoAccessToken);
+    public ResponseEntity<?> kakaoLogin(@RequestParam(value = "code") String code) throws URISyntaxException {
+        log.debug("카카오 로그인 요청 code = {}", code);
+        KakaoProfile kakaoProfile = kakaoService.getInfo(code);
         User user = userService.login(kakaoProfile);
+        log.debug("로그인 성공", user);
         String accessToken = jwtProvider.createAccessToken(user);
         String refreshToken = jwtProvider.createRefreshToken(user);
         ResponseCookie refreshTokenCookie = createRefreshTokenCookie(refreshToken);
         return ResponseEntity.ok().header(SET_COOKIE, refreshTokenCookie.toString()).header(AUTHORIZATION, accessToken).body(UserCertificationResponse.from(user));
     }
+
+//    @Operation(summary = "카카오 로그인하기")
+//    @GetMapping("/kakao")
+//    public ResponseEntity<?> kakaoLogin(@RequestParam String tokenType, @RequestParam String kakaoAccessToken) throws URISyntaxException {
+//        log.info("카카오 로그인 요청 tokenType = {}, kakaoAccessToken = {}", tokenType, kakaoAccessToken);
+//        KakaoProfile kakaoProfile = kakaoService.getInfo(tokenType, kakaoAccessToken);
+//        User user = userService.login(kakaoProfile);
+//        String accessToken = jwtProvider.createAccessToken(user);
+//        String refreshToken = jwtProvider.createRefreshToken(user);
+//        ResponseCookie refreshTokenCookie = createRefreshTokenCookie(refreshToken);
+//        return ResponseEntity.ok().header(SET_COOKIE, refreshTokenCookie.toString()).header(AUTHORIZATION, accessToken).body(UserCertificationResponse.from(user));
+//    }
 
     private static ResponseCookie createRefreshTokenCookie(String refreshToken) {
         return ResponseCookie.from("refreshToken", refreshToken).maxAge(Duration.ofDays(14)).path("/")

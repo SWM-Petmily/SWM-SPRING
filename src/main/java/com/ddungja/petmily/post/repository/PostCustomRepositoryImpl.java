@@ -1,7 +1,7 @@
 package com.ddungja.petmily.post.repository;
 
 import com.ddungja.petmily.post.domain.post.Post;
-import com.ddungja.petmily.post.domain.post.PostStatusType;
+import com.ddungja.petmily.post.domain.type.PostStatusType;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;

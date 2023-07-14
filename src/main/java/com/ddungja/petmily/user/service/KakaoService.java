@@ -1,6 +1,7 @@
 package com.ddungja.petmily.user.service;
 
 import com.ddungja.petmily.user.domain.KakaoProfile;
+import com.ddungja.petmily.user.domain.KakaoToken;
 import com.ddungja.petmily.user.repository.KakaoOpenFeign;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,7 +16,7 @@ import java.net.URISyntaxException;
 @RequiredArgsConstructor
 public class KakaoService {
 
-    private final KakaoOpenFeign kakao;
+    private final KakaoOpenFeign client;
 
     @Value("${kakao.tokenUrl}")
     private String kakaoTokenUrl;
@@ -29,9 +30,13 @@ public class KakaoService {
     @Value("${kakao.redirectUrl}")
     private String redirectUrl;
 
-    public KakaoProfile getInfo(String tokenType, String accessToken) throws URISyntaxException {
-        return kakao.getInfo(new URI(kakaoUserInfoURl), tokenType + " " + accessToken);
+    public KakaoProfile getInfo(final String code) throws URISyntaxException {
+        final KakaoToken token = getToken(code);
+        log.debug("token = {}", token);
+        return client.getInfo(new URI(kakaoUserInfoURl), token.getToken_type() + " " + token.getAccess_token());
     }
 
-
+    private KakaoToken getToken(final String code) throws URISyntaxException {
+        return client.getToken(new URI(kakaoTokenUrl), restapiKey, redirectUrl, code, "authorization_code");
+    }
 }

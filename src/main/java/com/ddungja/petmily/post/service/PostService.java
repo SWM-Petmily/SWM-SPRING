@@ -1,7 +1,7 @@
 package com.ddungja.petmily.post.service;
 
 import com.ddungja.petmily.common.domain.exception.CustomException;
-import com.ddungja.petmily.post.domain.post.PostStatusType;
+import com.ddungja.petmily.post.domain.type.PostStatusType;
 import com.ddungja.petmily.post.domain.request.DiseaseRequest;
 import com.ddungja.petmily.post.domain.request.ImageCreateRequest;
 import com.ddungja.petmily.post.domain.request.PostCreateRequest;

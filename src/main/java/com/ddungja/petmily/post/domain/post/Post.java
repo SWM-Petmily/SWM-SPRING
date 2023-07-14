@@ -6,11 +6,13 @@ import com.ddungja.petmily.like.domain.Like;
 import com.ddungja.petmily.post.domain.MainCategory;
 import com.ddungja.petmily.post.domain.SubCategory;
 import com.ddungja.petmily.post.domain.image.Image;
+import com.ddungja.petmily.post.domain.type.GenderType;
+import com.ddungja.petmily.post.domain.type.NeuteredType;
+import com.ddungja.petmily.post.domain.type.PostStatusType;
 import com.ddungja.petmily.user.domain.User;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
