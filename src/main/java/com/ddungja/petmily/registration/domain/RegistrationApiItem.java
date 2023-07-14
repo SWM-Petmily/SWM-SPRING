@@ -3,16 +3,18 @@ package com.ddungja.petmily.registration.domain;
 import lombok.*;
 
 @Getter
+@NoArgsConstructor
+@ToString
 public class RegistrationApiItem {
-    private final String rfidCd;
-    private final String dogNm;
-    private final String sexNm;
-    private final String kindNm;
-    private final String neuterYn;
-    private final String orgNm;
-    private final String officeTel;
-    private final String aprGbNm;
-    private final String dogRegNo;
+    private String rfidCd;
+    private String dogNm;
+    private String sexNm;
+    private String kindNm;
+    private String neuterYn;
+    private String orgNm;
+    private String officeTel;
+    private String aprGbNm;
+    private String dogRegNo;
 
     @Builder
     private RegistrationApiItem(String dogRegNo, String rfidCd, String dogNm, String sexNm, String kindNm, String neuterYn, String orgNm, String officeTel, String aprGbNm) {
