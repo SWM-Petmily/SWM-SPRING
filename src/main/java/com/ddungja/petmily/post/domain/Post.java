@@ -9,11 +9,11 @@ import com.ddungja.petmily.post.domain.type.NeuteredType;
 import com.ddungja.petmily.post.domain.type.PostStatusType;
 import com.ddungja.petmily.user.domain.User;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
-import java.util.Arrays;
 import java.util.List;
 
 @Entity
@@ -94,16 +94,13 @@ public class Post extends BaseTimeEntity {
     }
 
     public static Post from(PostCreateRequest postCreateRequest, User user, MainCategory mainCategory, SubCategory subCategory) {
-        int[] date = Arrays.stream(postCreateRequest.getBirth().split("-")).mapToInt(Integer::parseInt).toArray();
-        LocalDate start = LocalDate.of(date[0], date[1], 1);
-        LocalDate end = LocalDate.now();
         return Post.builder()
                 .user(user)
                 .mainCategory(mainCategory)
                 .subCategory(subCategory)
                 .name(postCreateRequest.getName())
                 .gender(postCreateRequest.getGender())
-                .birth(Long.toString(ChronoUnit.MONTHS.between(start, end)))
+                .birth(postCreateRequest.getBirth())
                 .region(postCreateRequest.getRegion())
                 .money(postCreateRequest.getMoney())
                 .neutered(postCreateRequest.getNeutered())
