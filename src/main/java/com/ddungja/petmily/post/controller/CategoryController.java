@@ -22,9 +22,7 @@ public class CategoryController {
 
     private final CategoryService categoryService;
 
-
-    // TODO /category/ ???
-    @GetMapping("/")
+    @GetMapping
     public ResponseEntity<?> getCategory(){
         log.info("메인 카테고리 불러오기");
         return ResponseEntity.ok(categoryService.getMainCategory());

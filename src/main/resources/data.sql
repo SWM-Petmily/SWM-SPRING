@@ -38,7 +38,9 @@ insert into sub_categories(sub_category_id, main_category_id, name)values
 insert into posts (adopter,advantage,average_cost,birth,create_date,disadvantage,gender,main_category_id,money,name,neutered,reason,region,reports,status,sub_category_id,thumbnail_image,update_date,user_id,views,post_id) values
 ('입양자', '장점','평균비용','2022-03',now(),'단점','MALE',1,'100000','테스트','YES','이유','서울',1,'SAVE',1,'https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcREj22c-wMNL5IDmU99v8G7voUl17Yxm0JJqMLqttdPT4DnaB99zqVK7HWiNzjP3aZnzCEf-ikAqb2yiDk',now(),1,1,1),
 ('입양자', '장점','평균비용','2022-03',now(),'단점','MALE',1,'100000','테스트','NO','이유','서울',1,'SAVE',1,'https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcREj22c-wMNL5IDmU99v8G7voUl17Yxm0JJqMLqttdPT4DnaB99zqVK7HWiNzjP3aZnzCEf-ikAqb2yiDk',now(),1,1,2),
-('입양자', '장점','평균비용','2022-03',now(),'단점','MALE',1,'100000','테스트','NO','이유','서울',1,'SAVE',1,'https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcREj22c-wMNL5IDmU99v8G7voUl17Yxm0JJqMLqttdPT4DnaB99zqVK7HWiNzjP3aZnzCEf-ikAqb2yiDk',now(),2,1,3);
+('입양자', '장점','평균비용','2022-03',now(),'단점','MALE',1,'100000','테스트','NO','이유','서울',1,'WAITING',1,'https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcREj22c-wMNL5IDmU99v8G7voUl17Yxm0JJqMLqttdPT4DnaB99zqVK7HWiNzjP3aZnzCEf-ikAqb2yiDk',now(),1,1,3),
+('입양자', '장점','평균비용','2022-03',now(),'단점','MALE',1,'100000','테스트','NO','이유','서울',1,'SAVE',1,'https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcREj22c-wMNL5IDmU99v8G7voUl17Yxm0JJqMLqttdPT4DnaB99zqVK7HWiNzjP3aZnzCEf-ikAqb2yiDk',now(),2,1,4),
+('입양자', '장점','평균비용','2022-03',now(),'단점','MALE',1,'100000','테스트','NO','이유','서울',1,'WAITING',1,'https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcREj22c-wMNL5IDmU99v8G7voUl17Yxm0JJqMLqttdPT4DnaB99zqVK7HWiNzjP3aZnzCEf-ikAqb2yiDk',now(),2,1,5);
 
 -- post_images
 insert into images (create_date,image_type,post_id,update_date,url,image_id) values
