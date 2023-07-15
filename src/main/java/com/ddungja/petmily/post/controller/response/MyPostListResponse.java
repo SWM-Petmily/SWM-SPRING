@@ -6,7 +6,10 @@ import com.ddungja.petmily.post.domain.type.PostStatusType;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+import java.util.Arrays;
 
 @Getter
 public class MyPostListResponse {
@@ -36,6 +39,9 @@ public class MyPostListResponse {
     }
 
     public static MyPostListResponse from(Post post) {
+        int[] date = Arrays.stream(post.getBirth().split("-")).mapToInt(Integer::parseInt).toArray();
+        LocalDate start = LocalDate.of(date[0], date[1], 1);
+        LocalDate end = LocalDate.now();
         return MyPostListResponse.builder()
                 .id(post.getId())
                 .name(post.getName())
@@ -44,7 +50,7 @@ public class MyPostListResponse {
                 .gender(post.getGender())
                 .status(post.getStatus())
                 .region(post.getRegion())
-                .birth(post.getBirth())
+                .birth(Long.toString(ChronoUnit.MONTHS.between(start, end)))
                 .like(post.getLike().size())
                 .createdDate(post.getCreateDate().format(DateTimeFormatter.ofPattern("yyyy.MM.dd")))
                 .build();
