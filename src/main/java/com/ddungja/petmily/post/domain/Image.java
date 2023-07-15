@@ -1,7 +1,7 @@
-package com.ddungja.petmily.post.domain.image;
+package com.ddungja.petmily.post.domain;
 
 import com.ddungja.petmily.common.domain.BaseTimeEntity;
-import com.ddungja.petmily.post.domain.post.Post;
+import com.ddungja.petmily.post.domain.type.ImageType;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;

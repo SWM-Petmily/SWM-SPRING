@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 public class DiseaseRequest {
     private String name;
     @Builder
-    public DiseaseRequest(String name, String dasdf) {
+    private DiseaseRequest(String name, String dasdf) {
         this.name = name;
     }
 }

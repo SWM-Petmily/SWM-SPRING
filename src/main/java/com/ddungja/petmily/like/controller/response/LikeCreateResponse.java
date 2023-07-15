@@ -7,10 +7,10 @@ import lombok.Getter;
 
 @Getter
 public class LikeCreateResponse {
-    private Long likeId;
+    private final Long likeId;
 
     @Builder
-    public LikeCreateResponse(Long likeId) {
+    private LikeCreateResponse(Long likeId) {
         this.likeId = likeId;
     }
 

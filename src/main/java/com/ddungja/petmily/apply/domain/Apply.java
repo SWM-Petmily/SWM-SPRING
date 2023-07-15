@@ -3,7 +3,7 @@ package com.ddungja.petmily.apply.domain;
 
 import com.ddungja.petmily.apply.domain.request.ApplyCreateRequest;
 import com.ddungja.petmily.common.domain.BaseTimeEntity;
-import com.ddungja.petmily.post.domain.post.Post;
+import com.ddungja.petmily.post.domain.Post;
 import com.ddungja.petmily.user.domain.User;
 import jakarta.persistence.*;
 import lombok.AccessLevel;

@@ -31,7 +31,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign:4.0.3'
+    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
     implementation group: 'io.github.openfeign', name: 'feign-gson', version: '11.0'
 
 
@@ -61,7 +61,7 @@ dependencies {
     implementation 'com.auth0:java-jwt:4.3.0'
 
     //CoolSMS
-    implementation 'net.nurigo:sdk:4.3.0'
+//    implementation 'net.nurigo:sdk:4.3.0'
 
 }
 

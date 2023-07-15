@@ -15,8 +15,8 @@ import java.util.List;
 
 import static com.ddungja.petmily.apply.domain.QApply.apply;
 import static com.ddungja.petmily.like.domain.QLike.like;
+import static com.ddungja.petmily.post.domain.QPost.post;
 import static com.ddungja.petmily.post.domain.QSubCategory.subCategory;
-import static com.ddungja.petmily.post.domain.post.QPost.post;
 
 @RequiredArgsConstructor
 public class ApplyCustomRepositoryImpl implements ApplyCustomRepository {

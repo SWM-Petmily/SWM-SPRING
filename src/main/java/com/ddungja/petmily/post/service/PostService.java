@@ -8,9 +8,9 @@ import com.ddungja.petmily.post.domain.request.PostCreateRequest;
 import com.ddungja.petmily.post.domain.Disease;
 import com.ddungja.petmily.post.domain.MainCategory;
 import com.ddungja.petmily.post.domain.SubCategory;
-import com.ddungja.petmily.post.domain.image.Image;
-import com.ddungja.petmily.post.domain.image.ImageType;
-import com.ddungja.petmily.post.domain.post.Post;
+import com.ddungja.petmily.post.domain.Image;
+import com.ddungja.petmily.post.domain.type.ImageType;
+import com.ddungja.petmily.post.domain.Post;
 import com.ddungja.petmily.post.repository.*;
 import com.ddungja.petmily.user.domain.User;
 import com.ddungja.petmily.user.repository.UserRepository;
@@ -20,18 +20,21 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static com.ddungja.petmily.common.domain.exception.ExceptionCode.*;
-import static com.ddungja.petmily.post.domain.image.ImageType.MEDICAL_CHECK;
-import static com.ddungja.petmily.post.domain.image.ImageType.POST;
+import static com.ddungja.petmily.post.domain.type.ImageType.MEDICAL_CHECK;
+import static com.ddungja.petmily.post.domain.type.ImageType.POST;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class PostService {
 
     private final UserRepository userRepository;
 
     private final PostRepository postRepository;
-
     private final MainCategoryRepository mainCategoryRepository;
     private final SubCategoryRepository subCategoryRepository;
 
@@ -43,11 +46,9 @@ public class PostService {
     @Transactional
     public Post create(PostCreateRequest postCreateRequest, Long id) {
         User user = userRepository.findById(id).orElseThrow(() -> new CustomException(USER_NOT_FOUND));
-
         MainCategory mainCategory = mainCategoryRepository.findById(postCreateRequest.getMainCategory()).orElseThrow(() -> new CustomException(MAIN_CATEGORY_NOT_FOUND));
         SubCategory subCategory = subCategoryRepository.findById(postCreateRequest.getSubCategory()).orElseThrow(() -> new CustomException(SUB_CATEGORY_NOT_FOUND));
-
-        Post post = postCreateRequest.toEntity(user, mainCategory, subCategory);
+        Post post = Post.from(postCreateRequest, user, mainCategory, subCategory);
 
         /*질병 업로드*/
         if (postCreateRequest.getDiseases() != null) {
@@ -60,18 +61,30 @@ public class PostService {
             }
         }
 
+
         /*이미지 업로드*/
         if (postCreateRequest.getPostImages() != null) {
-            post.setThumbnailImage(postCreateRequest.getPostImages().get(0).getUrl());
+            post.createThumbnailImage(postCreateRequest);
+            List<Image> images = new ArrayList<>();
             for (ImageCreateRequest image : postCreateRequest.getPostImages()) {
-                Image uploadimage = Image.builder()
+                Image uploadImage = Image.builder()
                         .post(post)
                         .url(image.getUrl())
                         .imageType(POST)
                         .build();
-                imageRepository.save(uploadimage);
+                images.add(uploadImage);
             }
+            imageRepository.saveAll(images);
         }
+//        stream으로 코드 바꿔봄
+//        if (postCreateRequest.getPostImages() != null) {
+//            post.createThumbnailImage(postCreateRequest);
+//            postCreateRequest.getPostImages().stream().map(imageCreateRequest -> Image.builder()
+//                    .post(post)
+//                    .url(imageCreateRequest.getUrl())
+//                    .imageType(POST)
+//                    .build()).forEach(imageRepository::save);
+//        }
 
         /*예방접종 인증 - 사진만*/
         if (postCreateRequest.getVaccinationImages() != null) {
@@ -104,7 +117,6 @@ public class PostService {
 
     /*포스트 보기*/
 
-    @Transactional(readOnly = true)
     public Post get(Long id) {
         return postRepository.findPostById(id).orElseThrow(() -> new CustomException(POST_NOT_FOUND));
     }

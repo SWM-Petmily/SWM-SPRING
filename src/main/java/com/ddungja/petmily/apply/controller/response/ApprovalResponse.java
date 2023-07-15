@@ -12,7 +12,7 @@ public class ApprovalResponse {
     private final ApprovalType approval;
 
     @Builder
-    public ApprovalResponse(Long applyId, ApprovalType approval) {
+    private ApprovalResponse(Long applyId, ApprovalType approval) {
         this.applyId = applyId;
         this.approval = approval;
     }

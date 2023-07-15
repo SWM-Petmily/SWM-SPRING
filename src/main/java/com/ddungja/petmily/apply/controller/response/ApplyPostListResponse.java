@@ -6,6 +6,11 @@ import com.ddungja.petmily.post.domain.type.GenderType;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+import java.util.Arrays;
+
 @Getter
 public class ApplyPostListResponse {
     private final Long applyId;
@@ -37,6 +42,9 @@ public class ApplyPostListResponse {
 
 
     public static ApplyPostListResponse from(Apply apply) {
+        int[] date = Arrays.stream(apply.getPost().getBirth().split("-")).mapToInt(Integer::parseInt).toArray();
+        LocalDate start = LocalDate.of(date[0], date[1], 1);
+        LocalDate end = LocalDate.now();
         return  ApplyPostListResponse.builder()
                 .applyId(apply.getId())
                 .postId(apply.getPost().getId())
@@ -45,10 +53,10 @@ public class ApplyPostListResponse {
                 .subCategory(apply.getPost().getSubCategory().getName())
                 .region(apply.getRegion())
                 .gender(apply.getPost().getGender())
-                .birth(apply.getPost().getBirth())
+                .birth(Long.toString(ChronoUnit.MONTHS.between(start, end)))
                 .like(apply.getPost().getLike().size())
                 .approval(apply.getApproval())
-                .createdDate(apply.getPost().getCreateDate().toString())
+                .createdDate(apply.getPost().getCreateDate().format(DateTimeFormatter.ofPattern("yyyy.MM.dd")))
                 .build();
     }
 }

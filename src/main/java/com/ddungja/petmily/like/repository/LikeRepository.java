@@ -1,16 +1,14 @@
 package com.ddungja.petmily.like.repository;
 
 import com.ddungja.petmily.like.domain.Like;
-import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.List;
 import java.util.Optional;
 
-public interface LikeRepository extends JpaRepository<Like, Long> {
+public interface LikeRepository extends JpaRepository<Like, Long>, LikeQueryRepository {
 
     Optional<Like> findByPostIdAndUserId(Long postId, Long userId);
 
-    @EntityGraph(attributePaths = {"post", "post.like" ,"post.subCategory"})
-    List<Like> findAllByUserId(Long userId);
+//    @EntityGraph(attributePaths = {"post", "post.like" ,"post.subCategory"})
+//    Page<Like> findByUserIdAnd(Long userId, PostStatusType postStatusType, Pageable pageable);
 }

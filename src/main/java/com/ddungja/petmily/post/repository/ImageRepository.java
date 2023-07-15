@@ -1,7 +1,7 @@
 package com.ddungja.petmily.post.repository;
 
-import com.ddungja.petmily.post.domain.image.Image;
-import com.ddungja.petmily.post.domain.image.ImageType;
+import com.ddungja.petmily.post.domain.Image;
+import com.ddungja.petmily.post.domain.type.ImageType;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

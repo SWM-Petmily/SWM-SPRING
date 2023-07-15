@@ -1,4 +1,4 @@
-package com.ddungja.petmily.global.jwt;
+package com.ddungja.petmily.common.jwt;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;

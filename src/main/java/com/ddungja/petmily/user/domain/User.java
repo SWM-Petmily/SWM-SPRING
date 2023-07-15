@@ -10,7 +10,6 @@ import lombok.*;
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-@Setter
 @Table(name = "users")
 public class User extends BaseTimeEntity {
     @Id
@@ -21,12 +20,13 @@ public class User extends BaseTimeEntity {
     private String nickname;
     private String birth;
     private String phone;
-    private String provider;
+    @Enumerated(EnumType.STRING)
+    private ProviderType provider;
     private boolean isProfile;
     private boolean isCertification;
 
     @Builder
-    public User(Long id, String email, String nickname, String birth, String phone, String provider, boolean isProfile, boolean isCertification) {
+    private User(Long id, String email, String nickname, String birth, String phone, ProviderType provider, boolean isProfile, boolean isCertification) {
         this.id = id;
         this.email = email;
         this.nickname = nickname;
@@ -41,7 +41,7 @@ public class User extends BaseTimeEntity {
         this.isProfile = true;
     }
 
-    public void certicate(UserCreateRequest userCreateRequest) {
+    public void certificate(UserCreateRequest userCreateRequest) {
         this.nickname = userCreateRequest.getNickname();
         this.phone = userCreateRequest.getPhone();
         this.birth = userCreateRequest.getBirth();

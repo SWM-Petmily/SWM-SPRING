@@ -6,8 +6,8 @@ import lombok.Getter;
 
 @Getter
 public class UserCertificationResponse {
-    private final Boolean isCertification;
 
+    private final Boolean isCertification;
     @Builder
     private UserCertificationResponse(Boolean isCertification) {
         this.isCertification = isCertification;

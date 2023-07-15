@@ -1,7 +1,7 @@
 package com.ddungja.petmily.post.controller.response;
 
 import com.ddungja.petmily.post.domain.type.GenderType;
-import com.ddungja.petmily.post.domain.post.Post;
+import com.ddungja.petmily.post.domain.Post;
 import com.ddungja.petmily.post.domain.type.PostStatusType;
 import com.ddungja.petmily.user.domain.User;
 import lombok.Builder;
@@ -11,7 +11,7 @@ import java.util.List;
 
 @Getter
 public class PostGetResponse {
-    private final Long id;
+    private final Long postId;
     private final String mainCategory;
     private final String subCategory;
     private final String region;
@@ -27,11 +27,11 @@ public class PostGetResponse {
     private final String adopter; // 분양자
     private final PostStatusType status; // 분양상태
     private final List<ImageResponse> images;
-    private final boolean isMine;
+    private final Boolean isMine;
 
     @Builder
-    public PostGetResponse(Long id, String mainCategory, String subCategory, String region, String name, GenderType gender, String birth, String neutered, int money, String reason, String advantage, String disadvantage, String averageCost, String adopter, PostStatusType status, List<ImageResponse> images, boolean isMine) {
-        this.id = id;
+    private PostGetResponse(Long id, String mainCategory, String subCategory, String region, String name, GenderType gender, String birth, String neutered, int money, String reason, String advantage, String disadvantage, String averageCost, String adopter, PostStatusType status, List<ImageResponse> images, Boolean isMine) {
+        this.postId = id;
         this.mainCategory = mainCategory;
         this.subCategory = subCategory;
         this.region = region;
@@ -68,8 +68,8 @@ public class PostGetResponse {
                 .averageCost(post.getAverageCost())
                 .adopter(post.getAdopter())
                 .status(post.getStatus())
-                .images(ImageResponse.from(post.getImages()))
-                .isMine(user==null?false:user.getId().equals(post.getUser().getId()))
+                .images(post.getImages().stream().map(ImageResponse::from).toList())
+                .isMine(user != null && user.getId().equals(post.getUser().getId()))
                 .build();
     }
 }

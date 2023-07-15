@@ -1,24 +1,23 @@
 package com.ddungja.petmily.registration.domain;
 
-import lombok.Builder;
-import lombok.Data;
-import lombok.Getter;
+import lombok.*;
 
-@Data
 @Getter
+@NoArgsConstructor
+@ToString
 public class RegistrationApiItem {
-    String rfidCd;
-    String dogNm;
-    String sexNm;
-    String kindNm;
-    String neuterYn;
-    String orgNm;
-    String officeTel;
-    String aprGbNm;
-    String dogRegNo;
+    private String rfidCd;
+    private String dogNm;
+    private String sexNm;
+    private String kindNm;
+    private String neuterYn;
+    private String orgNm;
+    private String officeTel;
+    private String aprGbNm;
+    private String dogRegNo;
 
     @Builder
-    public RegistrationApiItem(String dogRegNo, String rfidCd, String dogNm, String sexNm, String kindNm, String neuterYn, String orgNm, String officeTel, String aprGbNm) {
+    private RegistrationApiItem(String dogRegNo, String rfidCd, String dogNm, String sexNm, String kindNm, String neuterYn, String orgNm, String officeTel, String aprGbNm) {
         this.dogRegNo = dogRegNo;
         this.rfidCd = rfidCd;
         this.dogNm = dogNm;

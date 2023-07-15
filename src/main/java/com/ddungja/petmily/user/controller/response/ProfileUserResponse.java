@@ -1,5 +1,6 @@
 package com.ddungja.petmily.user.controller.response;
 
+import com.ddungja.petmily.user.domain.ProviderType;
 import com.ddungja.petmily.user.domain.User;
 import lombok.Builder;
 import lombok.Getter;
@@ -10,10 +11,10 @@ public class ProfileUserResponse {
     private final String nickname;
     private final String birth;
     private final String phone;
-    private final String provider;
-    private final boolean isProfile;
+    private final ProviderType provider;
+    private final Boolean isProfile;
     @Builder
-    public ProfileUserResponse(String email, String nickname, String birth, String phone, String provider, boolean isProfile) {
+    public ProfileUserResponse(String email, String nickname, String birth, String phone, ProviderType provider, Boolean isProfile) {
         this.email = email;
         this.nickname = nickname;
         this.birth = birth;

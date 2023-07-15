@@ -1,4 +1,4 @@
-package com.ddungja.petmily.global.jwt;
+package com.ddungja.petmily.common.jwt;
 
 import com.ddungja.petmily.user.domain.User;
 import jakarta.servlet.FilterChain;

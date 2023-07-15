@@ -6,8 +6,6 @@ import com.ddungja.petmily.user.domain.Experience;
 import com.ddungja.petmily.user.domain.Profile;
 import com.ddungja.petmily.user.domain.ProfileImage;
 import com.ddungja.petmily.user.domain.User;
-import com.ddungja.petmily.user.domain.request.ExperienceCreateRequest;
-import com.ddungja.petmily.user.domain.request.ExperienceUpdateRequest;
 import com.ddungja.petmily.user.domain.request.MyProfileCreateRequest;
 import com.ddungja.petmily.user.domain.request.ProfileUpdateRequest;
 import com.ddungja.petmily.user.repository.ExperienceRepository;
@@ -17,9 +15,6 @@ import com.ddungja.petmily.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static com.ddungja.petmily.common.domain.exception.ExceptionCode.*;
 
@@ -36,6 +31,7 @@ public class ProfileService {
     public Profile get(Long userId) {
         return profileRepository.findByUserId(userId).orElseThrow(() -> new CustomException(PROFILE_NOT_FOUND));
     }
+
     @Transactional
     public Profile create(MyProfileCreateRequest profileCreateRequest, Long userId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new CustomException(USER_NOT_FOUND));
@@ -44,11 +40,7 @@ public class ProfileService {
         Profile profile = Profile.from(profileCreateRequest, profileImage, user);
         profileRepository.save(profile);
         if (profileCreateRequest.getIsExperience()) {
-            List<Experience> experiences = new ArrayList<>();
-            for (ExperienceCreateRequest experience : profileCreateRequest.getExperiences()) {
-                experiences.add(Experience.from(experience, profile));
-            }
-            experienceRepository.saveAll(experiences);
+            profileCreateRequest.getExperiences().forEach(experience -> experienceRepository.save(Experience.from(experience, profile)));
         }
         user.createProfile();
         return profile;
@@ -61,11 +53,7 @@ public class ProfileService {
         profile.update(profileUpdateRequest, profileImage);
         profile.deleteExperiences();
         if (profileUpdateRequest.getIsExperience()) {
-            List<Experience> experiences = new ArrayList<>();
-            for (ExperienceUpdateRequest experience : profileUpdateRequest.getExperiences()) {
-                experiences.add(Experience.from(experience, profile));
-            }
-            experienceRepository.saveAll(experiences);
+            profileUpdateRequest.getExperiences().forEach(experience -> experienceRepository.save(Experience.from(experience, profile)));
         }
         return profile;
     }

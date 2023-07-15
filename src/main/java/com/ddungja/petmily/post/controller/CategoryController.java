@@ -1,7 +1,7 @@
 package com.ddungja.petmily.post.controller;
 
+import com.ddungja.petmily.post.controller.response.SubCategoryResponse;
 import com.ddungja.petmily.post.domain.SubCategory;
-import com.ddungja.petmily.post.repository.SubCategoryRepository;
 import com.ddungja.petmily.post.service.CategoryService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,6 +22,8 @@ public class CategoryController {
 
     private final CategoryService categoryService;
 
+
+    // TODO /category/ ???
     @GetMapping("/")
     public ResponseEntity<?> getCategory(){
         log.info("메인 카테고리 불러오기");
@@ -31,7 +33,7 @@ public class CategoryController {
     @GetMapping("/{categoryId}")
     public ResponseEntity<?> getSubCategory(@PathVariable Long categoryId){
         log.info("서브 카테고리 불러오기 categoryId = {}", categoryId);
-        List<SubCategoryRepository.SubCategoryNameAndId> subCategories = categoryService.getSubCategory(categoryId);
-        return ResponseEntity.ok(subCategories);
+        List<SubCategory> subCategories = categoryService.getSubCategory(categoryId);
+        return ResponseEntity.ok(subCategories.stream().map(SubCategoryResponse::from));
     }
 }

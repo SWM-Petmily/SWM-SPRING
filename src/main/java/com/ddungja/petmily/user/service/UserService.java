@@ -23,8 +23,7 @@ public class UserService {
 
     @Transactional
     public User login(KakaoProfile kakaoProfile) {
-
-        return userRepository.findByEmail(kakaoProfile.getEmail()).orElseGet(() -> userRepository.save(User.builder().email(kakaoProfile.getEmail()).provider(ProviderType.KAKAO.name()).build()));
+        return userRepository.findByEmail(kakaoProfile.getEmail()).orElseGet(() -> userRepository.save(User.builder().email(kakaoProfile.getEmail()).provider(ProviderType.KAKAO).build()));
     }
 
     @Transactional(readOnly = true)
@@ -38,10 +37,9 @@ public class UserService {
         if (user.isCertification()) {
             throw new CustomException(ExceptionCode.USER_ALREADY_CERTIFICATION);
         }
-        user.certicate(userCreateRequest);
+        user.certificate(userCreateRequest);
         return user;
     }
-
 
     @Transactional
     public void modifyNickname(Long userId, UserUpdateRequest userUpdateRequest) {

@@ -1,24 +1,24 @@
-package com.ddungja.petmily.post.domain.post;
+package com.ddungja.petmily.post.domain;
 
 
 import com.ddungja.petmily.common.domain.BaseTimeEntity;
 import com.ddungja.petmily.like.domain.Like;
-import com.ddungja.petmily.post.domain.MainCategory;
-import com.ddungja.petmily.post.domain.SubCategory;
-import com.ddungja.petmily.post.domain.image.Image;
+import com.ddungja.petmily.post.domain.request.PostCreateRequest;
 import com.ddungja.petmily.post.domain.type.GenderType;
 import com.ddungja.petmily.post.domain.type.NeuteredType;
 import com.ddungja.petmily.post.domain.type.PostStatusType;
 import com.ddungja.petmily.user.domain.User;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-@Setter
 @Table(name = "posts")
 public class Post extends BaseTimeEntity {
 
@@ -69,7 +69,7 @@ public class Post extends BaseTimeEntity {
     private int reports;
 
     @Builder
-    public Post(Long id, User user, MainCategory mainCategory, SubCategory subCategory, String thumbnailImage, List<Like> like, List<Image> images, GenderType gender, String birth, String name, String region, NeuteredType neutered, int money, String reason, String advantage, String disadvantage, String averageCost, String adopter, PostStatusType status, int views, int reports) {
+    private Post(Long id, User user, MainCategory mainCategory, SubCategory subCategory, String thumbnailImage, List<Like> like, List<Image> images, GenderType gender, String birth, String name, String region, NeuteredType neutered, int money, String reason, String advantage, String disadvantage, String averageCost, String adopter, PostStatusType status, int views, int reports) {
         this.id = id;
         this.user = user;
         this.mainCategory = mainCategory;
@@ -91,5 +91,31 @@ public class Post extends BaseTimeEntity {
         this.status = status;
         this.views = views;
         this.reports = reports;
+    }
+
+    public static Post from(PostCreateRequest postCreateRequest, User user, MainCategory mainCategory, SubCategory subCategory) {
+        return Post.builder()
+                .user(user)
+                .mainCategory(mainCategory)
+                .subCategory(subCategory)
+                .name(postCreateRequest.getName())
+                .gender(postCreateRequest.getGender())
+                .birth(postCreateRequest.getBirth())
+                .region(postCreateRequest.getRegion())
+                .money(postCreateRequest.getMoney())
+                .neutered(postCreateRequest.getNeutered())
+                .reason(postCreateRequest.getReason())
+                .advantage(postCreateRequest.getAdvantage())
+                .disadvantage(postCreateRequest.getDisadvantage())
+                .averageCost(postCreateRequest.getAverageCost())
+                .adopter(postCreateRequest.getAdopter())
+                .status(postCreateRequest.getStatus())
+                .views(0)
+                .reports(0)
+                .build();
+    }
+
+    public void createThumbnailImage(PostCreateRequest postCreateRequest) {
+        this.thumbnailImage = postCreateRequest.getPostImages().get(0).getUrl();
     }
 }

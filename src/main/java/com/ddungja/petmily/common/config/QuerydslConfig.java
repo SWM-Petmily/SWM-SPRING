@@ -1,4 +1,4 @@
-package com.ddungja.petmily.global.config;
+package com.ddungja.petmily.common.config;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
@@ -9,9 +9,6 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @RequiredArgsConstructor
 public class QuerydslConfig {
-
-    private final EntityManager em;
-
     @Bean
     public JPAQueryFactory jpaQueryFactory(EntityManager em) {
         return new JPAQueryFactory(em);

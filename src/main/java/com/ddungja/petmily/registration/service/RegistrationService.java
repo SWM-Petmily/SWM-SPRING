@@ -1,64 +1,60 @@
 package com.ddungja.petmily.registration.service;
 
 import com.ddungja.petmily.common.domain.exception.CustomException;
+import com.ddungja.petmily.post.domain.MainCategory;
 import com.ddungja.petmily.post.domain.SubCategory;
+import com.ddungja.petmily.post.repository.MainCategoryRepository;
 import com.ddungja.petmily.post.repository.SubCategoryRepository;
-import com.ddungja.petmily.registration.client.RegistrationApiClient;
 import com.ddungja.petmily.registration.domain.Registration;
 import com.ddungja.petmily.registration.domain.RegistrationApiItem;
 import com.ddungja.petmily.registration.domain.request.RegistrationCreateRequest;
+import com.ddungja.petmily.registration.repository.RegistrationApiClient;
 import com.ddungja.petmily.registration.repository.RegistrationRepository;
 import com.ddungja.petmily.user.domain.User;
+import com.ddungja.petmily.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
+import org.springframework.transaction.annotation.Transactional;
 
-import static com.ddungja.petmily.common.domain.exception.ExceptionCode.REGISTER_ALREADY_EXISTS;
-import static com.ddungja.petmily.common.domain.exception.ExceptionCode.REGISTER_NOT_FOUND;
+import static com.ddungja.petmily.common.domain.exception.ExceptionCode.*;
 
 @Service
 @RequiredArgsConstructor
 @Slf4j
 public class RegistrationService {
 
+    @Value("${api.serviceKey}")
+    private String serviceKey;
+    private final MainCategoryRepository mainCategoryRepository;
     private final SubCategoryRepository subCategoryRepository;
-
     private final RegistrationRepository registrationRepository;
-    @Autowired
-    private RegistrationApiClient registrationApiClient;
+    private final UserRepository userRepository;
+    private final RegistrationApiClient registrationApiClient;
 
-    public Registration getApiResult(User user, RegistrationCreateRequest registrationCreateRequest) {
-
-        MultiValueMap<String, String> requestParam = new LinkedMultiValueMap<>();
-        requestParam.set("owner_nm", registrationCreateRequest.getOwner_nm());
-        requestParam.set("dog_reg_no", registrationCreateRequest.getDog_reg_no());
-        requestParam.set("serviceKey", registrationCreateRequest.getServiceKey());
-        requestParam.set("_type", "json");
-
-        RegistrationApiItem item = registrationApiClient.getAnimalInfo(requestParam).getResponse().getBody().getItem();
-
-        if(item == null) throw new CustomException(REGISTER_NOT_FOUND);
-
-        if(registrationRepository.findByDogRegNo(item.getDogRegNo()).isPresent()) throw new CustomException(REGISTER_ALREADY_EXISTS);
-
-        SubCategory petSubcategory = subCategoryRepository.findByName(item.getKindNm()).orElseGet(() -> {
-            SubCategory subCategory = SubCategory.builder()
-                    .name(item.getKindNm())
-                    .build();
-            return subCategoryRepository.save(subCategory);
-        });
-
-        Registration registration = Registration.from(item, user, petSubcategory);
-        log.debug("반려동물 등록 결과 = {}", registration);
-
-        return registration;
+    @Transactional
+    public Registration register(Long userId, RegistrationCreateRequest registrationCreateRequest) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new CustomException(USER_NOT_FOUND));
+        MainCategory mainCategory = mainCategoryRepository.findByName("강아지").orElseThrow(() -> new CustomException(MAIN_CATEGORY_NOT_FOUND));
+        if (registrationRepository.findByDogRegNo(registrationCreateRequest.getDogRegistrationNumber()).isPresent()) {
+            throw new CustomException(REGISTER_ALREADY_EXISTS);
+        }
+        RegistrationApiItem registerInfo = getRegistrationInfo(registrationCreateRequest);
+        SubCategory petSubcategory = subCategoryRepository.findByName(registerInfo.getKindNm()).orElseGet(() ->
+             subCategoryRepository.save(SubCategory.builder()
+                    .name(registerInfo.getKindNm())
+                    .mainCategory(mainCategory).build())
+        );
+        return registrationRepository.save(Registration.from(registerInfo, user, petSubcategory));
     }
 
-    public Registration register(User user, RegistrationCreateRequest registrationCreateRequest) {
-        Registration registration = getApiResult(user, registrationCreateRequest);
-        return registrationRepository.save(registration);
+
+    private RegistrationApiItem getRegistrationInfo(RegistrationCreateRequest registrationCreateRequest) {
+        RegistrationApiItem registerInfo = registrationApiClient.getAnimalInfo(registrationCreateRequest.getOwnerName(), registrationCreateRequest.getDogRegistrationNumber(), serviceKey, "json").getResponse().getBody().getItem();
+        if (registerInfo == null) {
+            throw new CustomException(REGISTER_NOT_FOUND);
+        }
+        return registerInfo;
     }
 }
