@@ -9,6 +9,7 @@ import com.ddungja.petmily.user.domain.User;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -33,5 +34,12 @@ public class RegistrationController {
         log.info("반려동물 등록 조회 요청 userId = {}", user.getId());
         List<Registration> registrations= registrationService.getMyRegister(user.getId());
         return ResponseEntity.ok(registrations.stream().map(MyRegistrationResponse::from));
+    }
+
+    @DeleteMapping("/{registrationId}")
+    public ResponseEntity<?> delete(@AuthenticationPrincipal User user, @PathVariable Long registrationId) {
+        log.info("반려동물 등록 삭제 요청 userId = {}, registrationId = {}", user.getId(), registrationId);
+        registrationService.delete(user.getId(), registrationId);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }

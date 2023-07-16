@@ -13,4 +13,6 @@ public interface RegistrationRepository extends JpaRepository<Registration, Long
     List<Registration> findByUserId(Long userId);
 
     Optional<Registration> findByRegistrationNumber(String dogRegNo);
+
+    Optional<Registration> findByIdAndUserId(Long id, Long userId);
 }
