@@ -69,7 +69,17 @@ public class RegistrationService {
     @Transactional
     public void delete(Long userId, Long registrationId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new CustomException(USER_NOT_FOUND));
-        Registration registration = registrationRepository.findByIdAndUserId(registrationId,userId).orElseThrow(() -> new CustomException(REGISTER_NOT_FOUND));
+        Registration registration = registrationRepository.findById(registrationId).orElseThrow(() -> new CustomException(REGISTER_NOT_FOUND));
+        if(!registration.getUser().getId().equals(user.getId())){
+            throw new CustomException(REGISTER_NOT_FOUND);
+        }
         registrationRepository.delete(registration);
+    }
+
+    @Transactional
+    public Registration select(Long userId, Long registrationId) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new CustomException(USER_NOT_FOUND));
+        Registration registration = registrationRepository.findByIdAndUserId(registrationId,userId).orElseThrow(() -> new CustomException(REGISTER_NOT_FOUND));
+        return registration;
     }
 }
