@@ -2,7 +2,7 @@ package com.ddungja.petmily.user.service;
 
 import com.ddungja.petmily.user.domain.KakaoProfile;
 import com.ddungja.petmily.user.domain.KakaoToken;
-import com.ddungja.petmily.user.repository.KakaoOpenFeign;
+import com.ddungja.petmily.user.repository.KakaoApiClient;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,7 +16,7 @@ import java.net.URISyntaxException;
 @RequiredArgsConstructor
 public class KakaoService {
 
-    private final KakaoOpenFeign client;
+    private final KakaoApiClient client;
 
     @Value("${kakao.tokenUrl}")
     private String kakaoTokenUrl;
