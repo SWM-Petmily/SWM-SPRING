@@ -1,16 +1,12 @@
 package com.ddungja.petmily.post.service;
 
 import com.ddungja.petmily.common.domain.exception.CustomException;
-import com.ddungja.petmily.post.domain.type.PostStatusType;
+import com.ddungja.petmily.post.domain.*;
 import com.ddungja.petmily.post.domain.request.DiseaseRequest;
 import com.ddungja.petmily.post.domain.request.ImageCreateRequest;
 import com.ddungja.petmily.post.domain.request.PostCreateRequest;
-import com.ddungja.petmily.post.domain.Disease;
-import com.ddungja.petmily.post.domain.MainCategory;
-import com.ddungja.petmily.post.domain.SubCategory;
-import com.ddungja.petmily.post.domain.Image;
 import com.ddungja.petmily.post.domain.type.ImageType;
-import com.ddungja.petmily.post.domain.Post;
+import com.ddungja.petmily.post.domain.type.PostStatusType;
 import com.ddungja.petmily.post.repository.*;
 import com.ddungja.petmily.user.domain.User;
 import com.ddungja.petmily.user.repository.UserRepository;
@@ -123,6 +119,6 @@ public class PostService {
 
     public Page<Post> getMyPost(Long userId, PostStatusType postStatusType, Pageable pageable) {
         userRepository.findById(userId).orElseThrow(() -> new CustomException(USER_NOT_FOUND));
-        return postRepository.getMypost(userId, postStatusType, pageable);
+        return postRepository.getMyPost(userId, postStatusType, pageable);
     }
 }

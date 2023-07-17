@@ -33,7 +33,4 @@ public class Disease extends BaseTimeEntity {
         this.createDate = createDate;
         this.updateDate = updateDate;
     }
-
-
-
 }

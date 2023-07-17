@@ -1,7 +1,5 @@
 package com.ddungja.petmily.post.domain.type;
 
-import lombok.Getter;
-
 public enum PostStatusType {
     SAVE("분양중"), WAITING("임시저장"), COMPLETE("분양완료"), DELETE("삭제");
 
@@ -10,5 +8,4 @@ public enum PostStatusType {
     PostStatusType(String description) {
         this.description = description;
     }
-
 }

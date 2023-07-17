@@ -21,7 +21,7 @@ public class PostQueryRepositoryImpl implements PostQueryRepository {
 
     private final JPAQueryFactory jpaQueryFactory;
     @Override
-    public Page<Post> getMypost(Long userId, PostStatusType postStatusType, Pageable pageable) {
+    public Page<Post> getMyPost(Long userId, PostStatusType postStatusType, Pageable pageable) {
         List<Post> content = jpaQueryFactory.selectFrom(post)
                 .leftJoin(post.subCategory, subCategory).fetchJoin()
                 .leftJoin(post.like, like).fetchJoin()
