@@ -35,9 +35,6 @@ public class ApplyCustomRepositoryImpl implements ApplyCustomRepository {
                 .fetch();
         JPAQuery<Long> countQuery = jpaQueryFactory.select(apply.count())
                 .from(apply)
-                .leftJoin(apply.post, post).fetchJoin()
-                .leftJoin(apply.post.subCategory, subCategory).fetchJoin()
-                .leftJoin(apply.post.like, like).fetchJoin()
                 .where(apply.user.id.eq(userId).and(eqApproval(approval)));
 
         return PageableExecutionUtils.getPage(content, pageable, countQuery::fetchOne);
