@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.net.URI;
 
 @FeignClient(name = "kakaoClient", configuration = OpenFeignConfig.class)
-public interface KakaoOpenFeign {
+public interface KakaoApiClient {
     @PostMapping
     KakaoProfile getInfo(URI baseUrl, @RequestHeader("Authorization") String accessToken);
     @PostMapping

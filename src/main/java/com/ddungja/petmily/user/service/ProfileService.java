@@ -38,10 +38,10 @@ public class ProfileService {
         if (user.isProfile()) throw new CustomException(PROFILE_ALREADY_EXISTS);
         ProfileImage profileImage = profileImageRepository.findById(profileCreateRequest.getProfileImageId()).orElseThrow(() -> new CustomException(PROFILE_IMAGE_NOT_FOUND));
         Profile profile = Profile.from(profileCreateRequest, profileImage, user);
-        profileRepository.save(profile);
         if (profileCreateRequest.getIsExperience()) {
-            profileCreateRequest.getExperiences().forEach(experience -> experienceRepository.save(Experience.from(experience, profile)));
+            profileCreateRequest.getExperiences().forEach(experience -> profile.add(Experience.from(experience, profile)));
         }
+        profileRepository.save(profile);
         user.createProfile();
         return profile;
     }
