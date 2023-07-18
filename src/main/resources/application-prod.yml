@@ -77,3 +77,16 @@ jwt:
 
 api:
   serviceKey: iqucPIkN%2Br9Zm%2FI6ALZlkapFDvJIgC1gySMHPDOd0aTP%2BbDajaKTYeE680W97iVo0EEg4PZcEGozg37slj%2FlcA%3D%3D
+
+
+cloud:
+  aws:
+    region:
+      static: ap-northeast-2  # AWS 기본 리전을 설정
+    stack:
+      auto: false # Spring Cloud를 실행하면, 서버 구성을 자동화하는 CloudFormation이 실행되는데 이를 사용하지 않으므로 false로 설정
+
+s3:
+  bucket:
+  access-key: AKIA5WZKVIDO2IZSVJ7B
+  secret-key: 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
