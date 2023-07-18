@@ -37,7 +37,6 @@ public class LikeQueryRepositoryImpl implements LikeQueryRepository {
         JPAQuery<Long> countQuery = jpaQueryFactory
                 .select(like.count())
                 .from(like)
-                .leftJoin(like.post, post).fetchJoin()
                 .where(like.user.id.eq(userId).and(eqPostStatusType(postStatusType)));
 
         return PageableExecutionUtils.getPage(contents, pageable, countQuery::fetchOne);

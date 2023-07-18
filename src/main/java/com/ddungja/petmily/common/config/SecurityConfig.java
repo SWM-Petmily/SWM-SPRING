@@ -1,8 +1,8 @@
 package com.ddungja.petmily.common.config;
 
-import com.ddungja.petmily.common.response.SecurityResponse;
 import com.ddungja.petmily.common.jwt.JwtAuthorizationFilter;
 import com.ddungja.petmily.common.jwt.JwtProvider;
+import com.ddungja.petmily.common.response.SecurityResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
@@ -14,14 +14,26 @@ import org.springframework.security.config.annotation.web.configurers.HeadersCon
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Configuration
 @RequiredArgsConstructor
 @Slf4j
 public class SecurityConfig {
     private final JwtProvider jwtProvider;
+    private static final String[] AUTHENTICATION_WHITELIST = {
+            "/",
+            "/swagger-ui/**",
+            "/v3/api-docs/**",
+            "/api/**",
+            "/h2-console",
+            "/h2-console/**",
+            "/users/kakao",
+            "/users/refresh",
+            "/users/test/**",
+            "/users/profile/{userId}",
+            "/send-one",
+            "/posts/{postId}",
+            "/category/**"
+    };
 
     @RequiredArgsConstructor
     public static class CustomSecurityFilterManager extends AbstractHttpConfigurer<CustomSecurityFilterManager, HttpSecurity> {
@@ -44,7 +56,8 @@ public class SecurityConfig {
         http.apply(new CustomSecurityFilterManager(jwtProvider));
         http.exceptionHandling(configurer -> configurer.authenticationEntryPoint((request, response, accessDeniedException) -> SecurityResponse.unAuthentication(response)));
         http.exceptionHandling(configurer -> configurer.accessDeniedHandler((request, response, accessDeniedException) -> SecurityResponse.forbidden(response)));
-        http.authorizeHttpRequests(authorize -> authorize.requestMatchers("/users/authorization").authenticated());
+//        http.authorizeHttpRequests(authorize -> authorize.requestMatchers(AUTHENTICATION_WHITELIST).permitAll());
+//        http.authorizeHttpRequests(authorize -> authorize.anyRequest().authenticated());
         http.authorizeHttpRequests(authorize -> authorize.anyRequest().permitAll());
         return http.build();
     }
