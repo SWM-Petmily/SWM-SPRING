@@ -60,6 +60,9 @@ public class Profile extends BaseTimeEntity {
         this.updateDate = updateDate;
     }
 
+    public void add(Experience experience) {
+        experiences.add(experience);
+    }
 
     public static Profile from(MyProfileCreateRequest profileCreateRequest, ProfileImage profileImage, User user) {
         return Profile.builder()
@@ -69,6 +72,7 @@ public class Profile extends BaseTimeEntity {
                 .comment(profileCreateRequest.getComment())
                 .openTalk(profileCreateRequest.getOpenTalk())
                 .region(profileCreateRequest.getRegion())
+                .experiences(new ArrayList<>())
                 .isExperience(profileCreateRequest.getIsExperience())
                 .profileImage(profileImage)
                 .user(user)
