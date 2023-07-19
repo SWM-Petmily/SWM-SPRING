@@ -19,7 +19,7 @@ import static com.ddungja.petmily.post.domain.QPost.post;
 import static com.ddungja.petmily.post.domain.QSubCategory.subCategory;
 
 @RequiredArgsConstructor
-public class ApplyQueryRepositoryImpl implements ApplyCustomRepository {
+public class ApplyQueryRepositoryImpl implements ApplyQueryRepository {
 
     private final JPAQueryFactory jpaQueryFactory;
 
