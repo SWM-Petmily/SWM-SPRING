@@ -11,6 +11,7 @@ import org.springframework.web.bind.MissingRequestCookieException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import org.springframework.web.multipart.support.MissingServletRequestPartException;
 
 import java.util.HashMap;
 import java.util.List;
@@ -48,6 +49,12 @@ public class GlobalExceptionController {
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     public ResponseEntity<?> typeMisMatch(MethodArgumentTypeMismatchException e) {
         log.error("MethodArgumentTypeMismatchException = {}", e);
-        return ResponseEntity.badRequest().build();
+        return ResponseEntity.badRequest().body("MethodArgumentTypeMismatchException");
+    }
+
+    @ExceptionHandler(MissingServletRequestPartException.class)
+    public ResponseEntity<?> typeMisMatch(MissingServletRequestPartException e) {
+        log.error("MissingServletRequestPartException = {}", e);
+        return ResponseEntity.badRequest().body("MissingServletRequestPartException");
     }
 }
