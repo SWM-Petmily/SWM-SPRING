@@ -25,7 +25,7 @@ public class LikeController {
     private final LikeService likeService;
 
     @GetMapping
-    public ResponseEntity<?> getLike(@AuthenticationPrincipal User user, @RequestParam(value = "status") PostStatusType postStatusType, Pageable pageable){
+    public ResponseEntity<?> getLike(@AuthenticationPrincipal User user, @RequestParam(value = "status", required = false) PostStatusType postStatusType, Pageable pageable){
         log.info("좋아요 누른 게시글 불러오기");
         Page<Like> likes = likeService.getLikeList(user.getId(),postStatusType, pageable);
         return ResponseEntity.ok(likes.map(LikePostResponse::from));
