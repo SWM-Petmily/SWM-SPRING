@@ -34,9 +34,9 @@ public class ApplyController {
 
     @Operation(summary = "내가 지원한 목록 보기")
     @GetMapping
-    public ResponseEntity<?> getByUserId(@AuthenticationPrincipal User user, ApprovalType approval, Pageable pageable) {
+    public ResponseEntity<?> getByUserId(@AuthenticationPrincipal User user, ApprovalType status, Pageable pageable) {
         log.info("내가 지원한 목록 보기 userId : {}", user.getId());
-        return ResponseEntity.ok(applyService.getAppliedList(user.getId(), approval, pageable).map(ApplyPostListResponse::from));
+        return ResponseEntity.ok(applyService.getAppliedList(user.getId(), status, pageable).map(ApplyPostListResponse::from));
     }
 
     @Operation(summary = "지원 상세 보기")
