@@ -20,7 +20,7 @@ public class ApplyPostListResponse {
     private final String birth;
     private final int like;
     private final String createdDate;
-    private final ApprovalType approval;
+    private final ApprovalType status;
     private final int age;
 
     @Builder
@@ -35,7 +35,7 @@ public class ApplyPostListResponse {
         this.birth = birth;
         this.like = like;
         this.createdDate = createdDate;
-        this.approval = approval;
+        this.status = approval;
         this.age = age;
     }
     public static ApplyPostListResponse from(Apply apply) {
