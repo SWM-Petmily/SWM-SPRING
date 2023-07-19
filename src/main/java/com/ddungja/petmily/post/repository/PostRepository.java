@@ -9,4 +9,5 @@ import java.util.Optional;
 public interface PostRepository extends JpaRepository<Post,Long>, PostQueryRepository {
     @EntityGraph(attributePaths = {"images", "subCategory" , "mainCategory"})
     Optional<Post> findPostById(Long postId);
+
 }

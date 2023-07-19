@@ -5,6 +5,7 @@ import com.ddungja.petmily.post.domain.*;
 import com.ddungja.petmily.post.domain.request.DiseaseRequest;
 import com.ddungja.petmily.post.domain.request.ImageCreateRequest;
 import com.ddungja.petmily.post.domain.request.PostCreateRequest;
+import com.ddungja.petmily.post.domain.request.PostFilterRequest;
 import com.ddungja.petmily.post.domain.type.ImageType;
 import com.ddungja.petmily.post.domain.type.PostStatusType;
 import com.ddungja.petmily.post.repository.*;
@@ -120,5 +121,14 @@ public class PostService {
     public Page<Post> getMyPost(Long userId, PostStatusType postStatusType, Pageable pageable) {
         userRepository.findById(userId).orElseThrow(() -> new CustomException(USER_NOT_FOUND));
         return postRepository.getMyPost(userId, postStatusType, pageable);
+    }
+
+    public Page<Post> getMainPosts(Long userId, PostFilterRequest postFilterRequest, Pageable pageable) {
+        userRepository.findById(userId).orElseThrow(() -> new CustomException(USER_NOT_FOUND));
+        return postRepository.getMainPosts(userId, postFilterRequest, pageable);
+    }
+
+    public Page<Post> getMainPosts(PostFilterRequest postFilterRequest, Pageable pageable) {
+        return postRepository.getMainPosts(postFilterRequest, pageable);
     }
 }
