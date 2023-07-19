@@ -22,17 +22,22 @@ public class PostQueryRepositoryImpl implements PostQueryRepository {
     private final JPAQueryFactory jpaQueryFactory;
     @Override
     public Page<Post> getMyPost(Long userId, PostStatusType postStatusType, Pageable pageable) {
+        List<Long> postId = jpaQueryFactory.select(post.id)
+                .from(post)
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetch();
+
         List<Post> content = jpaQueryFactory.selectFrom(post)
                 .leftJoin(post.subCategory, subCategory).fetchJoin()
                 .leftJoin(post.like, like).fetchJoin()
-                .where(post.user.id.eq(userId).and(eqPostStatusType(postStatusType)))
-                .offset(pageable.getOffset())
-                .limit(pageable.getPageSize())
+                .where(post.user.id.eq(userId).and(eqPostStatusType(postStatusType)), post.id.in(postId))
                 .fetch();
 
         JPAQuery<Long> countQuery = jpaQueryFactory.select(post.count())
                 .from(post)
                 .where(post.user.id.eq(userId).and(eqPostStatusType(postStatusType)));
+
         return PageableExecutionUtils.getPage(content, pageable, countQuery::fetchOne);
     }
 
