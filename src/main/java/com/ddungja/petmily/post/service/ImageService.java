@@ -5,6 +5,8 @@ import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.ddungja.petmily.common.domain.exception.CustomException;
+import com.ddungja.petmily.common.domain.exception.ExceptionCode;
 import com.ddungja.petmily.post.domain.Image;
 import com.ddungja.petmily.post.domain.Post;
 import com.ddungja.petmily.post.domain.type.ImageType;
@@ -30,7 +32,6 @@ public class ImageService {
 
     @Value("${s3.bucket}")
     private String bucket;
-
     private final ImageRepository imageRepository;
     private final AmazonS3Client amazonS3Client;
 
@@ -53,7 +54,18 @@ public class ImageService {
         return imageRepository.saveAll(saveImageList);
     }
 
+    @Transactional
+    public void delete(Long imageId) {
+        Image image = imageRepository.findById(imageId).orElseThrow(() -> new CustomException(ExceptionCode.IMAGE_NOT_FOUND));
+        if(!amazonS3Client.doesObjectExist(bucket, image.getUrl())){
+            throw new CustomException(ExceptionCode.S3_IMAGE_NOT_FOUND);
+        }
+        amazonS3Client.deleteObject(bucket, image.getUrl());
+        imageRepository.delete(image);
+    }
+
     private String uploadImage(MultipartFile multipartFile, String fileName, long size, String bucket) throws IOException {
+
         ObjectMetadata objectMetaData = new ObjectMetadata();
         objectMetaData.setContentType(multipartFile.getContentType());
         objectMetaData.setContentLength(size);

@@ -40,8 +40,8 @@ public class PostService {
 
     /*포스트 업로드*/
     @Transactional
-    public Post create(PostCreateRequest postCreateRequest, Long id, List<MultipartFile> postImages, List<MultipartFile> vaccinationImages, List<MultipartFile> medicalCheckImages) throws IOException {
-        User user = userRepository.findById(id).orElseThrow(() -> new CustomException(USER_NOT_FOUND));
+    public Post create(PostCreateRequest postCreateRequest, Long userId, List<MultipartFile> postImages, List<MultipartFile> vaccinationImages, List<MultipartFile> medicalCheckImages) throws IOException {
+        User user = userRepository.findById(userId).orElseThrow(() -> new CustomException(USER_NOT_FOUND));
         MainCategory mainCategory = mainCategoryRepository.findById(postCreateRequest.getMainCategory()).orElseThrow(() -> new CustomException(MAIN_CATEGORY_NOT_FOUND));
         SubCategory subCategory = subCategoryRepository.findById(postCreateRequest.getSubCategory()).orElseThrow(() -> new CustomException(SUB_CATEGORY_NOT_FOUND));
         Post post = Post.from(postCreateRequest, user, mainCategory, subCategory);

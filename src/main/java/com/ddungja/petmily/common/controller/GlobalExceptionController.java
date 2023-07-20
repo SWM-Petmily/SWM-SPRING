@@ -1,6 +1,7 @@
 package com.ddungja.petmily.common.controller;
 
 
+import com.amazonaws.AmazonServiceException;
 import com.ddungja.petmily.common.domain.exception.CustomException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -47,14 +48,19 @@ public class GlobalExceptionController {
     }
 
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
-    public ResponseEntity<?> typeMisMatch(MethodArgumentTypeMismatchException e) {
+    public ResponseEntity<?> methodArgumentTypeMismatchException(MethodArgumentTypeMismatchException e) {
         log.error("MethodArgumentTypeMismatchException = {}", e);
         return ResponseEntity.badRequest().body("MethodArgumentTypeMismatchException");
     }
 
     @ExceptionHandler(MissingServletRequestPartException.class)
-    public ResponseEntity<?> typeMisMatch(MissingServletRequestPartException e) {
+    public ResponseEntity<?> missingServletRequestPartException(MissingServletRequestPartException e) {
         log.error("MissingServletRequestPartException = {}", e);
         return ResponseEntity.badRequest().body("MissingServletRequestPartException");
+    }
+    @ExceptionHandler(AmazonServiceException.class)
+    public ResponseEntity<?> amazonServiceException(AmazonServiceException e) {
+        log.error("AmazonServiceException = {}", e);
+        return ResponseEntity.badRequest().body("AmazonServiceException");
     }
 }
