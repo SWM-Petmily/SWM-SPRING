@@ -11,7 +11,6 @@ import com.ddungja.petmily.post.domain.request.PostFilterRequest;
 import com.ddungja.petmily.post.domain.type.PostStatusType;
 import com.ddungja.petmily.post.service.PostService;
 import com.ddungja.petmily.user.domain.User;
-import com.ddungja.petmily.user.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -32,7 +31,6 @@ import java.util.List;
 public class PostController {
 
     private final PostService postService;
-    private final UserService userService;
 
     @Operation(summary = "게시글 등록")
     @PostMapping
