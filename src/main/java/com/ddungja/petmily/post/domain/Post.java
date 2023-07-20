@@ -120,7 +120,10 @@ public class Post extends BaseTimeEntity {
                 .build();
     }
 
-    public void createThumbnailImage(PostCreateRequest postCreateRequest) {
-        this.thumbnailImage = postCreateRequest.getPostImages().get(0).getUrl();
+    public void createThumbnailImage(String thumbnailImage) {
+        this.thumbnailImage = thumbnailImage;
+    }
+    public void uploadImages(List<Image> uploadImages) {
+        this.images = uploadImages;
     }
 }
