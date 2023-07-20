@@ -5,6 +5,8 @@ import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.ddungja.petmily.post.domain.Image;
+import com.ddungja.petmily.post.domain.type.ImageType;
 import com.ddungja.petmily.post.repository.ImageRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -32,17 +34,24 @@ public class ImageService {
 
 
     @Transactional
-    public List<String> upload(List<MultipartFile> multipartFiles) throws IOException {
-        List<String> images = new ArrayList<>();
+    public List<String> upload(List<MultipartFile> multipartFiles, ImageType imageType) throws IOException {
+        List<String> imageUrlList = new ArrayList<>();
+        List<Image> saveImageList = new ArrayList<>();
         for (MultipartFile image : multipartFiles) {
             String fileName = UUID.randomUUID() + "-" + image.getOriginalFilename(); // 파일 이름
             long size = image.getSize(); // 파일 크기
             log.debug("fileName: {}, size: {}, contentType: {}", fileName, size, image.getContentType());
             if (isImage(Objects.requireNonNull(image.getContentType()))) {
-                images.add(uploadImage(image, fileName, size, bucket));
+                String url = uploadImage(image, fileName, size, bucket);
+                imageUrlList.add(url);
+                saveImageList.add(Image.builder()
+                        .imageType(imageType)
+                        .url(url)
+                        .build());
             }
         }
-        return images;
+        imageRepository.saveAll(saveImageList);
+        return imageUrlList;
     }
 
     private String uploadImage(MultipartFile multipartFile, String fileName, long size, String bucket) throws IOException {
