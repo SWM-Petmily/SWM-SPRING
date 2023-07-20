@@ -6,10 +6,7 @@ import com.ddungja.petmily.post.domain.type.GenderType;
 import lombok.Builder;
 import lombok.Getter;
 
-import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
-import java.util.Arrays;
 
 @Getter
 public class ApplyPostListResponse {
@@ -23,10 +20,11 @@ public class ApplyPostListResponse {
     private final String birth;
     private final int like;
     private final String createdDate;
-    private final ApprovalType approval;
+    private final ApprovalType status;
+    private final int age;
 
     @Builder
-    private ApplyPostListResponse(Long applyId, Long postId, String name, String thumbnailImage, String subCategory, String region, GenderType gender, String birth, int like, String createdDate, ApprovalType approval) {
+    private ApplyPostListResponse(Long applyId, Long postId, String name, String thumbnailImage, String subCategory, String region, GenderType gender, String birth, int like, String createdDate, ApprovalType approval, int age) {
         this.applyId = applyId;
         this.postId = postId;
         this.name = name;
@@ -37,14 +35,10 @@ public class ApplyPostListResponse {
         this.birth = birth;
         this.like = like;
         this.createdDate = createdDate;
-        this.approval = approval;
+        this.status = approval;
+        this.age = age;
     }
-
-
     public static ApplyPostListResponse from(Apply apply) {
-        int[] date = Arrays.stream(apply.getPost().getBirth().split("-")).mapToInt(Integer::parseInt).toArray();
-        LocalDate start = LocalDate.of(date[0], date[1], 1);
-        LocalDate end = LocalDate.now();
         return  ApplyPostListResponse.builder()
                 .applyId(apply.getId())
                 .postId(apply.getPost().getId())
@@ -53,7 +47,8 @@ public class ApplyPostListResponse {
                 .subCategory(apply.getPost().getSubCategory().getName())
                 .region(apply.getRegion())
                 .gender(apply.getPost().getGender())
-                .birth(Long.toString(ChronoUnit.MONTHS.between(start, end)))
+                .age(apply.getPost().getAge())
+                .birth(apply.getPost().getBirth())
                 .like(apply.getPost().getLike().size())
                 .approval(apply.getApproval())
                 .createdDate(apply.getPost().getCreateDate().format(DateTimeFormatter.ofPattern("yyyy.MM.dd")))

@@ -14,6 +14,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -42,14 +43,15 @@ public class Post extends BaseTimeEntity {
     private String thumbnailImage;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Like> like;
+    private List<Like> like = new ArrayList<>();
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Image> images;
+    private List<Image> images = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)
     private GenderType gender;
     private String birth;
+    private int age;
     private String name;
     private String region;
 
@@ -69,7 +71,7 @@ public class Post extends BaseTimeEntity {
     private int reports;
 
     @Builder
-    private Post(Long id, User user, MainCategory mainCategory, SubCategory subCategory, String thumbnailImage, List<Like> like, List<Image> images, GenderType gender, String birth, String name, String region, NeuteredType neutered, int money, String reason, String advantage, String disadvantage, String averageCost, String adopter, PostStatusType status, int views, int reports) {
+    private Post(Long id, User user, MainCategory mainCategory, SubCategory subCategory, String thumbnailImage, List<Like> like, List<Image> images, GenderType gender, String birth, int age, String name, String region, NeuteredType neutered, int money, String reason, String advantage, String disadvantage, String averageCost, String adopter, PostStatusType status, int views, int reports) {
         this.id = id;
         this.user = user;
         this.mainCategory = mainCategory;
@@ -79,6 +81,7 @@ public class Post extends BaseTimeEntity {
         this.images = images;
         this.gender = gender;
         this.birth = birth;
+        this.age = age;
         this.name = name;
         this.region = region;
         this.neutered = neutered;
@@ -93,6 +96,7 @@ public class Post extends BaseTimeEntity {
         this.reports = reports;
     }
 
+
     public static Post from(PostCreateRequest postCreateRequest, User user, MainCategory mainCategory, SubCategory subCategory) {
         return Post.builder()
                 .user(user)
@@ -104,6 +108,7 @@ public class Post extends BaseTimeEntity {
                 .region(postCreateRequest.getRegion())
                 .money(postCreateRequest.getMoney())
                 .neutered(postCreateRequest.getNeutered())
+                .age(postCreateRequest.getAge())
                 .reason(postCreateRequest.getReason())
                 .advantage(postCreateRequest.getAdvantage())
                 .disadvantage(postCreateRequest.getDisadvantage())
@@ -115,7 +120,10 @@ public class Post extends BaseTimeEntity {
                 .build();
     }
 
-    public void createThumbnailImage(PostCreateRequest postCreateRequest) {
-        this.thumbnailImage = postCreateRequest.getPostImages().get(0).getUrl();
+    public void createThumbnailImage(String thumbnailImage) {
+        this.thumbnailImage = thumbnailImage;
+    }
+    public void uploadImages(List<Image> uploadImages) {
+        this.images = uploadImages;
     }
 }

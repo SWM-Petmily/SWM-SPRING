@@ -7,6 +7,7 @@ import com.ddungja.petmily.registration.domain.Registration;
 import com.ddungja.petmily.registration.domain.request.RegistrationCreateRequest;
 import com.ddungja.petmily.registration.service.RegistrationService;
 import com.ddungja.petmily.user.domain.User;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,29 +25,30 @@ import java.util.List;
 public class RegistrationController {
     private final RegistrationService registrationService;
 
+    @Operation(summary = "반려동물 등록하기")
     @PostMapping
     public ResponseEntity<?> create(@AuthenticationPrincipal User user, @Valid @RequestBody RegistrationCreateRequest registrationCreateRequest) {
-        log.info("반려동물 등록 요청 userId = {}", user.getId());
+        log.info("반려동물 등록하기 userId = {}", user.getId());
         return ResponseEntity.ok(RegisterCreateResponse.from(registrationService.register(user.getId(), registrationCreateRequest)));
     }
-
+    @Operation(summary = "내가 등록한 반려동물 보기")
     @GetMapping("/myRegister")
     public ResponseEntity<?> getMyRegister(@AuthenticationPrincipal User user) {
-        log.info("반려동물 등록 조회 요청 userId = {}", user.getId());
+        log.info("내가 등록한 반려동물 보기 userId = {}", user.getId());
         List<Registration> registrations= registrationService.getMyRegister(user.getId());
         return ResponseEntity.ok(registrations.stream().map(MyRegistrationResponse::from));
     }
-
+    @Operation(summary = "반려동물 삭제하기")
     @DeleteMapping("/{registrationId}")
     public ResponseEntity<?> delete(@AuthenticationPrincipal User user, @PathVariable Long registrationId) {
-        log.info("반려동물 등록 삭제 요청 userId = {}, registrationId = {}", user.getId(), registrationId);
+        log.info("반려동물 삭제하기 userId = {}, registrationId = {}", user.getId(), registrationId);
         registrationService.delete(user.getId(), registrationId);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
-
-    @GetMapping("select/{registrationId}")
+    @Operation(summary = "분양 게시글 작성 시, 반려동물 선택")
+    @GetMapping("/select/{registrationId}")
     public ResponseEntity<?> selectRegister(@AuthenticationPrincipal User user, @PathVariable Long registrationId) {
-        log.info("반려동물 등록 선택 요청 userId = {}, registrationId = {}", user.getId(), registrationId);
+        log.info("분양 게시글 작성 시, 반려동물 선택 userId = {}, registrationId = {}", user.getId(), registrationId);
         Registration registration = registrationService.select(user.getId(), registrationId);
         log.info("Registration = {}", registration);
         return ResponseEntity.ok(SelectRegistrationResponse.from(registration));

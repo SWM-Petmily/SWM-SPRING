@@ -7,6 +7,7 @@ import com.ddungja.petmily.like.domain.Like;
 import com.ddungja.petmily.like.service.LikeService;
 import com.ddungja.petmily.post.domain.type.PostStatusType;
 import com.ddungja.petmily.user.domain.User;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -24,13 +25,15 @@ public class LikeController {
 
     private final LikeService likeService;
 
+    @Operation(summary = "좋아요 누른 게시글 불러오기")
     @GetMapping
-    public ResponseEntity<?> getLike(@AuthenticationPrincipal User user, @RequestParam(value = "status") PostStatusType postStatusType, Pageable pageable){
+    public ResponseEntity<?> getLike(@AuthenticationPrincipal User user, @RequestParam(value = "status", required = false) PostStatusType postStatusType, Pageable pageable){
         log.info("좋아요 누른 게시글 불러오기");
         Page<Like> likes = likeService.getLikeList(user.getId(),postStatusType, pageable);
         return ResponseEntity.ok(likes.map(LikePostResponse::from));
     }
 
+    @Operation(summary = "좋아요 누르기")
     @PostMapping("/{postId}")
     public ResponseEntity<?> Like(@AuthenticationPrincipal User user, @PathVariable Long postId){
         log.info("좋아요 누르기 postId = {}", postId);
@@ -38,6 +41,7 @@ public class LikeController {
         return ResponseEntity.ok(LikeCreateResponse.from(like));
     }
 
+    @Operation(summary = "좋아요 취소")
     @DeleteMapping("/{postId}")
     public ResponseEntity<?> UnLike(@AuthenticationPrincipal User user, @PathVariable Long postId){
         log.info("좋아요 취소 postId = {}", postId);

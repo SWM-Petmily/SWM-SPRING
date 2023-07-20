@@ -25,24 +25,24 @@ import static org.springframework.http.HttpStatus.CREATED;
 public class ApplyController {
     private final ApplyService applyService;
 
-    @Operation(summary = "내 게시글에 지원한 지원서 목록 보기")
+    @Operation(summary = "지원 받은 목록")
     @GetMapping("/{postId}")
     public ResponseEntity<?> getByPostId(@AuthenticationPrincipal User user, @PathVariable Long postId, Pageable pageable) {
-        log.info("내 게시글 지원 받은 목록 보기 userId : {}", user.getId());
-        return ResponseEntity.ok(ApplyPostResponse.from(postId, applyService.supportMyPost(user.getId(), postId, pageable).map(ApplySupportResponse::from)));
+        log.info("지원 받은 목록 userId : {}", user.getId());
+        return ResponseEntity.ok(applyService.supportMyPost(user.getId(), postId, pageable).map(ApplySupportResponse::from));
     }
 
-    @Operation(summary = "내가 지원한 목록 보기")
+    @Operation(summary = "내가 지원한 게시글 목록 보기")
     @GetMapping
-    public ResponseEntity<?> getByUserId(@AuthenticationPrincipal User user, ApprovalType approval, Pageable pageable) {
-        log.info("내가 지원한 목록 보기 userId : {}", user.getId());
-        return ResponseEntity.ok(applyService.getAppliedList(user.getId(), approval, pageable).map(ApplyPostListResponse::from));
+    public ResponseEntity<?> getByUserId(@AuthenticationPrincipal User user, ApprovalType status, Pageable pageable) {
+        log.info("내가 지원한 게시글 목록 보기 userId : {}", user.getId());
+        return ResponseEntity.ok(applyService.getAppliedList(user.getId(), status, pageable).map(ApplyPostListResponse::from));
     }
 
-    @Operation(summary = "지원 상세 보기")
+    @Operation(summary = "지원 상세보기")
     @GetMapping("/{applyId}/detail")
     public ResponseEntity<?> getDetail(@AuthenticationPrincipal User user, @PathVariable Long applyId) {
-        log.info("지원 상세 보기 : userId = {}, applyId = {} ", user.getId(), applyId);
+        log.info("지원 상세보기 : userId = {}, applyId = {} ", user.getId(), applyId);
         Apply apply = applyService.getDetailInfo(applyId);
         if (apply.getUser().getId().equals(user.getId())) {
             return ResponseEntity.ok(ApplyDetailResponse.from(apply, true));
@@ -50,24 +50,24 @@ public class ApplyController {
         return ResponseEntity.ok(ApplyDetailResponse.from(apply, false));
     }
 
-    @Operation(summary = "지원 승인/거절")
+    @Operation(summary = "지원 수락/거절")
     @PostMapping("/{applyId}/approval")
     public ResponseEntity<?> approve(@AuthenticationPrincipal User user, @PathVariable Long applyId, @Valid @RequestBody ApproveRequest approveRequest) {
-        log.info("지원 승인/거절 : userId = {}, applyId = {} , approvalRequest  = {}", user.getId(), applyId, approveRequest);
+        log.info("지원 수락/거절 : userId = {}, applyId = {} , approvalRequest  = {}", user.getId(), applyId, approveRequest);
         return ResponseEntity.ok(ApprovalResponse.from(applyService.approve(user.getId(), applyId, approveRequest)));
     }
 
-    @Operation(summary = "지원 하기")
+    @Operation(summary = "지원하기")
     @PostMapping("/{postId}")
     public ResponseEntity<?> apply(@AuthenticationPrincipal User user, @PathVariable Long postId, @Valid @RequestBody ApplyCreateRequest applyCreateRequest) {
-        log.info("지원 하기 userId = {}, postId = {}", user.getId(), postId);
+        log.info("지원하기 userId = {}, postId = {}", user.getId(), postId);
         return ResponseEntity.status(CREATED).body(ApplyCreateResponse.from(applyService.apply(user.getId(), postId, applyCreateRequest)));
     }
 
-    @Operation(summary = "지원 취소하기")
+    @Operation(summary = "지원취소")
     @DeleteMapping("/{postId}/cancel")
     public ResponseEntity<?> cancel(@AuthenticationPrincipal User user, @PathVariable Long postId) {
-        log.info("지원 취소하기 userId = {}, postId = {}", user.getId(), postId);
+        log.info("지원취소 userId = {}, postId = {}", user.getId(), postId);
         return ResponseEntity.ok().body(ApplyCancelResponse.from(applyService.cancel(user.getId(), postId)));
     }
 }

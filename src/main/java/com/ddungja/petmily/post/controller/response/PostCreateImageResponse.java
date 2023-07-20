@@ -6,17 +6,19 @@ import lombok.Builder;
 import lombok.Getter;
 
 @Getter
-public class ImageResponse {
+public class PostCreateImageResponse {
 
     private final String url;
     private final ImageType imageType;
+
     @Builder
-    private ImageResponse(String url, ImageType imageType) {
+    private PostCreateImageResponse(String url, ImageType imageType) {
         this.url = url;
         this.imageType = imageType;
     }
-    public static ImageResponse from(Image image) {
-        return ImageResponse.builder()
+
+    public static PostCreateImageResponse from(Image image) {
+        return PostCreateImageResponse.builder()
                 .url(image.getUrl())
                 .imageType(image.getImageType())
                 .build();

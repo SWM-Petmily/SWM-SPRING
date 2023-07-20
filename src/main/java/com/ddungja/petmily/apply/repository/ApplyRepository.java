@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.Optional;
 
-public interface ApplyRepository extends JpaRepository<Apply, Long>, ApplyCustomRepository {
+public interface ApplyRepository extends JpaRepository<Apply, Long>, ApplyQueryRepository {
 
     @Query("select a from Apply a left join fetch a.applyExperiences where a.id = :applyId")
     Optional<Apply> findByApplyId(Long applyId);
