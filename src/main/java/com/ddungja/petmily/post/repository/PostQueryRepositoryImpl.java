@@ -2,7 +2,6 @@ package com.ddungja.petmily.post.repository;
 
 import com.ddungja.petmily.post.domain.Post;
 import com.ddungja.petmily.post.domain.QMainCategory;
-import com.ddungja.petmily.post.domain.QSubCategory;
 import com.ddungja.petmily.post.domain.request.PostFilterRequest;
 import com.ddungja.petmily.post.domain.type.GenderType;
 import com.ddungja.petmily.post.domain.type.NeuteredType;
@@ -21,6 +20,7 @@ import java.util.List;
 
 import static com.ddungja.petmily.like.domain.QLike.like;
 import static com.ddungja.petmily.post.domain.QPost.post;
+import static com.ddungja.petmily.post.domain.QSubCategory.subCategory;
 
 @RequiredArgsConstructor
 public class PostQueryRepositoryImpl implements PostQueryRepository {
@@ -36,15 +36,13 @@ public class PostQueryRepositoryImpl implements PostQueryRepository {
                 .fetch();
 
         List<Post> content = jpaQueryFactory.selectFrom(post)
-                .leftJoin(post.subCategory, QSubCategory.subCategory).fetchJoin()
+                .join(post.subCategory, subCategory).fetchJoin()
                 .leftJoin(post.like, like).fetchJoin()
                 .where(post.user.id.eq(userId).and(eqPostStatusType(postStatusType)), post.id.in(postId))
                 .fetch();
 
         JPAQuery<Long> countQuery = jpaQueryFactory.select(post.count())
                 .from(post)
-                .leftJoin(post.subCategory, QSubCategory.subCategory).fetchJoin()
-                .leftJoin(post.like, like).fetchJoin()
                 .where(post.user.id.eq(userId).and(eqPostStatusType(postStatusType)));
 
         return PageableExecutionUtils.getPage(content, pageable, countQuery::fetchOne);
@@ -53,7 +51,7 @@ public class PostQueryRepositoryImpl implements PostQueryRepository {
     @Override
     public Page<Post> getMainPosts(PostFilterRequest postFilterRequest, Pageable pageable) {
         List<Post> content = jpaQueryFactory.selectFrom(post)
-                .leftJoin(post.subCategory, QSubCategory.subCategory).fetchJoin()
+                .leftJoin(post.subCategory, subCategory).fetchJoin()
                 .leftJoin(post.mainCategory, QMainCategory.mainCategory)
                 .where(eqRegion(postFilterRequest.getRegion())
                         .and(eqMainCategory(postFilterRequest.getMainCategory()))
@@ -66,7 +64,7 @@ public class PostQueryRepositoryImpl implements PostQueryRepository {
 
         JPAQuery<Long> countQuery = jpaQueryFactory.select(post.count())
                 .from(post)
-                .leftJoin(post.subCategory, QSubCategory.subCategory)
+                .leftJoin(post.subCategory, subCategory)
                 .leftJoin(post.mainCategory, QMainCategory.mainCategory)
                 .where(eqRegion(postFilterRequest.getRegion())
                         .and(eqMainCategory(postFilterRequest.getMainCategory()))
@@ -80,7 +78,7 @@ public class PostQueryRepositoryImpl implements PostQueryRepository {
     public Page<Post> getMainPosts(Long userId, PostFilterRequest postFilterRequest, Pageable pageable) {
         List<Post> content = jpaQueryFactory.selectFrom(post)
                 .leftJoin(post.like, like).fetchJoin()
-                .leftJoin(post.subCategory, QSubCategory.subCategory).fetchJoin()
+                .leftJoin(post.subCategory, subCategory).fetchJoin()
                 .leftJoin(post.mainCategory, QMainCategory.mainCategory)
                 .where(eqRegion(postFilterRequest.getRegion())
                         .and(eqMainCategory(postFilterRequest.getMainCategory()))
