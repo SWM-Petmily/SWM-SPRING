@@ -35,7 +35,7 @@ public class ImageService {
 
     @Transactional
     public List<String> upload(List<MultipartFile> multipartFiles, ImageType imageType) throws IOException {
-        List<String> imageUrlList = new ArrayList<>();
+        List<String> imageList = new ArrayList<>();
         List<Image> saveImageList = new ArrayList<>();
         for (MultipartFile image : multipartFiles) {
             String fileName = UUID.randomUUID() + "-" + image.getOriginalFilename(); // 파일 이름
@@ -43,7 +43,7 @@ public class ImageService {
             log.debug("fileName: {}, size: {}, contentType: {}", fileName, size, image.getContentType());
             if (isImage(Objects.requireNonNull(image.getContentType()))) {
                 String url = uploadImage(image, fileName, size, bucket);
-                imageUrlList.add(url);
+                imageList.add(url);
                 saveImageList.add(Image.builder()
                         .imageType(imageType)
                         .url(url)
@@ -51,7 +51,7 @@ public class ImageService {
             }
         }
         imageRepository.saveAll(saveImageList);
-        return imageUrlList;
+        return imageList;
     }
 
     private String uploadImage(MultipartFile multipartFile, String fileName, long size, String bucket) throws IOException {

@@ -29,7 +29,7 @@ public class ApplyController {
     @GetMapping("/{postId}")
     public ResponseEntity<?> getByPostId(@AuthenticationPrincipal User user, @PathVariable Long postId, Pageable pageable) {
         log.info("지원 받은 목록 userId : {}", user.getId());
-        return ResponseEntity.ok(ApplyPostResponse.from(postId, applyService.supportMyPost(user.getId(), postId, pageable).map(ApplySupportResponse::from)));
+        return ResponseEntity.ok(applyService.supportMyPost(user.getId(), postId, pageable).map(ApplySupportResponse::from));
     }
 
     @Operation(summary = "내가 지원한 게시글 목록 보기")
