@@ -1,6 +1,7 @@
 package com.ddungja.petmily.user.controller;
 
 
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.extern.slf4j.Slf4j;
 import net.nurigo.sdk.message.model.Message;
 import net.nurigo.sdk.message.request.SingleMessageSendingRequest;
@@ -23,7 +24,9 @@ public class CoolSmsController {
         this.messageService = new DefaultMessageService(Objects.requireNonNull(environment.getProperty("coolsms.apiKey")), Objects.requireNonNull(environment.getProperty("coolsms.apiSecretKey")), "https://api.coolsms.co.kr");
     }
 
-    @PostMapping("/send-one")
+    
+    @Operation(summary = "인증번호 문자 발송")
+    @PostMapping("/send")
     public ResponseEntity<?> sendOne(@RequestBody String phoneNumber) {
         Message message = new Message();
         message.setFrom("01063169037");

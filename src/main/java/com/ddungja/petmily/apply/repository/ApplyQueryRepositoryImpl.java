@@ -43,8 +43,8 @@ public class ApplyQueryRepositoryImpl implements ApplyQueryRepository {
                 .fetch();
 
         List<Apply> content = jpaQueryFactory.selectFrom(apply)
-                .leftJoin(apply.post, post).fetchJoin()
-                .leftJoin(apply.post.subCategory, subCategory).fetchJoin()
+                .join(apply.post, post).fetchJoin()
+                .join(apply.post.subCategory, subCategory).fetchJoin()
                 .leftJoin(apply.post.like, like).fetchJoin()
                 .where(apply.user.id.eq(userId).and(eqApproval(approval)), apply.id.in(applyId))
                 .fetch();
