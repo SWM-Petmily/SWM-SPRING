@@ -3,6 +3,7 @@ package com.ddungja.petmily.like.controller.response;
 import com.ddungja.petmily.like.domain.Like;
 import com.ddungja.petmily.post.domain.Post;
 import com.ddungja.petmily.post.domain.type.GenderType;
+import com.ddungja.petmily.post.domain.type.PostStatusType;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -21,8 +22,10 @@ public class LikePostResponse {
     private final Boolean isMine;
     private final String createdDate;
 
+    private final PostStatusType postStatus;
+
     @Builder
-    private LikePostResponse(Long id, String name, String image, String subCategory, String region, GenderType gender, String birth, int like, Boolean isMine, String createdDate) {
+    private LikePostResponse(Long id, String name, String image, String subCategory, String region, GenderType gender, String birth, int like, Boolean isMine, String createdDate, PostStatusType postStatus) {
         this.id = id;
         this.name = name;
         this.thumbnailImage = image;
@@ -33,6 +36,7 @@ public class LikePostResponse {
         this.like = like;
         this.isMine = isMine;
         this.createdDate = createdDate;
+        this.postStatus = postStatus;
     }
 
     public static LikePostResponse from(Like like) {
@@ -48,6 +52,7 @@ public class LikePostResponse {
                 .like(post.getLike().size())
                 .isMine(post.getUser().getId().equals(like.getUser().getId()))
                 .createdDate(post.getCreateDate().format(DateTimeFormatter.ofPattern("yyyy.MM.dd")))
+                .postStatus(post.getStatus())
                 .build();
     }
 }

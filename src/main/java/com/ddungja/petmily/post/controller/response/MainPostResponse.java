@@ -13,19 +13,21 @@ public class MainPostResponse {
     private final String thumbnailImage;
     private final String region;
     private final GenderType genderType;
-    private final String birth;
+    private final int age;
+    private final int money;
     private final Boolean isLike;
     private final String createdDate;
 
     @Builder
-    public MainPostResponse(Long id, String name, String thumbnailImage, String subCategory, String region, GenderType genderType, String birth, Boolean isLike, String createdDate) {
+    public MainPostResponse(Long id, String name, String thumbnailImage, String subCategory, String region, GenderType genderType, int age, int money, Boolean isLike, String createdDate) {
         this.id = id;
         this.name = name;
         this.thumbnailImage = thumbnailImage;
         this.subCategory = subCategory;
         this.region = region;
         this.genderType = genderType;
-        this.birth = birth;
+        this.age = age;
+        this.money = money;
         this.isLike = isLike;
         this.createdDate = createdDate;
     }
@@ -38,7 +40,8 @@ public class MainPostResponse {
                 .subCategory(post.getSubCategory().getName())
                 .genderType(post.getGender())
                 .region(post.getRegion())
-                .birth(post.getBirth())
+                .age(post.getAge())
+                .money(post.getMoney())
                 .isLike(false)
                 .createdDate(post.getCreateDate().toString())
                 .build();
@@ -52,7 +55,8 @@ public class MainPostResponse {
                 .subCategory(post.getSubCategory().getName())
                 .genderType(post.getGender())
                 .region(post.getRegion())
-                .birth(post.getBirth())
+                .age(post.getAge())
+                .money(post.getMoney())
                 .isLike(post.getLike().stream().anyMatch(like -> like.getUser().getId().equals(userId)))
                 .createdDate(post.getCreateDate().toString())
                 .build();
