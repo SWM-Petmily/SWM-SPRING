@@ -25,18 +25,18 @@ public class ProfileController {
 
     private final ProfileService profileService;
 
-    @Operation(summary = "내 프로필 생성하기")
+    @Operation(summary = "내 프로필 등록")
     @PostMapping
     public ResponseEntity<?> create(@AuthenticationPrincipal User user, @Valid @RequestBody MyProfileCreateRequest myProfileCreateRequest) {
-        log.info("내 프로필 생성하기 userId = {}", user.getId());
+        log.info("내 프로필 등록 userId = {}", user.getId());
         Profile profile = profileService.create(myProfileCreateRequest, user.getId());
         return ResponseEntity.ok(MyProfileCreateResponse.from(profile));
     }
 
-    @Operation(summary = "프로필 가져오기")
+    @Operation(summary = "프로필 상세보기")
     @GetMapping("/{userId}")
     public ResponseEntity<?> get(@AuthenticationPrincipal User user, @PathVariable Long userId) {
-        log.info("프로필 가져오기 userId = {}", userId);
+        log.info("프로필 상세보기 userId = {}", userId);
         if (user != null) {
             if (user.getId().equals(userId)) {
                 return ResponseEntity.ok(ProfileResponse.from(profileService.get(user.getId()), true));

@@ -38,10 +38,10 @@ public class UserController {
     private final UserService userService;
     private final JwtProvider jwtProvider;
 
-    @Operation(summary = "카카오 로그인")
+    @Operation(summary = "카카오 로그인/회원가입")
     @GetMapping("/kakao")
     public ResponseEntity<?> kakaoLogin(@RequestParam(value = "code") String code) throws URISyntaxException {
-        log.debug("카카오 로그인 요청 code = {}", code);
+        log.debug("카카오 로그인/회원가입 code = {}", code);
         KakaoProfile kakaoProfile = kakaoService.getInfo(code);
         User user = userService.login(kakaoProfile);
         String accessToken = jwtProvider.createAccessToken(user);
@@ -58,10 +58,10 @@ public class UserController {
                 .httpOnly(true).build().toString();
     }
 
-    @Operation(summary = "리프레쉬 토큰 검증하고 엑세스토큰 반환")
+    @Operation(summary = "엑세스 토큰 재발급")
     @PostMapping("/refresh")
     public ResponseEntity<?> getRefreshToken(@CookieValue(value = "refreshToken") Cookie cookie) {
-        log.info("refresh 요청 = {}", cookie.getValue());
+        log.debug("refresh 요청 = {}", cookie.getValue());
         String refreshToken = cookie.getValue();
         log.debug("refreshToken = {}", refreshToken);
         if (jwtProvider.validateRefreshToken(refreshToken)) {
@@ -73,6 +73,20 @@ public class UserController {
         }
         throw new CustomException(REFRESH_TOKEN_VALIDATION_FAILED);
     }
+
+    @Operation(summary = "카카오 회원가입 후 추가적인 정보와 휴대전화 인증")
+    @PostMapping("/signup")
+    public ResponseEntity<?> signUp(@AuthenticationPrincipal User user, @RequestBody UserCreateRequest userCreateRequest) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(UserSignUpResponse.from(userService.signUp(user.getId(), userCreateRequest)));
+    }
+
+    @Operation(summary = "닉네임 수정")
+    @PutMapping
+    public ResponseEntity<?> modify(@AuthenticationPrincipal User user, @RequestBody UserUpdateRequest userUpdateRequest) {
+        userService.modifyNickname(user.getId(), userUpdateRequest);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
 
     @Operation(summary = "권한테스트")
     @GetMapping("/authorization")
@@ -92,18 +106,6 @@ public class UserController {
     public ResponseEntity<?> testAccessToken2() {
         String testAccessToken = jwtProvider.createTestAccessToken(2L);
         return ResponseEntity.ok(testAccessToken);
-    }
-    @Operation(summary = "카카오 회원가입 후 추가적인 정보와 휴대전화 인증")
-    @PostMapping("/signup")
-    public ResponseEntity<?> signUp(@AuthenticationPrincipal User user, @RequestBody UserCreateRequest userCreateRequest) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(UserSignUpResponse.from(userService.signUp(user.getId(), userCreateRequest)));
-    }
-
-    @Operation(summary = "닉네임 수정")
-    @PutMapping
-    public ResponseEntity<?> modify(@AuthenticationPrincipal User user, @RequestBody UserUpdateRequest userUpdateRequest) {
-        userService.modifyNickname(user.getId(), userUpdateRequest);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
     @Operation(summary = "로컬에서 카카오 로그인 테스트")
     @GetMapping("/sadfasdfsdfsdf")
