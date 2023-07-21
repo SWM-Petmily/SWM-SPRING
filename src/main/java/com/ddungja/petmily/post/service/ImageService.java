@@ -5,7 +5,10 @@ import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.ddungja.petmily.common.domain.exception.CustomException;
+import com.ddungja.petmily.common.domain.exception.ExceptionCode;
 import com.ddungja.petmily.post.domain.Image;
+import com.ddungja.petmily.post.domain.Post;
 import com.ddungja.petmily.post.domain.type.ImageType;
 import com.ddungja.petmily.post.repository.ImageRepository;
 import lombok.RequiredArgsConstructor;
@@ -26,16 +29,14 @@ import java.util.UUID;
 @Transactional(readOnly = true)
 @Slf4j
 public class ImageService {
-    private final ImageRepository imageRepository;
 
     @Value("${s3.bucket}")
     private String bucket;
+    private final ImageRepository imageRepository;
     private final AmazonS3Client amazonS3Client;
 
-
     @Transactional
-    public List<String> upload(List<MultipartFile> multipartFiles, ImageType imageType) throws IOException {
-        List<String> imageList = new ArrayList<>();
+    public List<Image> upload(Post post, List<MultipartFile> multipartFiles, ImageType imageType) throws IOException {
         List<Image> saveImageList = new ArrayList<>();
         for (MultipartFile image : multipartFiles) {
             String fileName = UUID.randomUUID() + "-" + image.getOriginalFilename(); // 파일 이름
@@ -43,18 +44,28 @@ public class ImageService {
             log.debug("fileName: {}, size: {}, contentType: {}", fileName, size, image.getContentType());
             if (isImage(Objects.requireNonNull(image.getContentType()))) {
                 String url = uploadImage(image, fileName, size, bucket);
-                imageList.add(url);
                 saveImageList.add(Image.builder()
                         .imageType(imageType)
+                        .post(post)
                         .url(url)
                         .build());
             }
         }
-        imageRepository.saveAll(saveImageList);
-        return imageList;
+        return imageRepository.saveAll(saveImageList);
+    }
+
+    @Transactional
+    public void delete(Long imageId) {
+        Image image = imageRepository.findById(imageId).orElseThrow(() -> new CustomException(ExceptionCode.IMAGE_NOT_FOUND));
+        if(!amazonS3Client.doesObjectExist(bucket, image.getUrl())){
+            throw new CustomException(ExceptionCode.S3_IMAGE_NOT_FOUND);
+        }
+        amazonS3Client.deleteObject(bucket, image.getUrl());
+        imageRepository.delete(image);
     }
 
     private String uploadImage(MultipartFile multipartFile, String fileName, long size, String bucket) throws IOException {
+
         ObjectMetadata objectMetaData = new ObjectMetadata();
         objectMetaData.setContentType(multipartFile.getContentType());
         objectMetaData.setContentLength(size);

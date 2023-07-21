@@ -57,7 +57,9 @@ public class PostQueryRepositoryImpl implements PostQueryRepository {
                         .and(eqMainCategory(postFilterRequest.getMainCategory()))
                         .and(eqSubCategory(postFilterRequest.getSubCategory()))
                         .and(eqGenderType(postFilterRequest.getGenderType()))
-                        .and(eqNeuteredType(postFilterRequest.getNeuteredType())))
+                        .and(eqNeuteredType(postFilterRequest.getNeuteredType()))
+                        .and(eqAgeBetween(postFilterRequest.getAgeFrom(), postFilterRequest.getAgeTo()))
+                        .and(eqMoneyBetween(postFilterRequest.getMoneyFrom(), postFilterRequest.getMoneyTo())))
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();
@@ -70,7 +72,9 @@ public class PostQueryRepositoryImpl implements PostQueryRepository {
                         .and(eqMainCategory(postFilterRequest.getMainCategory()))
                         .and(eqSubCategory(postFilterRequest.getSubCategory()))
                         .and(eqGenderType(postFilterRequest.getGenderType()))
-                        .and(eqNeuteredType(postFilterRequest.getNeuteredType())));
+                        .and(eqNeuteredType(postFilterRequest.getNeuteredType()))
+                        .and(eqAgeBetween(postFilterRequest.getAgeFrom(), postFilterRequest.getAgeTo()))
+                        .and(eqMoneyBetween(postFilterRequest.getMoneyFrom(), postFilterRequest.getMoneyTo())));
         return PageableExecutionUtils.getPage(content, pageable, countQuery::fetchOne);
     }
 
@@ -84,7 +88,9 @@ public class PostQueryRepositoryImpl implements PostQueryRepository {
                         .and(eqMainCategory(postFilterRequest.getMainCategory()))
                         .and(eqSubCategory(postFilterRequest.getSubCategory()))
                         .and(eqGenderType(postFilterRequest.getGenderType()))
-                        .and(eqNeuteredType(postFilterRequest.getNeuteredType())))
+                        .and(eqNeuteredType(postFilterRequest.getNeuteredType()))
+                        .and(eqAgeBetween(postFilterRequest.getAgeFrom(), postFilterRequest.getAgeTo()))
+                        .and(eqMoneyBetween(postFilterRequest.getMoneyFrom(), postFilterRequest.getMoneyTo())))
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();
@@ -95,7 +101,9 @@ public class PostQueryRepositoryImpl implements PostQueryRepository {
                         .and(eqMainCategory(postFilterRequest.getMainCategory()))
                         .and(eqSubCategory(postFilterRequest.getSubCategory()))
                         .and(eqGenderType(postFilterRequest.getGenderType()))
-                        .and(eqNeuteredType(postFilterRequest.getNeuteredType())));
+                        .and(eqNeuteredType(postFilterRequest.getNeuteredType()))
+                        .and(eqAgeBetween(postFilterRequest.getAgeFrom(), postFilterRequest.getAgeTo()))
+                        .and(eqMoneyBetween(postFilterRequest.getMoneyFrom(), postFilterRequest.getMoneyTo())));
         return PageableExecutionUtils.getPage(content, pageable, countQuery::fetchOne);    }
 
     private BooleanBuilder eqRegion(String region) {
@@ -118,11 +126,13 @@ public class PostQueryRepositoryImpl implements PostQueryRepository {
         return neuterType == null ? null : post.neutered.eq(neuterType);
     }
 
-//    private BooleanExpression eqBirth(Integer birth, RangeType rangeType) {
-//
-//
-//    }
+    private BooleanBuilder eqAgeBetween(Integer start, Integer end) {
+        return start != null && end != null ? new BooleanBuilder(post.age.between(start, end)) : new BooleanBuilder();
+    }
 
+    private BooleanBuilder eqMoneyBetween(Integer start, Integer end) {
+        return start != null && end != null ? new BooleanBuilder(post.money.between(start, end)) : new BooleanBuilder();
+    }
 
     private BooleanExpression eqPostStatusType(PostStatusType postStatusType) {
         return postStatusType == null ? null : post.status.eq(postStatusType);

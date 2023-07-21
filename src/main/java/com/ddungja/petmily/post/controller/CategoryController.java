@@ -3,6 +3,7 @@ package com.ddungja.petmily.post.controller;
 import com.ddungja.petmily.post.controller.response.SubCategoryResponse;
 import com.ddungja.petmily.post.domain.SubCategory;
 import com.ddungja.petmily.post.service.CategoryService;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -22,12 +23,14 @@ public class CategoryController {
 
     private final CategoryService categoryService;
 
+    @Operation(summary = "메인 카테고리 불러오기")
     @GetMapping
     public ResponseEntity<?> getCategory(){
         log.info("메인 카테고리 불러오기");
         return ResponseEntity.ok(categoryService.getMainCategory());
     }
 
+    @Operation(summary = "서브 카테고리 불러오기")
     @GetMapping("/{categoryId}")
     public ResponseEntity<?> getSubCategory(@PathVariable Long categoryId){
         log.info("서브 카테고리 불러오기 categoryId = {}", categoryId);

@@ -25,9 +25,6 @@ public class PostCreateRequest {
     private final String adopter; // 분양자
     private final int age;
     private final PostStatusType status;
-    private final List<ImageCreateRequest> postImages;
-    private final List<ImageCreateRequest> vaccinationImages;
-    private final List<ImageCreateRequest> medicalCheckImages;
     private final List<DiseaseRequest> diseases;
 
     @Builder
@@ -47,9 +44,6 @@ public class PostCreateRequest {
         this.adopter = adopter;
         this.age = age;
         this.status = status;
-        this.postImages = postImages;
-        this.vaccinationImages = vaccinationImages;
-        this.medicalCheckImages = medicalCheckImages;
         this.diseases = diseases;
     }
 

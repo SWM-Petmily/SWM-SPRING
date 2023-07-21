@@ -7,6 +7,8 @@ import com.ddungja.petmily.post.domain.type.PostStatusType;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.util.List;
+
 
 @Getter
 public class PostCreateResponse {
@@ -24,10 +26,11 @@ public class PostCreateResponse {
     private final String disadvantage; // 단점, 주의할 점
     private final String averageCost;// 평균비용
     private final String adopter; // 분양자
-    private PostStatusType status; // 분양상태
+    private final PostStatusType status; // 분양상태
+    private final List<PostCreateImageResponse> images;
 
     @Builder
-    private PostCreateResponse(Long id, Long mainCategory, Long subCategory, String region, GenderType gender, String birth, NeuteredType neutered, int money, String reason, String advantage, String disadvantage, String averageCost, String adopter, PostStatusType status) {
+    private PostCreateResponse(Long id, Long mainCategory, Long subCategory, String region, GenderType gender, String birth, NeuteredType neutered, int money, String reason, String advantage, String disadvantage, String averageCost, String adopter, PostStatusType status, List<PostCreateImageResponse> images) {
         this.postId = id;
         this.mainCategory = mainCategory;
         this.subCategory = subCategory;
@@ -42,8 +45,8 @@ public class PostCreateResponse {
         this.averageCost = averageCost;
         this.adopter = adopter;
         this.status = status;
+        this.images = images;
     }
-
 
     public static PostCreateResponse from(Post post) {
         return PostCreateResponse.builder()
@@ -61,6 +64,7 @@ public class PostCreateResponse {
                 .averageCost(post.getAverageCost())
                 .adopter(post.getAdopter())
                 .status(post.getStatus())
+                .images(post.getImages().stream().map(PostCreateImageResponse::from).toList())
                 .build();
     }
 

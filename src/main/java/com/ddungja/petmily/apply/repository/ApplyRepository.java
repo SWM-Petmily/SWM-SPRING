@@ -16,7 +16,7 @@ public interface ApplyRepository extends JpaRepository<Apply, Long>, ApplyQueryR
 
     Optional<Apply> findByIdAndSellerId(Long applyId, Long sellerId);
 
-    @EntityGraph(attributePaths = {"applyExperiences"})
+    @EntityGraph(attributePaths = {"user"})
     Page<Apply> findBySellerIdAndPostId(Long sellerId, Long postId, Pageable pageable);
 
     Optional<Apply> findByUserIdAndPostId(Long userId, Long postId);
