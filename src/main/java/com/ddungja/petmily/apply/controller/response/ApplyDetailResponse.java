@@ -12,6 +12,7 @@ public class ApplyDetailResponse {
     private final Long applyId;
     private final String job;
     private final String environment;
+    private final String nickname;
     private final int people;
     private final String comment;
     private final String openTalk;
@@ -23,10 +24,11 @@ public class ApplyDetailResponse {
     private final Boolean isMyApply;
 
     @Builder
-    private ApplyDetailResponse(Long applyId, String job, String environment, int people, String comment, String openTalk, String region, Boolean isExperience, String url, ApprovalType approval, List<ApplyExperienceResponse> applyExperienceResponses, Boolean isMyApply) {
+    private ApplyDetailResponse(Long applyId, String job, String environment, String nickname, int people, String comment, String openTalk, String region, Boolean isExperience, String url, ApprovalType approval, List<ApplyExperienceResponse> applyExperienceResponses, Boolean isMyApply) {
         this.applyId = applyId;
         this.job = job;
         this.environment = environment;
+        this.nickname = nickname;
         this.people = people;
         this.comment = comment;
         this.openTalk = openTalk;
@@ -50,6 +52,7 @@ public class ApplyDetailResponse {
                 .isExperience(apply.isExperience())
                 .url(apply.getUrl())
                 .approval(apply.getApproval())
+                .nickname(apply.getUser().getNickname())
                 .applyExperienceResponses(apply.getApplyExperiences().stream().map(ApplyExperienceResponse::from).toList())
                 .isMyApply(isMyApply)
                 .build();
