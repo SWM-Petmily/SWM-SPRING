@@ -11,7 +11,7 @@ import java.util.Optional;
 
 public interface ApplyRepository extends JpaRepository<Apply, Long>, ApplyQueryRepository {
 
-    @Query("select a from Apply a left join fetch a.applyExperiences where a.id = :applyId")
+    @Query("select a from Apply a left join fetch a.applyExperiences join fetch a.user where a.id = :applyId")
     Optional<Apply> findByApplyId(Long applyId);
 
     Optional<Apply> findByIdAndSellerId(Long applyId, Long sellerId);
