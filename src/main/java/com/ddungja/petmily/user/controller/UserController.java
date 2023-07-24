@@ -108,7 +108,7 @@ public class UserController {
         return ResponseEntity.ok(testAccessToken);
     }
     @Operation(summary = "로컬에서 카카오 로그인 테스트")
-    @GetMapping("/sadfasdfsdfsdf")
+    @GetMapping("/kakao/login/test")
     public void login(HttpServletResponse response) throws IOException {
         response.sendRedirect("https://kauth.kakao.com/oauth/authorize?client_id=ee34f16978b76a36b7c087376c6bbef2&redirect_uri=http://localhost:8080/users/kakao&response_type=code");
     }
