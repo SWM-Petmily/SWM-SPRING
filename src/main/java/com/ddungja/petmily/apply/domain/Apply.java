@@ -1,6 +1,7 @@
 package com.ddungja.petmily.apply.domain;
 
 
+import com.ddungja.petmily.apply.controller.response.ApplyUpdateRequest;
 import com.ddungja.petmily.apply.domain.request.ApplyCreateRequest;
 import com.ddungja.petmily.common.domain.BaseTimeEntity;
 import com.ddungja.petmily.post.domain.Post;
@@ -18,7 +19,7 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Table(name = "applys")
-public class  Apply extends BaseTimeEntity {
+public class Apply extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -88,19 +89,25 @@ public class  Apply extends BaseTimeEntity {
 
     }
 
-    public void approve(ApprovalType approval) {
-        if (this.approval == ApprovalType.WAITING) {
-            if (approval == ApprovalType.APPROVED) {
-                this.approval = ApprovalType.APPROVED;
-            } else {
-                this.approval = ApprovalType.REJECTED;
-            }
+    public void approve(ApprovalType requestApproval) {
+        if (this.approval == ApprovalType.WAITING && requestApproval == ApprovalType.APPROVED) {
+            this.approval = ApprovalType.APPROVED;
         }
+
+        if (this.approval == ApprovalType.WAITING && requestApproval == ApprovalType.REJECTED) {
+            this.approval = ApprovalType.REJECTED;
+        }
+
     }
 
     public void cancel() {
         if (this.approval == ApprovalType.WAITING) {
             this.approval = ApprovalType.CANCEL;
         }
+    }
+
+    public void modify(ApplyUpdateRequest applyUpdateRequest) {
+        this.comment = applyUpdateRequest.getComment();
+        this.openTalk = applyUpdateRequest.getOpenTalk();
     }
 }

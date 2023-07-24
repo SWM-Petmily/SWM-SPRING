@@ -2,6 +2,8 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '3.1.0'
     id 'io.spring.dependency-management' version '1.1.0'
+    id 'org.sonarqube' version '3.3'
+    id 'jacoco'
 }
 
 group = 'com.ddungja.petmily'
@@ -64,6 +66,8 @@ dependencies {
 
 }
 
+
+//배포시  jar파일이 하나만 나오게 하기 위해 설정
 jar {
     enabled = false;
 }
@@ -78,6 +82,7 @@ tasks.named('test') {
     useJUnitPlatform()
 }
 
+// querydsl 설정
 def querydslDir = "$buildDir/generated/querydsl"
 
 sourceSets {
@@ -90,5 +95,39 @@ tasks.withType(JavaCompile) {
 
 clean.doLast {
     file(querydslDir).deleteDir()
+}
+
+
+
+
+jacoco {
+    toolVersion = '0.8.5'
+}
+
+test {
+    jacoco {
+        destinationFile = file("$buildDir/jacoco/jacoco.exec")
+    }
+}
+jacocoTestReport {
+    reports {
+        html.enabled true
+        xml.enabled false
+        csv.enabled false
+    }
+}
+
+
+sonarqube {
+    properties {
+        property "sonar.host.url", "http://localhost:9000"
+        property "sonar.login", "squ_c7acc72ed26a47289ff569ce25322f1e9ac25bac"
+        property "sonar.sources", "src"
+        property "sonar.language", "java"
+        property "sonar.sourceEncoding", "UTF-8"
+        property "sonar.profile", "Sonar way"
+        property "sonar.test.inclusions", "**/*Test.java"
+        property 'sonar.coverage.jacoco.xmlReportPaths', "${buildDir}/reports/jacoco/test/jacocoTestReport.xml"
+    }
 }
 

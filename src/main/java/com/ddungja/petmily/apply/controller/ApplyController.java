@@ -4,20 +4,29 @@ import com.ddungja.petmily.apply.controller.response.*;
 import com.ddungja.petmily.apply.domain.Apply;
 import com.ddungja.petmily.apply.domain.ApprovalType;
 import com.ddungja.petmily.apply.domain.request.ApplyCreateRequest;
+import com.ddungja.petmily.apply.domain.request.ApplyUpdateResponse;
 import com.ddungja.petmily.apply.domain.request.ApproveRequest;
 import com.ddungja.petmily.apply.service.ApplyService;
+import com.ddungja.petmily.common.domain.exception.ExceptionCode;
 import com.ddungja.petmily.user.domain.User;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import static org.springframework.http.HttpStatus.CREATED;
 
+@Tag(name = "Apply", description = "지원 관련 API")
 @RestController
 @RequiredArgsConstructor
 @Slf4j
@@ -33,8 +42,12 @@ public class ApplyController {
     }
 
     @Operation(summary = "내가 지원한 게시글 목록 보기")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "게시글 목록 조회 성공", content = @Content(schema = @Schema(implementation = ApplyPostListResponse.class))),
+            @ApiResponse(responseCode = "404", description = "게시글 조회 실패", content = @Content(schema = @Schema(implementation = ExceptionCode.class)))
+    })
     @GetMapping
-    public ResponseEntity<?> getByUserId(@AuthenticationPrincipal User user, ApprovalType status, Pageable pageable) {
+    public ResponseEntity<?> getByUserId(@AuthenticationPrincipal User user, ApprovalType status,@PageableDefault Pageable pageable) {
         log.info("내가 지원한 게시글 목록 보기 userId : {}", user.getId());
         return ResponseEntity.ok(applyService.getAppliedList(user.getId(), status, pageable).map(ApplyPostListResponse::from));
     }
@@ -69,5 +82,12 @@ public class ApplyController {
     public ResponseEntity<?> cancel(@AuthenticationPrincipal User user, @PathVariable Long postId) {
         log.info("지원취소 userId = {}, postId = {}", user.getId(), postId);
         return ResponseEntity.ok().body(ApplyCancelResponse.from(applyService.cancel(user.getId(), postId)));
+    }
+
+    @Operation(summary = "지원수정")
+    @PutMapping("/{applyId}")
+    public ResponseEntity<?> modify(@AuthenticationPrincipal User user, @PathVariable Long applyId, @RequestBody ApplyUpdateRequest applyUpdateRequest) {
+        log.info("지원수정 userId = {}, applyId = {}", user.getId(), applyId);
+        return ResponseEntity.ok().body(ApplyUpdateResponse.from(applyService.modify(user.getId(), applyId, applyUpdateRequest)));
     }
 }

@@ -31,6 +31,7 @@ public class PostQueryRepositoryImpl implements PostQueryRepository {
     public Page<Post> getMyPost(Long userId, PostStatusType postStatusType, Pageable pageable) {
         List<Long> postId = jpaQueryFactory.select(post.id)
                 .from(post)
+                .where(post.user.id.eq(userId).and(eqPostStatusType(postStatusType)))
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();

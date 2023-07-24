@@ -1,12 +1,14 @@
 package com.ddungja.petmily.apply.service;
 
 
+import com.ddungja.petmily.apply.controller.response.ApplyUpdateRequest;
 import com.ddungja.petmily.apply.domain.Apply;
 import com.ddungja.petmily.apply.domain.ApprovalType;
 import com.ddungja.petmily.apply.domain.request.ApplyCreateRequest;
 import com.ddungja.petmily.apply.domain.request.ApproveRequest;
 import com.ddungja.petmily.apply.repository.ApplyRepository;
 import com.ddungja.petmily.common.domain.exception.CustomException;
+import com.ddungja.petmily.common.domain.exception.ExceptionCode;
 import com.ddungja.petmily.post.domain.Post;
 import com.ddungja.petmily.post.repository.PostRepository;
 import com.ddungja.petmily.user.domain.User;
@@ -40,7 +42,7 @@ public class ApplyService {
     }
 
     public Apply getDetailInfo(Long applyId) {
-        return applyRepository.findByApplyId(applyId).orElseThrow(() -> new CustomException(APPLY_NOT_FOUND));
+        return applyRepository.findDetailById(applyId).orElseThrow(() -> new CustomException(APPLY_NOT_FOUND));
     }
 
     @Transactional
@@ -64,6 +66,17 @@ public class ApplyService {
     public Apply cancel(Long userId, Long postId) {
         Apply apply = applyRepository.findByUserIdAndPostId(userId, postId).orElseThrow(() -> new CustomException(APPLY_NOT_FOUND));
         apply.cancel();
+        return apply;
+    }
+
+    @Transactional
+    public Apply modify(Long userId, Long applyId, ApplyUpdateRequest applyUpdateRequest){
+        User user = userRepository.findById(userId).orElseThrow(() -> new CustomException(USER_NOT_FOUND));
+        Apply apply = applyRepository.findByIdAndUserId(applyId, user.getId()).orElseThrow(() -> new CustomException(APPLY_NOT_FOUND));
+        if (apply.getApproval() != ApprovalType.WAITING) {
+            throw new CustomException(ExceptionCode.APPLY_CANT_MODIFY);
+        }
+        apply.modify(applyUpdateRequest);
         return apply;
     }
 }
