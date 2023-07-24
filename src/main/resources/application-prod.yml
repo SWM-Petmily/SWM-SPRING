@@ -59,8 +59,7 @@ springdoc:
     disabled: true
   swagger-ui:
     path: /ui
-    operations-sorter: alpha, method
-    tags-sorter: alpha, method
+    operations-sorter: method
 
 kakao:
   restApiKey: ee34f16978b76a36b7c087376c6bbef2
