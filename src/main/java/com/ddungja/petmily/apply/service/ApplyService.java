@@ -40,7 +40,7 @@ public class ApplyService {
     }
 
     public Apply getDetailInfo(Long applyId) {
-        return applyRepository.findByApplyId(applyId).orElseThrow(() -> new CustomException(APPLY_NOT_FOUND));
+        return applyRepository.findDetailById(applyId).orElseThrow(() -> new CustomException(APPLY_NOT_FOUND));
     }
 
     @Transactional

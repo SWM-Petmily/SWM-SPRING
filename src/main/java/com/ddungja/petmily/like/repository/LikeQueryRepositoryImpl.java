@@ -24,19 +24,11 @@ public class LikeQueryRepositoryImpl implements LikeQueryRepository {
 
     @Override
     public Page<Like> findByUserIdAndPostStatus(Long userId, PostStatusType postStatusType, Pageable pageable) {
-//이전 코드
-        //        List<Like> contents = jpaQueryFactory.selectFrom(like)
-//                .leftJoin(like.post, post).fetchJoin()
-//                .leftJoin(like.post.subCategory, subCategory).fetchJoin()
-//                .where(like.user.id.eq(userId).and(eqPostStatusType(postStatusType)))
-//                .join(like.post.like, like2).fetchJoin()
-//                .offset(pageable.getOffset())
-//                .limit(pageable.getPageSize())
-//                .fetch();
 
         QLike like2 = new QLike("like2");
         List<Long> likeId = jpaQueryFactory.select(like.id)
                 .from(like)
+                .where(like.user.id.eq(userId).and(eqPostStatusType(postStatusType)))
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();

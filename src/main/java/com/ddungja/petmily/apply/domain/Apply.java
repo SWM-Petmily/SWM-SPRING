@@ -18,7 +18,7 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Table(name = "applys")
-public class  Apply extends BaseTimeEntity {
+public class Apply extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -92,7 +92,7 @@ public class  Apply extends BaseTimeEntity {
         if (this.approval == ApprovalType.WAITING) {
             if (approval == ApprovalType.APPROVED) {
                 this.approval = ApprovalType.APPROVED;
-            } else {
+            } else if (approval == ApprovalType.REJECTED) {
                 this.approval = ApprovalType.REJECTED;
             }
         }

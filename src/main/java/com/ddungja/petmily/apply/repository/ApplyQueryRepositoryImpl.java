@@ -26,18 +26,9 @@ public class ApplyQueryRepositoryImpl implements ApplyQueryRepository {
     @Override
     public Page<Apply> getApplyList(Long userId, ApprovalType approval, Pageable pageable) {
 
-// 이전 코드
-        //        List<Apply> content = jpaQueryFactory.selectFrom(apply)
-//                .leftJoin(apply.post, post).fetchJoin()
-//                .leftJoin(apply.post.subCategory, subCategory).fetchJoin()
-//                .leftJoin(apply.post.like, like).fetchJoin()
-//                .where(apply.user.id.eq(userId).and(eqApproval(approval)))
-//                .limit(pageable.getPageSize())
-//                .offset(pageable.getOffset())
-//                .fetch();
-
         List<Long> applyId = jpaQueryFactory.select(apply.id)
                 .from(apply)
+                .where(apply.user.id.eq(userId).and(eqApproval(approval)))
                 .limit(pageable.getPageSize())
                 .offset(pageable.getOffset())
                 .fetch();
