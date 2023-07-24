@@ -51,11 +51,14 @@ public class UserController {
     }
 
     private static String createRefreshTokenCookie(String refreshToken) {
-        return ResponseCookie.from("refreshToken", refreshToken).maxAge(Duration.ofDays(14)).path("/")
-//                .secure(true) //https를 쓸때 사용
-//                .sameSite("lax") //csrf 공격을 방지하기 위해 설정
-//                .domain("localhost:3000") // 도메인이 다르면 쿠키를 못받는다.
-                .httpOnly(true).build().toString();
+        return ResponseCookie.from("refreshToken", refreshToken)
+                .maxAge(Duration.ofDays(30)) // 쿠키의 유효 기간 설정
+                .path("/") // 쿠키의 경로를 지정하여 모든 경로에서 접근 가능하도록 함
+                .secure(true) // HTTPS에서만 쿠키 전송 허용 (SSL/TLS 암호화된 연결)
+                .sameSite("Lax") // CSRF 공격 방지를 위해 SameSite 속성 설정 (Lax로 설정)
+                .domain(".petmily.site") // 도메인 설정 (하위 도메인 포함하여 적용)
+                .httpOnly(true) // 브라우저에서 쿠키에 직접 접근 불가하도록 제한
+                .build().toString();
     }
 
     @Operation(summary = "엑세스 토큰 재발급")
@@ -87,7 +90,6 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
-
     @Operation(summary = "권한테스트")
     @GetMapping("/authorization")
     public ResponseEntity<?> authorizationTest() {
@@ -108,19 +110,8 @@ public class UserController {
         return ResponseEntity.ok(testAccessToken);
     }
     @Operation(summary = "로컬에서 카카오 로그인 테스트")
-    @GetMapping("/sadfasdfsdfsdf")
+    @GetMapping("/kakao/login/test")
     public void login(HttpServletResponse response) throws IOException {
         response.sendRedirect("https://kauth.kakao.com/oauth/authorize?client_id=ee34f16978b76a36b7c087376c6bbef2&redirect_uri=http://localhost:8080/users/kakao&response_type=code");
     }
-//    @Operation(summary = "카카오 로그인하기")
-//    @GetMapping("/kakao")
-//    public ResponseEntity<?> kakaoLogin(@RequestParam String tokenType, @RequestParam String kakaoAccessToken) throws URISyntaxException {
-//        log.info("카카오 로그인 요청 tokenType = {}, kakaoAccessToken = {}", tokenType, kakaoAccessToken);
-//        KakaoProfile kakaoProfile = kakaoService.getInfo(tokenType, kakaoAccessToken);
-//        User user = userService.login(kakaoProfile);
-//        String accessToken = jwtProvider.createAccessToken(user);
-//        String refreshToken = jwtProvider.createRefreshToken(user);
-//        ResponseCookie refreshTokenCookie = createRefreshTokenCookie(refreshToken);
-//        return ResponseEntity.ok().header(SET_COOKIE, refreshTokenCookie.toString()).header(AUTHORIZATION, accessToken).body(UserCertificationResponse.from(user));
-//    }
 }
