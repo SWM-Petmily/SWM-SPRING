@@ -88,14 +88,15 @@ public class Apply extends BaseTimeEntity {
 
     }
 
-    public void approve(ApprovalType approval) {
-        if (this.approval == ApprovalType.WAITING) {
-            if (approval == ApprovalType.APPROVED) {
-                this.approval = ApprovalType.APPROVED;
-            } else if (approval == ApprovalType.REJECTED) {
-                this.approval = ApprovalType.REJECTED;
-            }
+    public void approve(ApprovalType requestApproval) {
+        if (this.approval == ApprovalType.WAITING && requestApproval == ApprovalType.APPROVED) {
+            this.approval = ApprovalType.APPROVED;
         }
+
+        if (this.approval == ApprovalType.WAITING && requestApproval == ApprovalType.REJECTED) {
+            this.approval = ApprovalType.REJECTED;
+        }
+
     }
 
     public void cancel() {
