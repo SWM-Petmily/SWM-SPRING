@@ -1,6 +1,7 @@
 package com.ddungja.petmily.apply.domain;
 
 
+import com.ddungja.petmily.apply.controller.response.ApplyUpdateRequest;
 import com.ddungja.petmily.apply.domain.request.ApplyCreateRequest;
 import com.ddungja.petmily.common.domain.BaseTimeEntity;
 import com.ddungja.petmily.post.domain.Post;
@@ -103,5 +104,10 @@ public class Apply extends BaseTimeEntity {
         if (this.approval == ApprovalType.WAITING) {
             this.approval = ApprovalType.CANCEL;
         }
+    }
+
+    public void modify(ApplyUpdateRequest applyUpdateRequest) {
+        this.comment = applyUpdateRequest.getComment();
+        this.openTalk = applyUpdateRequest.getOpenTalk();
     }
 }
