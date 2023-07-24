@@ -21,15 +21,15 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
     properties:
       hibernate:
         default_batch_fetch_size: 50
     open-in-view: false
 
-  sql:
-    init:
-      mode: never
+#  sql:
+#    init:
+#      mode: never
 
   data:
     web:
