@@ -64,7 +64,7 @@ springdoc:
 
 kakao:
   restApiKey: ee34f16978b76a36b7c087376c6bbef2
-  redirectUrl: http://localhost:8080/users/kakao
+  redirectUrl: https://www.petmily.site/users/kakao
   tokenUrl: https://kauth.kakao.com/oauth/token
   userInfoUrl: https://kapi.kakao.com/v2/user/me
 
