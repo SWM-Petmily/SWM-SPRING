@@ -44,7 +44,6 @@ public class User extends BaseTimeEntity {
     public void certificate(UserCreateRequest userCreateRequest) {
         this.nickname = userCreateRequest.getNickname();
         this.phone = userCreateRequest.getPhone();
-        this.birth = userCreateRequest.getBirth();
         this.isCertification = true;
     }
 
