@@ -11,7 +11,7 @@ public class SubCategoryResponse {
     private final String name;
 
     @Builder
-    public SubCategoryResponse(Long subCategoryId, String name) {
+    private SubCategoryResponse(Long subCategoryId, String name) {
         this.subCategoryId = subCategoryId;
         this.name = name;
     }

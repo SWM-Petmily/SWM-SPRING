@@ -1,9 +1,13 @@
 package com.ddungja.petmily.post.controller;
 
+import com.ddungja.petmily.post.controller.response.MainCategoryResponse;
 import com.ddungja.petmily.post.controller.response.SubCategoryResponse;
 import com.ddungja.petmily.post.domain.SubCategory;
 import com.ddungja.petmily.post.service.CategoryService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -24,13 +28,15 @@ public class CategoryController {
     private final CategoryService categoryService;
 
     @Operation(summary = "메인 카테고리 불러오기")
+    @ApiResponse(responseCode = "200", description = "메인 카테고리 불러오기 성공", content = @Content(schema = @Schema(implementation = MainCategoryResponse.class)))
     @GetMapping
     public ResponseEntity<?> getCategory(){
         log.info("메인 카테고리 불러오기");
-        return ResponseEntity.ok(categoryService.getMainCategory());
+        return ResponseEntity.ok(categoryService.getMainCategory().stream().map(MainCategoryResponse::from));
     }
 
     @Operation(summary = "서브 카테고리 불러오기")
+    @ApiResponse(responseCode = "200", description = "서브카테고리 불러오기 성공", content = @Content(schema = @Schema(implementation = SubCategoryResponse.class)))
     @GetMapping("/{categoryId}")
     public ResponseEntity<?> getSubCategory(@PathVariable Long categoryId){
         log.info("서브 카테고리 불러오기 categoryId = {}", categoryId);
