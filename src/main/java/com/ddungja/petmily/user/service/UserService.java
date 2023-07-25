@@ -24,7 +24,7 @@ public class UserService {
 
     @Transactional
     public User login(KakaoProfile kakaoProfile) {
-        log.info("로그인 이메일 = {}", kakaoProfile.getEmail());
+        log.info("kakao login email = {}", kakaoProfile.getEmail());
         return userRepository.findByEmail(kakaoProfile.getEmail()).orElseGet(() -> userRepository.save(User.builder().email(kakaoProfile.getEmail()).provider(ProviderType.KAKAO).build()));
     }
 
