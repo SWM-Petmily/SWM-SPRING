@@ -8,12 +8,10 @@ public class UserCreateRequest {
 
     private final String nickname;
     private final String phone;
-    private final String birth;
 
     @Builder
-    private UserCreateRequest(String nickname, String phone, String birth) {
+    private UserCreateRequest(String nickname, String phone) {
         this.nickname = nickname;
         this.phone = phone;
-        this.birth = birth;
     }
 }

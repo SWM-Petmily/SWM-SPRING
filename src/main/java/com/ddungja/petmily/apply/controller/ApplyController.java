@@ -7,13 +7,11 @@ import com.ddungja.petmily.apply.domain.request.ApplyCreateRequest;
 import com.ddungja.petmily.apply.domain.request.ApplyUpdateResponse;
 import com.ddungja.petmily.apply.domain.request.ApproveRequest;
 import com.ddungja.petmily.apply.service.ApplyService;
-import com.ddungja.petmily.common.domain.exception.ExceptionCode;
 import com.ddungja.petmily.user.domain.User;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -35,6 +33,7 @@ public class ApplyController {
     private final ApplyService applyService;
 
     @Operation(summary = "지원 받은 목록")
+    @ApiResponse(responseCode = "200", description = "지원 받은 목록 조회 성공", content = @Content(schema = @Schema(implementation = ApplySupportResponse.class)))
     @GetMapping("/{postId}")
     public ResponseEntity<?> getByPostId(@AuthenticationPrincipal User user, @PathVariable Long postId, Pageable pageable) {
         log.info("지원 받은 목록 userId : {}", user.getId());
@@ -42,10 +41,7 @@ public class ApplyController {
     }
 
     @Operation(summary = "내가 지원한 게시글 목록 보기")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "게시글 목록 조회 성공", content = @Content(schema = @Schema(implementation = ApplyPostListResponse.class))),
-            @ApiResponse(responseCode = "404", description = "게시글 조회 실패", content = @Content(schema = @Schema(implementation = ExceptionCode.class)))
-    })
+    @ApiResponse(responseCode = "200", description = "게시글 목록 조회 성공", content = @Content(schema = @Schema(implementation = ApplyPostListResponse.class)))
     @GetMapping
     public ResponseEntity<?> getByUserId(@AuthenticationPrincipal User user, ApprovalType status,@PageableDefault Pageable pageable) {
         log.info("내가 지원한 게시글 목록 보기 userId : {}", user.getId());
@@ -53,6 +49,7 @@ public class ApplyController {
     }
 
     @Operation(summary = "지원 상세보기")
+    @ApiResponse(responseCode = "200", description = "지원 상세보기 조회 성공", content = @Content(schema = @Schema(implementation = ApplyDetailResponse.class)))
     @GetMapping("/{applyId}/detail")
     public ResponseEntity<?> getDetail(@AuthenticationPrincipal User user, @PathVariable Long applyId) {
         log.info("지원 상세보기 : userId = {}, applyId = {} ", user.getId(), applyId);
@@ -64,6 +61,7 @@ public class ApplyController {
     }
 
     @Operation(summary = "지원 수락/거절")
+    @ApiResponse(responseCode = "200", description = "지원 수락/거절 성공", content = @Content(schema = @Schema(implementation = ApprovalResponse.class)))
     @PostMapping("/{applyId}/approval")
     public ResponseEntity<?> approve(@AuthenticationPrincipal User user, @PathVariable Long applyId, @Valid @RequestBody ApproveRequest approveRequest) {
         log.info("지원 수락/거절 : userId = {}, applyId = {} , approvalRequest  = {}", user.getId(), applyId, approveRequest);
@@ -71,6 +69,7 @@ public class ApplyController {
     }
 
     @Operation(summary = "지원하기")
+    @ApiResponse(responseCode = "201", description = "지원하기 성공", content = @Content(schema = @Schema(implementation = ApplyCreateResponse.class)))
     @PostMapping("/{postId}")
     public ResponseEntity<?> apply(@AuthenticationPrincipal User user, @PathVariable Long postId, @Valid @RequestBody ApplyCreateRequest applyCreateRequest) {
         log.info("지원하기 userId = {}, postId = {}", user.getId(), postId);
@@ -78,6 +77,7 @@ public class ApplyController {
     }
 
     @Operation(summary = "지원취소")
+    @ApiResponse(responseCode = "200", description = "지원취소 성공", content = @Content(schema = @Schema(implementation = ApplyCancelResponse.class)))
     @DeleteMapping("/{postId}/cancel")
     public ResponseEntity<?> cancel(@AuthenticationPrincipal User user, @PathVariable Long postId) {
         log.info("지원취소 userId = {}, postId = {}", user.getId(), postId);
@@ -85,6 +85,7 @@ public class ApplyController {
     }
 
     @Operation(summary = "지원수정")
+    @ApiResponse(responseCode = "200", description = "지원수정 성공", content = @Content(schema = @Schema(implementation = ApplyUpdateResponse.class)))
     @PutMapping("/{applyId}")
     public ResponseEntity<?> modify(@AuthenticationPrincipal User user, @PathVariable Long applyId, @RequestBody ApplyUpdateRequest applyUpdateRequest) {
         log.info("지원수정 userId = {}, applyId = {}", user.getId(), applyId);

@@ -1,10 +1,7 @@
 package com.ddungja.petmily.post.controller;
 
 
-import com.ddungja.petmily.post.controller.response.MainPostResponse;
-import com.ddungja.petmily.post.controller.response.MyPostListResponse;
-import com.ddungja.petmily.post.controller.response.PostCreateResponse;
-import com.ddungja.petmily.post.controller.response.PostGetResponse;
+import com.ddungja.petmily.post.controller.response.*;
 import com.ddungja.petmily.post.domain.Post;
 import com.ddungja.petmily.post.domain.request.PostCreateRequest;
 import com.ddungja.petmily.post.domain.request.PostFilterRequest;
@@ -12,10 +9,14 @@ import com.ddungja.petmily.post.domain.type.PostStatusType;
 import com.ddungja.petmily.post.service.PostService;
 import com.ddungja.petmily.user.domain.User;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -33,6 +34,7 @@ public class PostController {
     private final PostService postService;
 
     @Operation(summary = "게시글 등록")
+    @ApiResponse(responseCode = "201", description = "게시글 등록 성공", content = @Content(schema = @Schema(implementation = PostCreateResponse.class)))
     @PostMapping
     public ResponseEntity<?> create(@AuthenticationPrincipal User user,
                                     @Valid @RequestPart(value = "postRequest") PostCreateRequest postRequest,
@@ -41,10 +43,11 @@ public class PostController {
                                     @RequestPart(value = "medicalCheckImages", required = false) List<MultipartFile> medicalCheckImages) throws IOException {
         log.info("게시글 등록  userId = {} postImage = {}, vaccinationImages = {}, medicalCheckImages ={}", user.getId(), postImages, vaccinationImages, medicalCheckImages);
         Post post = postService.create(postRequest, user.getId(), postImages, vaccinationImages, medicalCheckImages);
-        return ResponseEntity.ok(PostCreateResponse.from(post));
+        return ResponseEntity.status(HttpStatus.CREATED).body(PostCreateResponse.from(post));
     }
 
     @Operation(summary = "게시글 상세보기")
+    @ApiResponse(responseCode = "200", description = "게시글 상세보기 조회 성공", content = @Content(schema = @Schema(implementation = PostGetResponse.class)))
     @GetMapping("/{postId}")
     public ResponseEntity<?> getSubCategory(@AuthenticationPrincipal User user, @PathVariable Long postId) {
         log.info("게시글 상세보기 postId = {}", postId);
@@ -53,6 +56,7 @@ public class PostController {
     }
 
     @Operation(summary = "내가 작성한 게시글 가져오기")
+    @ApiResponse(responseCode = "200", description = "내가 작성한 게시글 조회 성공", content = @Content(schema = @Schema(implementation = MyPostListResponse.class)))
     @GetMapping("/user")
     public ResponseEntity<?> getMyPost(@AuthenticationPrincipal User user, PostStatusType status, Pageable pageable) {
         log.info("내가 작성한 게시글 가져오기 userId = {}", user.getId());
@@ -60,6 +64,7 @@ public class PostController {
     }
 
     @Operation(summary = "메인 게시글 가져오기")
+    @ApiResponse(responseCode = "200", description = "메인 게시글 가져오기 조회 성공", content = @Content(schema = @Schema(implementation = MainPostResponse.class)))
     @GetMapping("/main")
     public ResponseEntity<?> getMainPosts(@AuthenticationPrincipal User user, PostFilterRequest postFilterRequest, Pageable pageable) {
         if (user == null) {
