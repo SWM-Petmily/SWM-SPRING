@@ -1,7 +1,11 @@
 package com.ddungja.petmily.user.controller;
 
 
+import com.ddungja.petmily.user.controller.response.CertificationResponse;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import lombok.extern.slf4j.Slf4j;
 import net.nurigo.sdk.message.model.Message;
 import net.nurigo.sdk.message.request.SingleMessageSendingRequest;
@@ -26,6 +30,7 @@ public class CoolSmsController {
 
     
     @Operation(summary = "인증번호 문자 발송")
+    @ApiResponse(responseCode = "200", description = "인증번호 문자 발송 성공", content = @Content(schema = @Schema(implementation = CertificationResponse.class)))
     @PostMapping("/send")
     public ResponseEntity<?> sendOne(@RequestBody String phoneNumber) {
         Message message = new Message();
@@ -39,7 +44,7 @@ public class CoolSmsController {
         SingleMessageSentResponse singleMessageSentResponse = messageService.sendOne(new SingleMessageSendingRequest(message));
         log.debug("certificationNumber = {}", certificationNumber);
         log.debug("singleMessageSentResponse = {}", singleMessageSentResponse);
-        return ResponseEntity.ok(certificationNumber);
+        return ResponseEntity.ok(CertificationResponse.from(certificationNumber.toString()));
     }
 
 
