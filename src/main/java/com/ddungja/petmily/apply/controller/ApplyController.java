@@ -17,7 +17,6 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -43,7 +42,7 @@ public class ApplyController {
     @Operation(summary = "내가 지원한 게시글 목록 보기")
     @ApiResponse(responseCode = "200", description = "게시글 목록 조회 성공", content = @Content(schema = @Schema(implementation = ApplyPostListResponse.class)))
     @GetMapping
-    public ResponseEntity<?> getByUserId(@AuthenticationPrincipal User user, ApprovalType status,@PageableDefault Pageable pageable) {
+    public ResponseEntity<?> getByUserId(@AuthenticationPrincipal User user, ApprovalType status, Pageable pageable) {
         log.info("내가 지원한 게시글 목록 보기 userId : {}", user.getId());
         return ResponseEntity.ok(applyService.getAppliedList(user.getId(), status, pageable).map(ApplyPostListResponse::from));
     }

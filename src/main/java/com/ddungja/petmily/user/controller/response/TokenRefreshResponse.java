@@ -1,4 +1,4 @@
-package com.ddungja.petmily.user.controller;
+package com.ddungja.petmily.user.controller.response;
 
 import lombok.Builder;
 import lombok.Getter;
