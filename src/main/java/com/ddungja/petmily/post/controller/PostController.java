@@ -101,7 +101,7 @@ public class PostController {
         if(postFilterRequest.getAgeFrom() != null && postFilterRequest.getAgeTo() != null){
             int ageFrom = postFilterRequest.getAgeFrom();
             int ageTo = postFilterRequest.getAgeTo();
-            String age = ageFrom + "원 - " + ageTo + "원";
+            String age = ageFrom + "개월 - " + ageTo + "개월";
             filter.add(age);
         }
         return filter;
