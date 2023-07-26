@@ -39,7 +39,7 @@ public class LikeController {
     @Operation(summary = "좋아요 누르기")
     @ApiResponse(responseCode = "200", description = "좋아요 누르기 성공", content = @Content(schema = @Schema(implementation = LikeCreateResponse.class)))
     @PostMapping("/{postId}")
-    public ResponseEntity<?> Like(@AuthenticationPrincipal User user, @PathVariable Long postId){
+    public ResponseEntity<?> like(@AuthenticationPrincipal User user, @PathVariable Long postId){
         log.info("좋아요 누르기 postId = {}", postId);
         Like like = likeService.like(user.getId(), postId);
         return ResponseEntity.ok(LikeCreateResponse.from(like));
@@ -48,7 +48,7 @@ public class LikeController {
     @Operation(summary = "좋아요 취소")
     @ApiResponse(responseCode = "204", description = "좋아요 취소 성공")
     @DeleteMapping("/{postId}")
-    public ResponseEntity<?> UnLike(@AuthenticationPrincipal User user, @PathVariable Long postId){
+    public ResponseEntity<?> unLike(@AuthenticationPrincipal User user, @PathVariable Long postId){
         log.info("좋아요 취소 postId = {}", postId);
         likeService.unlike(user.getId(), postId);
         return ResponseEntity.noContent().build();
