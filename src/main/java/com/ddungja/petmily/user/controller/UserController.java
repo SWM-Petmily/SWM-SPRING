@@ -2,10 +2,14 @@ package com.ddungja.petmily.user.controller;
 
 import com.ddungja.petmily.common.domain.exception.CustomException;
 import com.ddungja.petmily.common.jwt.JwtProvider;
+import com.ddungja.petmily.user.controller.response.CertificationPhoneNumberResponse;
 import com.ddungja.petmily.user.controller.response.CertificationResponse;
 import com.ddungja.petmily.user.controller.response.UserLoginResponse;
+import com.ddungja.petmily.user.domain.Certification;
 import com.ddungja.petmily.user.domain.KakaoProfile;
 import com.ddungja.petmily.user.domain.User;
+import com.ddungja.petmily.user.domain.request.CertificationPhoneVerifyRequest;
+import com.ddungja.petmily.user.domain.request.UserCreateRequest;
 import com.ddungja.petmily.user.domain.request.UserUpdateRequest;
 import com.ddungja.petmily.user.service.CoolSmsService;
 import com.ddungja.petmily.user.service.KakaoService;
@@ -14,15 +18,12 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
 import java.net.URISyntaxException;
 
 import static com.ddungja.petmily.common.domain.exception.ExceptionCode.REFRESH_TOKEN_VALIDATION_FAILED;
@@ -48,56 +49,47 @@ public class UserController {
         String refreshToken = jwtProvider.createRefreshToken(user);
         return ResponseEntity.ok().body(UserLoginResponse.from(user, accessToken, refreshToken));
     }
-
     @Operation(summary = "휴대전화 인증번호 발송")
     @ApiResponse(responseCode = "200", description = "휴대전화 인증번호 발송 성공", content = @Content(schema = @Schema(implementation = CertificationResponse.class)))
-    @PostMapping("/certification")
-    public ResponseEntity<?> sendCertificationNumber(String phoneNumber) {
-        return ResponseEntity.ok().body(CertificationResponse.from(coolSmsService.sendCertificationNumber(phoneNumber)));
+    @PostMapping("/certification/send")
+    public ResponseEntity<?> sendCertificationNumber(@AuthenticationPrincipal User user, String phoneNumber) {
+        log.info("휴대전화 인증번호 발송 user = {} phoneNumber = {}", user.getId(), phoneNumber);
+        Certification certification = coolSmsService.sendCertificationNumber(user.getId(), phoneNumber);
+        return ResponseEntity.ok().body(CertificationPhoneNumberResponse.from(certification));
     }
 
+    @Operation(summary = "휴대전화 인증번호 확인")
+    @ApiResponse(responseCode = "200", description = "휴대전화 인증번호 확인 성공")
+    @PostMapping("/certification/verify")
+    public ResponseEntity<?> certificationVerify(@AuthenticationPrincipal User user, @RequestBody CertificationPhoneVerifyRequest certificationPhoneVerifyRequest) {
+        log.info("휴대전화 인증번호 확인 user = {}, certificationPhoneVerifyRequest = {}", user.getId(), certificationPhoneVerifyRequest);
+        coolSmsService.certificationVerify(user.getId(), certificationPhoneVerifyRequest);
+        return ResponseEntity.ok().body("휴대전화 인증 성공");
+    }
+
+    @Operation(summary = "회원가입")
+    @ApiResponse(responseCode = "200", description = "회원가입 성공")
+    @PostMapping("/sign")
+    public ResponseEntity<?> certificationVerify(@AuthenticationPrincipal User user, @RequestBody UserCreateRequest userCreateRequest) {
+        log.info("회원가입 user = {} userCreateRequest = {}, ", user.getId(), userCreateRequest);
+        userService.signUp(user.getId(), userCreateRequest);
+        return ResponseEntity.ok().body("회원가입 성공");
+    }
 
     @Operation(summary = "닉네임 수정")
+    @ApiResponse(responseCode = "200", description = "닉네임 수정 성공")
     @PutMapping
     public ResponseEntity<?> modify(@AuthenticationPrincipal User user, @RequestBody UserUpdateRequest userUpdateRequest) {
+        log.info("닉네임 수정 user = {}", user.getId());
         userService.modifyNickname(user.getId(), userUpdateRequest);
-        return ResponseEntity.noContent().build();
-    }
-
-    @Operation(summary = "권한테스트")
-    @GetMapping("/authorization")
-    public ResponseEntity<?> authorizationTest() {
-        log.debug("권한 테스트");
-        return ResponseEntity.ok("토큰이 존재합니다");
-    }
-
-    @Operation(summary = "테스트용 엑세스토큰 반환 userId = 1")
-    @GetMapping("/test/token/1")
-    public ResponseEntity<?> testAccessToken1() {
-        String testAccessToken = jwtProvider.createTestAccessToken(1L);
-        return ResponseEntity.ok(testAccessToken);
-    }
-
-    @Operation(summary = "테스트용 엑세스토큰 반환 userId = 2")
-    @GetMapping("/test/token/2")
-    public ResponseEntity<?> testAccessToken2() {
-        String testAccessToken = jwtProvider.createTestAccessToken(2L);
-        return ResponseEntity.ok(testAccessToken);
-    }
-
-    @Operation(summary = "로컬에서 카카오 로그인 테스트")
-    @GetMapping("/kakao/login/test")
-    public void login(HttpServletResponse response) throws IOException {
-        response.sendRedirect("https://kauth.kakao.com/oauth/authorize?client_id=ee34f16978b76a36b7c087376c6bbef2&redirect_uri=http://localhost:8080/users/kakao&response_type=code");
+        return ResponseEntity.ok().body("닉네임 수정 성공");
     }
 
     @Operation(summary = "엑세스 토큰/리프레시 토큰 재발급")
     @ApiResponse(responseCode = "200", description = "엑세스 토큰/리프레시 토큰 재발급 성공", content = @Content(schema = @Schema(implementation = TokenRefreshResponse.class)))
     @PostMapping("/refresh")
-    public ResponseEntity<?> getRefreshToken(@CookieValue(value = "refreshToken") Cookie cookie) {
-        log.debug("refresh 요청 = {}", cookie.getValue());
-        String refreshToken = cookie.getValue();
-        log.debug("refreshToken = {}", refreshToken);
+    public ResponseEntity<?> getRefreshToken(String refreshToken) {
+        log.info("토큰 refresh 요청 = {}", refreshToken);
         if (jwtProvider.validateRefreshToken(refreshToken)) {
             User user = jwtProvider.refreshTokenVerify(refreshToken);
             String accessToken = jwtProvider.createAccessToken(user);
@@ -106,6 +98,4 @@ public class UserController {
         }
         throw new CustomException(REFRESH_TOKEN_VALIDATION_FAILED);
     }
-
-
 }
