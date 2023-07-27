@@ -39,6 +39,7 @@ public class Apply extends BaseTimeEntity {
     private Post post;
 
 //    @Enumerated(EnumType.STRING)
+    @Column(columnDefinition = "varchar(255)")
     private ApprovalType approval;
 
     @OneToMany(mappedBy = "apply", cascade = CascadeType.ALL)
