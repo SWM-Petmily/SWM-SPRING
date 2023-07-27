@@ -38,7 +38,6 @@ public class Apply extends BaseTimeEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     private Post post;
 
-    @Enumerated(EnumType.STRING)
     @Column(columnDefinition = "varchar(255)")
     private ApprovalType approval;
 
