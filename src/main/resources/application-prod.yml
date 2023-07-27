@@ -22,12 +22,11 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: none
+      ddl-auto: update
     properties:
       hibernate:
         default_batch_fetch_size: 50
     open-in-view: false
-    database-platform: org.hibernate.dialect.MySQLDialect
 
   sql:
     init:
