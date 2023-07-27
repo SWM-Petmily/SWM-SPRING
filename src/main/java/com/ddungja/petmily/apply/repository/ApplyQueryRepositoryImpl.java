@@ -37,7 +37,7 @@ public class ApplyQueryRepositoryImpl implements ApplyQueryRepository {
                 .join(apply.post, post).fetchJoin()
                 .join(apply.post.subCategory, subCategory).fetchJoin()
                 .leftJoin(apply.post.like, like).fetchJoin()
-                .where(apply.user.id.eq(userId).and(eqApproval(approval)), apply.id.in(applyId))
+                .where(apply.id.in(applyId))
                 .fetch();
 
         JPAQuery<Long> countQuery = jpaQueryFactory.select(apply.count())

@@ -15,14 +15,17 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -67,12 +70,44 @@ public class PostController {
     @ApiResponse(responseCode = "200", description = "메인 게시글 가져오기 조회 성공", content = @Content(schema = @Schema(implementation = MainPostResponse.class)))
     @GetMapping("/main")
     public ResponseEntity<?> getMainPosts(@AuthenticationPrincipal User user, PostFilterRequest postFilterRequest, Pageable pageable) {
+        List<String> filter = getFilter(postFilterRequest);
+
         if (user == null) {
             log.info("메인 게시글 가져오기 - 비로그인");
-            return ResponseEntity.ok(postService.getMainPosts(postFilterRequest, pageable).map(MainPostResponse::from));
+            Page<MainPostResponse> mainPostResponses = postService.getMainPosts(postFilterRequest, pageable).map(MainPostResponse::from);
+            MainPostsResponse mainPostsResponses = MainPostsResponse.from(filter,mainPostResponses.getContent(), mainPostResponses.getTotalPages(), mainPostResponses.getTotalElements());
+            return ResponseEntity.ok(mainPostsResponses);
+
         }
         log.info("메인 게시글 가져오기 - 로그인 userId = {}", user.getId());
-        return ResponseEntity.ok(postService.getMainPosts(user.getId(), postFilterRequest, pageable).map(post -> MainPostResponse.from(user.getId(), post)));
+        Page<MainPostResponse> mainPostResponses = postService.getMainPosts(user.getId(), postFilterRequest, pageable).map(post -> MainPostResponse.from(user.getId(), post));
+        MainPostsResponse mainPostsResponses = MainPostsResponse.from(filter,mainPostResponses.getContent(), mainPostResponses.getTotalPages(), mainPostResponses.getTotalElements());
+        return ResponseEntity.ok(mainPostsResponses);
     }
+
+    private static List<String> getFilter(PostFilterRequest postFilterRequest) {
+        List<String> filter = new ArrayList<>();
+        if(StringUtils.hasText(postFilterRequest.getRegion()))  filter.add(postFilterRequest.getRegion());
+        if(StringUtils.hasText(postFilterRequest.getMainCategory()))  filter.add(postFilterRequest.getMainCategory());
+        if(StringUtils.hasText(postFilterRequest.getSubCategory())) filter.add(postFilterRequest.getSubCategory());
+        if(postFilterRequest.getGenderType() != null)  filter.add(postFilterRequest.getGenderType().toString());
+        if(postFilterRequest.getNeuteredType() != null)  filter.add(postFilterRequest.getNeuteredType().toString());
+        if(postFilterRequest.getMoneyFrom() != null && postFilterRequest.getMoneyTo() != null){
+            int moneyFrom = postFilterRequest.getMoneyFrom();
+            int moneyTo = postFilterRequest.getMoneyTo();
+            String money = moneyFrom + "원 - " + moneyTo + "원";
+            filter.add(money);
+        }
+        if(postFilterRequest.getAgeFrom() != null && postFilterRequest.getAgeTo() != null){
+            int ageFrom = postFilterRequest.getAgeFrom();
+            int ageTo = postFilterRequest.getAgeTo();
+            String age = ageFrom + "개월 - " + ageTo + "개월";
+            filter.add(age);
+        }
+        return filter;
+    }
+
+
+
 }
 
