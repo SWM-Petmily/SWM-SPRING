@@ -38,7 +38,7 @@ public class Apply extends BaseTimeEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     private Post post;
 
-    @Column(columnDefinition = "varchar(255)")
+    @Enumerated(EnumType.STRING)
     private ApprovalType approval;
 
     @OneToMany(mappedBy = "apply", cascade = CascadeType.ALL)
