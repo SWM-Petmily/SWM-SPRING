@@ -10,6 +10,7 @@ import com.ddungja.petmily.user.domain.Certification;
 import com.ddungja.petmily.user.domain.KakaoProfile;
 import com.ddungja.petmily.user.domain.User;
 import com.ddungja.petmily.user.domain.request.CertificationPhoneVerifyRequest;
+import com.ddungja.petmily.user.domain.request.KaKaoLoginRequest;
 import com.ddungja.petmily.user.domain.request.UserCreateRequest;
 import com.ddungja.petmily.user.domain.request.UserUpdateRequest;
 import com.ddungja.petmily.user.service.CoolSmsService;
@@ -41,10 +42,10 @@ public class UserController {
 
     @Operation(summary = "카카오 로그인")
     @ApiResponse(responseCode = "200", description = "카카오 로그인 성공", content = @Content(schema = @Schema(implementation = UserLoginResponse.class)))
-    @GetMapping("/kakao")
-    public ResponseEntity<?> kakaoLogin(@RequestParam(value = "code") String code) throws URISyntaxException {
-        log.debug("카카오 로그인 code = {}", code);
-        KakaoProfile kakaoProfile = kakaoService.getInfo(code);
+    @PostMapping("/kakao")
+    public ResponseEntity<?> kakaoLogin(@RequestBody KaKaoLoginRequest kaKaoLoginRequest) throws URISyntaxException {
+        log.debug("카카오 로그인 kaKaoLoginRequest = {}", kaKaoLoginRequest);
+        KakaoProfile kakaoProfile = kakaoService.getInfo(kaKaoLoginRequest);
         User user = userService.login(kakaoProfile);
         String accessToken = jwtProvider.createAccessToken(user);
         String refreshToken = jwtProvider.createRefreshToken(user);

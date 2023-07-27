@@ -1,7 +1,7 @@
 package com.ddungja.petmily.user.service;
 
 import com.ddungja.petmily.user.domain.KakaoProfile;
-import com.ddungja.petmily.user.domain.KakaoToken;
+import com.ddungja.petmily.user.domain.request.KaKaoLoginRequest;
 import com.ddungja.petmily.user.repository.KakaoApiClient;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,13 +30,11 @@ public class KakaoService {
     @Value("${kakao.redirectUrl}")
     private String redirectUrl;
 
-    public KakaoProfile getInfo(final String code) throws URISyntaxException {
-        final KakaoToken token = getToken(code);
-        log.debug("token = {}", token);
-        return client.getInfo(new URI(kakaoUserInfoURl), token.getToken_type() + " " + token.getAccess_token());
+    public KakaoProfile getInfo(KaKaoLoginRequest kaKaoLoginRequest) throws URISyntaxException {
+//        final KakaoToken token = getToken(code);
+        return client.getInfo(new URI(kakaoUserInfoURl), kaKaoLoginRequest.getTokenType() + " " + kaKaoLoginRequest.getAccessToken());
     }
-
-    private KakaoToken getToken(final String code) throws URISyntaxException {
-        return client.getToken(new URI(kakaoTokenUrl), restapiKey, redirectUrl, code, "authorization_code");
-    }
+//    private KakaoToken getToken(final String code) throws URISyntaxException {
+//        return client.getToken(new URI(kakaoTokenUrl), restapiKey, redirectUrl, code, "authorization_code");
+//    }
 }
