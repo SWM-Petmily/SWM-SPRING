@@ -16,24 +16,23 @@ spring:
       max-file-size: 20MB
       max-request-size: 20MB
 
-  datasource:
-    url: jdbc:h2:mem:test;MODE=MySQL
-    username: sa
-    password:
-  h2:
-    console:
-      enabled: true
+#  datasource:
+#    url: jdbc:h2:mem:test;MODE=MySQL
+#    username: sa
+#    password:
+#  h2:
+#    console:
+#      enabled: true
 
-  # MYSQL
-  #  datasource:
-  #    url: jdbc:mysql://localhost:3306/gongguiljeong?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
-  #    username: root
-  #    password: 1234
-  #    driver-class-name: com.mysql.cj.jdbc.Driver
+  datasource:
+    url: jdbc:mysql://localhost:3306/spring?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: root
+    password: 1234
+    driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     properties:
       hibernate:
         default_batch_fetch_size: 50
@@ -41,7 +40,8 @@ spring:
         format_sql: true
         show_sql: true
     open-in-view: false
-    defer-datasource-initialization: true
+#    defer-datasource-initialization: true
+
 
   data:
     web:
