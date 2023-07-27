@@ -24,7 +24,6 @@ public class LikeQueryRepositoryImpl implements LikeQueryRepository {
 
     @Override
     public Page<Like> findByUserIdAndPostStatus(Long userId, PostStatusType postStatusType, Pageable pageable) {
-
         QLike like2 = new QLike("like2");
         List<Long> likeId = jpaQueryFactory.select(like.id)
                 .from(like)
@@ -34,10 +33,10 @@ public class LikeQueryRepositoryImpl implements LikeQueryRepository {
                 .fetch();
 
         List<Like> contents = jpaQueryFactory.selectFrom(like)
-                .leftJoin(like.post, post).fetchJoin()
-                .leftJoin(like.post.subCategory, subCategory).fetchJoin()
-                .join(like.post.like, like2).fetchJoin()
-                .where(like.user.id.eq(userId).and(eqPostStatusType(postStatusType)), like.id.in(likeId))
+                .join(like.post, post).fetchJoin()
+                .join(like.post.subCategory, subCategory).fetchJoin()
+                .leftJoin(like.post.like, like2).fetchJoin()
+                .where(like.id.in(likeId))
                 .fetch();
 
         JPAQuery<Long> countQuery = jpaQueryFactory

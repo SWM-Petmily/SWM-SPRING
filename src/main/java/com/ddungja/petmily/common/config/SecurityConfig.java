@@ -61,6 +61,7 @@ public class SecurityConfig {
         http.exceptionHandling(configurer -> configurer.accessDeniedHandler((request, response, accessDeniedException) -> SecurityResponse.forbidden(response)));
 //        http.authorizeHttpRequests(authorize -> authorize.requestMatchers(AUTHENTICATION_WHITELIST).permitAll());
 //        http.authorizeHttpRequests(authorize -> authorize.anyRequest().authenticated());
+        http.authorizeHttpRequests(authorize -> authorize.requestMatchers("/authorization").authenticated());
         http.authorizeHttpRequests(authorize -> authorize.anyRequest().permitAll());
         return http.build();
     }
