@@ -19,6 +19,7 @@ spring:
     username: ${rds.username}
     password: ${rds.password}
 
+
   jpa:
     hibernate:
       ddl-auto: create
@@ -26,6 +27,7 @@ spring:
       hibernate:
         default_batch_fetch_size: 50
     open-in-view: false
+    database-platform: org.hibernate.dialect.MySQLDialect
 
   sql:
     init:
