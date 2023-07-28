@@ -45,11 +45,23 @@ public class UserController {
     public ResponseEntity<?> kakaoLogin(@RequestBody KaKaoLoginRequest kaKaoLoginRequest) throws URISyntaxException {
         log.debug("카카오 로그인 kaKaoLoginRequest = {}", kaKaoLoginRequest);
         KakaoProfile kakaoProfile = kakaoService.getInfo(kaKaoLoginRequest);
-        User user = userService.login(kakaoProfile);
+        User user = userService.kakagoLogin(kakaoProfile);
         String accessToken = jwtProvider.createAccessToken(user);
         String refreshToken = jwtProvider.createRefreshToken(user);
         return ResponseEntity.ok().body(UserLoginResponse.from(user, accessToken, refreshToken));
     }
+
+
+//    @Operation(summary = "카카오 로그인")
+//    @ApiResponse(responseCode = "200", description = "카카오 로그인 성공", content = @Content(schema = @Schema(implementation = UserLoginResponse.class)))
+//    @PostMapping("/apple")
+//    public ResponseEntity<?> applyLogin() throws URISyntaxException {
+//        log.debug("애플 로그인");
+//        User user = userService.kakagoLogin(kakaoProfile);
+//        String accessToken = jwtProvider.createAccessToken(user);
+//        String refreshToken = jwtProvider.createRefreshToken(user);
+//        return ResponseEntity.ok().body(UserLoginResponse.from(user, accessToken, refreshToken));
+//    }
     @Operation(summary = "휴대전화 인증번호 발송")
     @ApiResponse(responseCode = "200", description = "휴대전화 인증번호 발송 성공", content = @Content(schema = @Schema(implementation = CertificationResponse.class)))
     @PostMapping("/certification/send")
