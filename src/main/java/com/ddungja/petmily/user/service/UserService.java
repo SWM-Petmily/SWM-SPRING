@@ -43,6 +43,7 @@ public class UserService {
 
     @Transactional
     public void signUp(Long userId, UserCreateRequest userCreateRequest) {
+        // TODO 값 검증 추가하기
         User user = userRepository.findById(userId).orElseThrow(() -> new CustomException(USER_NOT_FOUND));
         Certification certification = certificationRepository.findById(userCreateRequest.getCertificationId()).orElseThrow(() -> new CustomException(ExceptionCode.CERTIFICATION_NOT_FOUND));
         if (!certification.isCertification()) {
@@ -69,6 +70,13 @@ public class UserService {
                 .isProfile(false)
                 .isCertification(false)
                 .build()));
+    }
+
+    @Transactional
+    public void reset() {
+        User user = userRepository.findById(1L).orElseThrow(() -> new CustomException(USER_NOT_FOUND));
+        certificationRepository.deleteAll();
+        user.reset();
     }
 }
 

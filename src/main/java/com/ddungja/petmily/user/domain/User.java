@@ -51,4 +51,11 @@ public class User extends BaseTimeEntity {
         this.nickname = userUpdateRequest.getNickname();
 
     }
+
+    public void reset() {
+        this.isCertification = false;
+        this.isProfile = false;
+        this.nickname = null;
+        this.phone = null;
+    }
 }

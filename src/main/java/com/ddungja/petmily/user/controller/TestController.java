@@ -1,6 +1,7 @@
 package com.ddungja.petmily.user.controller;
 
 import com.ddungja.petmily.common.jwt.JwtProvider;
+import com.ddungja.petmily.user.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
@@ -16,6 +17,7 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class TestController {
     private final JwtProvider jwtProvider;
+    private final UserService userService;
     @Operation(summary = "테스트용 엑세스토큰 반환 userId = 1")
     @GetMapping("/test/token/1")
     public ResponseEntity<?> testAccessToken1() {
@@ -39,6 +41,14 @@ public class TestController {
     @Operation(summary = "권한테스트")
     @GetMapping("/authorization")
     public ResponseEntity<?> authorizationTest() {
+        return ResponseEntity.ok("엑세스 토큰이 존재합니다");
+    }
+
+
+    @Operation(summary = "유저 인증 초기화, 인증번호 기록 삭제")
+    @GetMapping("/reset")
+    public ResponseEntity<?> tes2() {
+        userService.reset();
         return ResponseEntity.ok("엑세스 토큰이 존재합니다");
     }
 
