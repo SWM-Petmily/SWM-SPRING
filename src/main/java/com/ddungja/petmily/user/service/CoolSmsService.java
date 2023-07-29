@@ -37,17 +37,31 @@ public class CoolSmsService {
     @Transactional
     public Certification sendCertificationNumber(Long userId, String phoneNumber) {
         User user = userRepository.findById(userId).orElseThrow(() -> new CustomException(USER_NOT_FOUND));
-        certificationRepository.findByPhoneNumber(phoneNumber).ifPresent(
-                certification -> {
-                    if (certification.isCertification()) {
-                        throw new CustomException(CERTIFICATION_PHONE_ALREADY_EXISTS);
-                    }
-                }
-        );
+        if (userRepository.findByPhone(phoneNumber).isPresent()) {
+            throw new CustomException(CERTIFICATION_PHONE_ALREADY_EXISTS);
+        }
         String certificationNumber = createCertificationNumber();
         SingleMessageSentResponse coolsmsResponse = sendCertificationNumber(phoneNumber, certificationNumber);
         log.info("인증번호 userId = {}, phoneNumber = {}, certificationNumber = {}", userId, phoneNumber, certificationNumber);
         log.info("coolsms 요청 response = {}", coolsmsResponse);
+        return certificationRepository.save(Certification.builder()
+                .phone(phoneNumber)
+                .user(user)
+                .expiredAt(LocalDateTime.now().plusMinutes(3))
+                .isCertification(false)
+                .certificationNumber(certificationNumber)
+                .build());
+    }
+    @Transactional
+    public Certification sendCertificationNumberTest(Long userId, String phoneNumber) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new CustomException(USER_NOT_FOUND));
+
+        if (userRepository.findByPhone(phoneNumber).isPresent()) {
+            throw new CustomException(CERTIFICATION_PHONE_ALREADY_EXISTS);
+        }
+
+        String certificationNumber = "123456";
+        log.info("인증번호 userId = {}, phoneNumber = {}, certificationNumber = {}", userId, phoneNumber, certificationNumber);
         return certificationRepository.save(Certification.builder()
                 .phone(phoneNumber)
                 .user(user)
