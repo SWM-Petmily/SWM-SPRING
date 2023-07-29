@@ -2,10 +2,12 @@ package com.ddungja.petmily.user.domain.request;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
+@NoArgsConstructor
 public class CertificationPhoneNumberRequest {
-    private final String phoneNumber;
+    private  String phoneNumber;
 
     @Builder
     private CertificationPhoneNumberRequest(String phoneNumber) {
