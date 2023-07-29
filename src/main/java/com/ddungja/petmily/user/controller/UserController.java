@@ -3,9 +3,7 @@ package com.ddungja.petmily.user.controller;
 import com.ddungja.petmily.common.domain.exception.CustomException;
 import com.ddungja.petmily.common.jwt.JwtProvider;
 import com.ddungja.petmily.user.controller.response.CertificationPhoneNumberResponse;
-import com.ddungja.petmily.user.controller.response.CertificationResponse;
 import com.ddungja.petmily.user.controller.response.UserLoginResponse;
-import com.ddungja.petmily.user.domain.Certification;
 import com.ddungja.petmily.user.domain.KakaoProfile;
 import com.ddungja.petmily.user.domain.User;
 import com.ddungja.petmily.user.domain.request.CertificationPhoneVerifyRequest;
@@ -55,20 +53,20 @@ public class UserController {
     @Operation(summary = "애플 로그인")
     @ApiResponse(responseCode = "200", description = "애플 로그인 성공", content = @Content(schema = @Schema(implementation = UserLoginResponse.class)))
     @PostMapping("/apple")
-    public ResponseEntity<?> applyLogin(String email) throws URISyntaxException {
+    public ResponseEntity<?> applyLogin(String email) {
         log.debug("애플 로그인");
         User user = userService.appleLogin(email);
         String accessToken = jwtProvider.createAccessToken(user);
         String refreshToken = jwtProvider.createRefreshToken(user);
         return ResponseEntity.ok().body(UserLoginResponse.from(user, accessToken, refreshToken));
     }
+
     @Operation(summary = "휴대전화 인증번호 발송")
-    @ApiResponse(responseCode = "200", description = "휴대전화 인증번호 발송 성공", content = @Content(schema = @Schema(implementation = CertificationResponse.class)))
+    @ApiResponse(responseCode = "200", description = "휴대전화 인증번호 발송 성공", content = @Content(schema = @Schema(implementation = CertificationPhoneNumberResponse.class)))
     @PostMapping("/certification/send")
-    public ResponseEntity<?> sendCertificationNumber(@AuthenticationPrincipal User user, String phoneNumber) {
+    public ResponseEntity<?> sendCertificationNumber(@AuthenticationPrincipal User user, @RequestBody String phoneNumber) {
         log.info("휴대전화 인증번호 발송 user = {} phoneNumber = {}", user.getId(), phoneNumber);
-        Certification certification = coolSmsService.sendCertificationNumber(user.getId(), phoneNumber);
-        return ResponseEntity.ok().body(CertificationPhoneNumberResponse.from(certification));
+        return ResponseEntity.ok().body(CertificationPhoneNumberResponse.from(coolSmsService.sendCertificationNumber(user.getId(), phoneNumber)));
     }
 
     @Operation(summary = "휴대전화 인증번호 확인")
