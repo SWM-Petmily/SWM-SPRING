@@ -6,10 +6,7 @@ import com.ddungja.petmily.user.controller.response.CertificationPhoneNumberResp
 import com.ddungja.petmily.user.controller.response.UserLoginResponse;
 import com.ddungja.petmily.user.domain.KakaoProfile;
 import com.ddungja.petmily.user.domain.User;
-import com.ddungja.petmily.user.domain.request.CertificationPhoneVerifyRequest;
-import com.ddungja.petmily.user.domain.request.KaKaoLoginRequest;
-import com.ddungja.petmily.user.domain.request.UserCreateRequest;
-import com.ddungja.petmily.user.domain.request.UserUpdateRequest;
+import com.ddungja.petmily.user.domain.request.*;
 import com.ddungja.petmily.user.service.CoolSmsService;
 import com.ddungja.petmily.user.service.KakaoService;
 import com.ddungja.petmily.user.service.UserService;
@@ -64,9 +61,9 @@ public class UserController {
     @Operation(summary = "휴대전화 인증번호 발송")
     @ApiResponse(responseCode = "200", description = "휴대전화 인증번호 발송 성공", content = @Content(schema = @Schema(implementation = CertificationPhoneNumberResponse.class)))
     @PostMapping("/certification/send")
-    public ResponseEntity<?> sendCertificationNumber(@AuthenticationPrincipal User user, @RequestBody String phoneNumber) {
-        log.info("휴대전화 인증번호 발송 user = {} phoneNumber = {}", user.getId(), phoneNumber);
-        return ResponseEntity.ok().body(CertificationPhoneNumberResponse.from(coolSmsService.sendCertificationNumber(user.getId(), phoneNumber)));
+    public ResponseEntity<?> sendCertificationNumber(@AuthenticationPrincipal User user, @RequestBody CertificationPhoneNumberRequest certificationPhoneNumberRequest) {
+        log.info("휴대전화 인증번호 발송 user = {} phoneNumber = {}", user.getId(), certificationPhoneNumberRequest.getPhoneNumber());
+        return ResponseEntity.ok().body(CertificationPhoneNumberResponse.from(coolSmsService.sendCertificationNumber(user.getId(), certificationPhoneNumberRequest.getPhoneNumber())));
     }
 
     @Operation(summary = "휴대전화 인증번호 확인")

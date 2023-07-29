@@ -57,9 +57,9 @@ public enum ExceptionCode {
     CERTIFICATION_NUMBER_EXPIRED(9001, HttpStatus.BAD_REQUEST, "인증번호가 만료되었습니다."),
     CERTIFICATION_NUMBER_NOT_MATCH(9002, HttpStatus.BAD_REQUEST, "인증번호가 일치하지 않습니다."),
     CERTIFICATION_NUMBER_NOT_FOUND(9003, HttpStatus.BAD_REQUEST, "인증번호를 찾을 수 없습니다."),
-    CERTIFICATION_PHONE_ALREADY_EXISTS(9004, HttpStatus.BAD_REQUEST, "이미 인증된 휴대전화입니다."),
-    CERTIFICATION_PHONE_NOT_FOUND(9005, HttpStatus.BAD_REQUEST, "인증된 휴대전화를 찾을 수 없습니다."),
-    CERTIFICATION_NOT_FOUND(9006, HttpStatus.BAD_REQUEST, "인증을 찾을 수 없습니다.");
+    CERTIFICATION_PHONE_ALREADY_EXISTS(9004, HttpStatus.BAD_REQUEST, "이미 인증된 휴대전화번호입니다."),
+    CERTIFICATION_PHONE_NOT_FOUND(9005, HttpStatus.BAD_REQUEST, "인증요청된 휴대전화번호를 찾을 수 없습니다."),
+    CERTIFICATION_NOT_FOUND(9006, HttpStatus.BAD_REQUEST, "인증요청을 찾을 수 없습니다.");
 
 
     private final int code;
