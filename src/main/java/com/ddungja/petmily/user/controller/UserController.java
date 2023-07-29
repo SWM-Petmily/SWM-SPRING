@@ -3,16 +3,10 @@ package com.ddungja.petmily.user.controller;
 import com.ddungja.petmily.common.domain.exception.CustomException;
 import com.ddungja.petmily.common.jwt.JwtProvider;
 import com.ddungja.petmily.user.controller.response.CertificationPhoneNumberResponse;
-import com.ddungja.petmily.user.controller.response.CertificationResponse;
-import com.ddungja.petmily.user.controller.response.TokenRefreshResponse;
 import com.ddungja.petmily.user.controller.response.UserLoginResponse;
-import com.ddungja.petmily.user.domain.Certification;
 import com.ddungja.petmily.user.domain.KakaoProfile;
 import com.ddungja.petmily.user.domain.User;
-import com.ddungja.petmily.user.domain.request.CertificationPhoneVerifyRequest;
-import com.ddungja.petmily.user.domain.request.KaKaoLoginRequest;
-import com.ddungja.petmily.user.domain.request.UserCreateRequest;
-import com.ddungja.petmily.user.domain.request.UserUpdateRequest;
+import com.ddungja.petmily.user.domain.request.*;
 import com.ddungja.petmily.user.service.CoolSmsService;
 import com.ddungja.petmily.user.service.KakaoService;
 import com.ddungja.petmily.user.service.UserService;
@@ -44,20 +38,32 @@ public class UserController {
     @ApiResponse(responseCode = "200", description = "카카오 로그인 성공", content = @Content(schema = @Schema(implementation = UserLoginResponse.class)))
     @PostMapping("/kakao")
     public ResponseEntity<?> kakaoLogin(@RequestBody KaKaoLoginRequest kaKaoLoginRequest) throws URISyntaxException {
-        log.debug("카카오 로그인 kaKaoLoginRequest = {}", kaKaoLoginRequest);
+        log.info("카카오 로그인 kaKaoLoginRequest = {}", kaKaoLoginRequest);
         KakaoProfile kakaoProfile = kakaoService.getInfo(kaKaoLoginRequest);
-        User user = userService.login(kakaoProfile);
+        User user = userService.kakagoLogin(kakaoProfile);
         String accessToken = jwtProvider.createAccessToken(user);
         String refreshToken = jwtProvider.createRefreshToken(user);
         return ResponseEntity.ok().body(UserLoginResponse.from(user, accessToken, refreshToken));
     }
+
+
+    @Operation(summary = "애플 로그인")
+    @ApiResponse(responseCode = "200", description = "애플 로그인 성공", content = @Content(schema = @Schema(implementation = UserLoginResponse.class)))
+    @PostMapping("/apple")
+    public ResponseEntity<?> applyLogin(String email) {
+        log.debug("애플 로그인");
+        User user = userService.appleLogin(email);
+        String accessToken = jwtProvider.createAccessToken(user);
+        String refreshToken = jwtProvider.createRefreshToken(user);
+        return ResponseEntity.ok().body(UserLoginResponse.from(user, accessToken, refreshToken));
+    }
+
     @Operation(summary = "휴대전화 인증번호 발송")
-    @ApiResponse(responseCode = "200", description = "휴대전화 인증번호 발송 성공", content = @Content(schema = @Schema(implementation = CertificationResponse.class)))
+    @ApiResponse(responseCode = "200", description = "휴대전화 인증번호 발송 성공", content = @Content(schema = @Schema(implementation = CertificationPhoneNumberResponse.class)))
     @PostMapping("/certification/send")
-    public ResponseEntity<?> sendCertificationNumber(@AuthenticationPrincipal User user, String phoneNumber) {
-        log.info("휴대전화 인증번호 발송 user = {} phoneNumber = {}", user.getId(), phoneNumber);
-        Certification certification = coolSmsService.sendCertificationNumber(user.getId(), phoneNumber);
-        return ResponseEntity.ok().body(CertificationPhoneNumberResponse.from(certification));
+    public ResponseEntity<?> sendCertificationNumber(@AuthenticationPrincipal User user, @RequestBody CertificationPhoneNumberRequest certificationPhoneNumberRequest) {
+        log.info("휴대전화 인증번호 발송 user = {} phoneNumber = {}", user.getId(), certificationPhoneNumberRequest.getPhoneNumber());
+        return ResponseEntity.ok().body(CertificationPhoneNumberResponse.from(coolSmsService.sendCertificationNumber(user.getId(), certificationPhoneNumberRequest.getPhoneNumber())));
     }
 
     @Operation(summary = "휴대전화 인증번호 확인")

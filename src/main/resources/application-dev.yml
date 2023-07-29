@@ -23,13 +23,12 @@ spring:
   h2:
     console:
       enabled: true
-
-  # MYSQL
-  #  datasource:
-  #    url: jdbc:mysql://localhost:3306/gongguiljeong?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
-  #    username: root
-  #    password: 1234
-  #    driver-class-name: com.mysql.cj.jdbc.Driver
+#
+#  datasource:
+#    url: jdbc:mysql://localhost:3306/spring?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+#    username: root
+#    password: 1234
+#    driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
     hibernate:
@@ -42,6 +41,7 @@ spring:
         show_sql: true
     open-in-view: false
     defer-datasource-initialization: true
+
 
   data:
     web:
