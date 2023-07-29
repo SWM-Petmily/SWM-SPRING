@@ -32,8 +32,8 @@ public class UserService {
         return userRepository.findByEmail(kakaoProfile.getEmail()).orElseGet(() -> userRepository.save(User.builder()
                 .email(kakaoProfile.getEmail())
                 .provider(ProviderType.KAKAO)
-                        .isProfile(false)
-                        .isCertification(false)
+                .isProfile(false)
+                .isCertification(false)
                 .build()));
     }
 
@@ -59,4 +59,16 @@ public class UserService {
         User user = userRepository.findById(userId).orElseThrow(() -> new CustomException(USER_NOT_FOUND));
         user.update(userUpdateRequest);
     }
+
+    @Transactional
+    public User appleLogin(String email) {
+        log.info("애플로그인 = {} ", email);
+        return userRepository.findByEmail(email).orElseGet(() -> userRepository.save(User.builder()
+                .email(email)
+                .provider(ProviderType.APPLE)
+                .isProfile(false)
+                .isCertification(false)
+                .build()));
+    }
 }
+

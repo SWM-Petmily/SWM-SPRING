@@ -43,7 +43,7 @@ public class UserController {
     @ApiResponse(responseCode = "200", description = "카카오 로그인 성공", content = @Content(schema = @Schema(implementation = UserLoginResponse.class)))
     @PostMapping("/kakao")
     public ResponseEntity<?> kakaoLogin(@RequestBody KaKaoLoginRequest kaKaoLoginRequest) throws URISyntaxException {
-        log.debug("카카오 로그인 kaKaoLoginRequest = {}", kaKaoLoginRequest);
+        log.info("카카오 로그인 kaKaoLoginRequest = {}", kaKaoLoginRequest);
         KakaoProfile kakaoProfile = kakaoService.getInfo(kaKaoLoginRequest);
         User user = userService.kakagoLogin(kakaoProfile);
         String accessToken = jwtProvider.createAccessToken(user);
@@ -52,16 +52,16 @@ public class UserController {
     }
 
 
-//    @Operation(summary = "카카오 로그인")
-//    @ApiResponse(responseCode = "200", description = "카카오 로그인 성공", content = @Content(schema = @Schema(implementation = UserLoginResponse.class)))
-//    @PostMapping("/apple")
-//    public ResponseEntity<?> applyLogin() throws URISyntaxException {
-//        log.debug("애플 로그인");
-//        User user = userService.kakagoLogin(kakaoProfile);
-//        String accessToken = jwtProvider.createAccessToken(user);
-//        String refreshToken = jwtProvider.createRefreshToken(user);
-//        return ResponseEntity.ok().body(UserLoginResponse.from(user, accessToken, refreshToken));
-//    }
+    @Operation(summary = "애플 로그인")
+    @ApiResponse(responseCode = "200", description = "애플 로그인 성공", content = @Content(schema = @Schema(implementation = UserLoginResponse.class)))
+    @PostMapping("/apple")
+    public ResponseEntity<?> applyLogin(String email) throws URISyntaxException {
+        log.debug("애플 로그인");
+        User user = userService.appleLogin(email);
+        String accessToken = jwtProvider.createAccessToken(user);
+        String refreshToken = jwtProvider.createRefreshToken(user);
+        return ResponseEntity.ok().body(UserLoginResponse.from(user, accessToken, refreshToken));
+    }
     @Operation(summary = "휴대전화 인증번호 발송")
     @ApiResponse(responseCode = "200", description = "휴대전화 인증번호 발송 성공", content = @Content(schema = @Schema(implementation = CertificationResponse.class)))
     @PostMapping("/certification/send")
