@@ -58,12 +58,20 @@ public class UserController {
         return ResponseEntity.ok().body(UserLoginResponse.from(user, accessToken, refreshToken));
     }
 
-    @Operation(summary = "휴대전화 인증번호 발송")
+    @Operation(summary = "휴대전화 인증번호 발송 20원까임")
     @ApiResponse(responseCode = "200", description = "휴대전화 인증번호 발송 성공", content = @Content(schema = @Schema(implementation = CertificationPhoneNumberResponse.class)))
     @PostMapping("/certification/send")
     public ResponseEntity<?> sendCertificationNumber(@AuthenticationPrincipal User user, @RequestBody CertificationPhoneNumberRequest certificationPhoneNumberRequest) {
         log.info("휴대전화 인증번호 발송 user = {} phoneNumber = {}", user.getId(), certificationPhoneNumberRequest.getPhoneNumber());
         return ResponseEntity.ok().body(CertificationPhoneNumberResponse.from(coolSmsService.sendCertificationNumber(user.getId(), certificationPhoneNumberRequest.getPhoneNumber())));
+    }
+
+    @Operation(summary = "휴대전화 인증번호 발송 테스트용 인증번호[123456] 고정")
+    @ApiResponse(responseCode = "200", description = "휴대전화 인증번호 발송 성공", content = @Content(schema = @Schema(implementation = CertificationPhoneNumberResponse.class)))
+    @PostMapping("/certification/send/test")
+    public ResponseEntity<?> sendCertificationNumberTest(@AuthenticationPrincipal User user, @RequestBody CertificationPhoneNumberRequest certificationPhoneNumberRequest) {
+        log.info("휴대전화 인증번호 발송 테스트용 인증번호[123456] 고정 user = {} phoneNumber = {}", user.getId(), certificationPhoneNumberRequest.getPhoneNumber());
+        return ResponseEntity.ok().body(CertificationPhoneNumberResponse.from(coolSmsService.sendCertificationNumberTest(user.getId(), certificationPhoneNumberRequest.getPhoneNumber())));
     }
 
     @Operation(summary = "휴대전화 인증번호 확인")
