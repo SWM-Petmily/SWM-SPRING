@@ -1,8 +1,8 @@
 -- user
-insert into users (user_id, email, nickname, phone, provider, birth, create_date, update_date, is_profile, is_certification) values
-(1, 'kwon@naver.com', '권기오', '01063169037', 'KAKAO', '0713', now(), now(), true, false),
-(2, 'aran@naver.com', '김아란', '01012345678', 'KAKAO', '0613', now(), now(), false, false),
-(3, 'seongi@naver.com', '오승기', '01011112222', 'KAKAO', '0402', now(), now(), false, false);
+insert into users (user_id, email, nickname, phone, provider,  create_date, update_date, is_profile, is_certification) values
+(1, 'kwon@naver.com', '권기오', '01012345672', 'KAKAO', now(), now(), true, false),
+(2, 'aran@naver.com', '김아란', '01012345678', 'KAKAO', now(), now(), false, false),
+(3, 'seongi@naver.com', '오승기', '01011112222', 'KAKAO', now(), now(), false, false);
 
 -- profile image
 insert into profile_images (profile_image_id, url, create_date, update_date) values

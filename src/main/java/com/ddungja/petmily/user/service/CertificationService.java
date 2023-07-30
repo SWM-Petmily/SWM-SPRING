@@ -3,7 +3,8 @@ package com.ddungja.petmily.user.service;
 import com.ddungja.petmily.common.domain.exception.CustomException;
 import com.ddungja.petmily.user.domain.Certification;
 import com.ddungja.petmily.user.domain.User;
-import com.ddungja.petmily.user.domain.request.CertificationPhoneVerifyRequest;
+import com.ddungja.petmily.user.domain.request.CertificationPhoneNumberRequest;
+import com.ddungja.petmily.user.domain.request.CertificationVerifyRequest;
 import com.ddungja.petmily.user.repository.CertificationRepository;
 import com.ddungja.petmily.user.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -23,28 +24,31 @@ import static com.ddungja.petmily.common.domain.exception.ExceptionCode.*;
 
 @Service
 @Slf4j
-public class CoolSmsService {
+public class CertificationService {
     final DefaultMessageService messageService;
     private final UserRepository userRepository;
     private final CertificationRepository certificationRepository;
 
-    public CoolSmsService(Environment environment, UserRepository userRepository, CertificationRepository certificationRepository) {
+    public CertificationService(Environment environment, UserRepository userRepository, CertificationRepository certificationRepository) {
         this.messageService = new DefaultMessageService(Objects.requireNonNull(environment.getProperty("coolsms.apiKey")), Objects.requireNonNull(environment.getProperty("coolsms.apiSecretKey")), "https://api.coolsms.co.kr");
         this.userRepository = userRepository;
         this.certificationRepository = certificationRepository;
     }
 
     @Transactional
-    public Certification sendCertificationNumber(Long userId, String phoneNumber) {
+    public void sendCertificationNumber(Long userId, String phoneNumber) {
         User user = userRepository.findById(userId).orElseThrow(() -> new CustomException(USER_NOT_FOUND));
+        if (user.isCertification()) {
+            throw new CustomException(USER_ALREADY_CERTIFICATION);
+        }
         if (userRepository.findByPhone(phoneNumber).isPresent()) {
             throw new CustomException(CERTIFICATION_PHONE_ALREADY_EXISTS);
         }
         String certificationNumber = createCertificationNumber();
-        SingleMessageSentResponse coolsmsResponse = sendCertificationNumber(phoneNumber, certificationNumber);
         log.info("인증번호 userId = {}, phoneNumber = {}, certificationNumber = {}", userId, phoneNumber, certificationNumber);
+        SingleMessageSentResponse coolsmsResponse = sendCertificationNumber(phoneNumber, certificationNumber);
         log.info("coolsms 요청 response = {}", coolsmsResponse);
-        return certificationRepository.save(Certification.builder()
+        certificationRepository.save(Certification.builder()
                 .phone(phoneNumber)
                 .user(user)
                 .expiredAt(LocalDateTime.now().plusMinutes(3))
@@ -53,17 +57,18 @@ public class CoolSmsService {
                 .build());
     }
     @Transactional
-    public Certification sendCertificationNumberTest(Long userId, String phoneNumber) {
+    public void sendCertificationNumberTest(Long userId, CertificationPhoneNumberRequest certificationPhoneNumberRequest) {
         User user = userRepository.findById(userId).orElseThrow(() -> new CustomException(USER_NOT_FOUND));
-
-        if (userRepository.findByPhone(phoneNumber).isPresent()) {
+        if (user.isCertification()) {
+            throw new CustomException(USER_ALREADY_CERTIFICATION);
+        }
+        if (userRepository.findByPhone(certificationPhoneNumberRequest.getPhoneNumber()).isPresent()) {
             throw new CustomException(CERTIFICATION_PHONE_ALREADY_EXISTS);
         }
-
         String certificationNumber = "123456";
-        log.info("인증번호 userId = {}, phoneNumber = {}, certificationNumber = {}", userId, phoneNumber, certificationNumber);
-        return certificationRepository.save(Certification.builder()
-                .phone(phoneNumber)
+        log.info("인증번호 userId = {}, phoneNumber = {}, certificationNumber = {}", userId, certificationPhoneNumberRequest.getPhoneNumber(), certificationNumber);
+        certificationRepository.save(Certification.builder()
+                .phone(certificationPhoneNumberRequest.getPhoneNumber())
                 .user(user)
                 .expiredAt(LocalDateTime.now().plusMinutes(3))
                 .isCertification(false)
@@ -72,11 +77,14 @@ public class CoolSmsService {
     }
 
     @Transactional
-    public void certificationVerify(Long userId, CertificationPhoneVerifyRequest certificationPhoneVerifyRequest) {
+    public void certificationVerify(Long userId, CertificationVerifyRequest certificationPhoneVerifyRequest) {
         User user = userRepository.findById(userId).orElseThrow(() -> new CustomException(USER_NOT_FOUND));
-        Certification certification = certificationRepository.findById(certificationPhoneVerifyRequest.getCertificationId()).orElseThrow(() -> new CustomException(CERTIFICATION_NOT_FOUND));
-        certification.validation(certificationPhoneVerifyRequest, user.getId());
-        certification.certification();
+        if (user.isCertification()) {
+            throw new CustomException(USER_ALREADY_CERTIFICATION);
+        }
+        Certification certification = certificationRepository.findFirstByUserIdOrderByIdDesc(user.getId()).orElseThrow(() -> new CustomException(CERTIFICATION_NOT_FOUND));
+        certification.verify(certificationPhoneVerifyRequest);
+        certification.certificate();
     }
 
     private SingleMessageSentResponse sendCertificationNumber(String phoneNumber, String certificationNumber) {

@@ -18,7 +18,7 @@ public enum ExceptionCode {
     //user
     USER_NOT_FOUND(2001, HttpStatus.NOT_FOUND, "유저를 찾을 수 없습니다."),
     USER_ALREADY_EXISTS(2002, HttpStatus.BAD_REQUEST, "유저가 이미 존재합니다."),
-    USER_ALREADY_CERTIFICATION(2003, HttpStatus.BAD_REQUEST, "이미 인증을 받았습니다."),
+    USER_ALREADY_CERTIFICATION(2003, HttpStatus.BAD_REQUEST, "이미 인증받은 사용자입니다."),
 
     //profile
     PROFILE_NOT_FOUND(3001, HttpStatus.NOT_FOUND, "프로필을 찾을 수 없습니다."),
@@ -52,15 +52,12 @@ public enum ExceptionCode {
     S3_IMAGE_NOT_FOUND(8001, HttpStatus.NOT_FOUND, "S3 이미지를 찾을 수 없습니다."),
     IMAGE_NOT_FOUND(8002, HttpStatus.NOT_FOUND, "이미지를 찾을 수 없습니다."),
 
-
     //certification
     CERTIFICATION_NUMBER_EXPIRED(9001, HttpStatus.BAD_REQUEST, "인증번호가 만료되었습니다."),
     CERTIFICATION_NUMBER_NOT_MATCH(9002, HttpStatus.BAD_REQUEST, "인증번호가 일치하지 않습니다."),
-    CERTIFICATION_NUMBER_NOT_FOUND(9003, HttpStatus.BAD_REQUEST, "인증번호를 찾을 수 없습니다."),
-    CERTIFICATION_PHONE_ALREADY_EXISTS(9004, HttpStatus.BAD_REQUEST, "이미 인증된 휴대전화번호입니다."),
-    CERTIFICATION_PHONE_NOT_FOUND(9005, HttpStatus.BAD_REQUEST, "인증요청된 휴대전화번호를 찾을 수 없습니다."),
-    CERTIFICATION_NOT_FOUND(9006, HttpStatus.BAD_REQUEST, "인증요청을 찾을 수 없습니다.");
-
+    CERTIFICATION_PHONE_ALREADY_EXISTS(9003, HttpStatus.BAD_REQUEST, "이미 가입된 휴대전화입니다."),
+    CERTIFICATION_NOT_FOUND(9004, HttpStatus.NOT_FOUND, "인증요청을 찾을 수 없습니다."),
+    CERTIFICATION_NOT_COMPLETE(9005, HttpStatus.BAD_REQUEST, "인증이 완료되지 않았습니다.");
 
     private final int code;
     private final HttpStatus status;

@@ -9,15 +9,13 @@ import lombok.Getter;
 public class ProfileUserResponse {
     private final String email;
     private final String nickname;
-    private final String birth;
     private final String phone;
     private final ProviderType provider;
     private final Boolean isProfile;
     @Builder
-    public ProfileUserResponse(String email, String nickname, String birth, String phone, ProviderType provider, Boolean isProfile) {
+    public ProfileUserResponse(String email, String nickname ,String phone, ProviderType provider, Boolean isProfile) {
         this.email = email;
         this.nickname = nickname;
-        this.birth = birth;
         this.phone = phone;
         this.provider = provider;
         this.isProfile = isProfile;
@@ -26,7 +24,6 @@ public class ProfileUserResponse {
         return ProfileUserResponse.builder()
                 .email(user.getEmail())
                 .nickname(user.getNickname())
-                .birth(user.getBirth())
                 .phone(user.getPhone())
                 .provider(user.getProvider())
                 .isProfile(user.isProfile())

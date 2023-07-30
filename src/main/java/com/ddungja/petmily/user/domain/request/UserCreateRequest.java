@@ -2,20 +2,17 @@ package com.ddungja.petmily.user.domain.request;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Getter
+@NoArgsConstructor
 @ToString
 public class UserCreateRequest {
-
-    private final Long certificationId;
-    private final String nickname;
-    private final String phone;
+    private  String nickname;
 
     @Builder
-    private UserCreateRequest(Long certificationId, String nickname, String phone) {
-        this.certificationId = certificationId;
+    private UserCreateRequest(String nickname) {
         this.nickname = nickname;
-        this.phone = phone;
     }
 }
