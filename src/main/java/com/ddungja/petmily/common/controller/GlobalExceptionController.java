@@ -3,6 +3,8 @@ package com.ddungja.petmily.common.controller;
 
 import com.amazonaws.AmazonServiceException;
 import com.ddungja.petmily.common.domain.exception.CustomException;
+import io.sentry.Sentry;
+import io.sentry.spring.jakarta.tracing.SentrySpan;
 import lombok.extern.slf4j.Slf4j;
 import net.nurigo.sdk.message.exception.NurigoUnknownException;
 import org.springframework.http.HttpStatus;
@@ -25,8 +27,10 @@ import static com.ddungja.petmily.common.domain.exception.ExceptionCode.REFRESH_
 @Slf4j
 public class GlobalExceptionController {
 
+    @SentrySpan
     @ExceptionHandler(CustomException.class)
     public ResponseEntity<?> exceptionHandler(CustomException exception) {
+        Sentry.captureException(exception);
         log.error("CustomException = {}", exception);
         return ResponseEntity.status(exception.getExceptionCode().getStatus()).body(exception.getExceptionCode());
     }
