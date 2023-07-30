@@ -2,7 +2,7 @@ package com.ddungja.petmily.user.domain;
 
 
 import com.ddungja.petmily.common.domain.exception.CustomException;
-import com.ddungja.petmily.user.domain.request.CertificationPhoneVerifyRequest;
+import com.ddungja.petmily.user.domain.request.CertificationVerifyRequest;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -12,7 +12,6 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
 import static com.ddungja.petmily.common.domain.exception.ExceptionCode.*;
-import static com.ddungja.petmily.common.domain.exception.ExceptionCode.CERTIFICATION_NUMBER_EXPIRED;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -42,17 +41,11 @@ public class Certification {
         this.user = user;
     }
 
-    public void certification() {
+    public void certificate() {
         this.isCertification = true;
     }
 
-    public void validation(CertificationPhoneVerifyRequest certificationPhoneVerifyRequest, Long userId) {
-        if (!user.getId().equals(userId)) {
-            throw new CustomException(CERTIFICATION_NOT_FOUND);
-        }
-        if (!phoneNumber.equals(certificationPhoneVerifyRequest.getPhoneNumber())) {
-            throw new CustomException(CERTIFICATION_NOT_FOUND);
-        }
+    public void verify(CertificationVerifyRequest certificationPhoneVerifyRequest) {
         if (!certificationNumber.equals(certificationPhoneVerifyRequest.getCertificationNumber())) {
             throw new CustomException(CERTIFICATION_NUMBER_NOT_MATCH);
         }
@@ -61,6 +54,15 @@ public class Certification {
         }
         if (expiredAt.isBefore(LocalDateTime.now())) {
             throw new CustomException(CERTIFICATION_NUMBER_EXPIRED);
+        }
+    }
+
+    public void signUpVerify() {
+        if (!isCertification) {
+            throw new CustomException(CERTIFICATION_NOT_COMPLETE);
+        }
+        if (user.isCertification()) {
+            throw new CustomException(USER_ALREADY_CERTIFICATION);
         }
     }
 }

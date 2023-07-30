@@ -49,8 +49,6 @@ public class TestController {
     @GetMapping("/reset")
     public ResponseEntity<?> tes2() {
         userService.reset();
-        return ResponseEntity.ok("엑세스 토큰이 존재합니다");
+        return ResponseEntity.noContent().build();
     }
-
-
 }
