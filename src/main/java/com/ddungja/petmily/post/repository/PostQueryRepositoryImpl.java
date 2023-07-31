@@ -5,6 +5,7 @@ import com.ddungja.petmily.post.domain.request.PostFilterRequest;
 import com.ddungja.petmily.post.domain.type.GenderType;
 import com.ddungja.petmily.post.domain.type.NeuteredType;
 import com.ddungja.petmily.post.domain.type.PostStatusType;
+import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -118,8 +119,8 @@ public class PostQueryRepositoryImpl implements PostQueryRepository {
         return PageableExecutionUtils.getPage(content, pageable, countQuery::fetchOne);
     }
 
-    private BooleanExpression eqRegion(String region) {
-        return StringUtils.hasText(region) ? post.region.contains(region) : null;
+    private BooleanBuilder eqRegion(String region) {
+        return StringUtils.hasText(region) ? new BooleanBuilder(post.region.contains(region)) : new BooleanBuilder();
     }
 
     private BooleanExpression eqMainCategory(String mainCategory) {
