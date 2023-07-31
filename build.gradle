@@ -34,6 +34,8 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.security:spring-security-test'
 
     //lombok
     compileOnly 'org.projectlombok:lombok'
@@ -61,8 +63,12 @@ dependencies {
     //AWS
     implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
 
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation 'org.springframework.security:spring-security-test'
+
+    //Sentry
+    implementation 'io.sentry:sentry-spring-boot-starter-jakarta:6.25.2'
+    implementation 'io.sentry:sentry-logback:6.25.2'
+
+
 
 }
 
@@ -130,4 +136,6 @@ sonarqube {
         property 'sonar.coverage.jacoco.xmlReportPaths', "${buildDir}/reports/jacoco/test/jacocoTestReport.xml"
     }
 }
+
+
 
