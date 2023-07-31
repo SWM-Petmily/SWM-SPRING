@@ -10,8 +10,8 @@ import java.util.List;
 
 @Getter
 public class PostCreateRequest {
-    private final Long mainCategory;
-    private final Long subCategory;
+    private final String mainCategory;
+    private final String subCategory;
     private final String name;
     private final String region;
     private final GenderType gender;
@@ -23,12 +23,12 @@ public class PostCreateRequest {
     private final String disadvantage; // 단점, 주의할 점
     private final String averageCost;// 평균비용
     private final String adopter; // 분양자
-    private final int age;
     private final PostStatusType status;
     private final List<DiseaseRequest> diseases;
+    private final Boolean isRegistered;
 
     @Builder
-    private PostCreateRequest(Long mainCategory, Long subCategory, String name, String region, GenderType gender, String birth, NeuteredType neutered, int money, String reason, String advantage, String disadvantage, String averageCost, String adopter, int age, PostStatusType status, List<ImageCreateRequest> postImages, List<ImageCreateRequest> vaccinationImages, List<ImageCreateRequest> medicalCheckImages, List<DiseaseRequest> diseases) {
+    private PostCreateRequest(String mainCategory, String subCategory, String name, String region, GenderType gender, String birth, NeuteredType neutered, int money, String reason, String advantage, String disadvantage, String averageCost, String adopter, PostStatusType status, List<ImageCreateRequest> postImages, List<ImageCreateRequest> vaccinationImages, List<ImageCreateRequest> medicalCheckImages, List<DiseaseRequest> diseases, Boolean isRegistered) {
         this.mainCategory = mainCategory;
         this.subCategory = subCategory;
         this.name = name;
@@ -42,9 +42,9 @@ public class PostCreateRequest {
         this.disadvantage = disadvantage;
         this.averageCost = averageCost;
         this.adopter = adopter;
-        this.age = age;
         this.status = status;
         this.diseases = diseases;
+        this.isRegistered = isRegistered;
     }
 
 }

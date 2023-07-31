@@ -15,6 +15,7 @@ public class SelectRegistrationResponse {
     private final String name;
     private final GenderType gender;
     private final NeuteredType neutered;
+    private final Boolean isRegistered = true;
 
     @Builder
     public SelectRegistrationResponse(Long mainCategory, String mainCategoryName, Long subCategory, String subCategoryName, String name, GenderType gender, NeuteredType neutered) {
