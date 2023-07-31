@@ -32,9 +32,9 @@ public class Certification {
     private User user;
 
     @Builder
-    private Certification(Long id, String phone, LocalDateTime expiredAt, String certificationNumber, boolean isCertification, User user) {
+    private Certification(Long id, String phoneNumber, LocalDateTime expiredAt, String certificationNumber, boolean isCertification, User user) {
         this.id = id;
-        this.phoneNumber = phone;
+        this.phoneNumber = phoneNumber;
         this.expiredAt = expiredAt;
         this.certificationNumber = certificationNumber;
         this.isCertification = isCertification;

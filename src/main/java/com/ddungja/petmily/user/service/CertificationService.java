@@ -2,9 +2,11 @@ package com.ddungja.petmily.user.service;
 
 import com.ddungja.petmily.common.domain.exception.CustomException;
 import com.ddungja.petmily.user.domain.Certification;
+import com.ddungja.petmily.user.domain.CertificationAttempt;
 import com.ddungja.petmily.user.domain.User;
 import com.ddungja.petmily.user.domain.request.CertificationPhoneNumberRequest;
 import com.ddungja.petmily.user.domain.request.CertificationVerifyRequest;
+import com.ddungja.petmily.user.repository.CertificationAttemptRepository;
 import com.ddungja.petmily.user.repository.CertificationRepository;
 import com.ddungja.petmily.user.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -17,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.security.SecureRandom;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -28,11 +31,13 @@ public class CertificationService {
     final DefaultMessageService messageService;
     private final UserRepository userRepository;
     private final CertificationRepository certificationRepository;
+    private final CertificationAttemptRepository certificationAttemptRepository;
 
-    public CertificationService(Environment environment, UserRepository userRepository, CertificationRepository certificationRepository) {
+    public CertificationService(Environment environment, UserRepository userRepository, CertificationRepository certificationRepository, CertificationAttemptRepository certificationAttemptRepository) {
         this.messageService = new DefaultMessageService(Objects.requireNonNull(environment.getProperty("coolsms.apiKey")), Objects.requireNonNull(environment.getProperty("coolsms.apiSecretKey")), "https://api.coolsms.co.kr");
         this.userRepository = userRepository;
         this.certificationRepository = certificationRepository;
+        this.certificationAttemptRepository = certificationAttemptRepository;
     }
 
     @Transactional
@@ -44,18 +49,21 @@ public class CertificationService {
         if (userRepository.findByPhone(phoneNumber).isPresent()) {
             throw new CustomException(CERTIFICATION_PHONE_ALREADY_EXISTS);
         }
+
         String certificationNumber = createCertificationNumber();
         log.info("인증번호 userId = {}, phoneNumber = {}, certificationNumber = {}", userId, phoneNumber, certificationNumber);
         SingleMessageSentResponse coolsmsResponse = sendCertificationNumber(phoneNumber, certificationNumber);
         log.info("coolsms 요청 response = {}", coolsmsResponse);
+        certificationAttemptRepository.save(increaseAttempt(user));
         certificationRepository.save(Certification.builder()
-                .phone(phoneNumber)
+                .phoneNumber(phoneNumber)
                 .user(user)
                 .expiredAt(LocalDateTime.now().plusMinutes(3))
                 .isCertification(false)
                 .certificationNumber(certificationNumber)
                 .build());
     }
+
     @Transactional
     public void sendCertificationNumberTest(Long userId, CertificationPhoneNumberRequest certificationPhoneNumberRequest) {
         User user = userRepository.findById(userId).orElseThrow(() -> new CustomException(USER_NOT_FOUND));
@@ -67,14 +75,16 @@ public class CertificationService {
         }
         String certificationNumber = "123456";
         log.info("인증번호 userId = {}, phoneNumber = {}, certificationNumber = {}", userId, certificationPhoneNumberRequest.getPhoneNumber(), certificationNumber);
+        certificationAttemptRepository.save(increaseAttempt(user));
         certificationRepository.save(Certification.builder()
-                .phone(certificationPhoneNumberRequest.getPhoneNumber())
+                .phoneNumber(certificationPhoneNumberRequest.getPhoneNumber())
                 .user(user)
                 .expiredAt(LocalDateTime.now().plusMinutes(3))
                 .isCertification(false)
                 .certificationNumber(certificationNumber)
                 .build());
     }
+
 
     @Transactional
     public void certificationVerify(Long userId, CertificationVerifyRequest certificationPhoneVerifyRequest) {
@@ -103,5 +113,17 @@ public class CertificationService {
         }
         return certificationNumber.toString();
     }
+
+    private CertificationAttempt increaseAttempt(User user) {
+        CertificationAttempt certificationAttempt = certificationAttemptRepository.findByUserIdAndLastAttemptDate(user.getId(), LocalDate.now()).orElseGet(() -> CertificationAttempt
+                .builder()
+                .lastAttemptDate(LocalDate.now())
+                .user(user)
+                .attemptCount(0)
+                .build());
+        certificationAttempt.attempt();
+        return certificationAttempt;
+    }
+
 
 }
