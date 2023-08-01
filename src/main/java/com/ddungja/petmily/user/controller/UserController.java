@@ -3,9 +3,10 @@ package com.ddungja.petmily.user.controller;
 import com.ddungja.petmily.common.domain.exception.CustomException;
 import com.ddungja.petmily.common.jwt.JwtProvider;
 import com.ddungja.petmily.user.controller.response.UserLoginResponse;
-import com.ddungja.petmily.user.domain.KakaoProfile;
-import com.ddungja.petmily.user.domain.User;
+import com.ddungja.petmily.user.domain.request.AppleLoginRequest;
+import com.ddungja.petmily.user.domain.kakao.KakaoProfile;
 import com.ddungja.petmily.user.domain.request.*;
+import com.ddungja.petmily.user.domain.user.User;
 import com.ddungja.petmily.user.service.CertificationService;
 import com.ddungja.petmily.user.service.KakaoService;
 import com.ddungja.petmily.user.service.UserService;
@@ -49,9 +50,10 @@ public class UserController {
     @Operation(summary = "애플 로그인")
     @ApiResponse(responseCode = "200", description = "애플 로그인 성공", content = @Content(schema = @Schema(implementation = UserLoginResponse.class)))
     @PostMapping("/apple")
-    public ResponseEntity<?> applyLogin(String email) {
+    public ResponseEntity<?> applyLogin(@RequestBody AppleLoginRequest appleLoginRequest) {
         log.debug("애플 로그인");
-        User user = userService.appleLogin(email);
+        User user = userService.appleLogin(appleLoginRequest);
+        userService.appleLogin(appleLoginRequest);
         String accessToken = jwtProvider.createAccessToken(user);
         String refreshToken = jwtProvider.createRefreshToken(user);
         return ResponseEntity.ok().body(UserLoginResponse.from(user, accessToken, refreshToken));

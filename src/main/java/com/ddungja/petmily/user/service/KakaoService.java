@@ -1,6 +1,6 @@
 package com.ddungja.petmily.user.service;
 
-import com.ddungja.petmily.user.domain.KakaoProfile;
+import com.ddungja.petmily.user.domain.kakao.KakaoProfile;
 import com.ddungja.petmily.user.domain.request.KaKaoLoginRequest;
 import com.ddungja.petmily.user.repository.KakaoApiClient;
 import lombok.RequiredArgsConstructor;

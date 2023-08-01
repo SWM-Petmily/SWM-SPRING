@@ -1,6 +1,7 @@
-package com.ddungja.petmily.user.domain;
+package com.ddungja.petmily.user.domain.certification;
 
 import com.ddungja.petmily.common.domain.exception.CustomException;
+import com.ddungja.petmily.user.domain.user.User;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -39,7 +40,7 @@ public class CertificationAttempt {
         attemptCount++;
     }
 
-    public boolean isExceed() {
+    private boolean isExceed() {
         return attemptCount >= 5;
     }
 }

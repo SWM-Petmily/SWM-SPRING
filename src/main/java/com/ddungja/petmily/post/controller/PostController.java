@@ -7,11 +7,11 @@ import com.ddungja.petmily.post.domain.request.PostCreateRequest;
 import com.ddungja.petmily.post.domain.request.PostFilterRequest;
 import com.ddungja.petmily.post.domain.type.PostStatusType;
 import com.ddungja.petmily.post.service.PostService;
+import com.ddungja.petmily.user.domain.user.User;
 import com.ddungja.petmily.registration.controller.response.SelectRegistrationResponse;
 import com.ddungja.petmily.registration.domain.Registration;
 import com.ddungja.petmily.registration.domain.request.RegistrationCreateRequest;
 import com.ddungja.petmily.registration.service.RegistrationService;
-import com.ddungja.petmily.user.domain.User;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -125,7 +125,6 @@ public class PostController {
     @GetMapping("/main")
     public ResponseEntity<?> getMainPosts(@AuthenticationPrincipal User user, PostFilterRequest postFilterRequest, Pageable pageable) {
         List<String> filter = getFilter(postFilterRequest);
-
         if (user == null) {
             log.info("메인 게시글 가져오기 - 비로그인");
             Page<MainPostResponse> mainPostResponses = postService.getMainPosts(postFilterRequest, pageable).map(MainPostResponse::from);
@@ -160,8 +159,5 @@ public class PostController {
         }
         return filter;
     }
-
-
-
 }
 

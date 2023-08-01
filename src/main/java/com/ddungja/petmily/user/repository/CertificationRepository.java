@@ -1,7 +1,7 @@
 package com.ddungja.petmily.user.repository;
 
 
-import com.ddungja.petmily.user.domain.Certification;
+import com.ddungja.petmily.user.domain.certification.Certification;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 

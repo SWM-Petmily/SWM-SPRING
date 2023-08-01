@@ -6,7 +6,7 @@ import com.ddungja.petmily.like.repository.LikeRepository;
 import com.ddungja.petmily.post.domain.Post;
 import com.ddungja.petmily.post.domain.type.PostStatusType;
 import com.ddungja.petmily.post.repository.PostRepository;
-import com.ddungja.petmily.user.domain.User;
+import com.ddungja.petmily.user.domain.user.User;
 import com.ddungja.petmily.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
