@@ -7,7 +7,7 @@ import com.ddungja.petmily.apply.domain.request.ApplyCreateRequest;
 import com.ddungja.petmily.apply.domain.request.ApplyUpdateResponse;
 import com.ddungja.petmily.apply.domain.request.ApproveRequest;
 import com.ddungja.petmily.apply.service.ApplyService;
-import com.ddungja.petmily.user.domain.User;
+import com.ddungja.petmily.user.domain.user.User;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;

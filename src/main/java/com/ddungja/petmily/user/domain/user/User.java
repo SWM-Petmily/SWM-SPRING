@@ -1,7 +1,8 @@
-package com.ddungja.petmily.user.domain;
+package com.ddungja.petmily.user.domain.user;
 
 
 import com.ddungja.petmily.common.domain.BaseTimeEntity;
+import com.ddungja.petmily.user.domain.certification.Certification;
 import com.ddungja.petmily.user.domain.request.UserCreateRequest;
 import com.ddungja.petmily.user.domain.request.UserUpdateRequest;
 import jakarta.persistence.*;

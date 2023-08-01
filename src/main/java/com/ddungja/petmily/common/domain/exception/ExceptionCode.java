@@ -57,7 +57,8 @@ public enum ExceptionCode {
     CERTIFICATION_NUMBER_NOT_MATCH(9002, HttpStatus.BAD_REQUEST, "인증번호가 일치하지 않습니다."),
     CERTIFICATION_PHONE_ALREADY_EXISTS(9003, HttpStatus.BAD_REQUEST, "이미 가입된 휴대전화입니다."),
     CERTIFICATION_NOT_FOUND(9004, HttpStatus.NOT_FOUND, "인증요청을 찾을 수 없습니다."),
-    CERTIFICATION_NOT_COMPLETE(9005, HttpStatus.BAD_REQUEST, "인증이 완료되지 않았습니다.");
+    CERTIFICATION_NOT_COMPLETE(9005, HttpStatus.BAD_REQUEST, "인증이 완료되지 않았습니다."),
+    CERTIFICATION_ATTEMPT_EXCEED(9006, HttpStatus.BAD_REQUEST, "인증 시도 횟수를 초과했습니다.");
 
     private final int code;
     private final HttpStatus status;

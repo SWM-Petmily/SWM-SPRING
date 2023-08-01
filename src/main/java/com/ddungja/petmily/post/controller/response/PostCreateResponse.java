@@ -64,7 +64,7 @@ public class PostCreateResponse {
                 .averageCost(post.getAverageCost())
                 .adopter(post.getAdopter())
                 .status(post.getStatus())
-                .images(post.getImages().stream().map(PostCreateImageResponse::from).toList())
+                .images(post.getImages() != null? post.getImages().stream().map(PostCreateImageResponse::from).toList() : null)
                 .build();
     }
 
