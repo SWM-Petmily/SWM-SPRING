@@ -6,7 +6,7 @@ import com.ddungja.petmily.registration.controller.response.SelectRegistrationRe
 import com.ddungja.petmily.registration.domain.Registration;
 import com.ddungja.petmily.registration.domain.request.RegistrationCreateRequest;
 import com.ddungja.petmily.registration.service.RegistrationService;
-import com.ddungja.petmily.user.domain.User;
+import com.ddungja.petmily.user.domain.user.User;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;

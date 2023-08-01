@@ -1,6 +1,6 @@
 package com.ddungja.petmily.user.controller.response;
 
-import com.ddungja.petmily.user.domain.Profile;
+import com.ddungja.petmily.user.domain.profile.Profile;
 import lombok.Builder;
 import lombok.Getter;
 
