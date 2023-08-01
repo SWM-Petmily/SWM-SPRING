@@ -10,8 +10,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 @SpringBootApplication
 @EnableJpaAuditing
 @EnableFeignClients
-@OpenAPIDefinition(servers = {@Server(url = "https://www.petmily.site",  description = "production server url")
-        , @Server(url = "http://localhost:8080", description = "dev server url")})
+@OpenAPIDefinition(servers = {@Server(url = "http://localhost:8080", description = "dev server url")
+        , @Server(url = "https://www.petmily.site",  description = "production server url")})
 public class AppApplication {
     public static void main(String[] args) {
         SpringApplication.run(AppApplication.class, args);

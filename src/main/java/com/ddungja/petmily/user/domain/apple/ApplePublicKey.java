@@ -2,16 +2,22 @@ package com.ddungja.petmily.user.domain.apple;
 
 import lombok.*;
 
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor
 @Getter
-@ToString
 public class ApplePublicKey {
- 
-    private String kty;
-    private String kid;
-    private String use;
-    private String alg;
-    private String n;
-    private String e;
+    private final String kty;
+    private final String kid;
+    private final String use;
+    private final String alg;
+    private final String n;
+    private final String e;
+
+    @Builder
+    private ApplePublicKey(String kty, String kid, String use, String alg, String n, String e) {
+        this.kty = kty;
+        this.kid = kid;
+        this.use = use;
+        this.alg = alg;
+        this.n = n;
+        this.e = e;
+    }
 }

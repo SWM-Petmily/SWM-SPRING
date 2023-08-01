@@ -1,5 +1,6 @@
 package com.ddungja.petmily.user.domain.apple;
 
+import com.ddungja.petmily.user.repository.AppleLoginClient;
 import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -12,7 +13,7 @@ import java.util.Map;
 public class AppleOAuthUserProvider {
 
     private final AppleJwtParser appleJwtParser;
-    private final AppleClient appleClient;
+    private final AppleLoginClient appleClient;
     private final PublicKeyGenerator publicKeyGenerator;
     private final AppleClaimsValidator appleClaimsValidator;
 
@@ -22,7 +23,7 @@ public class AppleOAuthUserProvider {
         PublicKey publicKey = publicKeyGenerator.generatePublicKey(headers, applePublicKeys);
         Claims claims = appleJwtParser.parsePublicKeyAndGetClaims(identityToken, publicKey);
         validateClaims(claims);
-        return new OAuthPlatformMemberResponse(claims.getSubject(), claims.get("email", String.class).toString());
+        return new OAuthPlatformMemberResponse(claims.getSubject(), claims.get("email", String.class));
     }
 
     private void validateClaims(Claims claims) {

@@ -3,7 +3,7 @@ package com.ddungja.petmily.user.controller;
 import com.ddungja.petmily.common.domain.exception.CustomException;
 import com.ddungja.petmily.common.jwt.JwtProvider;
 import com.ddungja.petmily.user.controller.response.UserLoginResponse;
-import com.ddungja.petmily.user.domain.apple.AppleLoginRequest;
+import com.ddungja.petmily.user.domain.request.AppleLoginRequest;
 import com.ddungja.petmily.user.domain.kakao.KakaoProfile;
 import com.ddungja.petmily.user.domain.request.*;
 import com.ddungja.petmily.user.domain.user.User;
@@ -52,12 +52,11 @@ public class UserController {
     @PostMapping("/apple")
     public ResponseEntity<?> applyLogin(@RequestBody AppleLoginRequest appleLoginRequest) {
         log.debug("애플 로그인");
-//        User user = userService.appleLogin(identityToken);
+        User user = userService.appleLogin(appleLoginRequest);
         userService.appleLogin(appleLoginRequest);
-//        String accessToken = jwtProvider.createAccessToken(user);
-//        String refreshToken = jwtProvider.createRefreshToken(user);
-//        return ResponseEntity.ok().body(UserLoginResponse.from(user, accessToken, refreshToken));
-        return ResponseEntity.noContent().build();
+        String accessToken = jwtProvider.createAccessToken(user);
+        String refreshToken = jwtProvider.createRefreshToken(user);
+        return ResponseEntity.ok().body(UserLoginResponse.from(user, accessToken, refreshToken));
     }
 
     @Operation(summary = "휴대전화 인증번호 발송 20원까임")

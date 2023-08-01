@@ -123,7 +123,7 @@ public class PostController {
     @Operation(summary = "메인 게시글 가져오기")
     @ApiResponse(responseCode = "200", description = "메인 게시글 가져오기 조회 성공", content = @Content(schema = @Schema(implementation = MainPostResponse.class)))
     @GetMapping("/main")
-    public ResponseEntity<?> getMainPosts(@AuthenticationPrincipal User user, PostFilterRequest postFilterRequest, Pageable pageable) {
+    public ResponseEntity<?> getMainPosts(@AuthenticationPrincipal User user,@RequestParam(required = false) PostFilterRequest postFilterRequest, Pageable pageable) {
         List<String> filter = getFilter(postFilterRequest);
         if (user == null) {
             log.info("메인 게시글 가져오기 - 비로그인");

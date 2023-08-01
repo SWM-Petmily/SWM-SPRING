@@ -2,7 +2,7 @@ package com.ddungja.petmily.user.service;
 
 import com.ddungja.petmily.common.domain.exception.CustomException;
 import com.ddungja.petmily.common.domain.exception.ExceptionCode;
-import com.ddungja.petmily.user.domain.apple.AppleLoginRequest;
+import com.ddungja.petmily.user.domain.request.AppleLoginRequest;
 import com.ddungja.petmily.user.domain.apple.AppleOAuthUserProvider;
 import com.ddungja.petmily.user.domain.apple.OAuthPlatformMemberResponse;
 import com.ddungja.petmily.user.domain.certification.Certification;
@@ -60,16 +60,16 @@ public class UserService {
     }
 
     @Transactional
-    public void appleLogin(AppleLoginRequest identityToken) {
-        log.info("애플로그인 = {} ", identityToken);
-        OAuthPlatformMemberResponse applePlatformMember = appleOAuthUserProvider.getApplePlatformMember(identityToken.getToken());
+    public User appleLogin(AppleLoginRequest appleLoginRequest) {
+        log.info("애플로그인 = {} ", appleLoginRequest.getIdToken());
+        OAuthPlatformMemberResponse applePlatformMember = appleOAuthUserProvider.getApplePlatformMember(appleLoginRequest.getIdToken());
         log.info("애플로그인 applePlatformMember = {} ", applePlatformMember);
-//        return userRepository.findByEmail(email).orElseGet(() -> userRepository.save(User.builder()
-//                .email(email)
-//                .provider(ProviderType.APPLE)
-//                .isProfile(false)
-//                .isCertification(false)
-//                .build()));
+        return userRepository.findByEmail(applePlatformMember.getEmail()).orElseGet(() -> userRepository.save(User.builder()
+                .email(applePlatformMember.getEmail())
+                .provider(ProviderType.APPLE)
+                .isProfile(false)
+                .isCertification(false)
+                .build()));
 
     }
 
