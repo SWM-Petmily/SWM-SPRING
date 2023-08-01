@@ -4,10 +4,11 @@ import com.ddungja.petmily.like.domain.Like;
 import com.ddungja.petmily.post.domain.Post;
 import com.ddungja.petmily.post.domain.type.GenderType;
 import com.ddungja.petmily.post.domain.type.PostStatusType;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Builder;
 import lombok.Getter;
 
-import java.time.format.DateTimeFormatter;
+import java.time.LocalDateTime;
 
 @Getter
 public class LikePostResponse {
@@ -20,12 +21,12 @@ public class LikePostResponse {
     private final String birth;
     private final int like;
     private final Boolean isMine;
-    private final String createdDate;
-
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd", timezone = "Asia/Seoul")
+    private final LocalDateTime createdDate;
     private final PostStatusType postStatus;
 
     @Builder
-    private LikePostResponse(Long id, String name, String image, String subCategory, String region, GenderType gender, String birth, int like, Boolean isMine, String createdDate, PostStatusType postStatus) {
+    private LikePostResponse(Long id, String name, String image, String subCategory, String region, GenderType gender, String birth, int like, Boolean isMine, LocalDateTime createdDate, PostStatusType postStatus) {
         this.id = id;
         this.name = name;
         this.thumbnailImage = image;
@@ -51,7 +52,7 @@ public class LikePostResponse {
                 .gender(post.getGender())
                 .like(post.getLike().size())
                 .isMine(post.getUser().getId().equals(like.getUser().getId()))
-                .createdDate(post.getCreateDate().format(DateTimeFormatter.ofPattern("yyyy.MM.dd")))
+                .createdDate(post.getCreateDate())
                 .postStatus(post.getStatus())
                 .build();
     }

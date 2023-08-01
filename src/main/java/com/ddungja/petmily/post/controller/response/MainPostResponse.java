@@ -2,10 +2,11 @@ package com.ddungja.petmily.post.controller.response;
 
 import com.ddungja.petmily.post.domain.Post;
 import com.ddungja.petmily.post.domain.type.GenderType;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Builder;
 import lombok.Getter;
 
-import java.time.format.DateTimeFormatter;
+import java.time.LocalDateTime;
 
 @Getter
 public class MainPostResponse {
@@ -18,10 +19,11 @@ public class MainPostResponse {
     private final int age;
     private final int money;
     private final Boolean isLike;
-    private final String createdDate;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd", timezone = "Asia/Seoul")
+    private final LocalDateTime createdDate;
 
     @Builder
-    public MainPostResponse( Long id, String name, String thumbnailImage, String subCategory, String region, GenderType genderType, int age, int money, Boolean isLike, String createdDate) {
+    public MainPostResponse( Long id, String name, String thumbnailImage, String subCategory, String region, GenderType genderType, int age, int money, Boolean isLike, LocalDateTime createdDate) {
         this.id = id;
         this.name = name;
         this.thumbnailImage = thumbnailImage;
@@ -46,7 +48,7 @@ public class MainPostResponse {
                 .age(post.getAge())
                 .money(post.getMoney())
                 .isLike(false)
-                .createdDate(post.getCreateDate().format(DateTimeFormatter.ofPattern("yyyy.MM.dd")))
+                .createdDate(post.getCreateDate())
                 .build();
     }
 
@@ -61,7 +63,7 @@ public class MainPostResponse {
                 .age(post.getAge())
                 .money(post.getMoney())
                 .isLike(post.getLike().stream().anyMatch(like -> like.getUser().getId().equals(userId)))
-                .createdDate(post.getCreateDate().format(DateTimeFormatter.ofPattern("yyyy.MM.dd")))
+                .createdDate(post.getCreateDate())
                 .build();
     }
 }
