@@ -3,10 +3,11 @@ package com.ddungja.petmily.apply.controller.response;
 import com.ddungja.petmily.apply.domain.Apply;
 import com.ddungja.petmily.apply.domain.ApprovalType;
 import com.ddungja.petmily.post.domain.type.GenderType;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Builder;
 import lombok.Getter;
 
-import java.time.format.DateTimeFormatter;
+import java.time.LocalDateTime;
 
 @Getter
 public class ApplyPostListResponse {
@@ -19,12 +20,13 @@ public class ApplyPostListResponse {
     private final GenderType gender;
     private final String birth;
     private final int like;
-    private final String createdDate;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd", timezone = "Asia/Seoul")
+    private final LocalDateTime createdDate;
     private final ApprovalType status;
     private final int age;
 
     @Builder
-    private ApplyPostListResponse(Long applyId, Long postId, String name, String thumbnailImage, String subCategory, String region, GenderType gender, String birth, int like, String createdDate, ApprovalType approval, int age) {
+    private ApplyPostListResponse(Long applyId, Long postId, String name, String thumbnailImage, String subCategory, String region, GenderType gender, String birth, int like, LocalDateTime createdDate, ApprovalType approval, int age) {
         this.applyId = applyId;
         this.postId = postId;
         this.name = name;
@@ -51,7 +53,7 @@ public class ApplyPostListResponse {
                 .birth(apply.getPost().getBirth())
                 .like(apply.getPost().getLike().size())
                 .approval(apply.getApproval())
-                .createdDate(apply.getPost().getCreateDate().format(DateTimeFormatter.ofPattern("yyyy.MM.dd")))
+                .createdDate(apply.getPost().getCreateDate())
                 .build();
     }
 }
