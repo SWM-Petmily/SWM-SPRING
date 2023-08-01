@@ -5,6 +5,8 @@ import com.ddungja.petmily.post.domain.type.GenderType;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.time.format.DateTimeFormatter;
+
 @Getter
 public class MainPostResponse {
     private final Long id;
@@ -44,7 +46,7 @@ public class MainPostResponse {
                 .age(post.getAge())
                 .money(post.getMoney())
                 .isLike(false)
-                .createdDate(post.getCreateDate().toString())
+                .createdDate(post.getCreateDate().format(DateTimeFormatter.ofPattern("yyyy.MM.dd")))
                 .build();
     }
 
@@ -59,7 +61,7 @@ public class MainPostResponse {
                 .age(post.getAge())
                 .money(post.getMoney())
                 .isLike(post.getLike().stream().anyMatch(like -> like.getUser().getId().equals(userId)))
-                .createdDate(post.getCreateDate().toString())
+                .createdDate(post.getCreateDate().format(DateTimeFormatter.ofPattern("yyyy.MM.dd")))
                 .build();
     }
 }
