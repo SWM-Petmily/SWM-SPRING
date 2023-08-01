@@ -46,7 +46,7 @@ public class MainPostResponse {
                 .age(post.getAge())
                 .money(post.getMoney())
                 .isLike(false)
-                .createdDate(post.getCreateDate().format(DateTimeFormatter.ofPattern("yyyy.MM.dd")))
+                .createdDate(post.getCreateDate().format(DateTimeFormatter.ofPattern("yy.MM.dd")))
                 .build();
     }
 
@@ -61,7 +61,7 @@ public class MainPostResponse {
                 .age(post.getAge())
                 .money(post.getMoney())
                 .isLike(post.getLike().stream().anyMatch(like -> like.getUser().getId().equals(userId)))
-                .createdDate(post.getCreateDate().format(DateTimeFormatter.ofPattern("yyyy.MM.dd")))
+                .createdDate(post.getCreateDate().format(DateTimeFormatter.ofPattern("yy.MM.dd")))
                 .build();
     }
 }
