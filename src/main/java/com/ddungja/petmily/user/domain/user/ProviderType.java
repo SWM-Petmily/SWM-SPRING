@@ -1,4 +1,4 @@
-package com.ddungja.petmily.user.domain;
+package com.ddungja.petmily.user.domain.user;
 
 
 

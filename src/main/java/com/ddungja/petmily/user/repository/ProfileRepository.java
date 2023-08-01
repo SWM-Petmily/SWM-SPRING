@@ -1,6 +1,6 @@
 package com.ddungja.petmily.user.repository;
 
-import com.ddungja.petmily.user.domain.Profile;
+import com.ddungja.petmily.user.domain.profile.Profile;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 
