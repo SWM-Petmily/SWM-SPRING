@@ -1,6 +1,10 @@
 package com.ddungja.petmily.post.service;
 
+import com.ddungja.petmily.apply.service.ApplyService;
 import com.ddungja.petmily.common.domain.exception.CustomException;
+import com.ddungja.petmily.like.repository.LikeRepository;
+import com.ddungja.petmily.like.service.LikeService;
+import com.ddungja.petmily.post.controller.response.PostDetailResponse;
 import com.ddungja.petmily.post.domain.*;
 import com.ddungja.petmily.post.domain.request.DiseaseRequest;
 import com.ddungja.petmily.post.domain.request.PostCreateRequest;
@@ -33,14 +37,14 @@ import static com.ddungja.petmily.post.domain.type.ImageType.*;
 public class PostService {
 
     private final UserRepository userRepository;
-
     private final PostRepository postRepository;
     private final MainCategoryRepository mainCategoryRepository;
     private final SubCategoryRepository subCategoryRepository;
-
+    private final LikeRepository likeRepository;
     private final DiseaseRepository diseaseRepository;
     private final ImageService imageService;
-
+    private final LikeService likeService;
+    private final ApplyService applyService;
 
     /*포스트 업로드*/
     @Transactional
@@ -49,7 +53,7 @@ public class PostService {
         MainCategory mainCategory = mainCategoryRepository.findByName(postCreateRequest.getMainCategory()).orElseThrow(() -> new CustomException(MAIN_CATEGORY_NOT_FOUND));
         SubCategory subCategory = subCategoryRepository.findByName(postCreateRequest.getSubCategory()).orElseThrow(() -> new CustomException(SUB_CATEGORY_NOT_FOUND));
         Post post = Post.from(postCreateRequest, user, mainCategory, subCategory);
-        if(postImages != null && postImages.size() > 0) {
+        if (postImages != null && !postImages.isEmpty()) {
             post.createThumbnailImage(imageService.upload(post, postImages, POST).get(0).getUrl());
             uploadImages(postImages, post, POST);
         }
@@ -74,9 +78,9 @@ public class PostService {
         /*이미지 업로드*/
         List<Image> uploadImages = new ArrayList<>();
 
-        if(images != null){
+        if (images != null) {
             uploadImages.addAll(imageService.upload(post, images, imageType));
-            if(imageType == POST) {
+            if (imageType == POST) {
                 uploadImages.remove(0);
             }
         }
@@ -85,9 +89,18 @@ public class PostService {
 
 
     /*포스트 보기*/
-   @Transactional
-    public Post get(Long id) {
-        return postRepository.findPostById(id).orElseThrow(() -> new CustomException(POST_NOT_FOUND));
+    public Post get(Long postId) {
+        return postRepository.findPostById(postId).orElseThrow(() -> new CustomException(POST_NOT_FOUND));
+    }
+    public PostDetailResponse detail(Long postId, User user) {
+        Post post = postRepository.findPostById(postId).orElseThrow(() -> new CustomException(POST_NOT_FOUND));
+        int likeCount = likeRepository.countByPostId(post.getId());
+        if (user == null) {
+            return PostDetailResponse.from(post, likeCount);
+        }
+        Boolean isLike = likeService.isLike(user.getId(), postId);
+        Boolean isApply = applyService.isApply(user.getId(), postId);
+        return PostDetailResponse.from(user, post, isApply, isLike, likeCount);
     }
 
     public Page<Post> getMyPost(Long userId, PostStatusType postStatusType, Pageable pageable) {
@@ -110,7 +123,7 @@ public class PostService {
         if (!post.getUser().getId().equals(userId)) {
             throw new CustomException(POST_NOT_FOUND);
         }
-        if(vaccinationImages == null || vaccinationImages.size() == 0) {
+        if (vaccinationImages == null || vaccinationImages.size() == 0) {
             throw new CustomException(IMAGE_NOT_FOUND);
         }
         post.certifyVaccination();
@@ -124,7 +137,7 @@ public class PostService {
         if (!post.getUser().getId().equals(userId)) {
             throw new CustomException(POST_NOT_FOUND);
         }
-        if(medicalCheckImages == null || medicalCheckImages.size() == 0) {
+        if (medicalCheckImages == null || medicalCheckImages.size() == 0) {
             throw new CustomException(IMAGE_NOT_FOUND);
         }
         post.certifyMedicalCheck();

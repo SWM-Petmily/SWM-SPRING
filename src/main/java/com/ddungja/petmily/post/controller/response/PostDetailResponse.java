@@ -1,7 +1,6 @@
 package com.ddungja.petmily.post.controller.response;
 
 import com.ddungja.petmily.post.domain.Disease;
-import com.ddungja.petmily.post.domain.Image;
 import com.ddungja.petmily.post.domain.Post;
 import com.ddungja.petmily.post.domain.type.*;
 import com.ddungja.petmily.user.domain.user.User;
@@ -11,7 +10,7 @@ import lombok.Getter;
 import java.util.List;
 
 @Getter
-public class PostGetResponse {
+public class PostDetailResponse {
     private final Long postId;
     private final Long writerId;
     private final int level;
@@ -42,7 +41,7 @@ public class PostGetResponse {
     private final int likeCount;
 
     @Builder
-    public PostGetResponse(Long postId, Long writerId, String writer, Long writerProfileImage, int level, String mainCategory, String subCategory, String name, GenderType gender, String region, int age, String registered, String vaccinated, String medicalChecked, String neutered, List<String> diseases, int money, String reason, String advantage, String disadvantage, String averageCost, String adopter, PostStatusType status, List<ImageResponse> images, Boolean isWriter, Boolean isLike, Boolean isApply, int likeCount) {
+    public PostDetailResponse(Long postId, Long writerId, String writer, Long writerProfileImage, int level, String mainCategory, String subCategory, String name, GenderType gender, String region, int age, String registered, String vaccinated, String medicalChecked, String neutered, List<String> diseases, int money, String reason, String advantage, String disadvantage, String averageCost, String adopter, PostStatusType status, List<ImageResponse> images, Boolean isWriter, Boolean isLike, Boolean isApply, int likeCount) {
         this.postId = postId;
         this.writerId = writerId;
         this.writer = writer;
@@ -73,8 +72,8 @@ public class PostGetResponse {
         this.likeCount = likeCount;
     }
 
-    public static PostGetResponse from(Post post, List<Image> images, int likeCount){
-        return PostGetResponse.builder()
+    public static PostDetailResponse from(Post post, int likeCount){
+        return PostDetailResponse.builder()
                 .postId(post.getId())
                 .writerId(null)
                 .writer(post.getUser().getNickname())
@@ -97,7 +96,7 @@ public class PostGetResponse {
                 .averageCost(post.getAverageCost())
                 .adopter(post.getAdopter())
                 .status(post.getStatus())
-                .images(images.stream().map(ImageResponse::from).toList())
+                .images(post.getImages().stream().map(ImageResponse::from).toList())
                 .isWriter(false)
                 .isLike(false)
                 .isApply(false)
@@ -105,8 +104,8 @@ public class PostGetResponse {
                 .build();
     }
 
-    public static PostGetResponse from(User user, Post post,List<Image> images,Boolean isApply, Boolean isLike, int likeCount){
-        return PostGetResponse.builder()
+    public static PostDetailResponse from(User user, Post post, Boolean isApply, Boolean isLike, int likeCount){
+        return PostDetailResponse.builder()
                 .postId(post.getId())
                 .writerId(post.getUser().getId())
                 .writer(post.getUser().getNickname())
@@ -129,7 +128,7 @@ public class PostGetResponse {
                 .averageCost(post.getAverageCost())
                 .adopter(post.getAdopter())
                 .status(post.getStatus())
-                .images(images.stream().map(ImageResponse::from).toList())
+                .images(post.getImages().stream().map(ImageResponse::from).toList())
                 .isWriter(post.getUser().equals(user.getId()))
                 .isLike(isLike)
                 .isApply(isApply)
