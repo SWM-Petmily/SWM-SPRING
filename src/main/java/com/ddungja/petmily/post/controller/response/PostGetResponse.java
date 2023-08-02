@@ -1,5 +1,6 @@
 package com.ddungja.petmily.post.controller.response;
 
+import com.ddungja.petmily.post.domain.Disease;
 import com.ddungja.petmily.post.domain.Image;
 import com.ddungja.petmily.post.domain.Post;
 import com.ddungja.petmily.post.domain.type.*;
@@ -22,10 +23,10 @@ public class PostGetResponse {
     private final GenderType gender;
     private final String region;
     private final int age;
-    private final CertifiedType registered;
-    private final CertifiedType vaccinated;
-    private final CertifiedType medicalChecked;
-    private final NeuteredType neutered;
+    private final String registered;
+    private final String vaccinated;
+    private final String medicalChecked;
+    private final String neutered;
     private final List<String> diseases;
     private final int money;
     private final String reason; // 분양 이유
@@ -41,7 +42,7 @@ public class PostGetResponse {
     private final int likeCount;
 
     @Builder
-    public PostGetResponse(Long postId, Long writerId, String writer, Long writerProfileImage, int level, String mainCategory, String subCategory, String name, GenderType gender, String region, int age, CertifiedType registered, CertifiedType vaccinated, CertifiedType medicalChecked, NeuteredType neutered, List<String> diseases, int money, String reason, String advantage, String disadvantage, String averageCost, String adopter, PostStatusType status, List<ImageResponse> images, Boolean isWriter, Boolean isLike, Boolean isApply, int likeCount) {
+    public PostGetResponse(Long postId, Long writerId, String writer, Long writerProfileImage, int level, String mainCategory, String subCategory, String name, GenderType gender, String region, int age, String registered, String vaccinated, String medicalChecked, String neutered, List<String> diseases, int money, String reason, String advantage, String disadvantage, String averageCost, String adopter, PostStatusType status, List<ImageResponse> images, Boolean isWriter, Boolean isLike, Boolean isApply, int likeCount) {
         this.postId = postId;
         this.writerId = writerId;
         this.writer = writer;
@@ -72,7 +73,6 @@ public class PostGetResponse {
         this.likeCount = likeCount;
     }
 
-
     public static PostGetResponse from(Post post, List<Image> images, int likeCount){
         return PostGetResponse.builder()
                 .postId(post.getId())
@@ -85,11 +85,11 @@ public class PostGetResponse {
                 .gender(post.getGender())
                 .region(post.getRegion())
                 .age(post.getAge())
-                .registered(post.getIsRegistered())
-                .vaccinated(post.getIsVaccinated())
-                .medicalChecked(post.getIsMedicalChecked())
-                .neutered(post.getNeutered())
-                .diseases(post.getDiseases().stream().map(disease -> disease.getName()).toList())
+                .registered(post.getIsRegistered() == CertifiedType.CERTIFIED? "인증 완료" : "-")
+                .vaccinated(post.getIsVaccinated() == CertifiedType.CERTIFIED? "인증 완료" : "-")
+                .medicalChecked(post.getIsMedicalChecked() == CertifiedType.CERTIFIED? "인증 완료" : "-")
+                .neutered(post.getNeutered() == NeuteredType.YES? "완료" : "미완료")
+                .diseases(post.getDiseases().stream().map(Disease::getName).toList())
                 .money(post.getMoney())
                 .reason(post.getReason())
                 .advantage(post.getAdvantage())
@@ -117,11 +117,11 @@ public class PostGetResponse {
                 .gender(post.getGender())
                 .region(post.getRegion())
                 .age(post.getAge())
-                .registered(post.getIsRegistered())
-                .vaccinated(post.getIsVaccinated())
-                .medicalChecked(post.getIsMedicalChecked())
-                .neutered(post.getNeutered())
-                .diseases(post.getDiseases().stream().map(disease -> disease.getName()).toList())
+                .registered(post.getIsRegistered() == CertifiedType.CERTIFIED? "인증 완료" : "-")
+                .vaccinated(post.getIsVaccinated() == CertifiedType.CERTIFIED? "인증 완료" : "-")
+                .medicalChecked(post.getIsMedicalChecked() == CertifiedType.CERTIFIED? "인증 완료" : "-")
+                .neutered(post.getNeutered() == NeuteredType.YES? "완료" : "미완료")
+                .diseases(post.getDiseases().stream().map(Disease::getName).toList())
                 .money(post.getMoney())
                 .reason(post.getReason())
                 .advantage(post.getAdvantage())
