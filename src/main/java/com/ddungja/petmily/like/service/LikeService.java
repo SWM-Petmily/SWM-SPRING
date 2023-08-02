@@ -46,4 +46,12 @@ public class LikeService {
         Like like = likeRepository.findByPostIdAndUserId(postId, userId).orElseThrow(() -> new CustomException(LIKE_NOT_FOUND));
         likeRepository.delete(like);
     }
+
+    public Boolean isLike(Long userId, Long postId) {
+        return likeRepository.findByPostIdAndUserId(postId, userId).isPresent();
+    }
+
+    public int getLikeCount(Long postId) {
+        return likeRepository.countByPostId(postId);
+    }
 }
