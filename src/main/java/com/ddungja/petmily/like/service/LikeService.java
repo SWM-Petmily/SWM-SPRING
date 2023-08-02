@@ -28,12 +28,13 @@ public class LikeService {
     private final UserRepository userRepository;
 
     @Transactional
-    public void like(Long userId, Long postId) {
+    public Like like(Long userId, Long postId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new CustomException(USER_NOT_FOUND));
         Post post = postRepository.findById(postId).orElseThrow(() -> new CustomException(POST_NOT_FOUND));
         if (likeRepository.findByPostIdAndUserId(post.getId(), user.getId()).isPresent()) {
             throw new CustomException(LIKE_IS_EXISTS);
         }
+        return likeRepository.save(Like.from(user, post));
     }
 
     public Page<Like> getLikeList(Long userId, PostStatusType postStatusType, Pageable pageable) {
