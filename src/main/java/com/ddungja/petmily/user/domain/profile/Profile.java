@@ -34,7 +34,7 @@ public class Profile extends BaseTimeEntity {
     private boolean isExperience;
 
     @JoinColumn(name = "profile_image_id")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private ProfileImage profileImage;
 
     @JoinColumn(name = "user_id")

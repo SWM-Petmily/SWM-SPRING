@@ -40,6 +40,10 @@ public class ApplyService {
         User user = userRepository.findById(userId).orElseThrow(() -> new CustomException(USER_NOT_FOUND));
         return applyRepository.getApplyList(user.getId(), approval, pageable);
     }
+    public int getApplyCount(Long userId) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new CustomException(USER_NOT_FOUND));
+        return applyRepository.countByUserId(user.getId());
+    }
 
     public Apply getDetailInfo(Long applyId) {
         return applyRepository.findDetailById(applyId).orElseThrow(() -> new CustomException(APPLY_NOT_FOUND));

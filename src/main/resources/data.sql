@@ -1,13 +1,15 @@
--- user
-insert into users (user_id, email, nickname, phone, provider,  create_date, update_date, is_profile, is_certification) values
-(1, 'kwon@naver.com', '권기오', '01012345672', 'KAKAO', now(), now(), true, false),
-(2, 'aran@naver.com', '김아란', '01012345678', 'KAKAO', now(), now(), false, false),
-(3, 'seongi@naver.com', '오승기', '01011112222', 'KAKAO', now(), now(), false, false);
-
 -- profile image
 insert into profile_images (profile_image_id, url, create_date, update_date) values
 (1, 'https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcREj22c-wMNL5IDmU99v8G7voUl17Yxm0JJqMLqttdPT4DnaB99zqVK7HWiNzjP3aZnzCEf-ikAqb2yiDk', now(), now()),
 (2, 'https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcREj22c-wMNL5IDmU99v8G7voUl17Yxm0JJqMLqttdPT4DnaB99zqVK7HWiNzjP3aZnzCEf-ikAqb2yiDk', now(), now());
+
+
+-- user
+insert into users (user_id, profile_image_id, email, nickname, phone, provider,  create_date, update_date, is_profile, is_certification) values
+(1, 1, 'kwon@naver.com', '권기오', '01012345672', 'KAKAO', now(), now(), true, false),
+(2, 1, 'aran@naver.com', '김아란', '01012345678', 'KAKAO', now(), now(), false, false),
+(3, 1, 'seongi@naver.com', '오승기', '01011112222', 'KAKAO', now(), now(), false, false);
+
 
 -- profile
 insert into profiles(profile_id, user_id, profile_image_id, job, environment, people, comment,  open_talk, region, is_experience, create_date, update_date) values

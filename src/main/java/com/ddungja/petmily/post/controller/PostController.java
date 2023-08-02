@@ -120,7 +120,7 @@ public class PostController {
         log.info("게시글 상세보기 postId = {}", postId);
         Post post = postService.get(postId);
         List<Image> images = imageService.getImages(postId, POST);
-        int likeCount = likeService.getLikeCount(postId);
+        int likeCount = likeService.getLikeCountByPostId(postId);
         if(user == null) {
             return ResponseEntity.ok(PostGetResponse.from(post, images, likeCount));
         }

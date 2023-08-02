@@ -51,7 +51,11 @@ public class LikeService {
         return likeRepository.findByPostIdAndUserId(postId, userId).isPresent();
     }
 
-    public int getLikeCount(Long postId) {
+    public int getLikeCountByPostId(Long postId) {
         return likeRepository.countByPostId(postId);
+    }
+
+    public int getLikeCountByUser(User user) {
+        return likeRepository.countByUserId(user.getId());
     }
 }

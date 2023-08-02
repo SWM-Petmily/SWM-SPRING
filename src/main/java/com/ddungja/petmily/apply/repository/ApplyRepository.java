@@ -22,4 +22,6 @@ public interface ApplyRepository extends JpaRepository<Apply, Long>, ApplyQueryR
 
 
     Optional<Apply> findByIdAndUserId(Long applyId, Long userId);
+
+    int countByUserId(Long userId);
 }

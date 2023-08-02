@@ -3,10 +3,13 @@ package com.ddungja.petmily.user.domain.user;
 
 import com.ddungja.petmily.common.domain.BaseTimeEntity;
 import com.ddungja.petmily.user.domain.certification.Certification;
+import com.ddungja.petmily.user.domain.profile.ProfileImage;
 import com.ddungja.petmily.user.domain.request.UserCreateRequest;
-import com.ddungja.petmily.user.domain.request.UserUpdateRequest;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -25,8 +28,12 @@ public class User extends BaseTimeEntity {
     private boolean isProfile;
     private boolean isCertification;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "profile_image_id")
+    private ProfileImage profileImage;
+
     @Builder
-    private User(Long id, String email, String nickname, String phone, ProviderType provider, boolean isProfile, boolean isCertification) {
+    public User(Long id, String email, String nickname, String phone, ProviderType provider, boolean isProfile, boolean isCertification, ProfileImage profileImage) {
         this.id = id;
         this.email = email;
         this.nickname = nickname;
@@ -34,7 +41,9 @@ public class User extends BaseTimeEntity {
         this.provider = provider;
         this.isProfile = isProfile;
         this.isCertification = isCertification;
+        this.profileImage = profileImage;
     }
+
 
     public void createProfile() {
         this.isProfile = true;
@@ -46,8 +55,9 @@ public class User extends BaseTimeEntity {
         this.isCertification = true;
     }
 
-    public void update(UserUpdateRequest userUpdateRequest) {
-        this.nickname = userUpdateRequest.getNickname();
+    public void update(String nickname, ProfileImage profileImage) {
+        this.nickname = nickname;
+        this.profileImage = profileImage;
 
     }
 
@@ -56,5 +66,9 @@ public class User extends BaseTimeEntity {
         this.isProfile = false;
         this.nickname = null;
         this.phone = null;
+    }
+
+    public void updateProfileImage(ProfileImage profileImage) {
+        this.profileImage = profileImage;
     }
 }

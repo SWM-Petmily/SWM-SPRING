@@ -2,16 +2,15 @@ package com.ddungja.petmily.user.domain.request;
 
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 @Getter
-@NoArgsConstructor
 public class UserUpdateRequest {
-    private String nickname;
-
+    private final String nickname;
+    private final Long profileImageId;
     @Builder
-    private UserUpdateRequest(String nickname) {
+    private UserUpdateRequest(String nickname, Long profileImageId) {
         this.nickname = nickname;
+        this.profileImageId = profileImageId;
     }
 }
 

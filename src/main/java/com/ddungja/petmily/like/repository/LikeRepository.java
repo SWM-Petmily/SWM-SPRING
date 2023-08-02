@@ -11,6 +11,8 @@ public interface LikeRepository extends JpaRepository<Like, Long>, LikeQueryRepo
 
     int countByPostId(Long postId);
 
+    int countByUserId(Long userId);
+
 //    @EntityGraph(attributePaths = {"post", "post.like" ,"post.subCategory"})
 //    Page<Like> findByUserIdAnd(Long userId, PostStatusType postStatusType, Pageable pageable);
 }

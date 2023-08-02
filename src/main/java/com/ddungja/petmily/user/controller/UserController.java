@@ -1,9 +1,11 @@
 package com.ddungja.petmily.user.controller;
 
+import com.ddungja.petmily.apply.service.ApplyService;
 import com.ddungja.petmily.common.domain.exception.CustomException;
 import com.ddungja.petmily.common.jwt.JwtProvider;
+import com.ddungja.petmily.like.service.LikeService;
 import com.ddungja.petmily.user.controller.response.UserLoginResponse;
-import com.ddungja.petmily.user.domain.request.AppleLoginRequest;
+import com.ddungja.petmily.user.controller.response.UserMyPageResponse;
 import com.ddungja.petmily.user.domain.kakao.KakaoProfile;
 import com.ddungja.petmily.user.domain.request.*;
 import com.ddungja.petmily.user.domain.user.User;
@@ -33,6 +35,8 @@ public class UserController {
     private final UserService userService;
     private final JwtProvider jwtProvider;
     private final CertificationService certificationService;
+    private final ApplyService applyService;
+    private final LikeService likeService;
 
     @Operation(summary = "카카오 로그인")
     @ApiResponse(responseCode = "200", description = "카카오 로그인 성공", content = @Content(schema = @Schema(implementation = UserLoginResponse.class)))
@@ -45,7 +49,6 @@ public class UserController {
         String refreshToken = jwtProvider.createRefreshToken(user);
         return ResponseEntity.ok().body(UserLoginResponse.from(user, accessToken, refreshToken));
     }
-
 
     @Operation(summary = "애플 로그인")
     @ApiResponse(responseCode = "200", description = "애플 로그인 성공", content = @Content(schema = @Schema(implementation = UserLoginResponse.class)))
@@ -95,13 +98,23 @@ public class UserController {
         return ResponseEntity.noContent().build();
     }
 
-    @Operation(summary = "닉네임 수정")
+    @Operation(summary = "프로필 사진, 닉네임 수정")
     @ApiResponse(responseCode = "204", description = "닉네임 수정 성공")
     @PutMapping
     public ResponseEntity<?> modify(@AuthenticationPrincipal User user, @RequestBody UserUpdateRequest userUpdateRequest) {
-        log.info("닉네임 수정 user = {}", user.getId());
+        log.info("프로필 사진, 닉네임 수정 user = {}", user.getId());
         userService.modifyNickname(user.getId(), userUpdateRequest);
         return ResponseEntity.noContent().build();
+    }
+
+    @Operation(summary = "마이페이지 조회")
+    @ApiResponse(responseCode = "200", description = "마이페이지 조회 성공", content = @Content(schema =  @Schema(implementation = UserMyPageResponse.class)))
+    @GetMapping("/myPage")
+    public ResponseEntity<?> myPage(@AuthenticationPrincipal User user) {
+        log.info("마이페이지 조회 user = {}", user.getId());
+        int applyCount = applyService.getApplyCount(user.getId());
+        int likeCount = likeService.getLikeCountByUser(user);
+        return ResponseEntity.ok().body(UserMyPageResponse.from(userService.getMyPage(user.getId()), applyCount, likeCount));
     }
 
     @Operation(summary = "엑세스 토큰/리프레시 토큰 재발급")
