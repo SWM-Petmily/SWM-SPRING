@@ -1,17 +1,21 @@
 package com.ddungja.petmily.post.controller;
 
 
+import com.ddungja.petmily.apply.service.ApplyService;
+import com.ddungja.petmily.like.service.LikeService;
 import com.ddungja.petmily.post.controller.response.*;
+import com.ddungja.petmily.post.domain.Image;
 import com.ddungja.petmily.post.domain.Post;
 import com.ddungja.petmily.post.domain.request.PostCreateRequest;
 import com.ddungja.petmily.post.domain.request.PostFilterRequest;
 import com.ddungja.petmily.post.domain.type.PostStatusType;
+import com.ddungja.petmily.post.service.ImageService;
 import com.ddungja.petmily.post.service.PostService;
-import com.ddungja.petmily.user.domain.user.User;
 import com.ddungja.petmily.registration.controller.response.SelectRegistrationResponse;
 import com.ddungja.petmily.registration.domain.Registration;
 import com.ddungja.petmily.registration.domain.request.RegistrationCreateRequest;
 import com.ddungja.petmily.registration.service.RegistrationService;
+import com.ddungja.petmily.user.domain.user.User;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -33,6 +37,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.ddungja.petmily.post.domain.type.ImageType.POST;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/posts")
@@ -40,6 +46,10 @@ import java.util.List;
 public class PostController {
 
     private final PostService postService;
+    private final LikeService likeService;
+    private final ApplyService applyService;
+
+    private final ImageService imageService;
 
     private final RegistrationService registrationService;
 
@@ -109,7 +119,14 @@ public class PostController {
     public ResponseEntity<?> getSubCategory(@AuthenticationPrincipal User user, @PathVariable Long postId) {
         log.info("게시글 상세보기 postId = {}", postId);
         Post post = postService.get(postId);
-        return ResponseEntity.ok(PostGetResponse.from(user, post));
+        List<Image> images = imageService.getImages(postId, POST);
+        int likeCount = likeService.getLikeCount(postId);
+        if(user == null) {
+            return ResponseEntity.ok(PostGetResponse.from(post, images, likeCount));
+        }
+        Boolean isLike = likeService.isLike(user.getId(), postId);
+        Boolean isApply = applyService.isApply(user.getId(), postId);
+        return ResponseEntity.ok(PostGetResponse.from(user, post, images, isApply, isLike, likeCount));
     }
 
     @Operation(summary = "내가 작성한 게시글 가져오기")

@@ -1,8 +1,8 @@
 package com.ddungja.petmily.post.controller.response;
 
-import com.ddungja.petmily.post.domain.type.GenderType;
+import com.ddungja.petmily.post.domain.Image;
 import com.ddungja.petmily.post.domain.Post;
-import com.ddungja.petmily.post.domain.type.PostStatusType;
+import com.ddungja.petmily.post.domain.type.*;
 import com.ddungja.petmily.user.domain.user.User;
 import lombok.Builder;
 import lombok.Getter;
@@ -12,13 +12,21 @@ import java.util.List;
 @Getter
 public class PostGetResponse {
     private final Long postId;
+    private final Long writerId;
+    private final int level;
+    private final String writer;
+    private final Long writerProfileImage = 1L;
     private final String mainCategory;
     private final String subCategory;
-    private final String region;
     private final String name;
     private final GenderType gender;
-    private final String birth;
-    private final String neutered;
+    private final String region;
+    private final int age;
+    private final CertifiedType registered;
+    private final CertifiedType vaccinated;
+    private final CertifiedType medicalChecked;
+    private final NeuteredType neutered;
+    private final List<String> diseases;
     private final int money;
     private final String reason; // 분양 이유
     private final String advantage; // 장점, 자랑
@@ -27,18 +35,29 @@ public class PostGetResponse {
     private final String adopter; // 분양자
     private final PostStatusType status; // 분양상태
     private final List<ImageResponse> images;
-    private final Boolean isMine;
+    private final Boolean isWriter;
+    private final Boolean isLike;
+    private final Boolean isApply;
+    private final int likeCount;
 
     @Builder
-    private PostGetResponse(Long id, String mainCategory, String subCategory, String region, String name, GenderType gender, String birth, String neutered, int money, String reason, String advantage, String disadvantage, String averageCost, String adopter, PostStatusType status, List<ImageResponse> images, Boolean isMine) {
-        this.postId = id;
+    public PostGetResponse(Long postId, Long writerId, String writer, Long writerProfileImage, int level, String mainCategory, String subCategory, String name, GenderType gender, String region, int age, CertifiedType registered, CertifiedType vaccinated, CertifiedType medicalChecked, NeuteredType neutered, List<String> diseases, int money, String reason, String advantage, String disadvantage, String averageCost, String adopter, PostStatusType status, List<ImageResponse> images, Boolean isWriter, Boolean isLike, Boolean isApply, int likeCount) {
+        this.postId = postId;
+        this.writerId = writerId;
+        this.writer = writer;
+        this.level = level;
+        // this.writerProfileImage = writerProfileImage;
         this.mainCategory = mainCategory;
         this.subCategory = subCategory;
-        this.region = region;
         this.name = name;
         this.gender = gender;
-        this.birth = birth;
+        this.region = region;
+        this.age = age;
+        this.registered = registered;
+        this.vaccinated = vaccinated;
+        this.medicalChecked = medicalChecked;
         this.neutered = neutered;
+        this.diseases = diseases;
         this.money = money;
         this.reason = reason;
         this.advantage = advantage;
@@ -47,20 +66,30 @@ public class PostGetResponse {
         this.adopter = adopter;
         this.status = status;
         this.images = images;
-        this.isMine = isMine;
+        this.isWriter = isWriter;
+        this.isLike = isLike;
+        this.isApply = isApply;
+        this.likeCount = likeCount;
     }
 
-    @Builder
-    public static PostGetResponse from(User user, Post post) {
+
+    public static PostGetResponse from(Post post, List<Image> images, int likeCount){
         return PostGetResponse.builder()
-                .id(post.getId())
+                .postId(post.getId())
+                .writerId(null)
+                .writer(post.getUser().getNickname())
+                //.writerProfileImage(post.getUser().get())
                 .mainCategory(post.getMainCategory().getName())
                 .subCategory(post.getSubCategory().getName())
-                .region(post.getRegion())
                 .name(post.getName())
                 .gender(post.getGender())
-                .birth(post.getBirth())
-                .neutered(post.getNeutered().toString())
+                .region(post.getRegion())
+                .age(post.getAge())
+                .registered(post.getIsRegistered())
+                .vaccinated(post.getIsVaccinated())
+                .medicalChecked(post.getIsMedicalChecked())
+                .neutered(post.getNeutered())
+                .diseases(post.getDiseases().stream().map(disease -> disease.getName()).toList())
                 .money(post.getMoney())
                 .reason(post.getReason())
                 .advantage(post.getAdvantage())
@@ -68,8 +97,43 @@ public class PostGetResponse {
                 .averageCost(post.getAverageCost())
                 .adopter(post.getAdopter())
                 .status(post.getStatus())
-                .images(post.getImages().stream().map(ImageResponse::from).toList())
-                .isMine(user != null && user.getId().equals(post.getUser().getId()))
+                .images(images.stream().map(ImageResponse::from).toList())
+                .isWriter(false)
+                .isLike(false)
+                .isApply(false)
+                .likeCount(likeCount)
+                .build();
+    }
+
+    public static PostGetResponse from(User user, Post post,List<Image> images,Boolean isApply, Boolean isLike, int likeCount){
+        return PostGetResponse.builder()
+                .postId(post.getId())
+                .writerId(post.getUser().getId())
+                .writer(post.getUser().getNickname())
+                //.writerProfileImage(post.getUser().get())
+                .mainCategory(post.getMainCategory().getName())
+                .subCategory(post.getSubCategory().getName())
+                .name(post.getName())
+                .gender(post.getGender())
+                .region(post.getRegion())
+                .age(post.getAge())
+                .registered(post.getIsRegistered())
+                .vaccinated(post.getIsVaccinated())
+                .medicalChecked(post.getIsMedicalChecked())
+                .neutered(post.getNeutered())
+                .diseases(post.getDiseases().stream().map(disease -> disease.getName()).toList())
+                .money(post.getMoney())
+                .reason(post.getReason())
+                .advantage(post.getAdvantage())
+                .disadvantage(post.getDisadvantage())
+                .averageCost(post.getAverageCost())
+                .adopter(post.getAdopter())
+                .status(post.getStatus())
+                .images(images.stream().map(ImageResponse::from).toList())
+                .isWriter(post.getUser().equals(user.getId()))
+                .isLike(isLike)
+                .isApply(isApply)
+                .likeCount(likeCount)
                 .build();
     }
 }

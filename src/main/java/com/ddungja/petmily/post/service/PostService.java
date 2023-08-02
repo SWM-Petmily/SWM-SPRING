@@ -83,7 +83,9 @@ public class PostService {
         post.uploadImages(uploadImages);
     }
 
+
     /*포스트 보기*/
+   @Transactional
     public Post get(Long id) {
         return postRepository.findPostById(id).orElseThrow(() -> new CustomException(POST_NOT_FOUND));
     }

@@ -1,24 +1,21 @@
 package com.ddungja.petmily.post.controller.response;
 
 import com.ddungja.petmily.post.domain.Image;
-import com.ddungja.petmily.post.domain.type.ImageType;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
+@NoArgsConstructor
 public class ImageResponse {
-
-    private final String url;
-    private final ImageType imageType;
+    private  String url;
     @Builder
-    private ImageResponse(String url, ImageType imageType) {
+    private ImageResponse(String url) {
         this.url = url;
-        this.imageType = imageType;
     }
     public static ImageResponse from(Image image) {
         return ImageResponse.builder()
                 .url(image.getUrl())
-                .imageType(image.getImageType())
                 .build();
     }
 }

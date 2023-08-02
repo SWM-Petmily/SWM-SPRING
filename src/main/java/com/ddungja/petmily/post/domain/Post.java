@@ -1,6 +1,7 @@
 package com.ddungja.petmily.post.domain;
 
 
+import com.ddungja.petmily.apply.domain.Apply;
 import com.ddungja.petmily.common.domain.BaseTimeEntity;
 import com.ddungja.petmily.like.domain.Like;
 import com.ddungja.petmily.post.domain.request.PostCreateRequest;
@@ -51,6 +52,12 @@ public class Post extends BaseTimeEntity {
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     private List<Image> images = new ArrayList<>();
+
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+    private List<Apply> applys = new ArrayList<>();
+
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+    private List<Disease> diseases = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)
     private GenderType gender;

@@ -79,4 +79,8 @@ public class ApplyService {
         apply.modify(applyUpdateRequest);
         return apply;
     }
+
+    public Boolean isApply(Long userId, Long postId) {
+        return applyRepository.findByUserIdAndPostId(userId, postId).isPresent();
+    }
 }

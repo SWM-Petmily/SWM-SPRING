@@ -81,4 +81,8 @@ public class ImageService {
         return contentType.equals("image/png") || contentType.equals("image/jpeg") || contentType.equals("image/gif") || contentType.equals("image/webp");
     }
 
+    public List<Image> getImages(Long postId, ImageType imageType) {
+        return imageRepository.findByPostIdAndImageType(postId, imageType);
+    }
+
 }
