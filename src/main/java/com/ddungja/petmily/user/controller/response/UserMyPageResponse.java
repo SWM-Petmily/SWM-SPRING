@@ -6,26 +6,23 @@ import lombok.Getter;
 
 @Getter
 public class UserMyPageResponse {
-    private final Long userId;
     private final String nickname;
     private final Boolean isProfile;
     private final int likeCount;
     private final int applyCount;
-    private final String url;
+    private final String imageUrl;
 
     @Builder
-    private UserMyPageResponse(Long userId, String nickname, Boolean isProfile, int likeCount, int applyCount, String url) {
-        this.userId = userId;
+    private UserMyPageResponse(String nickname, Boolean isProfile, int likeCount, int applyCount, String url) {
         this.nickname = nickname;
         this.isProfile = isProfile;
         this.likeCount = likeCount;
         this.applyCount = applyCount;
-        this.url = url;
+        this.imageUrl = url;
     }
 
     public static UserMyPageResponse from(User user, int applyCount, int likeCount) {
         return UserMyPageResponse.builder()
-                .userId(user.getId())
                 .nickname(user.getNickname())
                 .isProfile(user.isProfile())
                 .url(user.getProfileImage().getUrl())
