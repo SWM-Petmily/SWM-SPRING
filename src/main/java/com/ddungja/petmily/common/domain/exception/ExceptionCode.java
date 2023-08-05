@@ -14,6 +14,11 @@ public enum ExceptionCode {
     FORBIDDEN(1002, HttpStatus.FORBIDDEN, "권한이 없습니다."),
     REFRESH_TOKEN_NOT_FOUND(1003, HttpStatus.NOT_FOUND, "리프레시 토큰을 찾을 수 없습니다."),
     REFRESH_TOKEN_VALIDATION_FAILED(1004, HttpStatus.UNAUTHORIZED, "리프레시 토큰이 유효하지 않습니다."),
+    INVALID_APPLE_CLAIMS(1005, HttpStatus.BAD_REQUEST, "애플 claims가 유효하지 않습니다."),
+    INVALID_APPLE_IDENTITY_TOKEN(1006, HttpStatus.BAD_REQUEST, "Apple OAuth Identity Token 형식이 올바르지 않습니다."),
+    INVALID_APPLE_IDENTITY_TOKEN_EXPIRED(1007, HttpStatus.BAD_REQUEST, "Apple OAuth 로그인 중 Identity Token 유효기간이 만료됐습니다."),
+    INVALID_APPLE_IDENTITY_TOKEN_SIGNATURE(1008, HttpStatus.BAD_REQUEST, "Apple OAuth Identity Token 값이 올바르지 않습니다."),
+    INVALID_APPLE_JWT(1009, HttpStatus.BAD_REQUEST, "Apple JWT 값의 alg, kid 정보가 올바르지 않습니다."),
 
     //user
     USER_NOT_FOUND(2001, HttpStatus.NOT_FOUND, "유저를 찾을 수 없습니다."),

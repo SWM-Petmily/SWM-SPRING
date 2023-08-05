@@ -2,12 +2,11 @@ package com.ddungja.petmily.user.service;
 
 import com.ddungja.petmily.common.domain.exception.CustomException;
 import com.ddungja.petmily.common.domain.exception.ExceptionCode;
-import com.ddungja.petmily.user.domain.profile.ProfileImage;
-import com.ddungja.petmily.user.domain.request.AppleLoginRequest;
 import com.ddungja.petmily.user.domain.apple.AppleOAuthUserProvider;
-import com.ddungja.petmily.user.domain.apple.OAuthPlatformMemberResponse;
 import com.ddungja.petmily.user.domain.certification.Certification;
 import com.ddungja.petmily.user.domain.kakao.KakaoProfile;
+import com.ddungja.petmily.user.domain.profile.ProfileImage;
+import com.ddungja.petmily.user.domain.request.AppleLoginRequest;
 import com.ddungja.petmily.user.domain.request.UserCreateRequest;
 import com.ddungja.petmily.user.domain.request.UserUpdateRequest;
 import com.ddungja.petmily.user.domain.user.ProviderType;
@@ -69,11 +68,10 @@ public class UserService {
     @Transactional
     public User appleLogin(AppleLoginRequest appleLoginRequest) {
         log.info("애플로그인 = {} ", appleLoginRequest.getIdToken());
-        OAuthPlatformMemberResponse applePlatformMember = appleOAuthUserProvider.getApplePlatformMember(appleLoginRequest.getIdToken());
+        String email = appleOAuthUserProvider.getApplePlatformMember(appleLoginRequest.getIdToken());
         ProfileImage profileImage = profileImageRepository.findById(1L).orElseThrow(() -> new CustomException(PROFILE_IMAGE_NOT_FOUND));
-        log.info("애플로그인 applePlatformMember = {} ", applePlatformMember);
-        return userRepository.findByEmail(applePlatformMember.getEmail()).orElseGet(() -> userRepository.save(User.builder()
-                .email(applePlatformMember.getEmail())
+        return userRepository.findByEmail(email).orElseGet(() -> userRepository.save(User.builder()
+                .email(email)
                 .provider(ProviderType.APPLE)
                 .profileImage(profileImage)
                 .isProfile(false)

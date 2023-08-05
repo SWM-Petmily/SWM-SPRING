@@ -1,11 +1,14 @@
 package com.ddungja.petmily.user.domain.apple;
 
+import com.ddungja.petmily.common.domain.exception.CustomException;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+
+import static com.ddungja.petmily.common.domain.exception.ExceptionCode.INVALID_APPLE_JWT;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
@@ -19,6 +22,6 @@ public class ApplePublicKeys {
                 .stream()
                 .filter(k -> k.getAlg().equals(alg) && k.getKid().equals(kid))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("Apple JWT 값의 alg, kid 정보가 올바르지 않습니다."));
+                .orElseThrow(() -> new CustomException(INVALID_APPLE_JWT));
     }
 }
