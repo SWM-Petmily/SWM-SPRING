@@ -1,7 +1,19 @@
 package com.ddungja.petmily;
 
+import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
 class AppApplicationTests {
 
+    @Test
+    public void CiFailTest() {
+        int num = 1;
+        assertThat(num).isEqualTo(2);
+        //given
+        //when
+        //then
+    }
 
 //    @DisplayName("apply 값 생성")
 //    @Test
