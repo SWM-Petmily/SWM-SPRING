@@ -1,6 +1,5 @@
 package com.ddungja.petmily.common.controller;
 
-import io.sentry.Sentry;
 import io.sentry.spring.jakarta.tracing.SentrySpan;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.http.ResponseEntity;
