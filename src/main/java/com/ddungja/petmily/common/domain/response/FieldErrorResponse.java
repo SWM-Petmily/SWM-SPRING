@@ -19,6 +19,4 @@ public class FieldErrorResponse {
             response.put(fieldError.getField(), fieldError.getDefaultMessage());
         }
     }
-
-
 }
