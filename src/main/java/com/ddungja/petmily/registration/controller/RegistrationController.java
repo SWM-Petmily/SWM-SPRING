@@ -1,6 +1,7 @@
 package com.ddungja.petmily.registration.controller;
 
 import com.ddungja.petmily.registration.controller.response.MyRegistrationResponse;
+import com.ddungja.petmily.registration.controller.response.MyRegistrationsResponse;
 import com.ddungja.petmily.registration.controller.response.RegisterCreateResponse;
 import com.ddungja.petmily.registration.domain.Registration;
 import com.ddungja.petmily.registration.domain.request.RegistrationCreateRequest;
@@ -40,7 +41,7 @@ public class RegistrationController {
     public ResponseEntity<?> getMyRegister(@AuthenticationPrincipal User user) {
         log.info("내가 등록한 반려동물 보기 userId = {}", user.getId());
         List<Registration> registrations= registrationService.getMyRegister(user.getId());
-        return ResponseEntity.ok(registrations.stream().map(MyRegistrationResponse::from));
+        return ResponseEntity.ok(MyRegistrationsResponse.from(registrations.stream().map(MyRegistrationResponse::from)));
     }
     @Operation(summary = "반려동물 삭제하기")
     @ApiResponse(responseCode = "204", description = "반려동물 삭제하기 성공")
