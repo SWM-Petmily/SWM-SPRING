@@ -138,7 +138,7 @@ public class PostController {
     }
 
     @Operation(summary = "메인 게시글 가져오기")
-    @ApiResponse(responseCode = "200", description = "메인 게시글 가져오기 조회 성공", content = @Content(schema = @Schema(implementation = MainPostResponse.class)))
+    @ApiResponse(responseCode = "200", description = "메인 게시글 가져오기 조회 성공", content = @Content(schema = @Schema(implementation = MainPostsResponse.class)))
     @GetMapping("/main")
     public ResponseEntity<?> getMainPosts(@AuthenticationPrincipal User user, PostFilterRequest postFilterRequest, Pageable pageable) {
         List<String> filter = getFilter(postFilterRequest);
@@ -153,6 +153,24 @@ public class PostController {
         Page<MainPostResponse> mainPostResponses = postService.getMainPosts(user.getId(), postFilterRequest, pageable).map(post -> MainPostResponse.from(user.getId(), post));
         MainPostsResponse mainPostsResponses = MainPostsResponse.from(filter,mainPostResponses.getContent(), mainPostResponses.getTotalPages(), mainPostResponses.getTotalElements());
         return ResponseEntity.ok(mainPostsResponses);
+    }
+
+    @Operation(summary = "게시글 삭제")
+    @ApiResponse(responseCode = "204", description = "게시글 삭제 성공")
+    @DeleteMapping("/{postId}")
+    public ResponseEntity<?> delete(@AuthenticationPrincipal User user, @PathVariable Long postId) {
+        log.info("게시글 삭제 postId = {}", postId);
+        postService.delete(user.getId(), postId);
+        return ResponseEntity.noContent().build();
+    }
+
+    @Operation(summary = "게시글 분양 완료")
+    @ApiResponse(responseCode = "201", description = "게시글 분양 완료 성공", content = @Content(schema = @Schema(implementation = PostCompleteResponse.class)))
+    @PutMapping("/complete/{postId}")
+    public ResponseEntity<?> complete(@AuthenticationPrincipal User user, @PathVariable Long postId) {
+        log.info("게시글 분양 완료 postId = {}", postId);
+        postService.complete(user.getId(), postId);
+        return ResponseEntity.status(HttpStatus.CREATED).body(PostCompleteResponse.from(postId));
     }
 
     private static List<String> getFilter(PostFilterRequest postFilterRequest) {

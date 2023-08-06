@@ -1,11 +1,13 @@
 package com.ddungja.petmily.apply.repository;
 
 import com.ddungja.petmily.apply.domain.Apply;
+import com.ddungja.petmily.apply.domain.ApprovalType;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface ApplyRepository extends JpaRepository<Apply, Long>, ApplyQueryRepository {
@@ -24,4 +26,6 @@ public interface ApplyRepository extends JpaRepository<Apply, Long>, ApplyQueryR
     Optional<Apply> findByIdAndUserId(Long applyId, Long userId);
 
     int countByUserId(Long userId);
+
+    List<Apply> findByPostIdAndApproval(Long postId, ApprovalType approvalType);
 }
