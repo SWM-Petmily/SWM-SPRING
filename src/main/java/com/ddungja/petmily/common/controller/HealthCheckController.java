@@ -15,7 +15,6 @@ public class HealthCheckController {
     @GetMapping("/")
     @SentrySpan
     public ResponseEntity<?> health() {
-        log.info("LoadBalancer Health Check");
         return ResponseEntity.ok("LoadBalancer Health Check");
     }
 }
