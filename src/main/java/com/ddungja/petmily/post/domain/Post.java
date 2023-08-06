@@ -155,9 +155,7 @@ public class Post extends BaseTimeEntity {
         this.images = uploadImages;
     }
 
-    public void certifyRegistration() {
-        this.isRegistered = CertifiedType.CERTIFIED;
-    }
+    public void certifyRegistration() { this.isRegistered = CertifiedType.CERTIFIED; }
 
     public void certifyVaccination() {
         this.isVaccinated = CertifiedType.WAITING;
@@ -165,5 +163,13 @@ public class Post extends BaseTimeEntity {
 
     public void certifyMedicalCheck() {
         this.isMedicalChecked = CertifiedType.WAITING;
+    }
+
+    public void deletePost(){
+        this.status = PostStatusType.DELETE;
+    }
+
+    public void completePost() {
+        this.status = PostStatusType.COMPLETE;
     }
 }

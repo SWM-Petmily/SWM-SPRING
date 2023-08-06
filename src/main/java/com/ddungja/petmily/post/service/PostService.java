@@ -1,5 +1,8 @@
 package com.ddungja.petmily.post.service;
 
+import com.ddungja.petmily.apply.domain.Apply;
+import com.ddungja.petmily.apply.domain.ApprovalType;
+import com.ddungja.petmily.apply.repository.ApplyRepository;
 import com.ddungja.petmily.common.domain.exception.CustomException;
 import com.ddungja.petmily.post.domain.*;
 import com.ddungja.petmily.post.domain.request.DiseaseRequest;
@@ -33,14 +36,13 @@ import static com.ddungja.petmily.post.domain.type.ImageType.*;
 public class PostService {
 
     private final UserRepository userRepository;
-
+    private final ApplyRepository applyRepository;
     private final PostRepository postRepository;
     private final MainCategoryRepository mainCategoryRepository;
     private final SubCategoryRepository subCategoryRepository;
 
     private final DiseaseRepository diseaseRepository;
     private final ImageService imageService;
-
 
     /*포스트 업로드*/
     @Transactional
@@ -108,7 +110,7 @@ public class PostService {
     public Post certifyVaccination(Long postId, Long userId, List<MultipartFile> vaccinationImages) throws IOException {
         Post post = postRepository.findPostById(postId).orElseThrow(() -> new CustomException(POST_NOT_FOUND));
         if (!post.getUser().getId().equals(userId)) {
-            throw new CustomException(POST_NOT_FOUND);
+            throw new CustomException(POST_USER_NOT_MATCH);
         }
         if(vaccinationImages == null || vaccinationImages.size() == 0) {
             throw new CustomException(IMAGE_NOT_FOUND);
@@ -122,7 +124,7 @@ public class PostService {
     public Post certifyMedicalCheck(Long postId, Long userId, List<MultipartFile> medicalCheckImages) throws IOException {
         Post post = postRepository.findPostById(postId).orElseThrow(() -> new CustomException(POST_NOT_FOUND));
         if (!post.getUser().getId().equals(userId)) {
-            throw new CustomException(POST_NOT_FOUND);
+            throw new CustomException(POST_USER_NOT_MATCH);
         }
         if(medicalCheckImages == null || medicalCheckImages.size() == 0) {
             throw new CustomException(IMAGE_NOT_FOUND);
@@ -136,9 +138,41 @@ public class PostService {
     public Post certifyRegistration(Long userId, Long postId) {
         Post post = postRepository.findPostById(postId).orElseThrow(() -> new CustomException(POST_NOT_FOUND));
         if (!post.getUser().getId().equals(userId)) {
-            throw new CustomException(POST_NOT_FOUND);
+            throw new CustomException(POST_USER_NOT_MATCH);
         }
         post.certifyRegistration();
         return post;
+    }
+
+    @Transactional
+    public void delete(Long userId, Long postId) {
+        Post post = postRepository.findPostById(postId).orElseThrow(() -> new CustomException(POST_NOT_FOUND));
+        if (!post.getUser().getId().equals(userId)) {
+            throw new CustomException(POST_USER_NOT_MATCH);
+        }
+        if(post.getStatus()==PostStatusType.COMPLETE){
+            throw new CustomException(POST_STATUS_IS_COMPLETE);
+        }
+        post.deletePost();
+        List<Apply> applys = applyRepository.findByPostIdAndApproval(postId, ApprovalType.WAITING);
+        for (Apply apply : applys) {
+            apply.cancelApply();
+        }
+    }
+
+    @Transactional
+    public void complete(Long userId, Long postId) {
+        Post post = postRepository.findPostById(postId).orElseThrow(() -> new CustomException(POST_NOT_FOUND));
+        if(post.getStatus()==PostStatusType.DELETE){
+            throw new CustomException(POST_STATUS_IS_DELETE);
+        }
+        if (!post.getUser().getId().equals(userId)) {
+            throw new CustomException(POST_USER_NOT_MATCH);
+        }
+        post.completePost();
+        List<Apply> applys = applyRepository.findByPostIdAndApproval(postId, ApprovalType.WAITING);
+        for (Apply apply : applys) {
+            apply.rejectApply();
+        }
     }
 }

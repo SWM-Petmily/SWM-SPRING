@@ -110,4 +110,12 @@ public class Apply extends BaseTimeEntity {
         this.comment = applyUpdateRequest.getComment();
         this.openTalk = applyUpdateRequest.getOpenTalk();
     }
+
+    public void rejectApply() {
+        this.approval = ApprovalType.REJECTED;
+    }
+
+    public void cancelApply() {
+        this.approval = ApprovalType.CANCEL;
+    }
 }
