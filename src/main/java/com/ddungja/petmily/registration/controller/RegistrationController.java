@@ -36,7 +36,7 @@ public class RegistrationController {
         return ResponseEntity.status(HttpStatus.CREATED).body(RegisterCreateResponse.from(registrationService.register(user.getId(), registrationCreateRequest)));
     }
     @Operation(summary = "내가 등록한 반려동물 보기")
-    @ApiResponse(responseCode = "200", description = "내가 등록한 반려동물 조회 성공", content = @Content(schema = @Schema(implementation = MyRegistrationResponse.class)))
+    @ApiResponse(responseCode = "200", description = "내가 등록한 반려동물 조회 성공", content = @Content(schema = @Schema(implementation = MyRegistrationsResponse.class)))
     @GetMapping("/myRegister")
     public ResponseEntity<?> getMyRegister(@AuthenticationPrincipal User user) {
         log.info("내가 등록한 반려동물 보기 userId = {}", user.getId());
