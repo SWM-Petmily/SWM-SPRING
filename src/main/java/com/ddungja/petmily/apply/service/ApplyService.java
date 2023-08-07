@@ -16,6 +16,7 @@ import com.ddungja.petmily.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,7 +31,7 @@ public class ApplyService {
     private final PostRepository postRepository;
 
 
-    public Page<Apply> supportMyPost(Long userId, Long postId, Pageable pageable) {
+    public Slice<Apply> supportMyPost(Long userId, Long postId, Pageable pageable) {
         User user = userRepository.findById(userId).orElseThrow(() -> new CustomException(USER_NOT_FOUND));
         Post post = postRepository.findById(postId).orElseThrow(() -> new CustomException(POST_NOT_FOUND));
         return applyRepository.findBySellerIdAndPostId(user.getId(), post.getId(), pageable);

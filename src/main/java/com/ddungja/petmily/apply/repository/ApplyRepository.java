@@ -2,8 +2,8 @@ package com.ddungja.petmily.apply.repository;
 
 import com.ddungja.petmily.apply.domain.Apply;
 import com.ddungja.petmily.apply.domain.ApprovalType;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -18,7 +18,7 @@ public interface ApplyRepository extends JpaRepository<Apply, Long>, ApplyQueryR
     Optional<Apply> findByIdAndSellerId(Long applyId, Long sellerId);
 
     @EntityGraph(attributePaths = {"user"})
-    Page<Apply> findBySellerIdAndPostId(Long sellerId, Long postId, Pageable pageable);
+    Slice<Apply> findBySellerIdAndPostId(Long sellerId, Long postId, Pageable pageable);
 
     Optional<Apply> findByUserIdAndPostId(Long userId, Long postId);
 
