@@ -59,7 +59,7 @@ public class PostController {
     public ResponseEntity<?> create(@AuthenticationPrincipal User user,
                                     @Valid @RequestPart(value = "postRequest") PostCreateRequest postRequest,
                                     @RequestPart(value = "postImage", required = false) List<MultipartFile> postImages) throws IOException {
-        log.info("게시글 등록  userId = {} postImage = {}", user.getId(), postImages);
+        log.info("게시글 등록  userId = {} postImage = {} postRequest = {}", user.getId(), postImages, postRequest);
         Post post = postService.create(postRequest, user.getId(), postImages);
         return ResponseEntity.status(HttpStatus.CREATED).body(PostCreateResponse.from(post));
     }

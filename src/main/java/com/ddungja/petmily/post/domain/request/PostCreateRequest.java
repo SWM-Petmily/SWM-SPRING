@@ -4,10 +4,12 @@ import com.ddungja.petmily.post.domain.type.GenderType;
 import com.ddungja.petmily.post.domain.type.NeuteredType;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.ToString;
 
 import java.util.List;
 
 @Getter
+@ToString
 public class PostCreateRequest {
     private final String mainCategory;
     private final String subCategory;
