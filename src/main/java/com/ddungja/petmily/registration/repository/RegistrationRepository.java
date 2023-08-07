@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public interface RegistrationRepository extends JpaRepository<Registration, Long> {
 
-    @EntityGraph(attributePaths = {"petSubCategory"})
+    @EntityGraph(attributePaths = {"petSubCategory","petSubCategory.mainCategory"})
     List<Registration> findByUserId(Long userId);
 
     Optional<Registration> findByRegistrationNumber(String dogRegNo);

@@ -10,14 +10,17 @@ import lombok.Getter;
 public class MyRegistrationResponse {
     private final Long id;
     private final String petName;
+    private final String mainCategory;
     private final String petType;
     private final GenderType petGender;
     private final NeuteredType petNeutered;
 
+
     @Builder
-    private MyRegistrationResponse(Long id, String petName, String petType, GenderType petGender, NeuteredType petNeutered) {
+    private MyRegistrationResponse(Long id, String petName, String mainCategory, String petType, GenderType petGender, NeuteredType petNeutered) {
         this.id = id;
         this.petName = petName;
+        this.mainCategory = mainCategory;
         this.petType = petType;
         this.petGender = petGender;
         this.petNeutered = petNeutered;
@@ -27,6 +30,7 @@ public class MyRegistrationResponse {
         return MyRegistrationResponse.builder()
                 .id(registration.getId())
                 .petName(registration.getPetName())
+                .mainCategory(registration.getPetSubCategory().getMainCategory().getName())
                 .petType(registration.getPetSubCategory().getName())
                 .petGender(registration.getPetGender())
                 .petNeutered(registration.getPetNeutered())
