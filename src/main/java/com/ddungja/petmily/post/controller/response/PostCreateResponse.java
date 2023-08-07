@@ -3,7 +3,6 @@ package com.ddungja.petmily.post.controller.response;
 import com.ddungja.petmily.post.domain.Post;
 import com.ddungja.petmily.post.domain.type.GenderType;
 import com.ddungja.petmily.post.domain.type.NeuteredType;
-import com.ddungja.petmily.post.domain.type.PostStatusType;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -26,11 +25,10 @@ public class PostCreateResponse {
     private final String disadvantage; // 단점, 주의할 점
     private final String averageCost;// 평균비용
     private final String adopter; // 분양자
-    private final PostStatusType status; // 분양상태
     private final List<PostCreateImageResponse> images;
 
     @Builder
-    private PostCreateResponse(Long id, Long mainCategory, Long subCategory, String region, GenderType gender, String birth, NeuteredType neutered, int money, String reason, String advantage, String disadvantage, String averageCost, String adopter, PostStatusType status, List<PostCreateImageResponse> images) {
+    private PostCreateResponse(Long id, Long mainCategory, Long subCategory, String region, GenderType gender, String birth, NeuteredType neutered, int money, String reason, String advantage, String disadvantage, String averageCost, String adopter,  List<PostCreateImageResponse> images) {
         this.postId = id;
         this.mainCategory = mainCategory;
         this.subCategory = subCategory;
@@ -44,7 +42,6 @@ public class PostCreateResponse {
         this.disadvantage = disadvantage;
         this.averageCost = averageCost;
         this.adopter = adopter;
-        this.status = status;
         this.images = images;
     }
 
@@ -63,7 +60,6 @@ public class PostCreateResponse {
                 .disadvantage(post.getDisadvantage())
                 .averageCost(post.getAverageCost())
                 .adopter(post.getAdopter())
-                .status(post.getStatus())
                 .images(post.getImages() != null? post.getImages().stream().map(PostCreateImageResponse::from).toList() : null)
                 .build();
     }
