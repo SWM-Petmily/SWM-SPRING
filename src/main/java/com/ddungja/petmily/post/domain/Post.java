@@ -79,13 +79,13 @@ public class Post extends BaseTimeEntity {
     private PostStatusType status; // 분양상태
 
     @Enumerated(EnumType.STRING)
-    private CertifiedType isRegistered; // 분양 등록 여부
+    private CertifiedType isRegistered = CertifiedType.NONE; // 분양 등록 여부
 
     @Enumerated(EnumType.STRING)
-    private CertifiedType isVaccinated; // 예방접종 여부
+    private CertifiedType isVaccinated = CertifiedType.NONE; // 예방접종 여부
 
     @Enumerated(EnumType.STRING)
-    private CertifiedType isMedicalChecked; // 건강검진 여부
+    private CertifiedType isMedicalChecked = CertifiedType.NONE; // 건강검진 여부
     private int views;
     private int reports;
 
