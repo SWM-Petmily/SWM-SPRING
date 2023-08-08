@@ -52,8 +52,9 @@ public class PostService {
         SubCategory subCategory = subCategoryRepository.findByName(postCreateRequest.getSubCategory()).orElseThrow(() -> new CustomException(SUB_CATEGORY_NOT_FOUND));
         Post post = Post.from(postCreateRequest, user, mainCategory, subCategory);
         if(postImages != null && postImages.size() > 0) {
-            post.createThumbnailImage(imageService.upload(post, postImages, POST).get(0).getUrl());
-            uploadImages(postImages, post, POST);
+            List<Image> images = imageService.upload(post, postImages, POST);
+            post.createThumbnailImage(images.get(0).getUrl());
+            post.uploadImages(images);
         }
         uploadDisease(postCreateRequest, post);
         return postRepository.save(post);
