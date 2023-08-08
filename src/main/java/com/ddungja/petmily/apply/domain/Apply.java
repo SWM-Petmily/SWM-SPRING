@@ -18,7 +18,7 @@ import java.util.List;
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-@Table(name = "applys", indexes = @Index(name = "idx_applys_user_id", columnList = "user_id"))
+@Table(name = "applys", indexes = @Index(name = "idx_applys_user_id", columnList = "user_id, approval"))
 public class Apply extends BaseTimeEntity {
 
     @Id

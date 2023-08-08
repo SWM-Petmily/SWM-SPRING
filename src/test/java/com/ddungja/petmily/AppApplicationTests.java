@@ -1,9 +1,5 @@
 package com.ddungja.petmily;
 
-import org.junit.jupiter.api.Test;
-
-import static org.assertj.core.api.Assertions.assertThat;
-
 class AppApplicationTests {
 
 
@@ -29,7 +25,7 @@ class AppApplicationTests {
 //
 //        System.out.println("insert into posts (age, adopter,advantage,average_cost,birth,create_date,disadvantage,gender,main_category_id,money,name,neutered,reason,region,reports,status,sub_category_id,thumbnail_image,update_date,user_id,views,post_id) values");
 //        num = 1;
-//        for (PostStatusType value : PostStatusType.values()) {
+//        for (PostStatusType value : PostStatusType.values()) {z
 //            for (int i = 0; i < 50; i++) {
 //                System.out.println("(15, '입양자', '장점','평균비용','2022-03',now(),'단점','MALE',1,'100000','테스트','YES','이유','서울',1,'"+value+"',1,'https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcREj22c-wMNL5IDmU99v8G7voUl17Yxm0JJqMLqttdPT4DnaB99zqVK7HWiNzjP3aZnzCEf-ikAqb2yiDk',now(),1,1,"+num+"),");
 //                num++;
