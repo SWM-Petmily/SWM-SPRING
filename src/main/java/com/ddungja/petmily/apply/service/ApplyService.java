@@ -29,7 +29,6 @@ public class ApplyService {
     private final UserRepository userRepository;
     private final PostRepository postRepository;
 
-
     public Page<Apply> supportMyPost(Long userId, Long postId, Pageable pageable) {
         User user = userRepository.findById(userId).orElseThrow(() -> new CustomException(USER_NOT_FOUND));
         Post post = postRepository.findById(postId).orElseThrow(() -> new CustomException(POST_NOT_FOUND));
@@ -55,7 +54,6 @@ public class ApplyService {
         apply.approve(approveRequest.getApproval());
         return apply;
     }
-
     @Transactional
     public Apply apply(Long userId, Long postId, ApplyCreateRequest applyCreateRequest) {
         User user = userRepository.findById(userId).orElseThrow(() -> new CustomException(USER_NOT_FOUND));
