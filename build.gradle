@@ -80,6 +80,15 @@ dependencies {
 
 }
 
+//yml 서브 모듈에서 가져와서 빌드
+task copyYML(type: Copy){
+    copy {
+        from '/yml'
+        include "*"
+        into '/src/main/resources'
+    }
+}
+
 
 //배포시  jar파일이 하나만 나오게 하기 위해 설정
 jar {
