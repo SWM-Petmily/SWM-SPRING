@@ -1,0 +1,102 @@
+server:
+  port: 5000
+  servlet:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+
+spring:
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 20MB
+      max-request-size: 20MB
+
+  datasource:
+    url: jdbc:mysql://${rds.hostname}:${rds.port}/${rds.db.name}?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: ${rds.username}
+    password: ${rds.password}
+
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        default_batch_fetch_size: 50
+    open-in-view: false
+
+  sql:
+    init:
+      mode: never
+
+  data:
+    web:
+      pageable:
+        default-page-size: 20
+        max-page-size: 2000
+        one-indexed-parameters: on
+
+logging.level:
+  root: info
+  org.springframework:
+    web: info
+    security: info
+    boot: info
+  org.hibernate.SQL: off
+  org.hibernate.type: off
+
+springdoc:
+  packages-to-scan: com.ddungja.petmily
+  default-consumes-media-type: application/json;charset=UTF-8
+  default-produces-media-type: application/json;charset=UTF-8
+  api-docs:
+    path: /api
+    groups:
+      enabled: true
+  cache:
+    disabled: true
+  swagger-ui:
+    path: /ui
+    operations-sorter: method
+
+kakao:
+  restApiKey: ee34f16978b76a36b7c087376c6bbef2
+  redirectUrl: https://www.petmily.site/users/kakao
+  tokenUrl: https://kauth.kakao.com/oauth/token
+  userInfoUrl: https://kapi.kakao.com/v2/user/me
+
+jwt:
+  refresh:
+    secret: 7b190110066d09a1f88c5970fa55d5c2a61e52a2e4b984c7704966ab6bebad9791b5984136695239a67d98027ebcea2f36ba00ce628c662d7e0d43b5066d6567
+  access:
+    secret: 8937d7116cd6b9f184586f367e596d44661d838421db2fc23f7be1355df04d50838c9fbec843ef67cfe5856da75559ff69e48c3e6e00652f448fb975cc1c46d4
+
+
+coolsms:
+  apiKey: NCSCQ223CUYV65VX
+  apiSecretKey: AVG2RJNRVSA6G4TO5EASUNWPECDLYWJ0
+
+api:
+  serviceKey: iqucPIkN%2Br9Zm%2FI6ALZlkapFDvJIgC1gySMHPDOd0aTP%2BbDajaKTYeE680W97iVo0EEg4PZcEGozg37slj%2FlcA%3D%3D
+
+
+cloud:
+  aws:
+    region:
+      static: ap-northeast-2  # AWS 기본 리전을 설정
+    stack:
+      auto: false # Spring Cloud를 실행하면, 서버 구성을 자동화하는 CloudFormation이 실행되는데 이를 사용하지 않으므로 false로 설정
+
+s3:
+  bucket: swm-petmily
+  access-key: AKIA5WZKVIDO2IZSVJ7B
+  secret-key: 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
+
+oauth:
+  apple:
+    iss: https://appleid.apple.com
+    client-id: org.soma.Ddungja
+    nonce:
