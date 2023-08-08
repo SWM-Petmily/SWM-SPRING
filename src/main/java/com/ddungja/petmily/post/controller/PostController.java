@@ -65,6 +65,7 @@ public class PostController {
     }
 
     @Operation(summary = "분양 게시글 작성 시, 추가정보 입력 페이지 (인증 정보 출력)")
+    @ApiResponse(responseCode = "200", description = "분양 게시글 작성 시, 추가정보 입력 페이지 (인증 정보 출력)", content = @Content(schema = @Schema(implementation = PostCertifiedResponse.class)))
     @GetMapping("/certify/{postId}")
     public ResponseEntity<?> getCertify(@AuthenticationPrincipal User user, @PathVariable Long postId) {
         log.info("분양 게시글 작성 시, 추가정보 입력 페이지 (인증 정보 출력) userId = {}, postId = {}", postId);
