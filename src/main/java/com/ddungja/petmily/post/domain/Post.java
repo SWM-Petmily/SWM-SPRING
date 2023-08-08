@@ -140,9 +140,9 @@ public class Post extends BaseTimeEntity {
                 .averageCost(postCreateRequest.getAverageCost())
                 .adopter(postCreateRequest.getAdopter())
                 .status(PostStatusType.SAVE)
-                .isRegistered(postCreateRequest.getIsRegistered() ? CertifiedType.CERTIFIED : CertifiedType.NOT_CERTIFIED)
-                .isVaccinated(CertifiedType.NOT_CERTIFIED)
-                .isMedicalChecked(CertifiedType.NOT_CERTIFIED)
+                .isRegistered(postCreateRequest.getIsRegistered() ? CertifiedType.CERTIFIED : CertifiedType.NONE)
+                .isVaccinated(CertifiedType.NONE)
+                .isMedicalChecked(CertifiedType.NONE)
                 .views(0)
                 .reports(0)
                 .build();
