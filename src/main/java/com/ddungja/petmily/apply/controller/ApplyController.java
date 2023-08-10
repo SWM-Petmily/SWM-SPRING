@@ -4,7 +4,7 @@ import com.ddungja.petmily.apply.controller.response.*;
 import com.ddungja.petmily.apply.domain.Apply;
 import com.ddungja.petmily.apply.domain.ApprovalType;
 import com.ddungja.petmily.apply.domain.request.ApplyCreateRequest;
-import com.ddungja.petmily.apply.domain.request.ApplyUpdateResponse;
+import com.ddungja.petmily.apply.domain.request.ApplyUpdateRequest;
 import com.ddungja.petmily.apply.domain.request.ApproveRequest;
 import com.ddungja.petmily.apply.service.ApplyService;
 import com.ddungja.petmily.user.domain.user.User;

@@ -1,8 +1,8 @@
 package com.ddungja.petmily.apply.domain;
 
 
-import com.ddungja.petmily.apply.controller.response.ApplyUpdateRequest;
 import com.ddungja.petmily.apply.domain.request.ApplyCreateRequest;
+import com.ddungja.petmily.apply.domain.request.ApplyUpdateRequest;
 import com.ddungja.petmily.common.domain.BaseTimeEntity;
 import com.ddungja.petmily.post.domain.Post;
 import com.ddungja.petmily.user.domain.user.User;

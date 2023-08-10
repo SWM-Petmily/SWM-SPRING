@@ -1,10 +1,10 @@
 package com.ddungja.petmily.apply.service;
 
 
-import com.ddungja.petmily.apply.controller.response.ApplyUpdateRequest;
 import com.ddungja.petmily.apply.domain.Apply;
 import com.ddungja.petmily.apply.domain.ApprovalType;
 import com.ddungja.petmily.apply.domain.request.ApplyCreateRequest;
+import com.ddungja.petmily.apply.domain.request.ApplyUpdateRequest;
 import com.ddungja.petmily.apply.domain.request.ApproveRequest;
 import com.ddungja.petmily.apply.repository.ApplyRepository;
 import com.ddungja.petmily.common.exception.CustomException;

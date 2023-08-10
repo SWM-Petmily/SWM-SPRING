@@ -1,4 +1,4 @@
-package com.ddungja.petmily.apply.domain.request;
+package com.ddungja.petmily.apply.controller.response;
 
 
 import com.ddungja.petmily.apply.domain.Apply;
