@@ -1,7 +1,7 @@
 package com.ddungja.petmily.user.controller;
 
 import com.ddungja.petmily.apply.service.ApplyService;
-import com.ddungja.petmily.common.domain.exception.CustomException;
+import com.ddungja.petmily.common.exception.CustomException;
 import com.ddungja.petmily.common.jwt.JwtProvider;
 import com.ddungja.petmily.like.service.LikeService;
 import com.ddungja.petmily.user.controller.response.UserLoginResponse;
@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URISyntaxException;
 
-import static com.ddungja.petmily.common.domain.exception.ExceptionCode.REFRESH_TOKEN_VALIDATION_FAILED;
+import static com.ddungja.petmily.common.exception.ExceptionCode.REFRESH_TOKEN_VALIDATION_FAILED;
 
 @RestController
 @RequiredArgsConstructor

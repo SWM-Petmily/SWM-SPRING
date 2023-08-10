@@ -1,4 +1,4 @@
-package com.ddungja.petmily.common.domain.exception;
+package com.ddungja.petmily.common.exception;
 
 import lombok.Getter;
 

@@ -7,8 +7,8 @@ import com.ddungja.petmily.apply.domain.ApprovalType;
 import com.ddungja.petmily.apply.domain.request.ApplyCreateRequest;
 import com.ddungja.petmily.apply.domain.request.ApproveRequest;
 import com.ddungja.petmily.apply.repository.ApplyRepository;
-import com.ddungja.petmily.common.domain.exception.CustomException;
-import com.ddungja.petmily.common.domain.exception.ExceptionCode;
+import com.ddungja.petmily.common.exception.CustomException;
+import com.ddungja.petmily.common.exception.ExceptionCode;
 import com.ddungja.petmily.post.domain.Post;
 import com.ddungja.petmily.post.repository.PostRepository;
 import com.ddungja.petmily.user.domain.user.User;
@@ -19,7 +19,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import static com.ddungja.petmily.common.domain.exception.ExceptionCode.*;
+import static com.ddungja.petmily.common.exception.ExceptionCode.*;
 
 @Service
 @RequiredArgsConstructor

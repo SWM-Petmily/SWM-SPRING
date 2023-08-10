@@ -1,6 +1,6 @@
 package com.ddungja.petmily.user.domain.apple;
 
-import com.ddungja.petmily.common.domain.exception.CustomException;
+import com.ddungja.petmily.common.exception.CustomException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.*;
@@ -10,7 +10,7 @@ import java.security.PublicKey;
 import java.util.Base64;
 import java.util.Map;
 
-import static com.ddungja.petmily.common.domain.exception.ExceptionCode.*;
+import static com.ddungja.petmily.common.exception.ExceptionCode.*;
 
 @Component
 public class AppleJwtParser {

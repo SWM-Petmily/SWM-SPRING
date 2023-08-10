@@ -3,7 +3,7 @@ package com.ddungja.petmily.post.service;
 import com.ddungja.petmily.apply.domain.Apply;
 import com.ddungja.petmily.apply.domain.ApprovalType;
 import com.ddungja.petmily.apply.repository.ApplyRepository;
-import com.ddungja.petmily.common.domain.exception.CustomException;
+import com.ddungja.petmily.common.exception.CustomException;
 import com.ddungja.petmily.post.domain.*;
 import com.ddungja.petmily.post.domain.request.DiseaseRequest;
 import com.ddungja.petmily.post.domain.request.PostCreateRequest;
@@ -27,7 +27,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.ddungja.petmily.common.domain.exception.ExceptionCode.*;
+import static com.ddungja.petmily.common.exception.ExceptionCode.*;
 import static com.ddungja.petmily.post.domain.type.ImageType.*;
 
 @Service

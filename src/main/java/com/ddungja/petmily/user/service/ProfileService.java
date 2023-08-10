@@ -1,7 +1,7 @@
 package com.ddungja.petmily.user.service;
 
 
-import com.ddungja.petmily.common.domain.exception.CustomException;
+import com.ddungja.petmily.common.exception.CustomException;
 import com.ddungja.petmily.user.domain.profile.Experience;
 import com.ddungja.petmily.user.domain.profile.Profile;
 import com.ddungja.petmily.user.domain.profile.ProfileImage;
@@ -16,7 +16,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import static com.ddungja.petmily.common.domain.exception.ExceptionCode.*;
+import static com.ddungja.petmily.common.exception.ExceptionCode.*;
 
 @Service
 @RequiredArgsConstructor

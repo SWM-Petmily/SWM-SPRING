@@ -1,6 +1,6 @@
 package com.ddungja.petmily.user.domain.apple;
 
-import com.ddungja.petmily.common.domain.exception.CustomException;
+import com.ddungja.petmily.common.exception.CustomException;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
-import static com.ddungja.petmily.common.domain.exception.ExceptionCode.INVALID_APPLE_JWT;
+import static com.ddungja.petmily.common.exception.ExceptionCode.INVALID_APPLE_JWT;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor

@@ -1,6 +1,6 @@
 package com.ddungja.petmily.user.domain.certification;
 
-import com.ddungja.petmily.common.domain.exception.CustomException;
+import com.ddungja.petmily.common.exception.CustomException;
 import com.ddungja.petmily.user.domain.user.User;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
-import static com.ddungja.petmily.common.domain.exception.ExceptionCode.CERTIFICATION_ATTEMPT_EXCEED;
+import static com.ddungja.petmily.common.exception.ExceptionCode.CERTIFICATION_ATTEMPT_EXCEED;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)

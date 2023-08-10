@@ -1,6 +1,6 @@
 package com.ddungja.petmily.user.service;
 
-import com.ddungja.petmily.common.domain.exception.CustomException;
+import com.ddungja.petmily.common.exception.CustomException;
 import com.ddungja.petmily.user.domain.certification.Certification;
 import com.ddungja.petmily.user.domain.certification.CertificationAttempt;
 import com.ddungja.petmily.user.domain.user.User;
@@ -23,7 +23,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-import static com.ddungja.petmily.common.domain.exception.ExceptionCode.*;
+import static com.ddungja.petmily.common.exception.ExceptionCode.*;
 
 @Service
 @Slf4j

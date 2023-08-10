@@ -1,6 +1,6 @@
 package com.ddungja.petmily.common.response;
 
-import com.ddungja.petmily.common.domain.exception.ExceptionCode;
+import com.ddungja.petmily.common.exception.ExceptionCode;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletResponse;

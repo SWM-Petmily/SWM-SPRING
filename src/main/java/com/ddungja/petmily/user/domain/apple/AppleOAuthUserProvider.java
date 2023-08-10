@@ -1,6 +1,6 @@
 package com.ddungja.petmily.user.domain.apple;
 
-import com.ddungja.petmily.common.domain.exception.CustomException;
+import com.ddungja.petmily.common.exception.CustomException;
 import com.ddungja.petmily.user.repository.AppleLoginClient;
 import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 import java.security.PublicKey;
 import java.util.Map;
 
-import static com.ddungja.petmily.common.domain.exception.ExceptionCode.INVALID_APPLE_CLAIMS;
+import static com.ddungja.petmily.common.exception.ExceptionCode.INVALID_APPLE_CLAIMS;
 
 @Component
 @RequiredArgsConstructor

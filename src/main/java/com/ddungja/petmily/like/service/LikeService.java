@@ -1,6 +1,6 @@
 package com.ddungja.petmily.like.service;
 
-import com.ddungja.petmily.common.domain.exception.CustomException;
+import com.ddungja.petmily.common.exception.CustomException;
 import com.ddungja.petmily.like.domain.Like;
 import com.ddungja.petmily.like.repository.LikeRepository;
 import com.ddungja.petmily.post.domain.Post;
@@ -14,7 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import static com.ddungja.petmily.common.domain.exception.ExceptionCode.*;
+import static com.ddungja.petmily.common.exception.ExceptionCode.*;
 
 @Service
 @RequiredArgsConstructor

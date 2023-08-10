@@ -1,6 +1,6 @@
 package com.ddungja.petmily.registration.service;
 
-import com.ddungja.petmily.common.domain.exception.CustomException;
+import com.ddungja.petmily.common.exception.CustomException;
 import com.ddungja.petmily.post.domain.MainCategory;
 import com.ddungja.petmily.post.domain.SubCategory;
 import com.ddungja.petmily.post.repository.MainCategoryRepository;
@@ -20,7 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import static com.ddungja.petmily.common.domain.exception.ExceptionCode.*;
+import static com.ddungja.petmily.common.exception.ExceptionCode.*;
 
 @Service
 @RequiredArgsConstructor

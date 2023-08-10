@@ -2,8 +2,8 @@ package com.ddungja.petmily.common.controller;
 
 
 import com.amazonaws.AmazonServiceException;
-import com.ddungja.petmily.common.domain.exception.CustomException;
-import com.ddungja.petmily.common.domain.response.FieldErrorResponse;
+import com.ddungja.petmily.common.exception.CustomException;
+import com.ddungja.petmily.common.controller.response.FieldErrorResponse;
 import io.sentry.Sentry;
 import io.sentry.spring.jakarta.tracing.SentrySpan;
 import lombok.extern.slf4j.Slf4j;
@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.multipart.support.MissingServletRequestPartException;
 
-import static com.ddungja.petmily.common.domain.exception.ExceptionCode.REFRESH_TOKEN_NOT_FOUND;
+import static com.ddungja.petmily.common.exception.ExceptionCode.REFRESH_TOKEN_NOT_FOUND;
 
 @RestControllerAdvice
 @Slf4j

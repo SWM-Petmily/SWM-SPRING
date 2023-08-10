@@ -1,4 +1,4 @@
-package com.ddungja.petmily.common.domain.response;
+package com.ddungja.petmily.common.controller.response;
 
 import lombok.Getter;
 import org.springframework.validation.FieldError;

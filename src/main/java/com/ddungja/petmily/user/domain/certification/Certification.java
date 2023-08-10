@@ -1,7 +1,7 @@
 package com.ddungja.petmily.user.domain.certification;
 
 
-import com.ddungja.petmily.common.domain.exception.CustomException;
+import com.ddungja.petmily.common.exception.CustomException;
 import com.ddungja.petmily.user.domain.user.User;
 import com.ddungja.petmily.user.domain.request.CertificationVerifyRequest;
 import jakarta.persistence.*;
@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
-import static com.ddungja.petmily.common.domain.exception.ExceptionCode.*;
+import static com.ddungja.petmily.common.exception.ExceptionCode.*;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
