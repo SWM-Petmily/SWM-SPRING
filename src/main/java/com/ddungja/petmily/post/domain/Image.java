@@ -30,7 +30,7 @@ public class Image extends BaseTimeEntity {
     private Post post;
 
     @Builder
-    private Image(Long id, String url, ImageType imageType, Post post, LocalDateTime createDate, LocalDateTime updateDate) {
+    public Image(Long id, String url, ImageType imageType, Post post, LocalDateTime createDate, LocalDateTime updateDate) {
         this.id = id;
         this.url = url;
         this.imageType = imageType;

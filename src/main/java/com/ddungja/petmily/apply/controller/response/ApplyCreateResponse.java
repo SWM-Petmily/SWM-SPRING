@@ -9,7 +9,7 @@ public class ApplyCreateResponse {
     private final Long applyId;
 
     @Builder
-    private ApplyCreateResponse(Long applyId) {
+    public ApplyCreateResponse(Long applyId) {
         this.applyId = applyId;
     }
 

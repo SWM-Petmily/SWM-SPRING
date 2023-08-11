@@ -13,7 +13,7 @@ public class ApproveRequest {
     private ApprovalType approval;
 
     @Builder
-    private ApproveRequest(ApprovalType approval) {
+    public ApproveRequest(ApprovalType approval) {
         this.approval = approval;
     }
 }

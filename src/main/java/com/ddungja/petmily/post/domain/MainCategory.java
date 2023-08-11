@@ -21,7 +21,7 @@ public class MainCategory {
     private String name;
 
     @Builder
-    private MainCategory(Long id, String name) {
+    public MainCategory(Long id, String name) {
         this.id = id;
         this.name = name;
     }

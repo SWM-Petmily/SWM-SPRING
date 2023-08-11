@@ -20,7 +20,7 @@ public class ProfileResponse {
     private final List<ProfileExperienceResponse> experiences;
     private final Boolean isMyProfile;
     @Builder
-    private ProfileResponse(String job, String environment, int people, String comment, String openTalk, String region, Boolean isExperience, ProfileUserResponse user, ProfileImageResponse profileImage, List<ProfileExperienceResponse> experiences, Boolean isMyProfile) {
+    public ProfileResponse(String job, String environment, int people, String comment, String openTalk, String region, Boolean isExperience, ProfileUserResponse user, ProfileImageResponse profileImage, List<ProfileExperienceResponse> experiences, Boolean isMyProfile) {
         this.job = job;
         this.environment = environment;
         this.people = people;

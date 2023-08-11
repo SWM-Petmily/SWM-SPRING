@@ -24,7 +24,7 @@ public class Vaccination extends BaseTimeEntity {
     private Post post;
 
     @Builder
-    private Vaccination(Long id, Post post, LocalDateTime createDate, LocalDateTime updateDate) {
+    public Vaccination(Long id, Post post, LocalDateTime createDate, LocalDateTime updateDate) {
         this.id = id;
         this.post = post;
         this.createDate = createDate;

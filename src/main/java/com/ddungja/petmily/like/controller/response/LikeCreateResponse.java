@@ -10,13 +10,13 @@ public class LikeCreateResponse {
     private final Long likeId;
 
     @Builder
-    private LikeCreateResponse(Long likeId) {
+    public LikeCreateResponse(Long likeId) {
         this.likeId = likeId;
     }
 
-    public static LikeCreateResponse from(Like Like) {
+    public static LikeCreateResponse from(Like like) {
         return LikeCreateResponse.builder()
-                .likeId(Like.getId())
+                .likeId(like.getId())
                 .build();
     }
 

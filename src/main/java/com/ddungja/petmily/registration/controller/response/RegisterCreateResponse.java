@@ -10,7 +10,7 @@ public class RegisterCreateResponse {
     private final Long registerId;
     
     @Builder
-    private RegisterCreateResponse(Long registerId) {
+    public RegisterCreateResponse(Long registerId) {
         this.registerId = registerId;
     }
     public static RegisterCreateResponse from(Registration registration) {

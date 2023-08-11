@@ -45,7 +45,7 @@ public class Profile extends BaseTimeEntity {
     private List<Experience> experiences = new ArrayList<>();
 
     @Builder
-    private Profile(Long id, String job, String environment, int people, String comment, String openTalk, String region, boolean isExperience, User user, List<Experience> experiences, ProfileImage profileImage, LocalDateTime createDate, LocalDateTime updateDate) {
+    public Profile(Long id, String job, String environment, int people, String comment, String openTalk, String region, boolean isExperience, User user, List<Experience> experiences, ProfileImage profileImage, LocalDateTime createDate, LocalDateTime updateDate) {
         this.id = id;
         this.job = job;
         this.environment = environment;

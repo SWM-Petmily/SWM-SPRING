@@ -11,7 +11,7 @@ public class ApplyUpdateResponse {
     private final Long applyId;
 
     @Builder
-    private ApplyUpdateResponse(Long applyId) {
+    public ApplyUpdateResponse(Long applyId) {
         this.applyId = applyId;
     }
 

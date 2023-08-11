@@ -29,7 +29,7 @@ public class Experience extends BaseTimeEntity {
     private Profile profile;
 
     @Builder
-    private Experience(Long id, String species, int period, Profile profile, LocalDateTime createDate, LocalDateTime updateDate) {
+    public Experience(Long id, String species, int period, Profile profile, LocalDateTime createDate, LocalDateTime updateDate) {
         this.id = id;
         this.species = species;
         this.period = period;

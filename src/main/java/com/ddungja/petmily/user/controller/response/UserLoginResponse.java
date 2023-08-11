@@ -11,7 +11,7 @@ public class UserLoginResponse {
     private final String refreshToken;
     private final Boolean isCertification;
     @Builder
-    private UserLoginResponse(Long userId, String accessToken, String refreshToken, Boolean isCertification) {
+    public UserLoginResponse(Long userId, String accessToken, String refreshToken, Boolean isCertification) {
         this.userId = userId;
         this.accessToken = accessToken;
         this.refreshToken = refreshToken;

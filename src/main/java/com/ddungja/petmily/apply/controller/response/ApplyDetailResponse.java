@@ -24,7 +24,7 @@ public class ApplyDetailResponse {
     private final Boolean isMyApply;
 
     @Builder
-    private ApplyDetailResponse(Long applyId, String job, String environment, String nickname, int people, String comment, String openTalk, String region, Boolean isExperience, String url, ApprovalType approval, List<ApplyExperienceResponse> applyExperienceResponses, Boolean isMyApply) {
+    public ApplyDetailResponse(Long applyId, String job, String environment, String nickname, int people, String comment, String openTalk, String region, Boolean isExperience, String url, ApprovalType approval, List<ApplyExperienceResponse> applyExperienceResponses, Boolean isMyApply) {
         this.applyId = applyId;
         this.job = job;
         this.environment = environment;

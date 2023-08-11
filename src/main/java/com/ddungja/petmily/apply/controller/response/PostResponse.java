@@ -8,7 +8,7 @@ public class PostResponse {
 
     private final Long postId;
     @Builder
-    private PostResponse(Long id) {
+    public PostResponse(Long id) {
         this.postId = id;
     }
 }

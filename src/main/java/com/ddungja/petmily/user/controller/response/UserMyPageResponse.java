@@ -13,7 +13,7 @@ public class UserMyPageResponse {
     private final String imageUrl;
 
     @Builder
-    private UserMyPageResponse(String nickname, Boolean isProfile, int likeCount, int applyCount, String url) {
+    public UserMyPageResponse(String nickname, Boolean isProfile, int likeCount, int applyCount, String url) {
         this.nickname = nickname;
         this.isProfile = isProfile;
         this.likeCount = likeCount;

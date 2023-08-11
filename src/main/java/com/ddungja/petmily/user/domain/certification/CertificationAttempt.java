@@ -26,7 +26,7 @@ public class CertificationAttempt {
     @JoinColumn(name = "user_id")
     private User user;
     @Builder
-    private CertificationAttempt(Long id, LocalDate lastAttemptDate, int attemptCount, User user) {
+    public CertificationAttempt(Long id, LocalDate lastAttemptDate, int attemptCount, User user) {
         this.id = id;
         this.lastAttemptDate = lastAttemptDate;
         this.attemptCount = attemptCount;

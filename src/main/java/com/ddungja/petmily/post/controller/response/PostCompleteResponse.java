@@ -6,9 +6,8 @@ import lombok.Getter;
 @Getter
 public class PostCompleteResponse {
     private final Long postId;
-
     @Builder
-    private PostCompleteResponse(Long postId) {
+    public PostCompleteResponse(Long postId) {
         this.postId = postId;
     }
 

@@ -10,7 +10,7 @@ public class CertificationPhoneNumberRequest {
     private  String phoneNumber;
 
     @Builder
-    private CertificationPhoneNumberRequest(String phoneNumber) {
+    public CertificationPhoneNumberRequest(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 }

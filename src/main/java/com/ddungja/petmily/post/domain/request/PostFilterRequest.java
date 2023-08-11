@@ -7,15 +7,15 @@ import lombok.Getter;
 
 @Getter
 public class PostFilterRequest { // 인증정보 아직 안함.
-    private String region;
-    private String mainCategory;
-    private String subCategory;
-    private GenderType genderType;
-    private NeuteredType neuteredType;
-    private Integer ageFrom; // 이상
-    private Integer ageTo; // 이하
-    private Integer moneyFrom; // 이상
-    private Integer moneyTo; // 이하
+    private final String region;
+    private final String mainCategory;
+    private final String subCategory;
+    private final GenderType genderType;
+    private final NeuteredType neuteredType;
+    private final Integer ageFrom; // 이상
+    private final Integer ageTo; // 이하
+    private final Integer moneyFrom; // 이상
+    private final Integer moneyTo; // 이하
 
     @Builder
     public PostFilterRequest(String region, String mainCategory, String subCategory, GenderType genderType, NeuteredType neuteredType, Integer ageFrom, Integer ageTo, Integer moneyFrom, Integer moneyTo) {

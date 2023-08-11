@@ -22,7 +22,7 @@ public class ProfileImage extends BaseTimeEntity {
     @Lob
     private String url;
     @Builder
-    private ProfileImage(Long id, String url, LocalDateTime createDate, LocalDateTime updateDate) {
+    public ProfileImage(Long id, String url, LocalDateTime createDate, LocalDateTime updateDate) {
         this.id = id;
         this.url = url;
         this.createDate = createDate;

@@ -9,7 +9,7 @@ public class AppleLoginRequest {
     private final String accessToken;
 
     @Builder
-    private AppleLoginRequest(String idToken, String accessToken) {
+    public AppleLoginRequest(String idToken, String accessToken) {
         this.idToken = idToken;
         this.accessToken = accessToken;
     }

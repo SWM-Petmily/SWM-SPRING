@@ -26,7 +26,7 @@ public class Disease extends BaseTimeEntity {
     private String name;
 
     @Builder
-    private Disease(Long id, Post post, String name, LocalDateTime createDate, LocalDateTime updateDate) {
+    public Disease(Long id, Post post, String name, LocalDateTime createDate, LocalDateTime updateDate) {
         this.id = id;
         this.post = post;
         this.name = name;

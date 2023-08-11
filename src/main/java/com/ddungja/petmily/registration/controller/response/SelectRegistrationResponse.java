@@ -8,6 +8,7 @@ import lombok.Getter;
 
 @Getter
 public class SelectRegistrationResponse {
+
     private final Long mainCategory;
     private final String mainCategoryName;
     private final Long subCategory;
@@ -15,10 +16,10 @@ public class SelectRegistrationResponse {
     private final String name;
     private final GenderType gender;
     private final NeuteredType neutered;
-    private final Boolean isRegistered = true;
+    private final Boolean isRegistered;
 
     @Builder
-    public SelectRegistrationResponse(Long mainCategory, String mainCategoryName, Long subCategory, String subCategoryName, String name, GenderType gender, NeuteredType neutered) {
+    public SelectRegistrationResponse(Long mainCategory, String mainCategoryName, Long subCategory, String subCategoryName, String name, GenderType gender, NeuteredType neutered, Boolean isRegistered) {
         this.mainCategory = mainCategory;
         this.mainCategoryName = mainCategoryName;
         this.subCategory = subCategory;
@@ -26,8 +27,8 @@ public class SelectRegistrationResponse {
         this.name = name;
         this.gender = gender;
         this.neutered = neutered;
+        this.isRegistered = isRegistered;
     }
-
 
     public static SelectRegistrationResponse from(Registration registration) {
         return SelectRegistrationResponse.builder()
@@ -38,6 +39,7 @@ public class SelectRegistrationResponse {
                 .name(registration.getPetName())
                 .gender(registration.getPetGender())
                 .neutered(registration.getPetNeutered())
+                .isRegistered(true)
                 .build();
     }
 }

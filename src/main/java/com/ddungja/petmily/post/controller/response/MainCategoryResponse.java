@@ -10,7 +10,7 @@ public class MainCategoryResponse {
     private final String name;
 
     @Builder
-    private MainCategoryResponse(Long mainCategoryId, String name) {
+    public MainCategoryResponse(Long mainCategoryId, String name) {
         this.mainCategoryId = mainCategoryId;
         this.name = name;
     }
