@@ -54,7 +54,7 @@ public class Apply extends BaseTimeEntity {
     private String url;
 
     @Builder
-    private Apply(Long id, User user, User seller, Post post, ApprovalType approval, List<ApplyExperience> applyExperiences, String job, String environment, int people, String comment, String openTalk, String region, boolean isExperience, String url) {
+    public Apply(Long id, User user, User seller, Post post, ApprovalType approval, List<ApplyExperience> applyExperiences, String job, String environment, int people, String comment, String openTalk, String region, boolean isExperience, String url) {
         this.id = id;
         this.user = user;
         this.seller = seller;

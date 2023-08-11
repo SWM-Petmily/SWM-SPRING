@@ -14,7 +14,7 @@ public class CertificationVerifyRequest {
     private String certificationNumber;
 
     @Builder
-    private CertificationVerifyRequest(String certificationNumber) {
+    public CertificationVerifyRequest(String certificationNumber) {
         this.certificationNumber = certificationNumber;
     }
 }

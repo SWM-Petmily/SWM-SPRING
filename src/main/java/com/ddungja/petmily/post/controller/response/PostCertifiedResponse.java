@@ -7,12 +7,10 @@ import lombok.Getter;
 
 @Getter
 public class PostCertifiedResponse {
+
     private final Long postId;
-
     private final CertifiedType isRegistered;
-
     private final CertifiedType isVaccinated;
-
     private final CertifiedType isMedicalChecked;
 
     @Builder

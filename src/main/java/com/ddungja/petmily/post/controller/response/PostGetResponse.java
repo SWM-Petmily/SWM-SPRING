@@ -16,7 +16,7 @@ public class PostGetResponse {
     private final Long writerId;
     private final int level;
     private final String writer;
-    private final Long writerProfileImage = 1L;
+    private final Long writerProfileImage;
     private final String mainCategory;
     private final String subCategory;
     private final String name;
@@ -47,7 +47,7 @@ public class PostGetResponse {
         this.writerId = writerId;
         this.writer = writer;
         this.level = level;
-        // this.writerProfileImage = writerProfileImage;
+        this.writerProfileImage = writerProfileImage;
         this.mainCategory = mainCategory;
         this.subCategory = subCategory;
         this.name = name;
@@ -78,7 +78,8 @@ public class PostGetResponse {
                 .postId(post.getId())
                 .writerId(null)
                 .writer(post.getUser().getNickname())
-                //.writerProfileImage(post.getUser().get())
+                .writerProfileImage(1L)
+//                .writerProfileImage(post.getUser().get())
                 .mainCategory(post.getMainCategory().getName())
                 .subCategory(post.getSubCategory().getName())
                 .name(post.getName())
@@ -110,6 +111,7 @@ public class PostGetResponse {
                 .postId(post.getId())
                 .writerId(post.getUser().getId())
                 .writer(post.getUser().getNickname())
+                .writerProfileImage(1L)
                 //.writerProfileImage(post.getUser().get())
                 .mainCategory(post.getMainCategory().getName())
                 .subCategory(post.getSubCategory().getName())
@@ -130,7 +132,7 @@ public class PostGetResponse {
                 .adopter(post.getAdopter())
                 .status(post.getStatus())
                 .images(images.stream().map(ImageResponse::from).toList())
-                .isWriter(post.getUser().equals(user.getId()))
+                .isWriter(post.getUser().getId().equals(user.getId()))
                 .isLike(isLike)
                 .isApply(isApply)
                 .likeCount(likeCount)

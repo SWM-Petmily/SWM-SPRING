@@ -26,7 +26,7 @@ public class ApplyPostListResponse {
     private final int age;
 
     @Builder
-    private ApplyPostListResponse(Long applyId, Long postId, String name, String thumbnailImage, String subCategory, String region, GenderType gender, String birth, int like, LocalDateTime createdDate, ApprovalType approval, int age) {
+    public ApplyPostListResponse(Long applyId, Long postId, String name, String thumbnailImage, String subCategory, String region, GenderType gender, String birth, int like, LocalDateTime createdDate, ApprovalType approval, int age) {
         this.applyId = applyId;
         this.postId = postId;
         this.name = name;

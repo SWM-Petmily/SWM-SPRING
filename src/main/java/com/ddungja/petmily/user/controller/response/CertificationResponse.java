@@ -9,7 +9,7 @@ public class CertificationResponse {
     private final String certificationNumber;
 
     @Builder
-    private CertificationResponse(String certificationNumber) {
+    public CertificationResponse(String certificationNumber) {
         this.certificationNumber = certificationNumber;
     }
 

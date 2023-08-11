@@ -25,7 +25,7 @@ public class MyPostListResponse {
     private final int age;
 
     @Builder
-    private MyPostListResponse(Long id, String name, String thumbnailImage, String subCategory, String region, GenderType gender, String birth, int like, LocalDateTime createdDate, PostStatusType status, int age) {
+    public MyPostListResponse(Long id, String name, String thumbnailImage, String subCategory, String region, GenderType gender, String birth, int like, LocalDateTime createdDate, PostStatusType status, int age) {
         this.postId = id;
         this.name = name;
         this.thumbnailImage = thumbnailImage;

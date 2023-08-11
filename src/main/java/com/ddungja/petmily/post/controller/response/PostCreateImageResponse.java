@@ -12,7 +12,7 @@ public class PostCreateImageResponse {
     private final ImageType imageType;
 
     @Builder
-    private PostCreateImageResponse(String url, ImageType imageType) {
+    public PostCreateImageResponse(String url, ImageType imageType) {
         this.url = url;
         this.imageType = imageType;
     }

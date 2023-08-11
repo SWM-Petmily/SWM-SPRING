@@ -9,8 +9,8 @@ public class RegistrationCreateRequest {
     private final String dogRegistrationNumber;
 
     @Builder
-    private RegistrationCreateRequest(String owner_nm, String dog_reg_no) {
-        this.ownerName = owner_nm;
-        this.dogRegistrationNumber = dog_reg_no;
+    public RegistrationCreateRequest(String ownerName, String dogRegistrationNumber) {
+        this.ownerName = ownerName;
+        this.dogRegistrationNumber = dogRegistrationNumber;
     }
 }

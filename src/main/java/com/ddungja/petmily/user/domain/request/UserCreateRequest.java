@@ -12,7 +12,7 @@ public class UserCreateRequest {
     private  String nickname;
 
     @Builder
-    private UserCreateRequest(String nickname) {
+    public UserCreateRequest(String nickname) {
         this.nickname = nickname;
     }
 }

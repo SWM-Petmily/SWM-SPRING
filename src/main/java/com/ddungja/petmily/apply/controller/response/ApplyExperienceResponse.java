@@ -11,7 +11,7 @@ public class ApplyExperienceResponse {
     private final int period;
 
     @Builder
-    private ApplyExperienceResponse(String species, int period) {
+    public ApplyExperienceResponse(String species, int period) {
         this.species = species;
         this.period = period;
     }

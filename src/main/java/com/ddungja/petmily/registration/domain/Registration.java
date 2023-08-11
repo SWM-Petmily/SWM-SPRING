@@ -53,7 +53,6 @@ public class Registration extends BaseTimeEntity {
         this.petNeutered = petNeutered;
     }
 
-
     public static Registration from(RegistrationApiResponse.RegistrationApiItem registrationApiResult, User user, SubCategory petSubcategory){
         return Registration.builder()
                 .user(user)

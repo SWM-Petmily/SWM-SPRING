@@ -17,7 +17,7 @@ public class MyRegistrationResponse {
 
 
     @Builder
-    private MyRegistrationResponse(Long id, String petName, String mainCategory, String petType, GenderType petGender, NeuteredType petNeutered) {
+    public MyRegistrationResponse(Long id, String petName, String mainCategory, String petType, GenderType petGender, NeuteredType petNeutered) {
         this.id = id;
         this.petName = petName;
         this.mainCategory = mainCategory;

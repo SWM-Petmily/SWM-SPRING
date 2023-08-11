@@ -10,7 +10,7 @@ public class ProfileExperienceResponse {
     private final String species;
     private final int period;
     @Builder
-    private ProfileExperienceResponse(String species, int period) {
+    public ProfileExperienceResponse(String species, int period) {
         this.species = species;
         this.period = period;
     }

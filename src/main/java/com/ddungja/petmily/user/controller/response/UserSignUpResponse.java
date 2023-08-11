@@ -9,7 +9,7 @@ public class UserSignUpResponse {
 
     private final Long userId;
     @Builder
-    private UserSignUpResponse(Long userId) {
+    public UserSignUpResponse(Long userId) {
         this.userId = userId;
     }
 

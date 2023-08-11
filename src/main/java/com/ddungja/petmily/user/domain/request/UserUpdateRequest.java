@@ -8,7 +8,7 @@ public class UserUpdateRequest {
     private final String nickname;
     private final Long profileImageId;
     @Builder
-    private UserUpdateRequest(String nickname, Long profileImageId) {
+    public UserUpdateRequest(String nickname, Long profileImageId) {
         this.nickname = nickname;
         this.profileImageId = profileImageId;
     }

@@ -25,10 +25,8 @@ public class ApplyExperience extends BaseTimeEntity {
     @JoinColumn(name = "apply_id")
     @ManyToOne(fetch = FetchType.LAZY)
     private Apply apply;
-
-
     @Builder
-    private ApplyExperience(Long id, String species, int period, Apply apply) {
+    public ApplyExperience(Long id, String species, int period, Apply apply) {
         this.id = id;
         this.species = species;
         this.period = period;

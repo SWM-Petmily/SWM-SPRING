@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 
 @Getter
+@Builder
 public class ApplySupportResponse {
     private final Long applyId;
     private final ApprovalType approval;
@@ -17,7 +18,7 @@ public class ApplySupportResponse {
     private final String nickname;
     private final Boolean isExperience;
     @Builder
-    private ApplySupportResponse(Long applyId, ApprovalType approval, String job, String environment, int people, String comment, String region, String nickname, Boolean isExperience) {
+    public ApplySupportResponse(Long applyId, ApprovalType approval, String job, String environment, int people, String comment, String region, String nickname, Boolean isExperience) {
         this.applyId = applyId;
         this.approval = approval;
         this.job = job;
@@ -29,7 +30,7 @@ public class ApplySupportResponse {
         this.isExperience = isExperience;
     }
 
-    @Builder
+
     public static ApplySupportResponse from(Apply apply) {
         return ApplySupportResponse.builder()
                 .applyId(apply.getId())

@@ -11,7 +11,7 @@ public class KaKaoLoginRequest {
     private final String tokenType;
 
     @Builder
-    private KaKaoLoginRequest(String accessToken, String tokenType) {
+    public KaKaoLoginRequest(String accessToken, String tokenType) {
         this.accessToken = accessToken;
         this.tokenType = tokenType;
     }

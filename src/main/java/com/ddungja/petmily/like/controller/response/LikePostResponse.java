@@ -26,7 +26,7 @@ public class LikePostResponse {
     private final PostStatusType postStatus;
 
     @Builder
-    private LikePostResponse(Long id, String name, String image, String subCategory, String region, GenderType gender, String birth, int like, Boolean isMine, LocalDateTime createdDate, PostStatusType postStatus) {
+    public LikePostResponse(Long id, String name, String image, String subCategory, String region, GenderType gender, String birth, int like, Boolean isMine, LocalDateTime createdDate, PostStatusType postStatus) {
         this.id = id;
         this.name = name;
         this.thumbnailImage = image;

@@ -19,7 +19,7 @@ public class ApplyCreateRequest {
     private final List<ApplyExperienceCreateRequest> experiences;
 
     @Builder
-    private ApplyCreateRequest(Long profileImageId, String job, String environment, int people, String comment, String openTalk, String region, Boolean isExperience, String url, List<ApplyExperienceCreateRequest> experiences) {
+    public ApplyCreateRequest(Long profileImageId, String job, String environment, int people, String comment, String openTalk, String region, Boolean isExperience, String url, List<ApplyExperienceCreateRequest> experiences) {
         this.profileImageId = profileImageId;
         this.job = job;
         this.environment = environment;

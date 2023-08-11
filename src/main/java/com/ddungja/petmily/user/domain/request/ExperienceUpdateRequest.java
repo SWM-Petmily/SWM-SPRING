@@ -9,7 +9,7 @@ public class ExperienceUpdateRequest {
     private final int period;
 
     @Builder
-    private ExperienceUpdateRequest( String species, int period) {
+    public ExperienceUpdateRequest( String species, int period) {
         this.species = species;
         this.period = period;
     }

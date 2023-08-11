@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 public class ImageResponse {
     private  String url;
     @Builder
-    private ImageResponse(String url) {
+    public ImageResponse(String url) {
         this.url = url;
     }
     public static ImageResponse from(Image image) {

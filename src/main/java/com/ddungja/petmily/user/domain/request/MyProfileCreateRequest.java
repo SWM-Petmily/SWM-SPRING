@@ -18,7 +18,7 @@ public class MyProfileCreateRequest {
     private final Boolean isExperience;
     private final List<ExperienceCreateRequest> experiences;
     @Builder
-    private MyProfileCreateRequest(Long profileImageId, String job, String environment, int people, String comment, String openTalk, String region, Boolean isExperience, List<ExperienceCreateRequest> experiences) {
+    public MyProfileCreateRequest(Long profileImageId, String job, String environment, int people, String comment, String openTalk, String region, Boolean isExperience, List<ExperienceCreateRequest> experiences) {
         this.profileImageId = profileImageId;
         this.job = job;
         this.environment = environment;

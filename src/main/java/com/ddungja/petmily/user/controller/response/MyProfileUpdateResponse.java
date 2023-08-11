@@ -9,7 +9,7 @@ import lombok.Getter;
 public class MyProfileUpdateResponse {
     private final Long profileId;
     @Builder
-    private MyProfileUpdateResponse(Long profileId) {
+    public MyProfileUpdateResponse(Long profileId) {
         this.profileId = profileId;
     }
     public static MyProfileUpdateResponse from(Profile profile) {

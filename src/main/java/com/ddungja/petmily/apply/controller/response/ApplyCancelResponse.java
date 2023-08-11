@@ -10,7 +10,7 @@ public class ApplyCancelResponse {
     private final Long applyId;
 
     @Builder
-    private ApplyCancelResponse(Long applyId) {
+    public ApplyCancelResponse(Long applyId) {
         this.applyId = applyId;
     }
 

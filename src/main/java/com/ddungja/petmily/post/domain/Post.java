@@ -90,7 +90,7 @@ public class Post extends BaseTimeEntity {
     private int reports;
 
     @Builder
-    private Post(Long id, User user, MainCategory mainCategory, SubCategory subCategory, String thumbnailImage, List<Like> like, List<Image> images, GenderType gender, String birth, int age, String name, String region, NeuteredType neutered, int money, String reason, String advantage, String disadvantage, String averageCost, String adopter, PostStatusType status, CertifiedType isRegistered, CertifiedType isVaccinated, CertifiedType isMedicalChecked, int views, int reports) {
+    public Post(Long id, User user, MainCategory mainCategory, SubCategory subCategory, String thumbnailImage, List<Like> like, List<Image> images, GenderType gender, String birth, int age, String name, String region, NeuteredType neutered, int money, String reason, String advantage, String disadvantage, String averageCost, String adopter, PostStatusType status, CertifiedType isRegistered, CertifiedType isVaccinated, CertifiedType isMedicalChecked, int views, int reports) {
         this.id = id;
         this.user = user;
         this.mainCategory = mainCategory;

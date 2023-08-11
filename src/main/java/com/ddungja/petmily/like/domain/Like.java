@@ -31,7 +31,7 @@ public class Like extends BaseTimeEntity {
 
 
     @Builder
-    private Like(Long id, User user, Post post, LocalDateTime createDate, LocalDateTime updateDate) {
+    public Like(Long id, User user, Post post, LocalDateTime createDate, LocalDateTime updateDate) {
         this.id = id;
         this.user = user;
         this.post = post;
