@@ -7,7 +7,7 @@ import java.util.Optional;
 public interface CertificationRepository {
     Certification save(Certification certification);
 
-    Optional<Certification> findFirstByUserIdOrderByIdDesc(Long userId);
+    Optional<Certification> findFirstByUserIdOrderByIdDesc(long userId);
 
     void deleteAll();
 }

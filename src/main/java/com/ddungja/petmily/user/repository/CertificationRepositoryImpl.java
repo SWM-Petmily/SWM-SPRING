@@ -19,7 +19,7 @@ public class CertificationRepositoryImpl implements CertificationRepository {
     }
 
     @Override
-    public Optional<Certification> findFirstByUserIdOrderByIdDesc(Long userId) {
+    public Optional<Certification> findFirstByUserIdOrderByIdDesc(long userId) {
         return certificationJpaRepository.findFirstByUserIdOrderByIdDesc(userId);
     }
 
