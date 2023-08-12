@@ -103,7 +103,7 @@ public class UserController {
     @PutMapping
     public ResponseEntity<?> modify(@AuthenticationPrincipal User user, @RequestBody UserUpdateRequest userUpdateRequest) {
         log.info("프로필 사진, 닉네임 수정 user = {}", user.getId());
-        userService.modifyNickname(user.getId(), userUpdateRequest);
+        userService.modify(user.getId(), userUpdateRequest);
         return ResponseEntity.noContent().build();
     }
 

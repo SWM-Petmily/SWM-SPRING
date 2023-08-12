@@ -60,7 +60,7 @@ public class UserService {
     }
 
     @Transactional
-    public void modifyNickname(Long userId, UserUpdateRequest userUpdateRequest) {
+    public void modify(Long userId, UserUpdateRequest userUpdateRequest) {
         User user = userRepository.findById(userId).orElseThrow(() -> new CustomException(USER_NOT_FOUND));
         ProfileImage profileImage = profileImageRepository.findById(userUpdateRequest.getProfileImageId()).orElseThrow(() -> new CustomException(PROFILE_IMAGE_NOT_FOUND));
         user.update(userUpdateRequest.getNickname(), profileImage);

@@ -5,6 +5,7 @@ import com.ddungja.petmily.user.domain.certification.Certification;
 import com.ddungja.petmily.user.domain.kakao.KakaoProfile;
 import com.ddungja.petmily.user.domain.profile.ProfileImage;
 import com.ddungja.petmily.user.domain.request.UserCreateRequest;
+import com.ddungja.petmily.user.domain.request.UserUpdateRequest;
 import com.ddungja.petmily.user.domain.user.ProviderType;
 import com.ddungja.petmily.user.domain.user.User;
 import org.junit.jupiter.api.DisplayName;
@@ -61,8 +62,8 @@ class UserServiceTest {
                 .build();
 
         //when
-        testContainer.userService.signUp(1L, userCreateRequest);
-        User sut = testContainer.userRepository.findById(1L).get();
+        testContainer.userService.signUp(user.getId(), userCreateRequest);
+        User sut = testContainer.userRepository.findById(user.getId()).get();
 
         //then
         assertThat(sut.isCertification()).isTrue();
@@ -71,8 +72,42 @@ class UserServiceTest {
         assertThat(sut.getPhone()).isEqualTo("010-1234-5678");
     }
 
+    @DisplayName("유저는 프로필과 닉네임을 변경할 수 있다.")
     @Test
-    void modifyNickname() {
+    void modify() {
+        //given
+        TestContainer testContainer = TestContainer.builder().build();
+        ProfileImage profileImage1 = testContainer.profileImageRepository.save(ProfileImage.builder()
+                .url("https://test.com")
+                .build());
+
+        ProfileImage profileImage2 = testContainer.profileImageRepository.save(ProfileImage.builder()
+                .url("https://test.com")
+                .build());
+
+        ProfileImage profileImage3 = testContainer.profileImageRepository.save(ProfileImage.builder()
+                .url("https://test.com")
+                .build());
+
+
+        User user = testContainer.userRepository.save(User.builder()
+                .nickname("닉네임")
+                .profileImage(profileImage1)
+                .build());
+        UserUpdateRequest userUpdateRequest = UserUpdateRequest.builder()
+                .nickname("수정된 닉네임")
+                .profileImageId(profileImage2.getId())
+                .build();
+
+        //when
+        testContainer.userService.modify(user.getId(), userUpdateRequest);
+        User sut = testContainer.userRepository.findById(user.getId()).get();
+
+        //then
+        assertThat(sut.getNickname()).isEqualTo("수정된 닉네임");
+        assertThat(sut.getProfileImage()).isEqualTo(profileImage2);
+
+
     }
 
     @Test
