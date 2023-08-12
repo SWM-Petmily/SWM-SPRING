@@ -9,9 +9,9 @@ import com.ddungja.petmily.user.domain.user.User;
 import com.ddungja.petmily.user.domain.request.MyProfileCreateRequest;
 import com.ddungja.petmily.user.domain.request.ProfileUpdateRequest;
 import com.ddungja.petmily.user.repository.ExperienceRepository;
-import com.ddungja.petmily.user.repository.ProfileImageRepository;
+import com.ddungja.petmily.user.repository.ProfileImageJpaRepository;
 import com.ddungja.petmily.user.repository.ProfileRepository;
-import com.ddungja.petmily.user.repository.UserRepository;
+import com.ddungja.petmily.user.repository.UserJpaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,9 +23,9 @@ import static com.ddungja.petmily.common.exception.ExceptionCode.*;
 public class ProfileService {
 
     private final ProfileRepository profileRepository;
-    private final UserRepository userRepository;
+    private final UserJpaRepository userRepository;
     private final ExperienceRepository experienceRepository;
-    private final ProfileImageRepository profileImageRepository;
+    private final ProfileImageJpaRepository profileImageRepository;
 
     @Transactional(readOnly = true)
     public Profile get(Long userId) {

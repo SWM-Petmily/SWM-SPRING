@@ -11,9 +11,10 @@ import com.ddungja.petmily.user.domain.request.UserCreateRequest;
 import com.ddungja.petmily.user.domain.request.UserUpdateRequest;
 import com.ddungja.petmily.user.domain.user.ProviderType;
 import com.ddungja.petmily.user.domain.user.User;
-import com.ddungja.petmily.user.repository.CertificationRepository;
-import com.ddungja.petmily.user.repository.ProfileImageRepository;
-import com.ddungja.petmily.user.repository.UserRepository;
+import com.ddungja.petmily.user.service.port.CertificationRepository;
+import com.ddungja.petmily.user.service.port.ProfileImageRepository;
+import com.ddungja.petmily.user.service.port.UserRepository;
+import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,7 @@ import static com.ddungja.petmily.common.exception.ExceptionCode.PROFILE_IMAGE_N
 import static com.ddungja.petmily.common.exception.ExceptionCode.USER_NOT_FOUND;
 
 @Service
+@Builder
 @RequiredArgsConstructor
 @Slf4j
 @Transactional(readOnly = true)
