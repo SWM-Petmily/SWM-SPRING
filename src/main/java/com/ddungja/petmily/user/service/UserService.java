@@ -38,12 +38,10 @@ public class UserService {
     @Transactional
     public User kakagoLogin(KakaoProfile kakaoProfile) {
         log.info("카카오 로그인 kakaoProfile = {}", kakaoProfile);
-        ProfileImage profileImage = profileImageRepository.findById(1L).orElseThrow(() -> new CustomException(PROFILE_IMAGE_NOT_FOUND));
         return userRepository.findByEmail(kakaoProfile.getEmail()).orElseGet(() -> userRepository.save(User.builder()
                 .email(kakaoProfile.getEmail())
                 .provider(ProviderType.KAKAO)
                 .isProfile(false)
-                .profileImage(profileImage)
                 .isCertification(false)
                 .build()));
     }
@@ -54,10 +52,11 @@ public class UserService {
 
     @Transactional
     public void signUp(Long userId, UserCreateRequest userCreateRequest) {
+        ProfileImage profileImage = profileImageRepository.findById(1L).orElseThrow(() -> new CustomException(PROFILE_IMAGE_NOT_FOUND));
         User user = userRepository.findById(userId).orElseThrow(() -> new CustomException(USER_NOT_FOUND));
         Certification certification = certificationRepository.findFirstByUserIdOrderByIdDesc(user.getId()).orElseThrow(() -> new CustomException(ExceptionCode.CERTIFICATION_NOT_FOUND));
         certification.signUpVerify();
-        user.signUp(userCreateRequest, certification);
+        user.signUp(userCreateRequest, certification, profileImage);
     }
 
     @Transactional
@@ -71,11 +70,9 @@ public class UserService {
     public User appleLogin(AppleLoginRequest appleLoginRequest) {
         log.info("애플로그인 = {} ", appleLoginRequest.getIdToken());
         String email = appleOAuthUserProvider.getApplePlatformMember(appleLoginRequest.getIdToken());
-        ProfileImage profileImage = profileImageRepository.findById(1L).orElseThrow(() -> new CustomException(PROFILE_IMAGE_NOT_FOUND));
         return userRepository.findByEmail(email).orElseGet(() -> userRepository.save(User.builder()
                 .email(email)
                 .provider(ProviderType.APPLE)
-                .profileImage(profileImage)
                 .isProfile(false)
                 .isCertification(false)
                 .build()));

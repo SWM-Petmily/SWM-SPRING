@@ -14,48 +14,35 @@ class UserTest {
     @Test
     void signUp() {
         //given
-//        ProfileImage profileImage = ProfileImage.builder()
-//                .url("https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcREj22c-wMNL5IDmU99v8G7voUl17Yxm0JJqMLqttdPT4DnaB99zqVK7HWiNzjP3aZnzCEf-ikAqb2yiDk")
-//                .build();
-
         User user = User.builder()
-//                .email("test@naver.com")
-//                .isCertification(false)
-//                .isProfile(false)
-//                .provider(ProviderType.KAKAO)
-//                .profileImage(profileImage)
                 .build();
 
         Certification certification = Certification.builder()
                 .phoneNumber("010-1234-5678")
-//                .expiredAt(new TestClockHolder(3).expireAt())
-//                .isCertification(true)
-//                .certificationNumber("123456")
                 .build();
 
         UserCreateRequest userCreateRequest = UserCreateRequest.builder()
                 .nickname("닉네임")
                 .build();
-//
-//        TestContainer testContainer = TestContainer.builder().build();
-//        testContainer.profileImageRepository.save(profileImage);
-//        testContainer.userRepository.save(user);
-//        testContainer.certificationRepository.save(certification);
 
+        ProfileImage profileImage = ProfileImage
+                .builder()
+                .build();
 
         //when
-        user.signUp(userCreateRequest, certification);
+        user.signUp(userCreateRequest, certification, profileImage);
 
         //then
-
         assertThat(user.isCertification()).isTrue();
         assertThat(user.getPhone()).isEqualTo("010-1234-5678");
         assertThat(user.getNickname()).isEqualTo("닉네임");
+        assertThat(user.getProfileImage()).isNotNull();
+
     }
 
     @DisplayName("유저는 nickname과 profileImage를 수정할 수 있다.")
     @Test
-    void update(){
+    void update() {
         //given
         ProfileImage profileImage = ProfileImage.builder()
                 .url("https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcREj22c-wMNL5IDmU99v8G7voUl17Yxm0JJqMLqttdPT4DnaB99zqVK7HWiNzjP3aZnzCEf-ikAqb2yiDk")
@@ -78,5 +65,21 @@ class UserTest {
         //then
         assertThat(user.getNickname()).isEqualTo(nickname);
         assertThat(user.getProfileImage()).isEqualTo(profileImageUpdate);
+    }
+
+
+    @DisplayName("유저는 프로필을 생성할 수 있다.")
+    @Test
+    void createProfile() {
+        //given
+        User user = User.builder()
+                .isProfile(false)
+                .build();
+
+        //when
+        user.createProfile();
+
+        //then
+        assertThat(user.isProfile()).isTrue();
     }
 }

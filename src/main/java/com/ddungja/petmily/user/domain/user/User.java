@@ -49,16 +49,17 @@ public class User extends BaseTimeEntity {
         this.isProfile = true;
     }
 
-    public void signUp(UserCreateRequest userCreateRequest, Certification certification) {
+    public void signUp(UserCreateRequest userCreateRequest, Certification certification, ProfileImage profileImage) {
         this.nickname = userCreateRequest.getNickname();
+        this.profileImage = profileImage;
         this.phone = certification.getPhoneNumber();
         this.isCertification = true;
+
     }
 
     public void update(String nickname, ProfileImage profileImage) {
         this.nickname = nickname;
         this.profileImage = profileImage;
-
     }
 
     public void reset() {
@@ -66,9 +67,5 @@ public class User extends BaseTimeEntity {
         this.isProfile = false;
         this.nickname = null;
         this.phone = null;
-    }
-
-    public void updateProfileImage(ProfileImage profileImage) {
-        this.profileImage = profileImage;
     }
 }
