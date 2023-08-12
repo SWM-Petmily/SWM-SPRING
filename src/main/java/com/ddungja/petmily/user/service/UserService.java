@@ -11,9 +11,10 @@ import com.ddungja.petmily.user.domain.request.UserCreateRequest;
 import com.ddungja.petmily.user.domain.request.UserUpdateRequest;
 import com.ddungja.petmily.user.domain.user.ProviderType;
 import com.ddungja.petmily.user.domain.user.User;
-import com.ddungja.petmily.user.repository.CertificationRepository;
-import com.ddungja.petmily.user.repository.ProfileImageRepository;
-import com.ddungja.petmily.user.repository.UserRepository;
+import com.ddungja.petmily.user.service.port.CertificationRepository;
+import com.ddungja.petmily.user.service.port.ProfileImageRepository;
+import com.ddungja.petmily.user.service.port.UserRepository;
+import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,7 @@ import static com.ddungja.petmily.common.exception.ExceptionCode.PROFILE_IMAGE_N
 import static com.ddungja.petmily.common.exception.ExceptionCode.USER_NOT_FOUND;
 
 @Service
+@Builder
 @RequiredArgsConstructor
 @Slf4j
 @Transactional(readOnly = true)
@@ -36,12 +38,10 @@ public class UserService {
     @Transactional
     public User kakagoLogin(KakaoProfile kakaoProfile) {
         log.info("카카오 로그인 kakaoProfile = {}", kakaoProfile);
-        ProfileImage profileImage = profileImageRepository.findById(1L).orElseThrow(() -> new CustomException(PROFILE_IMAGE_NOT_FOUND));
         return userRepository.findByEmail(kakaoProfile.getEmail()).orElseGet(() -> userRepository.save(User.builder()
                 .email(kakaoProfile.getEmail())
                 .provider(ProviderType.KAKAO)
                 .isProfile(false)
-                .profileImage(profileImage)
                 .isCertification(false)
                 .build()));
     }
@@ -52,14 +52,15 @@ public class UserService {
 
     @Transactional
     public void signUp(Long userId, UserCreateRequest userCreateRequest) {
+        ProfileImage profileImage = profileImageRepository.findById(1L).orElseThrow(() -> new CustomException(PROFILE_IMAGE_NOT_FOUND));
         User user = userRepository.findById(userId).orElseThrow(() -> new CustomException(USER_NOT_FOUND));
         Certification certification = certificationRepository.findFirstByUserIdOrderByIdDesc(user.getId()).orElseThrow(() -> new CustomException(ExceptionCode.CERTIFICATION_NOT_FOUND));
         certification.signUpVerify();
-        user.signUp(userCreateRequest, certification);
+        user.signUp(userCreateRequest, certification, profileImage);
     }
 
     @Transactional
-    public void modifyNickname(Long userId, UserUpdateRequest userUpdateRequest) {
+    public void modify(Long userId, UserUpdateRequest userUpdateRequest) {
         User user = userRepository.findById(userId).orElseThrow(() -> new CustomException(USER_NOT_FOUND));
         ProfileImage profileImage = profileImageRepository.findById(userUpdateRequest.getProfileImageId()).orElseThrow(() -> new CustomException(PROFILE_IMAGE_NOT_FOUND));
         user.update(userUpdateRequest.getNickname(), profileImage);
@@ -69,11 +70,9 @@ public class UserService {
     public User appleLogin(AppleLoginRequest appleLoginRequest) {
         log.info("애플로그인 = {} ", appleLoginRequest.getIdToken());
         String email = appleOAuthUserProvider.getApplePlatformMember(appleLoginRequest.getIdToken());
-        ProfileImage profileImage = profileImageRepository.findById(1L).orElseThrow(() -> new CustomException(PROFILE_IMAGE_NOT_FOUND));
         return userRepository.findByEmail(email).orElseGet(() -> userRepository.save(User.builder()
                 .email(email)
                 .provider(ProviderType.APPLE)
-                .profileImage(profileImage)
                 .isProfile(false)
                 .isCertification(false)
                 .build()));

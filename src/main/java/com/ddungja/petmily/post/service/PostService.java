@@ -15,7 +15,7 @@ import com.ddungja.petmily.post.repository.MainCategoryRepository;
 import com.ddungja.petmily.post.repository.PostRepository;
 import com.ddungja.petmily.post.repository.SubCategoryRepository;
 import com.ddungja.petmily.user.domain.user.User;
-import com.ddungja.petmily.user.repository.UserRepository;
+import com.ddungja.petmily.user.service.port.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

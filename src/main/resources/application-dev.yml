@@ -23,12 +23,12 @@ spring:
   h2:
     console:
       enabled: true
-#
-#  datasource:
-#    url: jdbc:mysql://localhost:3306/spring?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
-#    username: root
-#    password: 1234
-#    driver-class-name: com.mysql.cj.jdbc.Driver
+  #
+  #  datasource:
+  #    url: jdbc:mysql://localhost:3306/spring?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+  #    username: root
+  #    password: 1234
+  #    driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
     hibernate:
@@ -49,6 +49,17 @@ spring:
         default-page-size: 20
         max-page-size: 2000
         one-indexed-parameters: on # paging 1부터 시작하기
+
+  #openfeign 설정
+  cloud:
+    openfeign:
+      client:
+        config:
+          default:
+            connect-timeout: 5000
+            read-timeout: 5000
+            logger-level: basic
+
 
 logging.level:
   com.ddungja.petmily: debug
@@ -91,7 +102,7 @@ api:
 cloud:
   aws:
     region:
-        static: ap-northeast-2  # AWS 기본 리전을 설정
+      static: ap-northeast-2  # AWS 기본 리전을 설정
     stack:
       auto: false # Spring Cloud를 실행하면, 서버 구성을 자동화하는 CloudFormation이 실행되는데 이를 사용하지 않으므로 false로 설정
 
@@ -105,3 +116,5 @@ oauth:
     iss: https://appleid.apple.com
     client-id: org.soma.Ddungja
     nonce:
+
+

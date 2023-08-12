@@ -1,14 +1,17 @@
 package com.ddungja.petmily.user.domain.kakao;
 
+import lombok.Builder;
 import lombok.Data;
 
 @Data
+@Builder
 public class KakaoProfile {
     public long id;
     public String connected_at;
     public Properties properties;
     public KakaoAccount kakao_account;
     @Data
+    @Builder
     public static class KakaoAccount {
         public boolean profile_nickname_needs_agreement;
         public Profile profile;
@@ -29,10 +32,12 @@ public class KakaoProfile {
         public String gender;
     }
     @Data
+    @Builder
     public static class Profile {
         public String nickname;
     }
     @Data
+    @Builder
     public static class Properties {
         public String nickname;
     }
@@ -46,6 +51,7 @@ public class KakaoProfile {
     public String getGender() {
         return kakao_account.getGender();
     }
+
 
 }
 
