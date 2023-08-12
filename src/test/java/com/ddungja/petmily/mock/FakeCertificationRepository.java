@@ -22,6 +22,7 @@ public class FakeCertificationRepository implements CertificationRepository {
                     .certificationNumber(certification.getCertificationNumber())
                     .isCertification(certification.isCertification())
                     .expiredAt(certification.getExpiredAt())
+                    .user(certification.getUser())
                     .build());
             return certification;
         }
@@ -31,7 +32,7 @@ public class FakeCertificationRepository implements CertificationRepository {
     }
 
     @Override
-    public Optional<Certification> findFirstByUserIdOrderByIdDesc(Long userId) {
+    public Optional<Certification> findFirstByUserIdOrderByIdDesc(long userId) {
         return data.stream().filter(item -> item.getUser().getId().equals(userId)).findAny();
     }
 

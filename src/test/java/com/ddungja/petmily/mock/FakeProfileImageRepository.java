@@ -28,6 +28,7 @@ public class FakeProfileImageRepository implements ProfileImageRepository {
             return newProfileImage;
         }
         data.removeIf(item -> item.getId().equals(profileImage.getId()));
+        data.add(profileImage);
         return profileImage;
     }
 }
