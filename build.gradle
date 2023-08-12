@@ -38,8 +38,11 @@ dependencies {
     testImplementation 'org.springframework.security:spring-security-test'
 
     //lombok
+    implementation 'org.projectlombok:lombok'
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
+    testCompileOnly 'org.projectlombok:lombok'
+    testAnnotationProcessor 'org.projectlombok:lombok'
 
     //database
     runtimeOnly 'com.h2database:h2'
@@ -57,24 +60,21 @@ dependencies {
     //jwt
     implementation 'com.auth0:java-jwt:4.3.0'
     implementation 'io.jsonwebtoken:jjwt:0.9.1'
-// https://mvnrepository.com/artifact/javax.xml.bind/jaxb-api
     implementation group: 'javax.xml.bind', name: 'jaxb-api', version: '2.3.1'
-
-// https://mvnrepository.com/artifact/com.sun.xml.bind/jaxb-core
     implementation group: 'com.sun.xml.bind', name: 'jaxb-core', version: '2.3.0.1'
-
-// https://mvnrepository.com/artifact/com.sun.xml.bind/jaxb-impl
     implementation group: 'com.sun.xml.bind', name: 'jaxb-impl', version: '2.3.1'
+
     //CoolSMS
     implementation 'net.nurigo:sdk:4.3.0'
 
     //AWS
     implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
 
-
     //Sentry
     implementation 'io.sentry:sentry-spring-boot-starter-jakarta:6.25.2'
     implementation 'io.sentry:sentry-logback:6.25.2'
+
+
 
 
 
