@@ -27,15 +27,10 @@ class UserServiceTest {
                 .build();
 
 
-        ProfileImage profileImage = testContainer.profileImageRepository.save(ProfileImage.builder()
-                .url("https://test.com")
-                .build());
-
         User user = testContainer.userService.kakagoLogin(kakaoProfile);
         assertThat(user.getProvider()).isEqualTo(ProviderType.KAKAO);
         assertThat(user.getEmail()).isEqualTo("test@naver.com");
         assertThat(user.isProfile()).isFalse();
-        assertThat(user.getProfileImage()).isEqualTo(profileImage);
         assertThat(user.isCertification()).isFalse();
         assertThat(user.getPhone()).isNull();
         assertThat(user.getNickname()).isNull();

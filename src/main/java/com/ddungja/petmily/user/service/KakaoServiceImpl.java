@@ -13,6 +13,7 @@ import java.net.URISyntaxException;
 
 @Slf4j
 @Service
+
 public class KakaoServiceImpl implements KakaoService {
 
     private final KakaoApiClient client;
