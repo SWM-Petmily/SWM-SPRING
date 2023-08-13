@@ -1,14 +1,16 @@
 package com.ddungja.petmily.user.service;
 
 import com.ddungja.petmily.common.exception.CustomException;
+import com.ddungja.petmily.common.infra.SystemClockHolder;
 import com.ddungja.petmily.user.domain.certification.Certification;
 import com.ddungja.petmily.user.domain.certification.CertificationAttempt;
-import com.ddungja.petmily.user.domain.user.User;
 import com.ddungja.petmily.user.domain.request.CertificationPhoneNumberRequest;
 import com.ddungja.petmily.user.domain.request.CertificationVerifyRequest;
-import com.ddungja.petmily.user.repository.CertificationAttemptRepository;
-import com.ddungja.petmily.user.repository.CertificationRepository;
-import com.ddungja.petmily.user.repository.UserRepository;
+import com.ddungja.petmily.user.domain.user.User;
+import com.ddungja.petmily.user.service.port.CertificationAttemptRepository;
+import com.ddungja.petmily.user.service.port.CertificationRepository;
+import com.ddungja.petmily.user.service.port.UserRepository;
+import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
 import net.nurigo.sdk.message.model.Message;
 import net.nurigo.sdk.message.request.SingleMessageSendingRequest;
@@ -33,6 +35,7 @@ public class CertificationService {
     private final CertificationRepository certificationRepository;
     private final CertificationAttemptRepository certificationAttemptRepository;
 
+    @Builder
     public CertificationService(Environment environment, UserRepository userRepository, CertificationRepository certificationRepository, CertificationAttemptRepository certificationAttemptRepository) {
         this.messageService = new DefaultMessageService(Objects.requireNonNull(environment.getProperty("coolsms.apiKey")), Objects.requireNonNull(environment.getProperty("coolsms.apiSecretKey")), "https://api.coolsms.co.kr");
         this.userRepository = userRepository;
@@ -58,7 +61,7 @@ public class CertificationService {
         certificationRepository.save(Certification.builder()
                 .phoneNumber(phoneNumber)
                 .user(user)
-                .expiredAt(LocalDateTime.now().plusMinutes(3))
+                .expiredAt(new SystemClockHolder().expireAt())
                 .isCertification(false)
                 .certificationNumber(certificationNumber)
                 .build());

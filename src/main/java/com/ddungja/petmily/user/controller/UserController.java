@@ -4,13 +4,13 @@ import com.ddungja.petmily.apply.service.ApplyService;
 import com.ddungja.petmily.common.exception.CustomException;
 import com.ddungja.petmily.common.jwt.JwtProvider;
 import com.ddungja.petmily.like.service.LikeService;
+import com.ddungja.petmily.user.controller.port.KakaoService;
 import com.ddungja.petmily.user.controller.response.UserLoginResponse;
 import com.ddungja.petmily.user.controller.response.UserMyPageResponse;
 import com.ddungja.petmily.user.domain.kakao.KakaoProfile;
 import com.ddungja.petmily.user.domain.request.*;
 import com.ddungja.petmily.user.domain.user.User;
 import com.ddungja.petmily.user.service.CertificationService;
-import com.ddungja.petmily.user.service.KakaoService;
 import com.ddungja.petmily.user.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -103,7 +103,7 @@ public class UserController {
     @PutMapping
     public ResponseEntity<?> modify(@AuthenticationPrincipal User user, @RequestBody UserUpdateRequest userUpdateRequest) {
         log.info("프로필 사진, 닉네임 수정 user = {}", user.getId());
-        userService.modifyNickname(user.getId(), userUpdateRequest);
+        userService.modify(user.getId(), userUpdateRequest);
         return ResponseEntity.noContent().build();
     }
 
