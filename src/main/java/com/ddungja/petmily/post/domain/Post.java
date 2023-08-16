@@ -90,7 +90,7 @@ public class Post extends BaseTimeEntity {
     private int reports;
 
     @Builder
-    public Post(Long id, User user, MainCategory mainCategory, SubCategory subCategory, String thumbnailImage, List<Like> like, List<Image> images, GenderType gender, String birth, int age, String name, String region, NeuteredType neutered, int money, String reason, String advantage, String disadvantage, String averageCost, String adopter, PostStatusType status, CertifiedType isRegistered, CertifiedType isVaccinated, CertifiedType isMedicalChecked, int views, int reports) {
+    public Post(Long id, User user, MainCategory mainCategory, SubCategory subCategory, String thumbnailImage, List<Like> like, List<Image> images, List<Apply> applys, List<Disease> diseases, GenderType gender, String birth, int age, String name, String region, NeuteredType neutered, int money, String reason, String advantage, String disadvantage, String averageCost, String adopter, PostStatusType status, CertifiedType isRegistered, CertifiedType isVaccinated, CertifiedType isMedicalChecked, int views, int reports) {
         this.id = id;
         this.user = user;
         this.mainCategory = mainCategory;
@@ -98,6 +98,8 @@ public class Post extends BaseTimeEntity {
         this.thumbnailImage = thumbnailImage;
         this.like = like;
         this.images = images;
+        this.applys = applys;
+        this.diseases = diseases;
         this.gender = gender;
         this.birth = birth;
         this.age = age;
@@ -117,7 +119,6 @@ public class Post extends BaseTimeEntity {
         this.views = views;
         this.reports = reports;
     }
-
 
     public static Post from(PostCreateRequest postCreateRequest, User user, MainCategory mainCategory, SubCategory subCategory) {
         int[] date = Arrays.stream(postCreateRequest.getBirth().split("-")).mapToInt(Integer::parseInt).toArray();
