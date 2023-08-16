@@ -4,14 +4,15 @@ import com.ddungja.petmily.user.controller.response.MyProfileCreateResponse;
 import com.ddungja.petmily.user.controller.response.MyProfileUpdateResponse;
 import com.ddungja.petmily.user.controller.response.ProfileResponse;
 import com.ddungja.petmily.user.domain.profile.Profile;
-import com.ddungja.petmily.user.domain.user.User;
 import com.ddungja.petmily.user.domain.request.MyProfileCreateRequest;
 import com.ddungja.petmily.user.domain.request.ProfileUpdateRequest;
+import com.ddungja.petmily.user.domain.user.User;
 import com.ddungja.petmily.user.service.ProfileService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +22,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 
+@Tag(name = "Profile", description = "프로필 API")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/users/profile")

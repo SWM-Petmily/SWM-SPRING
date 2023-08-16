@@ -20,6 +20,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -39,6 +40,7 @@ import java.util.List;
 
 import static com.ddungja.petmily.post.domain.type.ImageType.POST;
 
+@Tag(name = "Post", description = "게시글 API")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/posts")
@@ -88,7 +90,7 @@ public class PostController {
     @PostMapping("/certifyRegistration/{postId}")
     public ResponseEntity<PostCertifiedResponse> certifyRegistration(@AuthenticationPrincipal User user, @Valid @RequestBody RegistrationCreateRequest registrationCreateRequest, @PathVariable Long postId) {
         log.info("반려동물 등록하기 userId = {}, postId = {}", user.getId(), postId);
-        Registration registration = registrationService.register(user.getId(), registrationCreateRequest);
+        registrationService.register(user.getId(), registrationCreateRequest);
         Post post = postService.certifyRegistration(user.getId(), postId);
         return ResponseEntity.status(HttpStatus.CREATED).body(PostCertifiedResponse.from(post));
     }

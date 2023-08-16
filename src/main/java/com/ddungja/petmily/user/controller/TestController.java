@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
 
-@Tag(name = "Test API")
+@Tag(name = "Test", description = "테스트 API")
 @RestController
 @RequiredArgsConstructor
 public class TestController {
