@@ -1,4 +1,4 @@
-package com.ddungja.petmily.mock;
+package com.ddungja.petmily.mock.repository;
 
 import com.ddungja.petmily.user.domain.profile.ProfileImage;
 import com.ddungja.petmily.user.service.port.ProfileImageRepository;

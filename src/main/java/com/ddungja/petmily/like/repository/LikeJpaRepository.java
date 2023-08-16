@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 
-public interface LikeRepository extends JpaRepository<Like, Long>, LikeQueryRepository {
+public interface LikeJpaRepository extends JpaRepository<Like, Long>, LikeQueryRepository {
 
     Optional<Like> findByPostIdAndUserId(Long postId, Long userId);
 
@@ -13,6 +13,4 @@ public interface LikeRepository extends JpaRepository<Like, Long>, LikeQueryRepo
 
     int countByUserId(Long userId);
 
-//    @EntityGraph(attributePaths = {"post", "post.like" ,"post.subCategory"})
-//    Page<Like> findByUserIdAnd(Long userId, PostStatusType postStatusType, Pageable pageable);
 }

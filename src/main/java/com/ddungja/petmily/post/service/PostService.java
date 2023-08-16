@@ -2,7 +2,7 @@ package com.ddungja.petmily.post.service;
 
 import com.ddungja.petmily.apply.domain.Apply;
 import com.ddungja.petmily.apply.domain.ApprovalType;
-import com.ddungja.petmily.apply.repository.ApplyRepository;
+import com.ddungja.petmily.apply.repository.ApplyJpaRepository;
 import com.ddungja.petmily.common.exception.CustomException;
 import com.ddungja.petmily.post.domain.*;
 import com.ddungja.petmily.post.domain.request.DiseaseRequest;
@@ -12,8 +12,8 @@ import com.ddungja.petmily.post.domain.type.ImageType;
 import com.ddungja.petmily.post.domain.type.PostStatusType;
 import com.ddungja.petmily.post.repository.DiseaseRepository;
 import com.ddungja.petmily.post.repository.MainCategoryRepository;
-import com.ddungja.petmily.post.repository.PostRepository;
 import com.ddungja.petmily.post.repository.SubCategoryRepository;
+import com.ddungja.petmily.post.service.port.PostRepository;
 import com.ddungja.petmily.user.domain.user.User;
 import com.ddungja.petmily.user.service.port.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -36,7 +36,7 @@ import static com.ddungja.petmily.post.domain.type.ImageType.*;
 public class PostService {
 
     private final UserRepository userRepository;
-    private final ApplyRepository applyRepository;
+    private final ApplyJpaRepository applyRepository;
     private final PostRepository postRepository;
     private final MainCategoryRepository mainCategoryRepository;
     private final SubCategoryRepository subCategoryRepository;
@@ -89,8 +89,8 @@ public class PostService {
 
     /*포스트 보기*/
    @Transactional
-    public Post get(Long id) {
-        return postRepository.findPostById(id).orElseThrow(() -> new CustomException(POST_NOT_FOUND));
+    public Post get(Long postId) {
+        return postRepository.findPostById(postId).orElseThrow(() -> new CustomException(POST_NOT_FOUND));
     }
 
     public Page<Post> getMyPost(Long userId, PostStatusType postStatusType, Pageable pageable) {

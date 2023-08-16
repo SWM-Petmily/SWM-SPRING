@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 
-public interface PostRepository extends JpaRepository<Post,Long>, PostQueryRepository {
+public interface PostJpaRepository extends JpaRepository<Post,Long>, PostQueryRepository {
     @EntityGraph(attributePaths = {"subCategory" , "mainCategory", "user", "diseases"})
     Optional<Post> findPostById(Long postId);
 
