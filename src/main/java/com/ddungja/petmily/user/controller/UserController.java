@@ -16,6 +16,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +24,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URISyntaxException;
+import java.util.Objects;
 
 import static com.ddungja.petmily.common.exception.ExceptionCode.REFRESH_TOKEN_VALIDATION_FAILED;
 
@@ -30,6 +32,7 @@ import static com.ddungja.petmily.common.exception.ExceptionCode.REFRESH_TOKEN_V
 @RequiredArgsConstructor
 @RequestMapping("/users")
 @Slf4j
+@Builder
 public class UserController {
     private final KakaoService kakaoService;
     private final UserService userService;
@@ -41,7 +44,7 @@ public class UserController {
     @Operation(summary = "카카오 로그인")
     @ApiResponse(responseCode = "200", description = "카카오 로그인 성공", content = @Content(schema = @Schema(implementation = UserLoginResponse.class)))
     @PostMapping("/kakao")
-    public ResponseEntity<?> kakaoLogin(@RequestBody KaKaoLoginRequest kaKaoLoginRequest) throws URISyntaxException {
+    public ResponseEntity<Object> kakaoLogin(@RequestBody KaKaoLoginRequest kaKaoLoginRequest) throws URISyntaxException {
         log.info("카카오 로그인 kaKaoLoginRequest = {}", kaKaoLoginRequest);
         KakaoProfile kakaoProfile = kakaoService.getInfo(kaKaoLoginRequest);
         User user = userService.kakagoLogin(kakaoProfile);
@@ -65,7 +68,7 @@ public class UserController {
     @Operation(summary = "휴대전화 인증번호 발송 20원까임")
     @ApiResponse(responseCode = "204", description = "휴대전화 인증번호 발송 성공")
     @PostMapping("/certification/send")
-    public ResponseEntity<?> sendCertificationNumber(@AuthenticationPrincipal User user, @RequestBody CertificationPhoneNumberRequest certificationPhoneNumberRequest) {
+    public ResponseEntity<Void> sendCertificationNumber(@AuthenticationPrincipal User user, @RequestBody CertificationPhoneNumberRequest certificationPhoneNumberRequest) {
         log.info("휴대전화 인증번호 발송 user = {} phoneNumber = {}", user.getId(), certificationPhoneNumberRequest.getPhoneNumber());
         certificationService.sendCertificationNumber(user.getId(), certificationPhoneNumberRequest.getPhoneNumber());
         return ResponseEntity.noContent().build();
@@ -74,7 +77,7 @@ public class UserController {
     @Operation(summary = "휴대전화 인증번호 발송 테스트용 인증번호[123456] 고정")
     @ApiResponse(responseCode = "204", description = "휴대전화 인증번호 발송 성공")
     @PostMapping("/certification/send/test")
-    public ResponseEntity<?> sendCertificationNumberTest(@AuthenticationPrincipal User user, @RequestBody CertificationPhoneNumberRequest certificationPhoneNumberRequest) {
+    public ResponseEntity<Objects> sendCertificationNumberTest(@AuthenticationPrincipal User user, @RequestBody CertificationPhoneNumberRequest certificationPhoneNumberRequest) {
         log.info("휴대전화 인증번호 발송 테스트용 인증번호[123456] 고정 user = {} phoneNumber = {}", user.getId(), certificationPhoneNumberRequest.getPhoneNumber());
         certificationService.sendCertificationNumberTest(user.getId(), certificationPhoneNumberRequest);
         return ResponseEntity.noContent().build();

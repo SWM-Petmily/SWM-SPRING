@@ -112,9 +112,17 @@ class UserServiceTest {
 
     @Test
     void appleLogin() {
+        //given
+        //when
+        //then
     }
 
     @Test
-    void reset() {
+     void getMyPage(){
+        //given
+        //when
+        //then
     }
+
+
 }
