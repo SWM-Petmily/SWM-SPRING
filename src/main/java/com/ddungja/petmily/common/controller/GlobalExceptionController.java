@@ -4,6 +4,7 @@ package com.ddungja.petmily.common.controller;
 import com.amazonaws.AmazonServiceException;
 import com.ddungja.petmily.common.exception.CustomException;
 import com.ddungja.petmily.common.controller.response.FieldErrorResponse;
+import com.ddungja.petmily.common.exception.ExceptionCode;
 import io.sentry.Sentry;
 import io.sentry.spring.jakarta.tracing.SentrySpan;
 import lombok.extern.slf4j.Slf4j;
@@ -17,6 +18,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.multipart.support.MissingServletRequestPartException;
 
+import java.util.Map;
+
 import static com.ddungja.petmily.common.exception.ExceptionCode.REFRESH_TOKEN_NOT_FOUND;
 
 @RestControllerAdvice
@@ -25,19 +28,21 @@ public class GlobalExceptionController {
 
     @SentrySpan
     @ExceptionHandler(CustomException.class)
-    public ResponseEntity<?> exceptionHandler(CustomException exception) {
+    public ResponseEntity<ExceptionCode> exceptionHandler(CustomException exception) {
         Sentry.captureException(exception);
         log.warn("CustomException = {}", exception);
         return ResponseEntity.status(exception.getExceptionCode().getStatus()).body(exception.getExceptionCode());
     }
+
     @ExceptionHandler(NurigoUnknownException.class)
-    public ResponseEntity<?> exceptionHandler(NurigoUnknownException exception) {
+    public ResponseEntity<String> exceptionHandler(NurigoUnknownException exception) {
         Sentry.captureException(exception);
         log.error("NurigoUnknownException = {}", exception);
         return ResponseEntity.badRequest().body(exception.getMessage());
     }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<?> validation(MethodArgumentNotValidException exception) {
+    public ResponseEntity<Map<String, String>> validation(MethodArgumentNotValidException exception) {
         Sentry.captureException(exception);
         log.warn("MethodArgumentNotValidException = {}", exception);
         FieldErrorResponse fieldValidation = new FieldErrorResponse(exception);
@@ -45,28 +50,28 @@ public class GlobalExceptionController {
     }
 
     @ExceptionHandler(MissingRequestCookieException.class)
-    public ResponseEntity<?> cookieException(MissingRequestCookieException exception) {
+    public ResponseEntity<ExceptionCode> cookieException(MissingRequestCookieException exception) {
         Sentry.captureException(exception);
         log.error("MissingRequestCookieException = {}", exception);
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(REFRESH_TOKEN_NOT_FOUND);
     }
 
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
-    public ResponseEntity<?> methodArgumentTypeMismatchException(MethodArgumentTypeMismatchException exception) {
+    public ResponseEntity<String> methodArgumentTypeMismatchException(MethodArgumentTypeMismatchException exception) {
         Sentry.captureException(exception);
         log.error("MethodArgumentTypeMismatchException = {}", exception);
         return ResponseEntity.badRequest().body("MethodArgumentTypeMismatchException");
     }
 
     @ExceptionHandler(MissingServletRequestPartException.class)
-    public ResponseEntity<?> missingServletRequestPartException(MissingServletRequestPartException exception) {
+    public ResponseEntity<String> missingServletRequestPartException(MissingServletRequestPartException exception) {
         Sentry.captureException(exception);
         log.error("MissingServletRequestPartException = {}", exception);
         return ResponseEntity.badRequest().body("MissingServletRequestPartException");
     }
 
     @ExceptionHandler(AmazonServiceException.class)
-    public ResponseEntity<?> amazonServiceException(AmazonServiceException exception) {
+    public ResponseEntity<String> amazonServiceException(AmazonServiceException exception) {
         Sentry.captureException(exception);
         log.error("AmazonServiceException = {}", exception);
         return ResponseEntity.badRequest().body("AmazonServiceException");
