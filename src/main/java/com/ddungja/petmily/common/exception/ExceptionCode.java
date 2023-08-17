@@ -43,6 +43,8 @@ public enum ExceptionCode {
     POST_STATUS_IS_COMPLETE(5003, HttpStatus.BAD_REQUEST, "이미 완료된 게시글입니다.", "제목", "메시지", "exclamationmark.circle", "#fa0515"),
     POST_STATUS_IS_DELETE(5004, HttpStatus.BAD_REQUEST, "이미 삭제된 게시글입니다.", "제목", "메시지", "exclamationmark.circle", "#fa0515"),
 
+    //report
+    ALREADY_REPORT(5001, HttpStatus.BAD_REQUEST, "이미 신고한 게시글입니다.", "제목", "메시지", "exclamationmark.circle", "#fa0515"),
     //apply
     APPLY_NOT_FOUND(6001, HttpStatus.NOT_FOUND, "지원서를 찾을 수 없습니다.", "제목", "메시지", "exclamationmark.circle", "#fa0515"),
     APPLY_ALREADY_EXISTS(6002, HttpStatus.BAD_REQUEST, "이미 지원서를 작성했습니다.", "제목", "메시지", "exclamationmark.circle", "#fa0515"),
