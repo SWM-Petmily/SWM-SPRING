@@ -87,4 +87,4 @@ public enum ExceptionCode {
         this.icon = icon;
         this.iconColor = iconColor;
     }
-    }
+}

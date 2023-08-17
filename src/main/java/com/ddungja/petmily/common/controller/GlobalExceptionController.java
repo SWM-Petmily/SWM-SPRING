@@ -2,8 +2,8 @@ package com.ddungja.petmily.common.controller;
 
 
 import com.amazonaws.AmazonServiceException;
-import com.ddungja.petmily.common.exception.CustomException;
 import com.ddungja.petmily.common.controller.response.FieldErrorResponse;
+import com.ddungja.petmily.common.exception.CustomException;
 import com.ddungja.petmily.common.exception.ExceptionCode;
 import io.sentry.Sentry;
 import io.sentry.spring.jakarta.tracing.SentrySpan;
@@ -18,8 +18,6 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.multipart.support.MissingServletRequestPartException;
 
-import java.util.Map;
-
 import static com.ddungja.petmily.common.exception.ExceptionCode.REFRESH_TOKEN_NOT_FOUND;
 
 @RestControllerAdvice
@@ -28,21 +26,21 @@ public class GlobalExceptionController {
 
     @SentrySpan
     @ExceptionHandler(CustomException.class)
-    public ResponseEntity<ExceptionCode> exceptionHandler(CustomException exception) {
+    public ResponseEntity<Object> exceptionHandler(CustomException exception) {
         Sentry.captureException(exception);
         log.warn("CustomException = {}", exception);
         return ResponseEntity.status(exception.getExceptionCode().getStatus()).body(exception.getExceptionCode());
     }
 
     @ExceptionHandler(NurigoUnknownException.class)
-    public ResponseEntity<String> exceptionHandler(NurigoUnknownException exception) {
+    public ResponseEntity<?> exceptionHandler(NurigoUnknownException exception) {
         Sentry.captureException(exception);
         log.error("NurigoUnknownException = {}", exception);
         return ResponseEntity.badRequest().body(exception.getMessage());
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<Map<String, String>> validation(MethodArgumentNotValidException exception) {
+    public ResponseEntity<?> validation(MethodArgumentNotValidException exception) {
         Sentry.captureException(exception);
         log.warn("MethodArgumentNotValidException = {}", exception);
         FieldErrorResponse fieldValidation = new FieldErrorResponse(exception);
