@@ -59,7 +59,7 @@ public class Registration extends BaseTimeEntity {
                 .petSubCategory(petSubcategory)
                 .registrationNumber(registrationApiResult.getDogRegNo())
                 .petName(registrationApiResult.getDogNm())
-                .petGender(registrationApiResult.getSexNm().equals("암컷")? GenderType.MALE : GenderType.FEMALE)
+                .petGender(registrationApiResult.getSexNm().equals("암컷")? GenderType.FEMALE : GenderType.MALE)
                 .petNeutered(registrationApiResult.getNeuterYn().equals("중성") ? NeuteredType.YES : NeuteredType.NO)
                 .build();
     }
