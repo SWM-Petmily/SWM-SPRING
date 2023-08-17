@@ -2,7 +2,6 @@ package com.ddungja.petmily.report.service;
 
 import com.ddungja.petmily.common.exception.CustomException;
 import com.ddungja.petmily.post.domain.Post;
-import com.ddungja.petmily.post.domain.type.PostStatusType;
 import com.ddungja.petmily.post.service.port.PostRepository;
 import com.ddungja.petmily.report.domain.Report;
 import com.ddungja.petmily.report.repository.ReportRepository;
@@ -27,26 +26,14 @@ public class ReportService {
     public void reportPost(Long userId, Long postId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new CustomException(USER_NOT_FOUND));
         Post post = postRepository.findById(postId).orElseThrow(() -> new CustomException(POST_NOT_FOUND));
-
-        if(isReport(userId, postId)){
+        if(isReport(user.getId(), post.getId())){
             throw new CustomException(ALREADY_REPORT);
         }
-
-        if(post.getStatus().equals(PostStatusType.DELETE)){
-            throw new CustomException(POST_STATUS_IS_DELETE);
-        }
-
         post.report();
-
-        if(post.getReports() >= 5){
-            post.reportPost();
-        }
-
-        Report report = Report.from(user, post);
-        reportRepository.save(report);
+        reportRepository.save(Report.from(user, post));
     }
 
-    public boolean isReport(Long userId, Long postId){
+    private boolean isReport(Long userId, Long postId){
         return reportRepository.existsByUserIdAndPostId(userId, postId);
     }
 }

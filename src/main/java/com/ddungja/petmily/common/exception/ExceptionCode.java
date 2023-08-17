@@ -40,8 +40,8 @@ public enum ExceptionCode {
     //post
     POST_NOT_FOUND(5001, HttpStatus.NOT_FOUND, "게시글을 찾을 수 없습니다.", "제목", "메시지", "exclamationmark.circle", "#fa0515"),
     POST_USER_NOT_MATCH(5002, HttpStatus.BAD_REQUEST, "게시글 작성자가 아닙니다.", "제목", "메시지", "exclamationmark.circle", "#fa0515"),
-    POST_STATUS_IS_COMPLETE(5003, HttpStatus.BAD_REQUEST, "이미 완료된 게시글입니다.", "제목", "메시지", "exclamationmark.circle", "#fa0515"),
-    POST_STATUS_IS_DELETE(5004, HttpStatus.BAD_REQUEST, "이미 삭제된 게시글입니다.", "제목", "메시지", "exclamationmark.circle", "#fa0515"),
+    POST_STATUS_COMPLETE(5003, HttpStatus.BAD_REQUEST, "이미 완료된 게시글입니다.", "제목", "메시지", "exclamationmark.circle", "#fa0515"),
+    POST_STATUS_DELETE(5004, HttpStatus.BAD_REQUEST, "이미 삭제된 게시글입니다.", "제목", "메시지", "exclamationmark.circle", "#fa0515"),
 
     //report
     ALREADY_REPORT(5001, HttpStatus.BAD_REQUEST, "이미 신고한 게시글입니다.", "제목", "메시지", "exclamationmark.circle", "#fa0515"),
