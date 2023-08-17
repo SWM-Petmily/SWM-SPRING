@@ -4,7 +4,6 @@ package com.ddungja.petmily.common.controller;
 import com.amazonaws.AmazonServiceException;
 import com.ddungja.petmily.common.controller.response.FieldErrorResponse;
 import com.ddungja.petmily.common.exception.CustomException;
-import com.ddungja.petmily.common.exception.ExceptionCode;
 import io.sentry.Sentry;
 import io.sentry.spring.jakarta.tracing.SentrySpan;
 import lombok.extern.slf4j.Slf4j;
@@ -33,14 +32,14 @@ public class GlobalExceptionController {
     }
 
     @ExceptionHandler(NurigoUnknownException.class)
-    public ResponseEntity<?> exceptionHandler(NurigoUnknownException exception) {
+    public ResponseEntity<Object> exceptionHandler(NurigoUnknownException exception) {
         Sentry.captureException(exception);
         log.error("NurigoUnknownException = {}", exception);
         return ResponseEntity.badRequest().body(exception.getMessage());
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<?> validation(MethodArgumentNotValidException exception) {
+    public ResponseEntity<Object> validation(MethodArgumentNotValidException exception) {
         Sentry.captureException(exception);
         log.warn("MethodArgumentNotValidException = {}", exception);
         FieldErrorResponse fieldValidation = new FieldErrorResponse(exception);
@@ -48,28 +47,28 @@ public class GlobalExceptionController {
     }
 
     @ExceptionHandler(MissingRequestCookieException.class)
-    public ResponseEntity<ExceptionCode> cookieException(MissingRequestCookieException exception) {
+    public ResponseEntity<Object> cookieException(MissingRequestCookieException exception) {
         Sentry.captureException(exception);
         log.error("MissingRequestCookieException = {}", exception);
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(REFRESH_TOKEN_NOT_FOUND);
     }
 
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
-    public ResponseEntity<String> methodArgumentTypeMismatchException(MethodArgumentTypeMismatchException exception) {
+    public ResponseEntity<Object> methodArgumentTypeMismatchException(MethodArgumentTypeMismatchException exception) {
         Sentry.captureException(exception);
         log.error("MethodArgumentTypeMismatchException = {}", exception);
         return ResponseEntity.badRequest().body("MethodArgumentTypeMismatchException");
     }
 
     @ExceptionHandler(MissingServletRequestPartException.class)
-    public ResponseEntity<String> missingServletRequestPartException(MissingServletRequestPartException exception) {
+    public ResponseEntity<Object> missingServletRequestPartException(MissingServletRequestPartException exception) {
         Sentry.captureException(exception);
         log.error("MissingServletRequestPartException = {}", exception);
         return ResponseEntity.badRequest().body("MissingServletRequestPartException");
     }
 
     @ExceptionHandler(AmazonServiceException.class)
-    public ResponseEntity<String> amazonServiceException(AmazonServiceException exception) {
+    public ResponseEntity<Object> amazonServiceException(AmazonServiceException exception) {
         Sentry.captureException(exception);
         log.error("AmazonServiceException = {}", exception);
         return ResponseEntity.badRequest().body("AmazonServiceException");
