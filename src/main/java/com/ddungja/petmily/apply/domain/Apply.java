@@ -11,6 +11,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Where;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +20,7 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Table(name = "applys", indexes = @Index(name = "idx_applys_user_id", columnList = "apply_id, approval"))
+@Where(clause = "approval != 'CANCEL'")
 public class Apply extends BaseTimeEntity {
 
     @Id
