@@ -3,7 +3,7 @@ package com.ddungja.petmily.report.service;
 import com.ddungja.petmily.common.exception.CustomException;
 import com.ddungja.petmily.post.domain.Post;
 import com.ddungja.petmily.post.domain.type.PostStatusType;
-import com.ddungja.petmily.post.repository.PostRepository;
+import com.ddungja.petmily.post.service.port.PostRepository;
 import com.ddungja.petmily.report.domain.Report;
 import com.ddungja.petmily.report.repository.ReportRepository;
 import com.ddungja.petmily.user.domain.user.User;
