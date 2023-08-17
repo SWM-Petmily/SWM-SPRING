@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
 
-@Tag(name = "Test API")
+@Tag(name = "Test", description = "테스트 API")
 @RestController
 @RequiredArgsConstructor
 public class TestController {
@@ -20,14 +20,14 @@ public class TestController {
     private final UserService userService;
     @Operation(summary = "테스트용 엑세스토큰 반환 userId = 1")
     @GetMapping("/test/token/1")
-    public ResponseEntity<?> testAccessToken1() {
+    public ResponseEntity<String> testAccessToken1() {
         String testAccessToken = jwtProvider.createTestAccessToken(1L);
         return ResponseEntity.ok(testAccessToken);
     }
 
     @Operation(summary = "테스트용 엑세스토큰 반환 userId = 2")
     @GetMapping("/test/token/2")
-    public ResponseEntity<?> testAccessToken2() {
+    public ResponseEntity<String> testAccessToken2() {
         String testAccessToken = jwtProvider.createTestAccessToken(2L);
         return ResponseEntity.ok(testAccessToken);
     }
@@ -40,14 +40,14 @@ public class TestController {
 
     @Operation(summary = "권한테스트")
     @GetMapping("/authorization")
-    public ResponseEntity<?> authorizationTest() {
+    public ResponseEntity<String> authorizationTest() {
         return ResponseEntity.ok("엑세스 토큰이 존재합니다");
     }
 
 
     @Operation(summary = "유저 인증 초기화, 인증번호 기록 삭제")
     @GetMapping("/reset")
-    public ResponseEntity<?> tes2() {
+    public ResponseEntity<Void> tes2() {
         userService.reset();
         return ResponseEntity.noContent().build();
     }

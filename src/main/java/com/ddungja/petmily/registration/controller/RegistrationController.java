@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Tag(name = "Registration", description = "반려동물 API")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/users/register")
@@ -31,14 +33,14 @@ public class RegistrationController {
     @Operation(summary = "반려동물 등록하기")
     @ApiResponse(responseCode = "201", description = "반려동물 등록하기 성공", content = @Content(schema = @Schema(implementation = RegisterCreateResponse.class)))
     @PostMapping
-    public ResponseEntity<?> create(@AuthenticationPrincipal User user, @Valid @RequestBody RegistrationCreateRequest registrationCreateRequest) {
+    public ResponseEntity<RegisterCreateResponse> create(@AuthenticationPrincipal User user, @Valid @RequestBody RegistrationCreateRequest registrationCreateRequest) {
         log.info("반려동물 등록하기 userId = {}", user.getId());
         return ResponseEntity.status(HttpStatus.CREATED).body(RegisterCreateResponse.from(registrationService.register(user.getId(), registrationCreateRequest)));
     }
     @Operation(summary = "내가 등록한 반려동물 보기")
     @ApiResponse(responseCode = "200", description = "내가 등록한 반려동물 조회 성공", content = @Content(schema = @Schema(implementation = MyRegistrationsResponse.class)))
     @GetMapping("/myRegister")
-    public ResponseEntity<?> getMyRegister(@AuthenticationPrincipal User user) {
+    public ResponseEntity<MyRegistrationsResponse> getMyRegister(@AuthenticationPrincipal User user) {
         log.info("내가 등록한 반려동물 보기 userId = {}", user.getId());
         List<Registration> registrations= registrationService.getMyRegister(user.getId());
         return ResponseEntity.ok(MyRegistrationsResponse.from(registrations.stream().map(MyRegistrationResponse::from)));
@@ -46,7 +48,7 @@ public class RegistrationController {
     @Operation(summary = "반려동물 삭제하기")
     @ApiResponse(responseCode = "204", description = "반려동물 삭제하기 성공")
     @DeleteMapping("/{registrationId}")
-    public ResponseEntity<?> delete(@AuthenticationPrincipal User user, @PathVariable Long registrationId) {
+    public ResponseEntity<Void> delete(@AuthenticationPrincipal User user, @PathVariable Long registrationId) {
         log.info("반려동물 삭제하기 userId = {}, registrationId = {}", user.getId(), registrationId);
         registrationService.delete(user.getId(), registrationId);
         return ResponseEntity.noContent().build();

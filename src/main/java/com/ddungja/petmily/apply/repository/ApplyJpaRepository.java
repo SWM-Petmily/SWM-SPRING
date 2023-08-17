@@ -10,7 +10,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 import java.util.Optional;
 
-public interface ApplyRepository extends JpaRepository<Apply, Long>, ApplyQueryRepository {
+public interface ApplyJpaRepository extends JpaRepository<Apply, Long>, ApplyQueryRepository {
 
     @EntityGraph(attributePaths = {"applyExperiences", "user"})
     Optional<Apply> findDetailById(Long applyId);

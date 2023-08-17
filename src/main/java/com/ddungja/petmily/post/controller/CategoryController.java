@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 
+@Tag(name = "Cateogory", description = "카테고리 API")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/category")
@@ -30,17 +32,17 @@ public class CategoryController {
     @Operation(summary = "메인 카테고리 불러오기")
     @ApiResponse(responseCode = "200", description = "메인 카테고리 불러오기 성공", content = @Content(schema = @Schema(implementation = MainCategoryResponse.class)))
     @GetMapping
-    public ResponseEntity<?> getCategory(){
+    public ResponseEntity<List<MainCategoryResponse>> getCategory(){
         log.info("메인 카테고리 불러오기");
-        return ResponseEntity.ok(categoryService.getMainCategory().stream().map(MainCategoryResponse::from));
+        return ResponseEntity.ok(categoryService.getMainCategory().stream().map(MainCategoryResponse::from).toList());
     }
 
     @Operation(summary = "서브 카테고리 불러오기")
     @ApiResponse(responseCode = "200", description = "서브카테고리 불러오기 성공", content = @Content(schema = @Schema(implementation = SubCategoryResponse.class)))
     @GetMapping("/{categoryId}")
-    public ResponseEntity<?> getSubCategory(@PathVariable Long categoryId){
+    public ResponseEntity<List<SubCategoryResponse>> getSubCategory(@PathVariable Long categoryId){
         log.info("서브 카테고리 불러오기 categoryId = {}", categoryId);
         List<SubCategory> subCategories = categoryService.getSubCategory(categoryId);
-        return ResponseEntity.ok(subCategories.stream().map(SubCategoryResponse::from));
+        return ResponseEntity.ok(subCategories.stream().map(SubCategoryResponse::from).toList());
     }
 }

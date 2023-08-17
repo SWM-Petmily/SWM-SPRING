@@ -16,6 +16,8 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -26,10 +28,12 @@ import java.net.URISyntaxException;
 
 import static com.ddungja.petmily.common.exception.ExceptionCode.REFRESH_TOKEN_VALIDATION_FAILED;
 
+@Tag(name = "User", description = "유저 API")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/users")
 @Slf4j
+@Builder
 public class UserController {
     private final KakaoService kakaoService;
     private final UserService userService;
@@ -41,7 +45,7 @@ public class UserController {
     @Operation(summary = "카카오 로그인")
     @ApiResponse(responseCode = "200", description = "카카오 로그인 성공", content = @Content(schema = @Schema(implementation = UserLoginResponse.class)))
     @PostMapping("/kakao")
-    public ResponseEntity<?> kakaoLogin(@RequestBody KaKaoLoginRequest kaKaoLoginRequest) throws URISyntaxException {
+    public ResponseEntity<Object> kakaoLogin(@RequestBody KaKaoLoginRequest kaKaoLoginRequest) throws URISyntaxException {
         log.info("카카오 로그인 kaKaoLoginRequest = {}", kaKaoLoginRequest);
         KakaoProfile kakaoProfile = kakaoService.getInfo(kaKaoLoginRequest);
         User user = userService.kakagoLogin(kakaoProfile);
@@ -53,7 +57,7 @@ public class UserController {
     @Operation(summary = "애플 로그인")
     @ApiResponse(responseCode = "200", description = "애플 로그인 성공", content = @Content(schema = @Schema(implementation = UserLoginResponse.class)))
     @PostMapping("/apple")
-    public ResponseEntity<?> applyLogin(@RequestBody AppleLoginRequest appleLoginRequest) {
+    public ResponseEntity<UserLoginResponse> applyLogin(@RequestBody AppleLoginRequest appleLoginRequest) {
         log.debug("애플 로그인");
         User user = userService.appleLogin(appleLoginRequest);
         userService.appleLogin(appleLoginRequest);
@@ -65,7 +69,7 @@ public class UserController {
     @Operation(summary = "휴대전화 인증번호 발송 20원까임")
     @ApiResponse(responseCode = "204", description = "휴대전화 인증번호 발송 성공")
     @PostMapping("/certification/send")
-    public ResponseEntity<?> sendCertificationNumber(@AuthenticationPrincipal User user, @RequestBody CertificationPhoneNumberRequest certificationPhoneNumberRequest) {
+    public ResponseEntity<Void> sendCertificationNumber(@AuthenticationPrincipal User user, @RequestBody CertificationPhoneNumberRequest certificationPhoneNumberRequest) {
         log.info("휴대전화 인증번호 발송 user = {} phoneNumber = {}", user.getId(), certificationPhoneNumberRequest.getPhoneNumber());
         certificationService.sendCertificationNumber(user.getId(), certificationPhoneNumberRequest.getPhoneNumber());
         return ResponseEntity.noContent().build();
@@ -74,7 +78,7 @@ public class UserController {
     @Operation(summary = "휴대전화 인증번호 발송 테스트용 인증번호[123456] 고정")
     @ApiResponse(responseCode = "204", description = "휴대전화 인증번호 발송 성공")
     @PostMapping("/certification/send/test")
-    public ResponseEntity<?> sendCertificationNumberTest(@AuthenticationPrincipal User user, @RequestBody CertificationPhoneNumberRequest certificationPhoneNumberRequest) {
+    public ResponseEntity<Void> sendCertificationNumberTest(@AuthenticationPrincipal User user, @RequestBody CertificationPhoneNumberRequest certificationPhoneNumberRequest) {
         log.info("휴대전화 인증번호 발송 테스트용 인증번호[123456] 고정 user = {} phoneNumber = {}", user.getId(), certificationPhoneNumberRequest.getPhoneNumber());
         certificationService.sendCertificationNumberTest(user.getId(), certificationPhoneNumberRequest);
         return ResponseEntity.noContent().build();
@@ -83,7 +87,7 @@ public class UserController {
     @Operation(summary = "휴대전화 인증번호 확인")
     @ApiResponse(responseCode = "204", description = "휴대전화 인증번호 확인 성공")
     @PostMapping("/certification/verify")
-    public ResponseEntity<?> certificationVerify(@AuthenticationPrincipal User user, @RequestBody CertificationVerifyRequest certificationPhoneVerifyRequest) {
+    public ResponseEntity<Void> certificationVerify(@AuthenticationPrincipal User user, @RequestBody CertificationVerifyRequest certificationPhoneVerifyRequest) {
         log.info("휴대전화 인증번호 확인 user = {}, certificationPhoneVerifyRequest = {}", user.getId(), certificationPhoneVerifyRequest);
         certificationService.certificationVerify(user.getId(), certificationPhoneVerifyRequest);
         return ResponseEntity.noContent().build();
@@ -92,7 +96,7 @@ public class UserController {
     @Operation(summary = "회원가입")
     @ApiResponse(responseCode = "204", description = "회원가입 성공")
     @PostMapping("/sign")
-    public ResponseEntity<?> certificationVerify(@AuthenticationPrincipal User user, @RequestBody UserCreateRequest userCreateRequest) {
+    public ResponseEntity<Void> certificationVerify(@AuthenticationPrincipal User user, @RequestBody UserCreateRequest userCreateRequest) {
         log.info("회원가입 user = {} userCreateRequest = {}, ", user.getId(), userCreateRequest);
         userService.signUp(user.getId(), userCreateRequest);
         return ResponseEntity.noContent().build();
@@ -101,7 +105,7 @@ public class UserController {
     @Operation(summary = "프로필 사진, 닉네임 수정")
     @ApiResponse(responseCode = "204", description = "닉네임 수정 성공")
     @PutMapping
-    public ResponseEntity<?> modify(@AuthenticationPrincipal User user, @RequestBody UserUpdateRequest userUpdateRequest) {
+    public ResponseEntity<Void> modify(@AuthenticationPrincipal User user, @RequestBody UserUpdateRequest userUpdateRequest) {
         log.info("프로필 사진, 닉네임 수정 user = {}", user.getId());
         userService.modify(user.getId(), userUpdateRequest);
         return ResponseEntity.noContent().build();
@@ -110,7 +114,7 @@ public class UserController {
     @Operation(summary = "마이페이지 조회")
     @ApiResponse(responseCode = "200", description = "마이페이지 조회 성공", content = @Content(schema =  @Schema(implementation = UserMyPageResponse.class)))
     @GetMapping("/myPage")
-    public ResponseEntity<?> myPage(@AuthenticationPrincipal User user) {
+    public ResponseEntity<UserMyPageResponse> myPage(@AuthenticationPrincipal User user) {
         log.info("마이페이지 조회 user = {}", user.getId());
         int applyCount = applyService.getApplyCount(user.getId());
         int likeCount = likeService.getLikeCountByUser(user);
@@ -120,7 +124,7 @@ public class UserController {
     @Operation(summary = "엑세스 토큰/리프레시 토큰 재발급")
     @ApiResponse(responseCode = "200", description = "엑세스 토큰/리프레시 토큰 재발급 성공", content = @Content(schema = @Schema(implementation = TokenRefreshResponse.class)))
     @PostMapping("/refresh")
-    public ResponseEntity<?> getRefreshToken(String refreshToken) {
+    public ResponseEntity<TokenRefreshResponse> getRefreshToken(String refreshToken) {
         log.info("토큰 refresh 요청 = {}", refreshToken);
         if (jwtProvider.validateRefreshToken(refreshToken)) {
             User user = jwtProvider.refreshTokenVerify(refreshToken);

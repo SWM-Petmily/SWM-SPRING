@@ -6,13 +6,14 @@ import com.ddungja.petmily.apply.domain.ApprovalType;
 import com.ddungja.petmily.apply.domain.request.ApplyCreateRequest;
 import com.ddungja.petmily.apply.domain.request.ApplyUpdateRequest;
 import com.ddungja.petmily.apply.domain.request.ApproveRequest;
-import com.ddungja.petmily.apply.repository.ApplyRepository;
+import com.ddungja.petmily.apply.service.port.ApplyRepository;
 import com.ddungja.petmily.common.exception.CustomException;
 import com.ddungja.petmily.common.exception.ExceptionCode;
 import com.ddungja.petmily.post.domain.Post;
-import com.ddungja.petmily.post.repository.PostRepository;
+import com.ddungja.petmily.post.service.port.PostRepository;
 import com.ddungja.petmily.user.domain.user.User;
 import com.ddungja.petmily.user.service.port.UserRepository;
+import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -24,6 +25,7 @@ import static com.ddungja.petmily.common.exception.ExceptionCode.*;
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
+@Builder
 public class ApplyService {
     private final ApplyRepository applyRepository;
     private final UserRepository userRepository;

@@ -14,7 +14,7 @@ public class HealthCheckController {
     @Operation(summary = "LoadBalancer Health Check")
     @GetMapping("/")
     @SentrySpan
-    public ResponseEntity<?> health() {
+    public ResponseEntity<String> health() {
         return ResponseEntity.ok("LoadBalancer Health Check");
     }
 }

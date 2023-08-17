@@ -72,7 +72,7 @@ class UserServiceTest {
         assertThat(sut.getPhone()).isEqualTo("010-1234-5678");
     }
 
-    @DisplayName("유저는 프로필과 닉네임을 변경할 수 있다.")
+    @DisplayName("유저는 프로필 사진과 닉네임을 변경할 수 있다.")
     @Test
     void modify() {
         //given
@@ -112,9 +112,17 @@ class UserServiceTest {
 
     @Test
     void appleLogin() {
+        //given
+        //when
+        //then
     }
 
     @Test
-    void reset() {
+     void getMyPage(){
+        //given
+        //when
+        //then
     }
+
+
 }

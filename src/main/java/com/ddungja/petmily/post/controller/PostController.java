@@ -20,6 +20,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -39,6 +40,7 @@ import java.util.List;
 
 import static com.ddungja.petmily.post.domain.type.ImageType.POST;
 
+@Tag(name = "Post", description = "게시글 API")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/posts")
@@ -56,7 +58,7 @@ public class PostController {
     @Operation(summary = "게시글 등록")
     @ApiResponse(responseCode = "201", description = "게시글 등록 성공", content = @Content(schema = @Schema(implementation = PostCreateResponse.class)))
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> create(@AuthenticationPrincipal User user,
+    public ResponseEntity<PostCreateResponse> create(@AuthenticationPrincipal User user,
                                     @Valid @RequestPart(value = "postRequest") PostCreateRequest postRequest,
                                     @RequestPart(value = "postImage", required = false) List<MultipartFile> postImages) throws IOException {
         log.info("게시글 등록  userId = {} postImage = {} postRequest = {}", user.getId(), postImages, postRequest);
@@ -67,7 +69,7 @@ public class PostController {
     @Operation(summary = "분양 게시글 작성 시, 추가정보 입력 페이지 (인증 정보 출력)")
     @ApiResponse(responseCode = "200", description = "분양 게시글 작성 시, 추가정보 입력 페이지 (인증 정보 출력)", content = @Content(schema = @Schema(implementation = PostCertifiedResponse.class)))
     @GetMapping("/certify/{postId}")
-    public ResponseEntity<?> getCertify(@AuthenticationPrincipal User user, @PathVariable Long postId) {
+    public ResponseEntity<PostCertifiedResponse> getCertify(@AuthenticationPrincipal User user, @PathVariable Long postId) {
         log.info("분양 게시글 작성 시, 추가정보 입력 페이지 (인증 정보 출력) userId = {}, postId = {}", postId);
         Post post = postService.get(postId);
         return ResponseEntity.ok(PostCertifiedResponse.from(post));
@@ -76,7 +78,7 @@ public class PostController {
     @Operation(summary = "분양게시글 작성 시, 반려동물 선택")
     @ApiResponse(responseCode = "200", description = "분양 게시글 작성 시, 반려동물 선택 성공", content = @Content(schema = @Schema(implementation = SelectRegistrationResponse.class)))
     @PostMapping("/select/{registrationId}")
-    public ResponseEntity<?> selectRegister(@AuthenticationPrincipal User user, @PathVariable Long registrationId) {
+    public ResponseEntity<SelectRegistrationResponse> selectRegister(@AuthenticationPrincipal User user, @PathVariable Long registrationId) {
         log.info("분양 게시글 작성 시, 반려동물 선택 userId = {}, registrationId = {}", user.getId(), registrationId);
         Registration registration = registrationService.select(user.getId(), registrationId);
         log.info("Registration = {}", registration);
@@ -86,9 +88,9 @@ public class PostController {
     @Operation(summary = "반려동물 등록하기")
     @ApiResponse(responseCode = "201", description = "반려동물 등록하기 성공", content = @Content(schema = @Schema(implementation = PostCertifiedResponse.class)))
     @PostMapping("/certifyRegistration/{postId}")
-    public ResponseEntity<?> certifyRegistration(@AuthenticationPrincipal User user, @Valid @RequestBody RegistrationCreateRequest registrationCreateRequest, @PathVariable Long postId) {
+    public ResponseEntity<PostCertifiedResponse> certifyRegistration(@AuthenticationPrincipal User user, @Valid @RequestBody RegistrationCreateRequest registrationCreateRequest, @PathVariable Long postId) {
         log.info("반려동물 등록하기 userId = {}, postId = {}", user.getId(), postId);
-        Registration registration = registrationService.register(user.getId(), registrationCreateRequest);
+        registrationService.register(user.getId(), registrationCreateRequest);
         Post post = postService.certifyRegistration(user.getId(), postId);
         return ResponseEntity.status(HttpStatus.CREATED).body(PostCertifiedResponse.from(post));
     }
@@ -97,7 +99,7 @@ public class PostController {
     @Operation(summary = "예방접종 인증")
     @ApiResponse(responseCode = "201", description = "예방접종 인증 성공", content = @Content(schema = @Schema(implementation = PostCertifiedResponse.class)))
     @PostMapping(path= "/certifyVaccination/{postId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> certifyVaccination(@AuthenticationPrincipal User user, @PathVariable Long postId, @RequestPart(value = "vaccinationImages") List<MultipartFile> vaccinationImages) throws IOException {
+    public ResponseEntity<PostCertifiedResponse> certifyVaccination(@AuthenticationPrincipal User user, @PathVariable Long postId, @RequestPart(value = "vaccinationImages") List<MultipartFile> vaccinationImages) throws IOException {
         log.info("예방접종 인증 postId = {} vaccinationImages = {}", postId, vaccinationImages);
         Post post = postService.certifyVaccination(postId, user.getId(), vaccinationImages);
         return ResponseEntity.status(HttpStatus.CREATED).body(PostCertifiedResponse.from(post));
@@ -107,7 +109,7 @@ public class PostController {
     @Operation(summary = "건강검진 인증")
     @ApiResponse(responseCode = "201", description = "건강검진 인증 성공", content = @Content(schema = @Schema(implementation = PostCertifiedResponse.class)))
     @PostMapping(path= "/certifyMedicalCheck/{postId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> certifyMedicalCheck(@AuthenticationPrincipal User user, @PathVariable Long postId, @RequestPart(value = "medicalCheckImages") List<MultipartFile> medicalCheckImages) throws IOException {
+    public ResponseEntity<PostCertifiedResponse> certifyMedicalCheck(@AuthenticationPrincipal User user, @PathVariable Long postId, @RequestPart(value = "medicalCheckImages") List<MultipartFile> medicalCheckImages) throws IOException {
         log.info("건강검진 인증 postId = {} medicalCheckImages = {}", postId, medicalCheckImages);
         Post post = postService.certifyMedicalCheck(postId, user.getId(), medicalCheckImages);
         return ResponseEntity.status(HttpStatus.CREATED).body(PostCertifiedResponse.from(post));
@@ -117,7 +119,7 @@ public class PostController {
     @Operation(summary = "게시글 상세보기")
     @ApiResponse(responseCode = "200", description = "게시글 상세보기 조회 성공", content = @Content(schema = @Schema(implementation = PostGetResponse.class)))
     @GetMapping("/{postId}")
-    public ResponseEntity<?> getSubCategory(@AuthenticationPrincipal User user, @PathVariable Long postId) {
+    public ResponseEntity<PostGetResponse> getSubCategory(@AuthenticationPrincipal User user, @PathVariable Long postId) {
         log.info("게시글 상세보기 postId = {}", postId);
         Post post = postService.get(postId);
         List<Image> images = imageService.getImages(postId, POST);
@@ -133,7 +135,7 @@ public class PostController {
     @Operation(summary = "내가 작성한 게시글 가져오기")
     @ApiResponse(responseCode = "200", description = "내가 작성한 게시글 조회 성공", content = @Content(schema = @Schema(implementation = MyPostListResponse.class)))
     @GetMapping("/user")
-    public ResponseEntity<?> getMyPost(@AuthenticationPrincipal User user, PostStatusType status, Pageable pageable) {
+    public ResponseEntity<Page<MyPostListResponse>> getMyPost(@AuthenticationPrincipal User user, PostStatusType status, Pageable pageable) {
         log.info("내가 작성한 게시글 가져오기 userId = {}", user.getId());
         return ResponseEntity.ok(postService.getMyPost(user.getId(), status, pageable).map(MyPostListResponse::from));
     }
@@ -141,7 +143,7 @@ public class PostController {
     @Operation(summary = "메인 게시글 가져오기")
     @ApiResponse(responseCode = "200", description = "메인 게시글 가져오기 조회 성공", content = @Content(schema = @Schema(implementation = MainPostsResponse.class)))
     @GetMapping("/main")
-    public ResponseEntity<?> getMainPosts(@AuthenticationPrincipal User user, PostFilterRequest postFilterRequest, Pageable pageable) {
+    public ResponseEntity<MainPostsResponse> getMainPosts(@AuthenticationPrincipal User user, PostFilterRequest postFilterRequest, Pageable pageable) {
         List<String> filter = getFilter(postFilterRequest);
         if (user == null) {
             log.info("메인 게시글 가져오기 - 비로그인");
@@ -159,7 +161,7 @@ public class PostController {
     @Operation(summary = "게시글 삭제")
     @ApiResponse(responseCode = "204", description = "게시글 삭제 성공")
     @DeleteMapping("/{postId}")
-    public ResponseEntity<?> delete(@AuthenticationPrincipal User user, @PathVariable Long postId) {
+    public ResponseEntity<Void> delete(@AuthenticationPrincipal User user, @PathVariable Long postId) {
         log.info("게시글 삭제 postId = {}", postId);
         postService.delete(user.getId(), postId);
         return ResponseEntity.noContent().build();
@@ -168,7 +170,7 @@ public class PostController {
     @Operation(summary = "게시글 분양 완료")
     @ApiResponse(responseCode = "201", description = "게시글 분양 완료 성공", content = @Content(schema = @Schema(implementation = PostCompleteResponse.class)))
     @PutMapping("/complete/{postId}")
-    public ResponseEntity<?> complete(@AuthenticationPrincipal User user, @PathVariable Long postId) {
+    public ResponseEntity<PostCompleteResponse> complete(@AuthenticationPrincipal User user, @PathVariable Long postId) {
         log.info("게시글 분양 완료 postId = {}", postId);
         postService.complete(user.getId(), postId);
         return ResponseEntity.status(HttpStatus.CREATED).body(PostCompleteResponse.from(postId));

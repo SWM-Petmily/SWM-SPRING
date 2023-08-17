@@ -11,6 +11,7 @@ public class ApplySupportResponse {
     private final Long applyId;
     private final ApprovalType approval;
     private final String job;
+    private final String url;
     private final String environment;
     private final int people;
     private final String comment;
@@ -18,10 +19,11 @@ public class ApplySupportResponse {
     private final String nickname;
     private final Boolean isExperience;
     @Builder
-    public ApplySupportResponse(Long applyId, ApprovalType approval, String job, String environment, int people, String comment, String region, String nickname, Boolean isExperience) {
+    public ApplySupportResponse(Long applyId, ApprovalType approval, String job, String url, String environment, int people, String comment, String region, String nickname, Boolean isExperience) {
         this.applyId = applyId;
         this.approval = approval;
         this.job = job;
+        this.url = url;
         this.environment = environment;
         this.people = people;
         this.comment = comment;
@@ -36,6 +38,7 @@ public class ApplySupportResponse {
                 .applyId(apply.getId())
                 .approval(apply.getApproval())
                 .job(apply.getJob())
+                .url(apply.getUrl())
                 .environment(apply.getEnvironment())
                 .nickname(apply.getUser().getNickname())
                 .people(apply.getPeople())

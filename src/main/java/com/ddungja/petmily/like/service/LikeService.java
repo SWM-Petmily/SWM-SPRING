@@ -2,12 +2,13 @@ package com.ddungja.petmily.like.service;
 
 import com.ddungja.petmily.common.exception.CustomException;
 import com.ddungja.petmily.like.domain.Like;
-import com.ddungja.petmily.like.repository.LikeRepository;
+import com.ddungja.petmily.like.service.port.LikeRepository;
 import com.ddungja.petmily.post.domain.Post;
 import com.ddungja.petmily.post.domain.type.PostStatusType;
-import com.ddungja.petmily.post.repository.PostRepository;
+import com.ddungja.petmily.post.service.port.PostRepository;
 import com.ddungja.petmily.user.domain.user.User;
 import com.ddungja.petmily.user.service.port.UserRepository;
+import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,6 +20,7 @@ import static com.ddungja.petmily.common.exception.ExceptionCode.*;
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
+@Builder
 public class LikeService {
 
     private final LikeRepository likeRepository;
