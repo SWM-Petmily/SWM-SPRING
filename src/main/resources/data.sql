@@ -30,8 +30,20 @@ insert into main_categories(main_category_id, name) values
 -- sub_categories
 insert into sub_categories(sub_category_id, main_category_id, name)values
 (default, 1, '불독'),
-(default, 1, '골든 리트리버'),
+(default, 1, '골든리트리버'),
 (default, 1, '닥스훈트'),
+(default, 1, '말티즈'),
+(default, 1, '믹스견'),
+(default, 1, '비숑'),
+(default, 1, '시바견'),
+(default, 1, '시베리안허스키'),
+(default, 1, '시츄'),
+(default, 1, '웰시코기'),
+(default, 1, '진돗개'),
+(default, 1, '치와와'),
+(default, 1, '포메라니안'),
+(default, 1, '푸들'),
+(default, 1, '프렌치불독'),
 (default, 2, '믹스묘'),
 (default, 2, '러시안블루'),
 (default, 2, '페르시안');

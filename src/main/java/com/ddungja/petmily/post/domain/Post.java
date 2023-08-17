@@ -173,4 +173,8 @@ public class Post extends BaseTimeEntity {
     public void completePost() {
         this.status = PostStatusType.COMPLETE;
     }
+
+    public void report() { this.reports++;}
+    public void reportPost() {this.status = PostStatusType.REPORT;}
+
 }
