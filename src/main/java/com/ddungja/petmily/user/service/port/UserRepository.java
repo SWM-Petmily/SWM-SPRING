@@ -16,4 +16,6 @@ public interface UserRepository {
     void certificationUpdateFalse();
 
     Optional<User> findByPhone(String phoneNumber);
+
+    boolean existsById(Long userId);
 }

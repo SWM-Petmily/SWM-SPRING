@@ -40,4 +40,9 @@ public class UserRepositoryImpl implements UserRepository {
     public Optional<User> findByPhone(String phoneNumber) {
         return userJpaRepository.findByPhone(phoneNumber);
     }
+
+    @Override
+    public boolean existsById(Long userId) {
+        return userJpaRepository.existsById(userId);
+    }
 }

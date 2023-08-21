@@ -51,7 +51,7 @@ public class PostService {
         MainCategory mainCategory = mainCategoryRepository.findByName(postCreateRequest.getMainCategory()).orElseThrow(() -> new CustomException(MAIN_CATEGORY_NOT_FOUND));
         SubCategory subCategory = subCategoryRepository.findByName(postCreateRequest.getSubCategory()).orElseThrow(() -> new CustomException(SUB_CATEGORY_NOT_FOUND));
         Post post = Post.from(postCreateRequest, user, mainCategory, subCategory);
-        if(postImages != null && postImages.size() > 0) {
+        if (postImages != null && !postImages.isEmpty()) {
             List<Image> images = imageService.upload(post, postImages, POST);
             post.createThumbnailImage(images.get(0).getUrl());
             post.uploadImages(images);
@@ -77,9 +77,9 @@ public class PostService {
         /*이미지 업로드*/
         List<Image> uploadImages = new ArrayList<>();
 
-        if(images != null){
+        if (images != null) {
             uploadImages.addAll(imageService.upload(post, images, imageType));
-            if(imageType == POST) {
+            if (imageType == POST) {
                 uploadImages.remove(0);
             }
         }
@@ -88,19 +88,19 @@ public class PostService {
 
 
     /*포스트 보기*/
-   @Transactional
+    @Transactional
     public Post get(Long postId) {
         return postRepository.findPostById(postId).orElseThrow(() -> new CustomException(POST_NOT_FOUND));
     }
 
     public Page<Post> getMyPost(Long userId, PostStatusType postStatusType, Pageable pageable) {
-        userRepository.findById(userId).orElseThrow(() -> new CustomException(USER_NOT_FOUND));
-        return postRepository.getMyPost(userId, postStatusType, pageable);
+        User user = userRepository.findById(userId).orElseThrow(() -> new CustomException(USER_NOT_FOUND));
+        return postRepository.getMyPost(user.getId(), postStatusType, pageable);
     }
 
     public Page<Post> getMainPosts(Long userId, PostFilterRequest postFilterRequest, Pageable pageable) {
-        userRepository.findById(userId).orElseThrow(() -> new CustomException(USER_NOT_FOUND));
-        return postRepository.getMainPosts(userId, postFilterRequest, pageable);
+        User user = userRepository.findById(userId).orElseThrow(() -> new CustomException(USER_NOT_FOUND));
+        return postRepository.getMainPosts(user.getId(), postFilterRequest, pageable);
     }
 
     public Page<Post> getMainPosts(PostFilterRequest postFilterRequest, Pageable pageable) {
@@ -113,7 +113,7 @@ public class PostService {
         if (!post.getUser().getId().equals(userId)) {
             throw new CustomException(POST_USER_NOT_MATCH);
         }
-        if(vaccinationImages == null || vaccinationImages.size() == 0) {
+        if (vaccinationImages == null || vaccinationImages.isEmpty()) {
             throw new CustomException(IMAGE_NOT_FOUND);
         }
         post.certifyVaccination();
@@ -127,7 +127,7 @@ public class PostService {
         if (!post.getUser().getId().equals(userId)) {
             throw new CustomException(POST_USER_NOT_MATCH);
         }
-        if(medicalCheckImages == null || medicalCheckImages.size() == 0) {
+        if (medicalCheckImages == null || medicalCheckImages.isEmpty()) {
             throw new CustomException(IMAGE_NOT_FOUND);
         }
         post.certifyMedicalCheck();
@@ -151,8 +151,8 @@ public class PostService {
         if (!post.getUser().getId().equals(userId)) {
             throw new CustomException(POST_USER_NOT_MATCH);
         }
-        if(post.getStatus()==PostStatusType.COMPLETE){
-            throw new CustomException(POST_STATUS_IS_COMPLETE);
+        if (post.getStatus() == PostStatusType.COMPLETE) {
+            throw new CustomException(POST_STATUS_COMPLETE);
         }
         post.deletePost();
         List<Apply> applys = applyRepository.findByPostIdAndApproval(postId, ApprovalType.WAITING);
@@ -163,17 +163,10 @@ public class PostService {
 
     @Transactional
     public void complete(Long userId, Long postId) {
+        if (!userRepository.existsById(userId)) throw new CustomException(USER_NOT_FOUND);
         Post post = postRepository.findPostById(postId).orElseThrow(() -> new CustomException(POST_NOT_FOUND));
-        if(post.getStatus()==PostStatusType.DELETE){
-            throw new CustomException(POST_STATUS_IS_DELETE);
-        }
-        if (!post.getUser().getId().equals(userId)) {
-            throw new CustomException(POST_USER_NOT_MATCH);
-        }
-        post.completePost();
+        post.complete(userId);
         List<Apply> applys = applyRepository.findByPostIdAndApproval(postId, ApprovalType.WAITING);
-        for (Apply apply : applys) {
-            apply.rejectApply();
-        }
+        applys.forEach(Apply::rejectApply);
     }
 }

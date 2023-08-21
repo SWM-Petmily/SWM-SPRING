@@ -3,6 +3,8 @@ package com.ddungja.petmily.post.domain;
 
 import com.ddungja.petmily.apply.domain.Apply;
 import com.ddungja.petmily.common.domain.BaseTimeEntity;
+import com.ddungja.petmily.common.exception.CustomException;
+import com.ddungja.petmily.common.exception.ExceptionCode;
 import com.ddungja.petmily.like.domain.Like;
 import com.ddungja.petmily.post.domain.request.PostCreateRequest;
 import com.ddungja.petmily.post.domain.type.CertifiedType;
@@ -21,6 +23,10 @@ import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import static com.ddungja.petmily.common.exception.ExceptionCode.POST_STATUS_DELETE;
+import static com.ddungja.petmily.common.exception.ExceptionCode.POST_USER_NOT_MATCH;
+
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -152,11 +158,14 @@ public class Post extends BaseTimeEntity {
     public void createThumbnailImage(String thumbnailImage) {
         this.thumbnailImage = thumbnailImage;
     }
+
     public void uploadImages(List<Image> uploadImages) {
         this.images = uploadImages;
     }
 
-    public void certifyRegistration() { this.isRegistered = CertifiedType.CERTIFIED; }
+    public void certifyRegistration() {
+        this.isRegistered = CertifiedType.CERTIFIED;
+    }
 
     public void certifyVaccination() {
         this.isVaccinated = CertifiedType.WAITING;
@@ -166,15 +175,35 @@ public class Post extends BaseTimeEntity {
         this.isMedicalChecked = CertifiedType.WAITING;
     }
 
-    public void deletePost(){
+    public void deletePost() {
         this.status = PostStatusType.DELETE;
     }
 
-    public void completePost() {
+    public void complete(Long userId) {
+        if(status==PostStatusType.DELETE){
+            throw new CustomException(POST_STATUS_DELETE);
+        }
+        if (user.getId().equals(userId)) {
+            throw new CustomException(POST_USER_NOT_MATCH);
+        }
         this.status = PostStatusType.COMPLETE;
     }
 
-    public void report() { this.reports++;}
-    public void reportPost() {this.status = PostStatusType.REPORT;}
+    public void report() {
+        isDelete();
+        reports++;
+        if (reports >= 5)
+            reportPost();
+    }
+
+    private void isDelete() {
+        if (this.status.equals(PostStatusType.DELETE)) {
+            throw new CustomException(ExceptionCode.POST_STATUS_DELETE);
+        }
+    }
+
+    private void reportPost() {
+        this.status = PostStatusType.REPORT;
+    }
 
 }
