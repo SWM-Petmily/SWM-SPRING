@@ -33,7 +33,7 @@ public class Registration extends BaseTimeEntity {
     private String petName; // 반려동물 이름
 
     @JoinColumn(name = "sub_category_id")
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     private SubCategory petSubCategory;
 
     @Enumerated(EnumType.STRING)
