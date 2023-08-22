@@ -33,7 +33,6 @@ public class ApplyExperience extends BaseTimeEntity {
         this.apply = apply;
     }
 
-
     public static List<ApplyExperience> from(List<ApplyExperienceCreateRequest> experiences) {
         return experiences.stream().map(applyExperienceCreateRequest -> ApplyExperience.builder()
                 .species(applyExperienceCreateRequest.getSpecies())
