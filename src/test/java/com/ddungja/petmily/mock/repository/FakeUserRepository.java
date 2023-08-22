@@ -60,6 +60,6 @@ public class FakeUserRepository implements UserRepository {
 
     @Override
     public boolean existsById(Long userId) {
-        return false;
+        return data.stream().anyMatch(item -> item.getId().equals(userId));
     }
 }
