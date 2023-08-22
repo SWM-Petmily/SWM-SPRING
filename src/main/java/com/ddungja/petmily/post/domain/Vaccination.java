@@ -30,7 +30,4 @@ public class Vaccination extends BaseTimeEntity {
         this.createDate = createDate;
         this.updateDate = updateDate;
     }
-
-
-
 }

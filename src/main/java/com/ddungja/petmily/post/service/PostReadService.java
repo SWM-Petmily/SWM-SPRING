@@ -34,6 +34,9 @@ public class PostReadService {
     private final UserRepository userRepository;
     private final PostRepository postRepository;
     private final ReportRepository reportRepository;
+    private final ImageService imageService;
+    private final ApplyService applyService;
+    private final LikeService likeService;
 
     @Transactional
     public Post get(Long postId) {
@@ -55,16 +58,14 @@ public class PostReadService {
 
 
     public Page<MyPostListResponse> getMyPost(Long userId, PostStatusType postStatusType, Pageable pageable) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new CustomException(USER_NOT_FOUND));
-        return postRepository.getMyPost(user.getId(), postStatusType, pageable).map(MyPostListResponse::from);
+        if (!userRepository.existsById(userId)) throw new CustomException(USER_NOT_FOUND);
+        return postRepository.getMyPost(userId, postStatusType, pageable).map(MyPostListResponse::from);
     }
 
-    public Page<Post> getMainPosts(Long userId, PostFilterRequest postFilterRequest, Pageable pageable) {
-        if (!userRepository.existsById(userId)) {
-            throw new CustomException(USER_NOT_FOUND);
-        }
+    public Page<MainPostResponse> getMainPosts(Long userId, PostFilterRequest postFilterRequest, Pageable pageable) {
+        if (!userRepository.existsById(userId)) throw new CustomException(USER_NOT_FOUND);
         List<Long> reportPostIds = reportRepository.findByUserId(userId).stream().map(report -> report.getPost().getId()).toList();
-        return postRepository.getMainPosts(userId, postFilterRequest, reportPostIds, pageable);
+        return postRepository.getMainPosts(userId, postFilterRequest, reportPostIds, pageable).map(post -> MainPostResponse.from(userId, post));
     }
 
     public Page<Post> getMainPosts(PostFilterRequest postFilterRequest, Pageable pageable) {
