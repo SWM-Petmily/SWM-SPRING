@@ -42,22 +42,17 @@ public enum ExceptionCode {
     POST_USER_NOT_MATCH(5002, HttpStatus.BAD_REQUEST, "게시글 작성자가 아닙니다.", "제목", "메시지", "exclamationmark.circle", "#fa0515"),
     POST_STATUS_COMPLETE(5003, HttpStatus.BAD_REQUEST, "이미 완료된 게시글입니다.", "제목", "메시지", "exclamationmark.circle", "#fa0515"),
     POST_STATUS_DELETE(5004, HttpStatus.BAD_REQUEST, "이미 삭제된 게시글입니다.", "제목", "메시지", "exclamationmark.circle", "#fa0515"),
+    POST_STATUS_REPORT(5005, HttpStatus.BAD_REQUEST, "신고된 게시글입니다.", "제목", "메시지", "exclamationmark.circle", "#fa0515"),
 
-    //report
-    ALREADY_REPORT(5001, HttpStatus.BAD_REQUEST, "이미 신고한 게시글입니다.", "제목", "메시지", "exclamationmark.circle", "#fa0515"),
     //apply
     APPLY_NOT_FOUND(6001, HttpStatus.NOT_FOUND, "지원서를 찾을 수 없습니다.", "제목", "메시지", "exclamationmark.circle", "#fa0515"),
     APPLY_ALREADY_EXISTS(6002, HttpStatus.BAD_REQUEST, "이미 지원서를 작성했습니다.", "제목", "메시지", "exclamationmark.circle", "#fa0515"),
     APPLY_CANT_MODIFY(6003, HttpStatus.BAD_REQUEST, "지원서를 수정할 수 없습니다.", "제목", "메시지", "exclamationmark.circle", "#fa0515"),
 
-    //like
-    LIKE_NOT_FOUND(6001, HttpStatus.NOT_FOUND, "좋아요를 찾을 수 없습니다.", "제목", "메시지", "exclamationmark.circle", "#fa0515"),
-    LIKE_IS_EXISTS(6002, HttpStatus.BAD_REQUEST, "이미 좋아요를 눌렀습니다.", "제목", "메시지", "exclamationmark.circle", "#fa0515"),
-
     //register
     REGISTER_NOT_FOUND(7001, HttpStatus.NOT_FOUND, "해당 반려동물 등록 정보가 없습니다.", "제목", "메시지", "exclamationmark.circle", "#fa0515"),
     REGISTER_ALREADY_EXISTS(7002, HttpStatus.BAD_REQUEST, "이미 등록했습니다.", "제목", "메시지", "exclamationmark.circle", "#fa0515"),
-
+    REGISTER_NOT_MATCH_USER(7003, HttpStatus.BAD_REQUEST, "등록한 유저가 아닙니다.", "제목", "메시지", "exclamationmark.circle", "#fa0515"),
     //image
     S3_IMAGE_NOT_FOUND(8001, HttpStatus.NOT_FOUND, "S3 이미지를 찾을 수 없습니다.", "제목", "메시지", "exclamationmark.circle", "#fa0515"),
     IMAGE_NOT_FOUND(8002, HttpStatus.NOT_FOUND, "이미지를 찾을 수 없습니다.", "제목", "메시지", "exclamationmark.circle", "#fa0515"),
@@ -68,7 +63,15 @@ public enum ExceptionCode {
     CERTIFICATION_PHONE_ALREADY_EXISTS(9003, HttpStatus.BAD_REQUEST, "이미 가입된 휴대전화입니다.", "제목", "메시지", "exclamationmark.circle", "#fa0515"),
     CERTIFICATION_NOT_FOUND(9004, HttpStatus.NOT_FOUND, "인증요청을 찾을 수 없습니다.", "제목", "메시지", "exclamationmark.circle", "#fa0515"),
     CERTIFICATION_NOT_COMPLETE(9005, HttpStatus.BAD_REQUEST, "인증이 완료되지 않았습니다.", "제목", "메시지", "exclamationmark.circle", "#fa0515"),
-    CERTIFICATION_ATTEMPT_EXCEED(9006, HttpStatus.BAD_REQUEST, "인증 시도 횟수를 초과했습니다.", "제목", "메시지", "exclamationmark.circle", "#fa0515");
+    CERTIFICATION_ATTEMPT_EXCEED(9006, HttpStatus.BAD_REQUEST, "인증 시도 횟수를 초과했습니다.", "제목", "메시지", "exclamationmark.circle", "#fa0515"),
+
+    //report
+    ALREADY_REPORT(10001, HttpStatus.BAD_REQUEST, "이미 신고한 게시글입니다.", "제목", "메시지", "exclamationmark.circle", "#fa0515"),
+
+    //like
+    LIKE_NOT_FOUND(11001, HttpStatus.NOT_FOUND, "좋아요를 찾을 수 없습니다.", "제목", "메시지", "exclamationmark.circle", "#fa0515"),
+    LIKE_IS_EXISTS(11002, HttpStatus.BAD_REQUEST, "이미 좋아요를 눌렀습니다.", "제목", "메시지", "exclamationmark.circle", "#fa0515");
+
 
     private final int code;
     private final HttpStatus status;

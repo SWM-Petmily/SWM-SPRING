@@ -24,8 +24,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.ddungja.petmily.common.exception.ExceptionCode.POST_STATUS_DELETE;
-import static com.ddungja.petmily.common.exception.ExceptionCode.POST_USER_NOT_MATCH;
+import static com.ddungja.petmily.common.exception.ExceptionCode.*;
 
 
 @Entity
@@ -155,15 +154,16 @@ public class Post extends BaseTimeEntity {
                 .build();
     }
 
-    public void createThumbnailImage(String thumbnailImage) {
-        this.thumbnailImage = thumbnailImage;
+    public void createThumbnailImage( List<Image> images) {
+        this.thumbnailImage = images.get(0).getUrl();
     }
 
     public void uploadImages(List<Image> uploadImages) {
         this.images = uploadImages;
     }
 
-    public void certifyRegistration() {
+    public void certifyRegistration(Long userId) {
+        matchUser(userId);
         this.isRegistered = CertifiedType.CERTIFIED;
     }
 
@@ -175,16 +175,21 @@ public class Post extends BaseTimeEntity {
         this.isMedicalChecked = CertifiedType.WAITING;
     }
 
-    public void deletePost() {
+    public void deletePost(Long userId) {
+        matchUser(userId);
+        if (status == PostStatusType.COMPLETE ) {
+            throw new CustomException(POST_STATUS_COMPLETE);
+        }
+        if (status== PostStatusType.REPORT) {
+            throw new CustomException(POST_STATUS_REPORT);
+        }
         this.status = PostStatusType.DELETE;
     }
 
     public void complete(Long userId) {
+        matchUser(userId);
         if(status==PostStatusType.DELETE){
             throw new CustomException(POST_STATUS_DELETE);
-        }
-        if (user.getId().equals(userId)) {
-            throw new CustomException(POST_USER_NOT_MATCH);
         }
         this.status = PostStatusType.COMPLETE;
     }
@@ -192,8 +197,7 @@ public class Post extends BaseTimeEntity {
     public void report() {
         isDelete();
         reports++;
-        if (reports >= 5)
-            reportPost();
+        if (reports >= 5) reportPost();
     }
 
     private void isDelete() {
@@ -206,4 +210,9 @@ public class Post extends BaseTimeEntity {
         this.status = PostStatusType.REPORT;
     }
 
+    public void matchUser(Long userId) {
+        if (user.getId().equals(userId)) {
+            throw new CustomException(POST_USER_NOT_MATCH);
+        }
+    }
 }

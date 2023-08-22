@@ -10,11 +10,8 @@ import com.ddungja.petmily.post.domain.request.PostCreateRequest;
 import com.ddungja.petmily.post.domain.request.PostFilterRequest;
 import com.ddungja.petmily.post.domain.type.PostStatusType;
 import com.ddungja.petmily.post.service.ImageService;
-import com.ddungja.petmily.post.service.PostService;
-import com.ddungja.petmily.registration.controller.response.SelectRegistrationResponse;
-import com.ddungja.petmily.registration.domain.Registration;
-import com.ddungja.petmily.registration.domain.request.RegistrationCreateRequest;
-import com.ddungja.petmily.registration.service.RegistrationService;
+import com.ddungja.petmily.post.service.PostCommandService;
+import com.ddungja.petmily.post.service.PostReadService;
 import com.ddungja.petmily.user.domain.user.User;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -47,13 +44,11 @@ import static com.ddungja.petmily.post.domain.type.ImageType.POST;
 @Slf4j
 public class PostController {
 
-    private final PostService postService;
+    private final PostReadService postReadService;
+    private final PostCommandService postCommandService;
     private final LikeService likeService;
     private final ApplyService applyService;
-
     private final ImageService imageService;
-
-    private final RegistrationService registrationService;
 
     @Operation(summary = "게시글 등록")
     @ApiResponse(responseCode = "201", description = "게시글 등록 성공", content = @Content(schema = @Schema(implementation = PostCreateResponse.class)))
@@ -62,66 +57,16 @@ public class PostController {
                                     @Valid @RequestPart(value = "postRequest") PostCreateRequest postRequest,
                                     @RequestPart(value = "postImage", required = false) List<MultipartFile> postImages) throws IOException {
         log.info("게시글 등록  userId = {} postImage = {} postRequest = {}", user.getId(), postImages, postRequest);
-        Post post = postService.create(postRequest, user.getId(), postImages);
+        Post post = postCommandService.create(postRequest, user.getId(), postImages);
         return ResponseEntity.status(HttpStatus.CREATED).body(PostCreateResponse.from(post));
     }
-
-    @Operation(summary = "분양 게시글 작성 시, 추가정보 입력 페이지 (인증 정보 출력)")
-    @ApiResponse(responseCode = "200", description = "분양 게시글 작성 시, 추가정보 입력 페이지 (인증 정보 출력)", content = @Content(schema = @Schema(implementation = PostCertifiedResponse.class)))
-    @GetMapping("/certify/{postId}")
-    public ResponseEntity<PostCertifiedResponse> getCertify(@AuthenticationPrincipal User user, @PathVariable Long postId) {
-        log.info("분양 게시글 작성 시, 추가정보 입력 페이지 (인증 정보 출력) userId = {}, postId = {}", postId);
-        Post post = postService.get(postId);
-        return ResponseEntity.ok(PostCertifiedResponse.from(post));
-    }
-
-    @Operation(summary = "분양게시글 작성 시, 반려동물 선택")
-    @ApiResponse(responseCode = "200", description = "분양 게시글 작성 시, 반려동물 선택 성공", content = @Content(schema = @Schema(implementation = SelectRegistrationResponse.class)))
-    @PostMapping("/select/{registrationId}")
-    public ResponseEntity<SelectRegistrationResponse> selectRegister(@AuthenticationPrincipal User user, @PathVariable Long registrationId) {
-        log.info("분양 게시글 작성 시, 반려동물 선택 userId = {}, registrationId = {}", user.getId(), registrationId);
-        Registration registration = registrationService.select(user.getId(), registrationId);
-        log.info("Registration = {}", registration);
-        return ResponseEntity.ok(SelectRegistrationResponse.from(registration));
-    }
-
-    @Operation(summary = "반려동물 등록하기")
-    @ApiResponse(responseCode = "201", description = "반려동물 등록하기 성공", content = @Content(schema = @Schema(implementation = PostCertifiedResponse.class)))
-    @PostMapping("/certifyRegistration/{postId}")
-    public ResponseEntity<PostCertifiedResponse> certifyRegistration(@AuthenticationPrincipal User user, @Valid @RequestBody RegistrationCreateRequest registrationCreateRequest, @PathVariable Long postId) {
-        log.info("반려동물 등록하기 userId = {}, postId = {}", user.getId(), postId);
-        registrationService.register(user.getId(), registrationCreateRequest);
-        Post post = postService.certifyRegistration(user.getId(), postId);
-        return ResponseEntity.status(HttpStatus.CREATED).body(PostCertifiedResponse.from(post));
-    }
-
-
-    @Operation(summary = "예방접종 인증")
-    @ApiResponse(responseCode = "201", description = "예방접종 인증 성공", content = @Content(schema = @Schema(implementation = PostCertifiedResponse.class)))
-    @PostMapping(path= "/certifyVaccination/{postId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<PostCertifiedResponse> certifyVaccination(@AuthenticationPrincipal User user, @PathVariable Long postId, @RequestPart(value = "vaccinationImages") List<MultipartFile> vaccinationImages) throws IOException {
-        log.info("예방접종 인증 postId = {} vaccinationImages = {}", postId, vaccinationImages);
-        Post post = postService.certifyVaccination(postId, user.getId(), vaccinationImages);
-        return ResponseEntity.status(HttpStatus.CREATED).body(PostCertifiedResponse.from(post));
-    }
-
-
-    @Operation(summary = "건강검진 인증")
-    @ApiResponse(responseCode = "201", description = "건강검진 인증 성공", content = @Content(schema = @Schema(implementation = PostCertifiedResponse.class)))
-    @PostMapping(path= "/certifyMedicalCheck/{postId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<PostCertifiedResponse> certifyMedicalCheck(@AuthenticationPrincipal User user, @PathVariable Long postId, @RequestPart(value = "medicalCheckImages") List<MultipartFile> medicalCheckImages) throws IOException {
-        log.info("건강검진 인증 postId = {} medicalCheckImages = {}", postId, medicalCheckImages);
-        Post post = postService.certifyMedicalCheck(postId, user.getId(), medicalCheckImages);
-        return ResponseEntity.status(HttpStatus.CREATED).body(PostCertifiedResponse.from(post));
-    }
-
 
     @Operation(summary = "게시글 상세보기")
     @ApiResponse(responseCode = "200", description = "게시글 상세보기 조회 성공", content = @Content(schema = @Schema(implementation = PostGetResponse.class)))
     @GetMapping("/{postId}")
     public ResponseEntity<PostGetResponse> getSubCategory(@AuthenticationPrincipal User user, @PathVariable Long postId) {
         log.info("게시글 상세보기 postId = {}", postId);
-        Post post = postService.get(postId);
+        Post post = postReadService.get(postId);
         List<Image> images = imageService.getImages(postId, POST);
         int likeCount = likeService.getLikeCountByPostId(postId);
         if(user == null) {
@@ -137,7 +82,26 @@ public class PostController {
     @GetMapping("/user")
     public ResponseEntity<Page<MyPostListResponse>> getMyPost(@AuthenticationPrincipal User user, PostStatusType status, Pageable pageable) {
         log.info("내가 작성한 게시글 가져오기 userId = {}", user.getId());
-        return ResponseEntity.ok(postService.getMyPost(user.getId(), status, pageable).map(MyPostListResponse::from));
+        return ResponseEntity.ok(postReadService.getMyPost(user.getId(), status, pageable).map(MyPostListResponse::from));
+    }
+
+
+    @Operation(summary = "게시글 삭제")
+    @ApiResponse(responseCode = "204", description = "게시글 삭제 성공")
+    @DeleteMapping("/{postId}")
+    public ResponseEntity<Void> delete(@AuthenticationPrincipal User user, @PathVariable Long postId) {
+        log.info("게시글 삭제 postId = {}", postId);
+        postCommandService.delete(user.getId(), postId);
+        return ResponseEntity.noContent().build();
+    }
+
+    @Operation(summary = "게시글 분양 완료")
+    @ApiResponse(responseCode = "201", description = "게시글 분양 완료 성공", content = @Content(schema = @Schema(implementation = PostCompleteResponse.class)))
+    @PutMapping("/complete/{postId}")
+    public ResponseEntity<PostCompleteResponse> complete(@AuthenticationPrincipal User user, @PathVariable Long postId) {
+        log.info("게시글 분양 완료 postId = {}", postId);
+        postCommandService.complete(user.getId(), postId);
+        return ResponseEntity.status(HttpStatus.CREATED).body(PostCompleteResponse.from(postId));
     }
 
     @Operation(summary = "메인 게시글 가져오기")
@@ -147,33 +111,15 @@ public class PostController {
         List<String> filter = getFilter(postFilterRequest);
         if (user == null) {
             log.info("메인 게시글 가져오기 - 비로그인");
-            Page<MainPostResponse> mainPostResponses = postService.getMainPosts(postFilterRequest, pageable).map(MainPostResponse::from);
+            Page<MainPostResponse> mainPostResponses = postReadService.getMainPosts(postFilterRequest, pageable).map(MainPostResponse::from);
             MainPostsResponse mainPostsResponses = MainPostsResponse.from(filter,mainPostResponses.getContent(), mainPostResponses.getTotalPages(), mainPostResponses.getTotalElements());
             return ResponseEntity.ok(mainPostsResponses);
 
         }
         log.info("메인 게시글 가져오기 - 로그인 userId = {}", user.getId());
-        Page<MainPostResponse> mainPostResponses = postService.getMainPosts(user.getId(), postFilterRequest, pageable).map(post -> MainPostResponse.from(user.getId(), post));
+        Page<MainPostResponse> mainPostResponses = postReadService.getMainPosts(user.getId(), postFilterRequest, pageable).map(post -> MainPostResponse.from(user.getId(), post));
         MainPostsResponse mainPostsResponses = MainPostsResponse.from(filter,mainPostResponses.getContent(), mainPostResponses.getTotalPages(), mainPostResponses.getTotalElements());
         return ResponseEntity.ok(mainPostsResponses);
-    }
-
-    @Operation(summary = "게시글 삭제")
-    @ApiResponse(responseCode = "204", description = "게시글 삭제 성공")
-    @DeleteMapping("/{postId}")
-    public ResponseEntity<Void> delete(@AuthenticationPrincipal User user, @PathVariable Long postId) {
-        log.info("게시글 삭제 postId = {}", postId);
-        postService.delete(user.getId(), postId);
-        return ResponseEntity.noContent().build();
-    }
-
-    @Operation(summary = "게시글 분양 완료")
-    @ApiResponse(responseCode = "201", description = "게시글 분양 완료 성공", content = @Content(schema = @Schema(implementation = PostCompleteResponse.class)))
-    @PutMapping("/complete/{postId}")
-    public ResponseEntity<PostCompleteResponse> complete(@AuthenticationPrincipal User user, @PathVariable Long postId) {
-        log.info("게시글 분양 완료 postId = {}", postId);
-        postService.complete(user.getId(), postId);
-        return ResponseEntity.status(HttpStatus.CREATED).body(PostCompleteResponse.from(postId));
     }
 
     private static List<String> getFilter(PostFilterRequest postFilterRequest) {

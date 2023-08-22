@@ -6,6 +6,7 @@ import com.ddungja.petmily.post.domain.type.PostStatusType;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface PostRepository {
@@ -17,7 +18,7 @@ public interface PostRepository {
 
     Optional<Post> findById(Long postId);
 
-    Page<Post> getMainPosts(Long userId, PostFilterRequest postFilterRequest, Pageable pageable);
+    Page<Post> getMainPosts(Long userId, PostFilterRequest postFilterRequest, List<Long> reportPostIds, Pageable pageable);
 
     Page<Post> getMainPosts(PostFilterRequest postFilterRequest, Pageable pageable);
 }

@@ -26,14 +26,10 @@ public class ReportService {
     public void reportPost(Long userId, Long postId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new CustomException(USER_NOT_FOUND));
         Post post = postRepository.findById(postId).orElseThrow(() -> new CustomException(POST_NOT_FOUND));
-        if(isReport(user.getId(), post.getId())){
+        if(reportRepository.existsByUserIdAndPostId(userId, postId)){
             throw new CustomException(ALREADY_REPORT);
         }
         post.report();
         reportRepository.save(Report.from(user, post));
-    }
-
-    private boolean isReport(Long userId, Long postId){
-        return reportRepository.existsByUserIdAndPostId(userId, postId);
     }
 }

@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -27,7 +28,8 @@ public class PostRepositoryImpl implements PostRepository {
 
     @Override
     public Page<Post> getMyPost(Long userId, PostStatusType postStatusType, Pageable pageable) {
-        return postJpaRepository.getMyPost(userId, postStatusType, pageable);
+        Page<Post> myPost = postJpaRepository.getMyPost(userId, postStatusType, pageable);
+
     }
 
     @Override
@@ -36,8 +38,8 @@ public class PostRepositoryImpl implements PostRepository {
     }
 
     @Override
-    public Page<Post> getMainPosts(Long userId, PostFilterRequest postFilterRequest, Pageable pageable) {
-        return postJpaRepository.getMainPosts(userId, postFilterRequest, pageable);
+    public Page<Post> getMainPosts(Long userId, PostFilterRequest postFilterRequest, List<Long> reportPostId, Pageable pageable) {
+        return postJpaRepository.getMainPosts(userId, postFilterRequest, reportPostId, pageable);
     }
 
     @Override

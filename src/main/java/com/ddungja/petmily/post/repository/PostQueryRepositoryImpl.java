@@ -29,22 +29,33 @@ public class PostQueryRepositoryImpl implements PostQueryRepository {
 
     @Override
     public Page<Post> getMyPost(Long userId, PostStatusType postStatusType, Pageable pageable) {
-        List<Long> postId = jpaQueryFactory.select(post.id)
-                .from(post)
+//        List<Long> postId = jpaQueryFactory.select(post.id)
+//                .from(post)
+//                .where(post.user.id.eq(userId).and(eqPostStatusType(postStatusType)))
+//                .offset(pageable.getOffset())
+//                .limit(pageable.getPageSize())
+//                .fetch();
+
+        List<Post> content = jpaQueryFactory.selectFrom(post)
+                .join(post.subCategory, subCategory).fetchJoin()
                 .where(post.user.id.eq(userId).and(eqPostStatusType(postStatusType)))
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();
-
-        List<Post> content = jpaQueryFactory.selectFrom(post)
-                .join(post.subCategory, subCategory).fetchJoin()
-                .leftJoin(post.like, like).fetchJoin()
-                .where(post.id.in(postId))
-                .fetch();
-
         JPAQuery<Long> countQuery = jpaQueryFactory.select(post.count())
                 .from(post)
+                .join(post.subCategory, subCategory).fetchJoin()
                 .where(post.user.id.eq(userId).and(eqPostStatusType(postStatusType)));
+
+//        List<Post> content = jpaQueryFactory.selectFrom(post)
+//                .join(post.subCategory, subCategory).fetchJoin()
+//                .leftJoin(post.like, like).fetchJoin()
+//                .where(post.id.in(postId))
+//                .fetch();
+
+//        JPAQuery<Long> countQuery = jpaQueryFactory.select(post.count())
+//                .from(post)
+//                .where(post.user.id.eq(userId).and(eqPostStatusType(postStatusType)));
 
         return PageableExecutionUtils.getPage(content, pageable, countQuery::fetchOne);
     }
@@ -59,7 +70,8 @@ public class PostQueryRepositoryImpl implements PostQueryRepository {
                         .and(eqGenderType(postFilterRequest.getGenderType()))
                         .and(eqNeuteredType(postFilterRequest.getNeuteredType()))
                         .and(eqAgeBetween(postFilterRequest.getAgeFrom(), postFilterRequest.getAgeTo()))
-                        .and(eqMoneyBetween(postFilterRequest.getMoneyFrom(), postFilterRequest.getMoneyTo())))
+                        .and(eqMoneyBetween(postFilterRequest.getMoneyFrom(), postFilterRequest.getMoneyTo()))
+                        .and(eqPostStatusType(PostStatusType.SAVE)))
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();
@@ -85,8 +97,7 @@ public class PostQueryRepositoryImpl implements PostQueryRepository {
     }
 
     @Override
-    public Page<Post> getMainPosts(Long userId, PostFilterRequest postFilterRequest, Pageable pageable) {
-
+    public Page<Post> getMainPosts(Long userId, PostFilterRequest postFilterRequest, List<Long> reportPostIds,  Pageable pageable) {
         List<Long> postId = jpaQueryFactory.select(post.id)
                 .from(post)
                 .where(eqRegion(postFilterRequest.getRegion())
@@ -95,7 +106,9 @@ public class PostQueryRepositoryImpl implements PostQueryRepository {
                         .and(eqGenderType(postFilterRequest.getGenderType()))
                         .and(eqNeuteredType(postFilterRequest.getNeuteredType()))
                         .and(eqAgeBetween(postFilterRequest.getAgeFrom(), postFilterRequest.getAgeTo()))
-                        .and(eqMoneyBetween(postFilterRequest.getMoneyFrom(), postFilterRequest.getMoneyTo())))
+                        .and(eqMoneyBetween(postFilterRequest.getMoneyFrom(), postFilterRequest.getMoneyTo()))
+                        .and(eqPostStatusType(PostStatusType.SAVE))
+                        .and(post.id.notIn(reportPostIds)))
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();
@@ -115,7 +128,10 @@ public class PostQueryRepositoryImpl implements PostQueryRepository {
                         .and(eqGenderType(postFilterRequest.getGenderType()))
                         .and(eqNeuteredType(postFilterRequest.getNeuteredType()))
                         .and(eqAgeBetween(postFilterRequest.getAgeFrom(), postFilterRequest.getAgeTo()))
-                        .and(eqMoneyBetween(postFilterRequest.getMoneyFrom(), postFilterRequest.getMoneyTo())));
+                        .and(eqMoneyBetween(postFilterRequest.getMoneyFrom(), postFilterRequest.getMoneyTo()))
+                        .and(eqPostStatusType(PostStatusType.SAVE))
+                        .and(post.id.notIn(reportPostIds)));
+
         return PageableExecutionUtils.getPage(content, pageable, countQuery::fetchOne);
     }
 
