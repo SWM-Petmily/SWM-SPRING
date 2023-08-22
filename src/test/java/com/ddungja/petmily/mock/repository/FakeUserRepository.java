@@ -57,4 +57,9 @@ public class FakeUserRepository implements UserRepository {
     public Optional<User> findByPhone(String phoneNumber) {
         return data.stream().filter(item -> item.getPhone().equals(phoneNumber)).findAny();
     }
+
+    @Override
+    public boolean existsById(Long userId) {
+        return false;
+    }
 }

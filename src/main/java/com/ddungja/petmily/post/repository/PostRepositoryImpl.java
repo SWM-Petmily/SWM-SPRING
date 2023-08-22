@@ -28,8 +28,7 @@ public class PostRepositoryImpl implements PostRepository {
 
     @Override
     public Page<Post> getMyPost(Long userId, PostStatusType postStatusType, Pageable pageable) {
-        Page<Post> myPost = postJpaRepository.getMyPost(userId, postStatusType, pageable);
-
+        return postJpaRepository.getMyPost(userId, postStatusType, pageable);
     }
 
     @Override
