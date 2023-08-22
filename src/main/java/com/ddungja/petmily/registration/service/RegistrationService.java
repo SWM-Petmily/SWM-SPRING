@@ -44,7 +44,7 @@ public class RegistrationService {
             throw new CustomException(REGISTER_ALREADY_EXISTS);
         }
         RegistrationApiResponse.RegistrationApiItem registerInfo = getRegistrationInfo(registrationCreateRequest);
-        SubCategory petSubcategory = subCategoryRepository.findByName(registerInfo.getKindNm()).orElseGet(() ->
+        SubCategory petSubcategory = subCategoryRepository.findByName(registerInfo.getKindNm().replace(" ", "").trim()).orElseGet(() ->
              subCategoryRepository.save(SubCategory.builder()
                     .name(registerInfo.getKindNm())
                     .mainCategory(mainCategory).build())

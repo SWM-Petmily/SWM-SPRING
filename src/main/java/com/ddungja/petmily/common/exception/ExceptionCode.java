@@ -63,7 +63,15 @@ public enum ExceptionCode {
     CERTIFICATION_PHONE_ALREADY_EXISTS(9003, HttpStatus.BAD_REQUEST, "이미 가입된 휴대전화입니다.", "제목", "메시지", "exclamationmark.circle", "#fa0515"),
     CERTIFICATION_NOT_FOUND(9004, HttpStatus.NOT_FOUND, "인증요청을 찾을 수 없습니다.", "제목", "메시지", "exclamationmark.circle", "#fa0515"),
     CERTIFICATION_NOT_COMPLETE(9005, HttpStatus.BAD_REQUEST, "인증이 완료되지 않았습니다.", "제목", "메시지", "exclamationmark.circle", "#fa0515"),
-    CERTIFICATION_ATTEMPT_EXCEED(9006, HttpStatus.BAD_REQUEST, "인증 시도 횟수를 초과했습니다.", "제목", "메시지", "exclamationmark.circle", "#fa0515");
+    CERTIFICATION_ATTEMPT_EXCEED(9006, HttpStatus.BAD_REQUEST, "인증 시도 횟수를 초과했습니다.", "제목", "메시지", "exclamationmark.circle", "#fa0515"),
+
+    //report
+    ALREADY_REPORT(10001, HttpStatus.BAD_REQUEST, "이미 신고한 게시글입니다.", "제목", "메시지", "exclamationmark.circle", "#fa0515"),
+
+    //like
+    LIKE_NOT_FOUND(11001, HttpStatus.NOT_FOUND, "좋아요를 찾을 수 없습니다.", "제목", "메시지", "exclamationmark.circle", "#fa0515"),
+    LIKE_IS_EXISTS(11002, HttpStatus.BAD_REQUEST, "이미 좋아요를 눌렀습니다.", "제목", "메시지", "exclamationmark.circle", "#fa0515");
+
 
     private final int code;
     private final HttpStatus status;

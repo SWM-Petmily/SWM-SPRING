@@ -154,15 +154,16 @@ public class Post extends BaseTimeEntity {
                 .build();
     }
 
-    public void createThumbnailImage(String thumbnailImage) {
-        this.thumbnailImage = thumbnailImage;
+    public void createThumbnailImage( List<Image> images) {
+        this.thumbnailImage = images.get(0).getUrl();
     }
 
     public void uploadImages(List<Image> uploadImages) {
         this.images = uploadImages;
     }
 
-    public void certifyRegistration() {
+    public void certifyRegistration(Long userId) {
+        matchUser(userId);
         this.isRegistered = CertifiedType.CERTIFIED;
     }
 
@@ -196,8 +197,7 @@ public class Post extends BaseTimeEntity {
     public void report() {
         isDelete();
         reports++;
-        if (reports >= 5)
-            reportPost();
+        if (reports >= 5) reportPost();
     }
 
     private void isDelete() {

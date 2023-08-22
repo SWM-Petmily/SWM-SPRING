@@ -12,6 +12,7 @@ public interface PostQueryRepository {
     Page<Post> getMyPost(Long userId, PostStatusType postStatusType, Pageable pageable);
 
     Page<Post> getMainPosts(PostFilterRequest postStatusType, Pageable pageable);
-    Page<Post> getMainPosts(Long userId,PostFilterRequest postStatusType, Pageable pageable);
+
+    Page<Post> getMainPosts(Long userId, PostFilterRequest postStatusType, List<Long> reportPostIds, Pageable pageable);
 
 }

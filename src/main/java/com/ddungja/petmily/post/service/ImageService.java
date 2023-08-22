@@ -49,6 +49,7 @@ public class ImageService {
         return imageRepository.saveAll(saveImageList);
     }
 
+
     @Transactional
     public void delete(Long imageId) {
         Image image = imageRepository.findById(imageId).orElseThrow(() -> new CustomException(ExceptionCode.IMAGE_NOT_FOUND));
@@ -59,22 +60,19 @@ public class ImageService {
         imageRepository.delete(image);
     }
 
-    private String uploadImage(MultipartFile multipartFile, String fileName, long size, String bucket) throws IOException {
-
+    private String uploadImage(MultipartFile multipartFile,UploadImage uploadImage, String bucket) throws IOException {
         ObjectMetadata objectMetaData = new ObjectMetadata();
         objectMetaData.setContentType(multipartFile.getContentType());
-        objectMetaData.setContentLength(size);
+        objectMetaData.setContentLength(uploadImage.getSize());
         // S3에 업로드
         amazonS3Client.putObject(
-                new PutObjectRequest(bucket, fileName, multipartFile.getInputStream(), objectMetaData)
+                new PutObjectRequest(bucket, uploadImage.getFileName(), multipartFile.getInputStream(), objectMetaData)
                         .withCannedAcl(CannedAccessControlList.PublicRead)
         );
-        return amazonS3Client.getUrl(bucket, fileName).toString(); // 접근가능한 URL 가져오기
+        return amazonS3Client.getUrl(bucket, uploadImage.getFileName()).toString(); // 접근가능한 URL 가져오기
     }
 
-    private boolean isImage(String contentType) {
-        return contentType.equals("image/png") || contentType.equals("image/jpeg") || contentType.equals("image/gif") || contentType.equals("image/webp");
-    }
+
 
     public List<Image> getImages(Long postId, ImageType imageType) {
         return imageRepository.findByPostIdAndImageType(postId, imageType);

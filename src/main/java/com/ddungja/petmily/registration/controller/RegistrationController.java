@@ -37,6 +37,7 @@ public class RegistrationController {
         log.info("반려동물 등록하기 userId = {}", user.getId());
         return ResponseEntity.status(HttpStatus.CREATED).body(RegisterCreateResponse.from(registrationService.register(user.getId(), registrationCreateRequest)));
     }
+
     @Operation(summary = "내가 등록한 반려동물 보기")
     @ApiResponse(responseCode = "200", description = "내가 등록한 반려동물 조회 성공", content = @Content(schema = @Schema(implementation = MyRegistrationsResponse.class)))
     @GetMapping("/myRegister")
@@ -45,6 +46,7 @@ public class RegistrationController {
         List<Registration> registrations= registrationService.getMyRegister(user.getId());
         return ResponseEntity.ok(MyRegistrationsResponse.from(registrations.stream().map(MyRegistrationResponse::from)));
     }
+
     @Operation(summary = "반려동물 삭제하기")
     @ApiResponse(responseCode = "204", description = "반려동물 삭제하기 성공")
     @DeleteMapping("/{registrationId}")

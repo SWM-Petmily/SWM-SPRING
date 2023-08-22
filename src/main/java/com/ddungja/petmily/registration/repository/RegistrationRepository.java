@@ -14,5 +14,5 @@ public interface RegistrationRepository extends JpaRepository<Registration, Long
 
     Optional<Registration> findByRegistrationNumber(String dogRegNo);
     @EntityGraph(attributePaths = {"petSubCategory","petSubCategory.mainCategory"})
-    Optional<Registration> findByIdAndUserId(Long id, Long userId);
+    Optional<Registration> findByIdAndUserId(Long registrationId, Long userId);
 }

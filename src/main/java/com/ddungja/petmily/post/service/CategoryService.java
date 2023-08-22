@@ -21,6 +21,7 @@ public class CategoryService {
     public List<MainCategory> getMainCategory(){
         return mainCategoryRepository.findAll();
     }
+
     public List<SubCategory> getSubCategory(Long categoryId){
         return subCategoryRepository.findByMainCategoryId(categoryId);
     }

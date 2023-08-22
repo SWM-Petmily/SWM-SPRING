@@ -25,7 +25,6 @@ import static com.ddungja.petmily.common.exception.ExceptionCode.USER_NOT_FOUND;
 public class PostReadService {
 
     private final UserRepository userRepository;
-    private final ApplyJpaRepository applyRepository;
     private final PostRepository postRepository;
     private final ReportRepository reportRepository;
 
