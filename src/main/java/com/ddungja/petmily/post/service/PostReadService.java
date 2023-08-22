@@ -1,9 +1,14 @@
 package com.ddungja.petmily.post.service;
 
+import com.ddungja.petmily.apply.service.ApplyService;
 import com.ddungja.petmily.common.exception.CustomException;
-import com.ddungja.petmily.post.controller.response.MyPostListResponse;
+import com.ddungja.petmily.like.service.LikeService;
+import com.ddungja.petmily.post.controller.response.MainPostResponse;
+import com.ddungja.petmily.post.controller.response.PostGetResponse;
+import com.ddungja.petmily.post.domain.Image;
 import com.ddungja.petmily.post.domain.Post;
 import com.ddungja.petmily.post.domain.request.PostFilterRequest;
+import com.ddungja.petmily.post.domain.response.MyPostListResponse;
 import com.ddungja.petmily.post.domain.type.PostStatusType;
 import com.ddungja.petmily.post.service.port.PostRepository;
 import com.ddungja.petmily.report.repository.ReportRepository;
@@ -19,6 +24,7 @@ import java.util.List;
 
 import static com.ddungja.petmily.common.exception.ExceptionCode.POST_NOT_FOUND;
 import static com.ddungja.petmily.common.exception.ExceptionCode.USER_NOT_FOUND;
+import static com.ddungja.petmily.post.domain.type.ImageType.POST;
 
 @Service
 @RequiredArgsConstructor
@@ -29,9 +35,24 @@ public class PostReadService {
     private final PostRepository postRepository;
     private final ReportRepository reportRepository;
 
+    @Transactional
     public Post get(Long postId) {
         return postRepository.findPostById(postId).orElseThrow(() -> new CustomException(POST_NOT_FOUND));
     }
+
+    public PostGetResponse getDetail(User user, Long postId){
+        Post post = postRepository.findPostById(postId).orElseThrow(() -> new CustomException(POST_NOT_FOUND));
+        List<Image> images = imageService.getImages(postId, POST);
+        int likeCount = likeService.getLikeCountByPostId(postId);
+        if(user == null) {
+            return PostGetResponse.from(post, images, likeCount);
+        }
+        if (!userRepository.existsById(user.getId())) throw new CustomException(USER_NOT_FOUND);
+        Boolean isLike = likeService.isLike(user.getId(), postId);
+        Boolean isApply = applyService.isApply(user.getId(), postId);
+        return PostGetResponse.from(user, post, images, isApply, isLike, likeCount);
+    }
+
 
     public Page<MyPostListResponse> getMyPost(Long userId, PostStatusType postStatusType, Pageable pageable) {
         User user = userRepository.findById(userId).orElseThrow(() -> new CustomException(USER_NOT_FOUND));

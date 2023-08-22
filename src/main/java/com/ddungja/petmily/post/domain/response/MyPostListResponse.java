@@ -1,4 +1,4 @@
-package com.ddungja.petmily.post.controller.response;
+package com.ddungja.petmily.post.domain.response;
 
 import com.ddungja.petmily.post.domain.Post;
 import com.ddungja.petmily.post.domain.type.GenderType;

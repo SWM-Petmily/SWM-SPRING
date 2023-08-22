@@ -54,7 +54,6 @@ public class User extends BaseTimeEntity {
         this.profileImage = profileImage;
         this.phone = certification.getPhoneNumber();
         this.isCertification = true;
-
     }
 
     public void update(String nickname, ProfileImage profileImage) {

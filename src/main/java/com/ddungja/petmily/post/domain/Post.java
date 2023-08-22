@@ -216,4 +216,8 @@ public class Post extends BaseTimeEntity {
             throw new CustomException(POST_USER_NOT_MATCH);
         }
     }
+
+    public void addViewCount() {
+        this.views++;
+    }
 }

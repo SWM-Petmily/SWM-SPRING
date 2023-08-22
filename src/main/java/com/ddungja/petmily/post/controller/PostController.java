@@ -1,15 +1,12 @@
 package com.ddungja.petmily.post.controller;
 
 
-import com.ddungja.petmily.apply.service.ApplyService;
-import com.ddungja.petmily.like.service.LikeService;
 import com.ddungja.petmily.post.controller.response.*;
-import com.ddungja.petmily.post.domain.Image;
 import com.ddungja.petmily.post.domain.Post;
 import com.ddungja.petmily.post.domain.request.PostCreateRequest;
 import com.ddungja.petmily.post.domain.request.PostFilterRequest;
+import com.ddungja.petmily.post.domain.response.MyPostListResponse;
 import com.ddungja.petmily.post.domain.type.PostStatusType;
-import com.ddungja.petmily.post.service.ImageService;
 import com.ddungja.petmily.post.service.PostCommandService;
 import com.ddungja.petmily.post.service.PostReadService;
 import com.ddungja.petmily.user.domain.user.User;
@@ -34,8 +31,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.ddungja.petmily.post.domain.type.ImageType.POST;
 
 @Tag(name = "Post", description = "게시글 API")
 @RestController
