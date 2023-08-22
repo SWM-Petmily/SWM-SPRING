@@ -73,7 +73,7 @@ public class FakePostRepository implements PostRepository {
     }
 
     @Override
-    public Page<Post> getMainPosts(Long userId, PostFilterRequest postFilterRequest, Pageable pageable) {
+    public Page<Post> getMainPosts(Long userId, PostFilterRequest postFilterRequest,List<Long> reportPostIds, Pageable pageable) {
         List<Post> content = data.stream().filter(item -> item.getUser().getId().equals(userId)).toList();
         return new PageImpl<>(content, pageable,data.size());
     }

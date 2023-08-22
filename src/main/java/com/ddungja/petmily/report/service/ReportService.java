@@ -32,8 +32,4 @@ public class ReportService {
         post.report();
         reportRepository.save(Report.from(user, post));
     }
-
-    private boolean isReport(Long userId, Long postId){
-        return reportRepository.existsByUserIdAndPostId(userId, postId);
-    }
 }

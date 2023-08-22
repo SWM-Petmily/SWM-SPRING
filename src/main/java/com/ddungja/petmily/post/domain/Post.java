@@ -24,8 +24,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.ddungja.petmily.common.exception.ExceptionCode.POST_STATUS_DELETE;
-import static com.ddungja.petmily.common.exception.ExceptionCode.POST_USER_NOT_MATCH;
+import static com.ddungja.petmily.common.exception.ExceptionCode.*;
 
 
 @Entity
@@ -175,16 +174,21 @@ public class Post extends BaseTimeEntity {
         this.isMedicalChecked = CertifiedType.WAITING;
     }
 
-    public void deletePost() {
+    public void deletePost(Long userId) {
+        matchUser(userId);
+        if (status == PostStatusType.COMPLETE ) {
+            throw new CustomException(POST_STATUS_COMPLETE);
+        }
+        if (status== PostStatusType.REPORT) {
+            throw new CustomException(POST_STATUS_REPORT);
+        }
         this.status = PostStatusType.DELETE;
     }
 
     public void complete(Long userId) {
+        matchUser(userId);
         if(status==PostStatusType.DELETE){
             throw new CustomException(POST_STATUS_DELETE);
-        }
-        if (user.getId().equals(userId)) {
-            throw new CustomException(POST_USER_NOT_MATCH);
         }
         this.status = PostStatusType.COMPLETE;
     }
@@ -206,4 +210,9 @@ public class Post extends BaseTimeEntity {
         this.status = PostStatusType.REPORT;
     }
 
+    public void matchUser(Long userId) {
+        if (user.getId().equals(userId)) {
+            throw new CustomException(POST_USER_NOT_MATCH);
+        }
+    }
 }

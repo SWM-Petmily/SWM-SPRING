@@ -59,7 +59,8 @@ public class PostQueryRepositoryImpl implements PostQueryRepository {
                         .and(eqGenderType(postFilterRequest.getGenderType()))
                         .and(eqNeuteredType(postFilterRequest.getNeuteredType()))
                         .and(eqAgeBetween(postFilterRequest.getAgeFrom(), postFilterRequest.getAgeTo()))
-                        .and(eqMoneyBetween(postFilterRequest.getMoneyFrom(), postFilterRequest.getMoneyTo())))
+                        .and(eqMoneyBetween(postFilterRequest.getMoneyFrom(), postFilterRequest.getMoneyTo()))
+                        .and(eqPostStatusType(PostStatusType.SAVE)))
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();
@@ -95,7 +96,9 @@ public class PostQueryRepositoryImpl implements PostQueryRepository {
                         .and(eqGenderType(postFilterRequest.getGenderType()))
                         .and(eqNeuteredType(postFilterRequest.getNeuteredType()))
                         .and(eqAgeBetween(postFilterRequest.getAgeFrom(), postFilterRequest.getAgeTo()))
-                        .and(eqMoneyBetween(postFilterRequest.getMoneyFrom(), postFilterRequest.getMoneyTo())))
+                        .and(eqMoneyBetween(postFilterRequest.getMoneyFrom(), postFilterRequest.getMoneyTo()))
+                        .and(eqPostStatusType(PostStatusType.SAVE))
+                        .and(post.id.notIn(reportPostIds)))
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();

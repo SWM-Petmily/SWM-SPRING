@@ -9,6 +9,7 @@ import com.ddungja.petmily.common.exception.CustomException;
 import com.ddungja.petmily.common.exception.ExceptionCode;
 import com.ddungja.petmily.post.domain.Image;
 import com.ddungja.petmily.post.domain.Post;
+import com.ddungja.petmily.post.domain.UploadImage;
 import com.ddungja.petmily.post.domain.type.ImageType;
 import com.ddungja.petmily.post.repository.ImageRepository;
 import lombok.RequiredArgsConstructor;
@@ -21,8 +22,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -39,17 +38,13 @@ public class ImageService {
     public List<Image> upload(Post post, List<MultipartFile> multipartFiles, ImageType imageType) throws IOException {
         List<Image> saveImageList = new ArrayList<>();
         for (MultipartFile image : multipartFiles) {
-            String fileName = UUID.randomUUID() + "-" + image.getOriginalFilename(); // 파일 이름
-            long size = image.getSize(); // 파일 크기
-            log.debug("fileName: {}, size: {}, contentType: {}", fileName, size, image.getContentType());
-            if (isImage(Objects.requireNonNull(image.getContentType()))) {
-                String url = uploadImage(image, fileName, size, bucket);
+                UploadImage uploadImage = new UploadImage(image);
+                String url = uploadImage(image, uploadImage, bucket);
                 saveImageList.add(Image.builder()
                         .imageType(imageType)
                         .post(post)
                         .url(url)
                         .build());
-            }
         }
         return imageRepository.saveAll(saveImageList);
     }
