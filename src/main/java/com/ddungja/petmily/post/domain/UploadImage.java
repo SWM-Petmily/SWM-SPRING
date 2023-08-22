@@ -27,7 +27,7 @@ public class UploadImage {
         if(Objects.equals(contentType, "image/png") || Objects.equals(contentType, "image/jpeg") || Objects.equals(contentType, "image/gif") || Objects.equals(contentType, "image/webp")){
             return;
         }
-        throw new CustomException(ExceptionCode.IMAGE_NOT_FOUND);
+        throw new CustomException(ExceptionCode.IMAGE_NOT_ALLOWED);
     }
 
 }
