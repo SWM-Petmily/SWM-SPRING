@@ -82,7 +82,7 @@ public class PostController {
     @GetMapping("/user")
     public ResponseEntity<Page<MyPostListResponse>> getMyPost(@AuthenticationPrincipal User user, PostStatusType status, Pageable pageable) {
         log.info("내가 작성한 게시글 가져오기 userId = {}", user.getId());
-        return ResponseEntity.ok(postReadService.getMyPost(user.getId(), status, pageable).map(MyPostListResponse::from));
+        return ResponseEntity.ok(postReadService.getMyPost(user.getId(), status, pageable));
     }
 
 

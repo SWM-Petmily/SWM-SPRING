@@ -42,9 +42,9 @@ public class PostQueryRepositoryImpl implements PostQueryRepository {
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();
+
         JPAQuery<Long> countQuery = jpaQueryFactory.select(post.count())
                 .from(post)
-                .join(post.subCategory, subCategory).fetchJoin()
                 .where(post.user.id.eq(userId).and(eqPostStatusType(postStatusType)));
 
 //        List<Post> content = jpaQueryFactory.selectFrom(post)

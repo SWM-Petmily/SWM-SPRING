@@ -1,6 +1,7 @@
 package com.ddungja.petmily.post.service;
 
 import com.ddungja.petmily.common.exception.CustomException;
+import com.ddungja.petmily.post.controller.response.MyPostListResponse;
 import com.ddungja.petmily.post.domain.Post;
 import com.ddungja.petmily.post.domain.request.PostFilterRequest;
 import com.ddungja.petmily.post.domain.type.PostStatusType;
@@ -32,9 +33,9 @@ public class PostReadService {
         return postRepository.findPostById(postId).orElseThrow(() -> new CustomException(POST_NOT_FOUND));
     }
 
-    public Page<Post> getMyPost(Long userId, PostStatusType postStatusType, Pageable pageable) {
+    public Page<MyPostListResponse> getMyPost(Long userId, PostStatusType postStatusType, Pageable pageable) {
         User user = userRepository.findById(userId).orElseThrow(() -> new CustomException(USER_NOT_FOUND));
-        return postRepository.getMyPost(user.getId(), postStatusType, pageable);
+        return postRepository.getMyPost(user.getId(), postStatusType, pageable).map(MyPostListResponse::from);
     }
 
     public Page<Post> getMainPosts(Long userId, PostFilterRequest postFilterRequest, Pageable pageable) {
