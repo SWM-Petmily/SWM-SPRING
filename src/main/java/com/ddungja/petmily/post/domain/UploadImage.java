@@ -20,12 +20,14 @@ public class UploadImage {
         isImage(Objects.requireNonNull(image.getContentType()));
         this.fileName = UUID.randomUUID() + "-" + image.getOriginalFilename(); // 파일 이름
         this.size = image.getSize(); // 파일 크기
-        log.debug("fileName: {}, size: {}, contentType: {}", fileName, size, image.getContentType());
+        log.info("fileName: {}, size: {}, contentType: {}", fileName, size, image.getContentType());
     }
 
     private void isImage(String contentType) {
-        if(contentType != "image/png" || contentType != "image/jpeg" || contentType != "image/gif" || contentType != "image/webp"){
-            throw new CustomException(ExceptionCode.IMAGE_NOT_FOUND);
+        if(Objects.equals(contentType, "image/png") || Objects.equals(contentType, "image/jpeg") || Objects.equals(contentType, "image/gif") || Objects.equals(contentType, "image/webp")){
+            return;
         }
+        throw new CustomException(ExceptionCode.IMAGE_NOT_FOUND);
     }
+
 }

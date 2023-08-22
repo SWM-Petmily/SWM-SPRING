@@ -56,6 +56,7 @@ public enum ExceptionCode {
     //image
     S3_IMAGE_NOT_FOUND(8001, HttpStatus.NOT_FOUND, "S3 이미지를 찾을 수 없습니다.", "제목", "메시지", "exclamationmark.circle", "#fa0515"),
     IMAGE_NOT_FOUND(8002, HttpStatus.NOT_FOUND, "이미지를 찾을 수 없습니다.", "제목", "메시지", "exclamationmark.circle", "#fa0515"),
+    IMAGE_NOT_ALLOW(8003, HttpStatus.BAD_REQUEST, "유효하지 않는 이미지 형식입니다.", "제목", "메시지", "exclamationmark.circle", "#fa0515"),
 
     //certification
     CERTIFICATION_NUMBER_EXPIRED(9001, HttpStatus.BAD_REQUEST, "인증번호가 만료되었습니다.", "제목", "메시지", "exclamationmark.circle", "#fa0515"),

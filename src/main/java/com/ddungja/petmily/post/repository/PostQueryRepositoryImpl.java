@@ -29,13 +29,6 @@ public class PostQueryRepositoryImpl implements PostQueryRepository {
 
     @Override
     public Page<Post> getMyPost(Long userId, PostStatusType postStatusType, Pageable pageable) {
-//        List<Long> postId = jpaQueryFactory.select(post.id)
-//                .from(post)
-//                .where(post.user.id.eq(userId).and(eqPostStatusType(postStatusType)))
-//                .offset(pageable.getOffset())
-//                .limit(pageable.getPageSize())
-//                .fetch();
-
         List<Post> content = jpaQueryFactory.selectFrom(post)
                 .join(post.subCategory, subCategory).fetchJoin()
                 .where(post.user.id.eq(userId).and(eqPostStatusType(postStatusType)))
@@ -46,16 +39,6 @@ public class PostQueryRepositoryImpl implements PostQueryRepository {
         JPAQuery<Long> countQuery = jpaQueryFactory.select(post.count())
                 .from(post)
                 .where(post.user.id.eq(userId).and(eqPostStatusType(postStatusType)));
-
-//        List<Post> content = jpaQueryFactory.selectFrom(post)
-//                .join(post.subCategory, subCategory).fetchJoin()
-//                .leftJoin(post.like, like).fetchJoin()
-//                .where(post.id.in(postId))
-//                .fetch();
-
-//        JPAQuery<Long> countQuery = jpaQueryFactory.select(post.count())
-//                .from(post)
-//                .where(post.user.id.eq(userId).and(eqPostStatusType(postStatusType)));
 
         return PageableExecutionUtils.getPage(content, pageable, countQuery::fetchOne);
     }
