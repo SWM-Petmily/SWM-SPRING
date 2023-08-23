@@ -2,8 +2,6 @@ package com.ddungja.petmily.registration.domain;
 
 
 import com.ddungja.petmily.common.domain.BaseTimeEntity;
-import com.ddungja.petmily.common.exception.CustomException;
-import com.ddungja.petmily.common.exception.ExceptionCode;
 import com.ddungja.petmily.post.domain.SubCategory;
 import com.ddungja.petmily.post.domain.type.GenderType;
 import com.ddungja.petmily.post.domain.type.NeuteredType;
@@ -66,9 +64,4 @@ public class Registration extends BaseTimeEntity {
                 .build();
     }
 
-    public void matchUser(Long userId) {
-        if(this.user.getId().equals(userId)){
-            throw new CustomException(ExceptionCode.REGISTER_NOT_FOUND);
-        }
-    }
 }

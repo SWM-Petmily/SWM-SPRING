@@ -887,3 +887,5 @@ INSERT INTO registration (pet_gender, pet_name, pet_neutered, registration_numbe
 ('MALE', '뚱이', 'YES', '432423423', '1', '1'),
 ('MALE', '뚱이', 'YES', '432423423', '1', '1'),
 ('MALE', '뚱이', 'YES', '432423423', '1', '1');
+
+

@@ -87,6 +87,7 @@ public class Apply extends BaseTimeEntity {
                 .isExperience(applyCreateRequest.getIsExperience())
                 .url(applyCreateRequest.getUrl())
                 .applyExperiences(ApplyExperience.from(applyCreateRequest.getExperiences()))
+                .seller(post.getUser())
                 .build();
 
     }

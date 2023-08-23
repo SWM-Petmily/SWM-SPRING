@@ -1,15 +1,12 @@
 package com.ddungja.petmily.post.controller;
 
 
-import com.ddungja.petmily.apply.service.ApplyService;
-import com.ddungja.petmily.like.service.LikeService;
 import com.ddungja.petmily.post.controller.response.*;
-import com.ddungja.petmily.post.domain.Image;
 import com.ddungja.petmily.post.domain.Post;
 import com.ddungja.petmily.post.domain.request.PostCreateRequest;
 import com.ddungja.petmily.post.domain.request.PostFilterRequest;
+import com.ddungja.petmily.post.domain.response.MyPostListResponse;
 import com.ddungja.petmily.post.domain.type.PostStatusType;
-import com.ddungja.petmily.post.service.ImageService;
 import com.ddungja.petmily.post.service.PostCommandService;
 import com.ddungja.petmily.post.service.PostReadService;
 import com.ddungja.petmily.user.domain.user.User;
@@ -35,8 +32,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.ddungja.petmily.post.domain.type.ImageType.POST;
-
 @Tag(name = "Post", description = "게시글 API")
 @RestController
 @RequiredArgsConstructor
@@ -46,9 +41,6 @@ public class PostController {
 
     private final PostReadService postReadService;
     private final PostCommandService postCommandService;
-    private final LikeService likeService;
-    private final ApplyService applyService;
-    private final ImageService imageService;
 
     @Operation(summary = "게시글 등록")
     @ApiResponse(responseCode = "201", description = "게시글 등록 성공", content = @Content(schema = @Schema(implementation = PostCreateResponse.class)))
@@ -66,15 +58,7 @@ public class PostController {
     @GetMapping("/{postId}")
     public ResponseEntity<PostGetResponse> getSubCategory(@AuthenticationPrincipal User user, @PathVariable Long postId) {
         log.info("게시글 상세보기 postId = {}", postId);
-        Post post = postReadService.get(postId);
-        List<Image> images = imageService.getImages(postId, POST);
-        int likeCount = likeService.getLikeCountByPostId(postId);
-        if(user == null) {
-            return ResponseEntity.ok(PostGetResponse.from(post, images, likeCount));
-        }
-        Boolean isLike = likeService.isLike(user.getId(), postId);
-        Boolean isApply = applyService.isApply(user.getId(), postId);
-        return ResponseEntity.ok(PostGetResponse.from(user, post, images, isApply, isLike, likeCount));
+        return ResponseEntity.ok(postReadService.getDetail(user, postId));
     }
 
     @Operation(summary = "내가 작성한 게시글 가져오기")
@@ -117,7 +101,7 @@ public class PostController {
 
         }
         log.info("메인 게시글 가져오기 - 로그인 userId = {}", user.getId());
-        Page<MainPostResponse> mainPostResponses = postReadService.getMainPosts(user.getId(), postFilterRequest, pageable).map(post -> MainPostResponse.from(user.getId(), post));
+        Page<MainPostResponse> mainPostResponses = postReadService.getMainPosts(user.getId(), postFilterRequest, pageable);
         MainPostsResponse mainPostsResponses = MainPostsResponse.from(filter,mainPostResponses.getContent(), mainPostResponses.getTotalPages(), mainPostResponses.getTotalElements());
         return ResponseEntity.ok(mainPostsResponses);
     }

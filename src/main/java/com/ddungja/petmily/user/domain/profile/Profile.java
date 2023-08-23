@@ -38,7 +38,7 @@ public class Profile extends BaseTimeEntity {
     private ProfileImage profileImage;
 
     @JoinColumn(name = "user_id")
-    @OneToOne
+    @OneToOne(fetch =  FetchType.LAZY)
     private User user;
 
     @OneToMany(mappedBy = "profile", cascade = CascadeType.ALL, orphanRemoval = true)

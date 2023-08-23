@@ -17,7 +17,6 @@ import org.springframework.util.StringUtils;
 
 import java.util.List;
 
-import static com.ddungja.petmily.like.domain.QLike.like;
 import static com.ddungja.petmily.post.domain.QMainCategory.mainCategory;
 import static com.ddungja.petmily.post.domain.QPost.post;
 import static com.ddungja.petmily.post.domain.QSubCategory.subCategory;
@@ -45,8 +44,9 @@ public class PostQueryRepositoryImpl implements PostQueryRepository {
 
     @Override
     public Page<Post> getMainPosts(PostFilterRequest postFilterRequest, Pageable pageable) {
-        List<Long> postId = jpaQueryFactory.select(post.id)
-                .from(post)
+        List<Post> content = jpaQueryFactory.selectFrom(post)
+                .join(post.subCategory, subCategory).fetchJoin()
+                .join(post.mainCategory, mainCategory).fetchJoin()
                 .where(eqRegion(postFilterRequest.getRegion())
                         .and(eqMainCategory(postFilterRequest.getMainCategory()))
                         .and(eqSubCategory(postFilterRequest.getSubCategory()))
@@ -57,12 +57,6 @@ public class PostQueryRepositoryImpl implements PostQueryRepository {
                         .and(eqPostStatusType(PostStatusType.SAVE)))
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
-                .fetch();
-
-        List<Post> content = jpaQueryFactory.selectFrom(post)
-                .join(post.subCategory, subCategory).fetchJoin()
-                .join(post.mainCategory, mainCategory)
-                .where(post.id.in(postId))
                 .fetch();
 
         JPAQuery<Long> countQuery = jpaQueryFactory.select(post.count())
@@ -76,13 +70,15 @@ public class PostQueryRepositoryImpl implements PostQueryRepository {
                         .and(eqNeuteredType(postFilterRequest.getNeuteredType()))
                         .and(eqAgeBetween(postFilterRequest.getAgeFrom(), postFilterRequest.getAgeTo()))
                         .and(eqMoneyBetween(postFilterRequest.getMoneyFrom(), postFilterRequest.getMoneyTo())));
+
         return PageableExecutionUtils.getPage(content, pageable, countQuery::fetchOne);
     }
 
     @Override
     public Page<Post> getMainPosts(Long userId, PostFilterRequest postFilterRequest, List<Long> reportPostIds,  Pageable pageable) {
-        List<Long> postId = jpaQueryFactory.select(post.id)
-                .from(post)
+        List<Post> content = jpaQueryFactory.selectFrom(post)
+                .join(post.subCategory, subCategory).fetchJoin()
+                .join(post.mainCategory, mainCategory).fetchJoin()
                 .where(eqRegion(postFilterRequest.getRegion())
                         .and(eqMainCategory(postFilterRequest.getMainCategory()))
                         .and(eqSubCategory(postFilterRequest.getSubCategory()))
@@ -94,13 +90,6 @@ public class PostQueryRepositoryImpl implements PostQueryRepository {
                         .and(post.id.notIn(reportPostIds)))
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
-                .fetch();
-
-        List<Post> content = jpaQueryFactory.selectFrom(post)
-                .leftJoin(post.like, like).fetchJoin()
-                .join(post.subCategory, subCategory).fetchJoin()
-                .join(post.mainCategory, mainCategory)
-                .where(post.id.in(postId))
                 .fetch();
 
         JPAQuery<Long> countQuery = jpaQueryFactory.select(post.count())
