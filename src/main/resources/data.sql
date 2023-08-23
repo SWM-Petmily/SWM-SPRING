@@ -882,3 +882,8 @@ insert into apply_experiences(apply_experience_id, apply_id, species, period, cr
 (default, 3, '리트리버', 6, now(), now());
 
 
+-- registration
+INSERT INTO registration (pet_gender, pet_name, pet_neutered, registration_number, sub_category_id, user_id) VALUES
+('MALE', '뚱이', 'YES', '432423423', '1', '1'),
+('MALE', '뚱이', 'YES', '432423423', '1', '1'),
+('MALE', '뚱이', 'YES', '432423423', '1', '1');
