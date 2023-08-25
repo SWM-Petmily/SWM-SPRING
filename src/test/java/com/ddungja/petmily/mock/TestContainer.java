@@ -9,6 +9,7 @@ import com.ddungja.petmily.like.service.port.LikeRepository;
 import com.ddungja.petmily.mock.repository.*;
 import com.ddungja.petmily.post.service.port.PostRepository;
 import com.ddungja.petmily.user.controller.UserController;
+import com.ddungja.petmily.user.service.CertificationAttemptService;
 import com.ddungja.petmily.user.service.CertificationService;
 import com.ddungja.petmily.user.service.UserService;
 import com.ddungja.petmily.user.service.port.CertificationAttemptRepository;
@@ -30,6 +31,7 @@ public class TestContainer {
     public final LikeService likeService;
     public final CertificationService certificationService;
     public final UserController userController;
+    public final CertificationAttemptService certificationAttemptService;
 
     public final ExpireTimeHolder expireTimeHolder;
 
@@ -43,6 +45,9 @@ public class TestContainer {
         applyRepository = new FakeApplyRepository();
         profileImageRepository = new FakeProfileImageRepository();
         certificationAttemptRepository = new FakeCertificationAttemptRepository();
+        certificationAttemptService = CertificationAttemptService.builder()
+                .certificationAttemptRepository(certificationAttemptRepository)
+                .build();
         applyService = ApplyService.builder()
                 .applyRepository(applyRepository)
                 .postRepository(postRepository)
@@ -58,7 +63,7 @@ public class TestContainer {
                 .certificationRepository(certificationRepository)
                 .environment(new FakeEnvironment())
                 .certificationRepository(certificationRepository)
-                .certificationAttemptRepository(certificationAttemptRepository)
+                .certificationAttemptService(certificationAttemptService)
                 .build();
         userService = UserService.builder()
                 .certificationRepository(certificationRepository)

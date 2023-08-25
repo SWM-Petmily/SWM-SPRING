@@ -32,6 +32,6 @@ public class FakeCertificationAttemptRepository implements CertificationAttemptR
 
     @Override
     public Optional<CertificationAttempt> findByUserIdAndLastAttemptDate(Long userId, LocalDate attemptDate) {
-        return data.stream().filter(item -> item.getUser().getId().equals(userId) && item.getLastAttemptDate().equals(attemptDate)).findFirst();
+        return data.stream().filter(item -> item.getUser().getId().equals(userId) && item.getLastAttemptDate().equals(attemptDate)).findAny();
     }
 }
