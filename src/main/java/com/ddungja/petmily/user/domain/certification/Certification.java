@@ -42,9 +42,7 @@ public class Certification {
         this.user = user;
     }
 
-    public void certificate() {
-        this.isCertification = true;
-    }
+
 
     public void verify(CertificationVerifyRequest certificationPhoneVerifyRequest) {
         if (!certificationNumber.equals(certificationPhoneVerifyRequest.getCertificationNumber())) {
@@ -56,14 +54,10 @@ public class Certification {
         if (expiredAt.isBefore(LocalDateTime.now())) {
             throw new CustomException(CERTIFICATION_NUMBER_EXPIRED);
         }
+        certificate();
     }
 
-    public void signUpVerify() {
-        if (!isCertification) {
-            throw new CustomException(CERTIFICATION_NOT_COMPLETE);
-        }
-        if (user.isCertification()) {
-            throw new CustomException(USER_ALREADY_CERTIFICATION);
-        }
+    private void certificate() {
+        this.isCertification = true;
     }
 }

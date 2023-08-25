@@ -1,9 +1,8 @@
 package com.ddungja.petmily.user.service;
 
 import com.ddungja.petmily.common.exception.CustomException;
-import com.ddungja.petmily.common.infra.SystemClockHolder;
+import com.ddungja.petmily.common.service.ExpireTimeHolder;
 import com.ddungja.petmily.user.domain.certification.Certification;
-import com.ddungja.petmily.user.domain.certification.CertificationAttempt;
 import com.ddungja.petmily.user.domain.request.CertificationPhoneNumberRequest;
 import com.ddungja.petmily.user.domain.request.CertificationVerifyRequest;
 import com.ddungja.petmily.user.domain.user.User;
@@ -21,8 +20,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.security.SecureRandom;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Objects;
 
 import static com.ddungja.petmily.common.exception.ExceptionCode.*;
@@ -34,13 +31,19 @@ public class CertificationService {
     private final UserRepository userRepository;
     private final CertificationRepository certificationRepository;
     private final CertificationAttemptRepository certificationAttemptRepository;
+    private final CertificationAttemptService certificationAttemptService;
+
+
+    private final ExpireTimeHolder expireTimeHolder;
 
     @Builder
-    public CertificationService(Environment environment, UserRepository userRepository, CertificationRepository certificationRepository, CertificationAttemptRepository certificationAttemptRepository) {
+    public CertificationService(Environment environment, UserRepository userRepository, CertificationRepository certificationRepository, CertificationAttemptRepository certificationAttemptRepository, CertificationAttemptService certificationAttemptService, ExpireTimeHolder expireTimeHolder) {
         this.messageService = new DefaultMessageService(Objects.requireNonNull(environment.getProperty("coolsms.apiKey")), Objects.requireNonNull(environment.getProperty("coolsms.apiSecretKey")), "https://api.coolsms.co.kr");
         this.userRepository = userRepository;
         this.certificationRepository = certificationRepository;
         this.certificationAttemptRepository = certificationAttemptRepository;
+        this.certificationAttemptService = certificationAttemptService;
+        this.expireTimeHolder = expireTimeHolder;
     }
 
     @Transactional
@@ -57,11 +60,12 @@ public class CertificationService {
         log.info("인증번호 userId = {}, phoneNumber = {}, certificationNumber = {}", userId, phoneNumber, certificationNumber);
         SingleMessageSentResponse coolsmsResponse = sendCertificationNumber(phoneNumber, certificationNumber);
         log.info("coolsms 요청 response = {}", coolsmsResponse);
-        certificationAttemptRepository.save(increaseAttempt(user));
+
+        certificationAttemptService.attempt(user);
         certificationRepository.save(Certification.builder()
                 .phoneNumber(phoneNumber)
                 .user(user)
-                .expiredAt(new SystemClockHolder().expireAt())
+                .expiredAt(expireTimeHolder.millis())
                 .isCertification(false)
                 .certificationNumber(certificationNumber)
                 .build());
@@ -78,11 +82,11 @@ public class CertificationService {
         }
         String certificationNumber = "123456";
         log.info("인증번호 userId = {}, phoneNumber = {}, certificationNumber = {}", userId, certificationPhoneNumberRequest.getPhoneNumber(), certificationNumber);
-        certificationAttemptRepository.save(increaseAttempt(user));
+        certificationAttemptService.attempt(user);
         certificationRepository.save(Certification.builder()
                 .phoneNumber(certificationPhoneNumberRequest.getPhoneNumber())
                 .user(user)
-                .expiredAt(LocalDateTime.now().plusMinutes(3))
+                .expiredAt(expireTimeHolder.millis())
                 .isCertification(false)
                 .certificationNumber(certificationNumber)
                 .build());
@@ -97,7 +101,6 @@ public class CertificationService {
         }
         Certification certification = certificationRepository.findFirstByUserIdOrderByIdDesc(user.getId()).orElseThrow(() -> new CustomException(CERTIFICATION_NOT_FOUND));
         certification.verify(certificationPhoneVerifyRequest);
-        certification.certificate();
     }
 
     private SingleMessageSentResponse sendCertificationNumber(String phoneNumber, String certificationNumber) {
@@ -116,17 +119,4 @@ public class CertificationService {
         }
         return certificationNumber.toString();
     }
-
-    private CertificationAttempt increaseAttempt(User user) {
-        CertificationAttempt certificationAttempt = certificationAttemptRepository.findByUserIdAndLastAttemptDate(user.getId(), LocalDate.now()).orElseGet(() -> CertificationAttempt
-                .builder()
-                .lastAttemptDate(LocalDate.now())
-                .user(user)
-                .attemptCount(0)
-                .build());
-        certificationAttempt.attempt();
-        return certificationAttempt;
-    }
-
-
 }
