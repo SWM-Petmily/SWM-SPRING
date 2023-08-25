@@ -85,11 +85,6 @@ class UserServiceTest {
                 .url("https://test.com")
                 .build());
 
-        ProfileImage profileImage3 = testContainer.profileImageRepository.save(ProfileImage.builder()
-                .url("https://test.com")
-                .build());
-
-
         User user = testContainer.userRepository.save(User.builder()
                 .nickname("닉네임")
                 .profileImage(profileImage1)

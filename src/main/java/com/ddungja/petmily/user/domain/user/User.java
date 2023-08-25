@@ -2,6 +2,7 @@ package com.ddungja.petmily.user.domain.user;
 
 
 import com.ddungja.petmily.common.domain.BaseTimeEntity;
+import com.ddungja.petmily.common.exception.CustomException;
 import com.ddungja.petmily.user.domain.certification.Certification;
 import com.ddungja.petmily.user.domain.profile.ProfileImage;
 import com.ddungja.petmily.user.domain.request.UserCreateRequest;
@@ -10,6 +11,9 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import static com.ddungja.petmily.common.exception.ExceptionCode.CERTIFICATION_NOT_COMPLETE;
+import static com.ddungja.petmily.common.exception.ExceptionCode.USER_ALREADY_CERTIFICATION;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -50,6 +54,12 @@ public class User extends BaseTimeEntity {
     }
 
     public void signUp(UserCreateRequest userCreateRequest, Certification certification, ProfileImage profileImage) {
+        if (!certification.isCertification()) {
+            throw new CustomException(CERTIFICATION_NOT_COMPLETE);
+        }
+        if (isCertification) {
+            throw new CustomException(USER_ALREADY_CERTIFICATION);
+        }
         this.nickname = userCreateRequest.getNickname();
         this.profileImage = profileImage;
         this.phone = certification.getPhoneNumber();

@@ -55,7 +55,6 @@ public class UserService {
         ProfileImage profileImage = profileImageRepository.findById(1L).orElseThrow(() -> new CustomException(PROFILE_IMAGE_NOT_FOUND));
         User user = userRepository.findById(userId).orElseThrow(() -> new CustomException(USER_NOT_FOUND));
         Certification certification = certificationRepository.findFirstByUserIdOrderByIdDesc(user.getId()).orElseThrow(() -> new CustomException(ExceptionCode.CERTIFICATION_NOT_FOUND));
-        certification.signUpVerify();
         user.signUp(userCreateRequest, certification, profileImage);
     }
 
