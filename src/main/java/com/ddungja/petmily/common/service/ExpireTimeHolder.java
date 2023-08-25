@@ -2,8 +2,8 @@ package com.ddungja.petmily.common.service;
 
 import java.time.LocalDateTime;
 
-public interface ClockHolder {
+public interface ExpireTimeHolder {
 
-    LocalDateTime expireAt();
+    LocalDateTime millis();
 
 }

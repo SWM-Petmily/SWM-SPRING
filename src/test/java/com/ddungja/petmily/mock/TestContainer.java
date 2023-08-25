@@ -3,6 +3,7 @@ package com.ddungja.petmily.mock;
 import com.ddungja.petmily.apply.service.ApplyService;
 import com.ddungja.petmily.apply.service.port.ApplyRepository;
 import com.ddungja.petmily.common.jwt.JwtProvider;
+import com.ddungja.petmily.common.service.ExpireTimeHolder;
 import com.ddungja.petmily.like.service.LikeService;
 import com.ddungja.petmily.like.service.port.LikeRepository;
 import com.ddungja.petmily.mock.repository.*;
@@ -30,9 +31,11 @@ public class TestContainer {
     public final CertificationService certificationService;
     public final UserController userController;
 
+    public final ExpireTimeHolder expireTimeHolder;
 
     @Builder
     public TestContainer() {
+        expireTimeHolder = new TestExpireTimeHolder(3);
         certificationRepository = new FakeCertificationRepository();
         userRepository = new FakeUserRepository();
         postRepository = new FakePostRepository();
@@ -51,6 +54,7 @@ public class TestContainer {
                 .userRepository(userRepository)
                 .build();
         certificationService = CertificationService.builder()
+                .expireTimeHolder(expireTimeHolder)
                 .certificationRepository(certificationRepository)
                 .environment(new FakeEnvironment())
                 .certificationRepository(certificationRepository)
