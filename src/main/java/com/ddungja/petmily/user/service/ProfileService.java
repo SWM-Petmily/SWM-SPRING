@@ -10,8 +10,8 @@ import com.ddungja.petmily.user.domain.request.MyProfileCreateRequest;
 import com.ddungja.petmily.user.domain.request.ProfileUpdateRequest;
 import com.ddungja.petmily.user.repository.ExperienceRepository;
 import com.ddungja.petmily.user.repository.ProfileImageJpaRepository;
-import com.ddungja.petmily.user.repository.ProfileRepository;
 import com.ddungja.petmily.user.repository.UserJpaRepository;
+import com.ddungja.petmily.user.service.port.ProfileRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -38,9 +38,7 @@ public class ProfileService {
         if (user.isProfile()) throw new CustomException(PROFILE_ALREADY_EXISTS);
         ProfileImage profileImage = profileImageRepository.findById(profileCreateRequest.getProfileImageId()).orElseThrow(() -> new CustomException(PROFILE_IMAGE_NOT_FOUND));
         Profile profile = Profile.from(profileCreateRequest, profileImage, user);
-        if (profileCreateRequest.getIsExperience()) {
-            profileCreateRequest.getExperiences().forEach(experience -> profile.add(Experience.from(experience, profile)));
-        }
+
         profileRepository.save(profile);
         user.createProfile();
         return profile;
@@ -52,7 +50,7 @@ public class ProfileService {
         ProfileImage profileImage = profileImageRepository.findById(profileUpdateRequest.getProfileImageId()).orElseThrow(() -> new CustomException(PROFILE_IMAGE_NOT_FOUND));
         profile.update(profileUpdateRequest, profileImage);
         profile.deleteExperiences();
-        if (profileUpdateRequest.getIsExperience()) {
+        if (!profileUpdateRequest.getExperiences().isEmpty()) {
             profileUpdateRequest.getExperiences().forEach(experience -> experienceRepository.save(Experience.from(experience, profile)));
         }
         return profile;

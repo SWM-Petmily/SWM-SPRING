@@ -2,16 +2,15 @@ package com.ddungja.petmily.user.domain.profile;
 
 
 import com.ddungja.petmily.common.domain.BaseTimeEntity;
-import com.ddungja.petmily.user.domain.user.User;
 import com.ddungja.petmily.user.domain.request.MyProfileCreateRequest;
 import com.ddungja.petmily.user.domain.request.ProfileUpdateRequest;
+import com.ddungja.petmily.user.domain.user.User;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,14 +37,14 @@ public class Profile extends BaseTimeEntity {
     private ProfileImage profileImage;
 
     @JoinColumn(name = "user_id")
-    @OneToOne(fetch =  FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     private User user;
 
     @OneToMany(mappedBy = "profile", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Experience> experiences = new ArrayList<>();
 
     @Builder
-    public Profile(Long id, String job, String environment, int people, String comment, String openTalk, String region, boolean isExperience, User user, List<Experience> experiences, ProfileImage profileImage, LocalDateTime createDate, LocalDateTime updateDate) {
+    public Profile(Long id, String job, String environment, int people, String comment, String openTalk, String region, boolean isExperience, User user, List<Experience> experiences, ProfileImage profileImage) {
         this.id = id;
         this.job = job;
         this.environment = environment;
@@ -57,16 +56,12 @@ public class Profile extends BaseTimeEntity {
         this.experiences = experiences;
         this.user = user;
         this.profileImage = profileImage;
-        this.createDate = createDate;
-        this.updateDate = updateDate;
     }
 
-    public void add(Experience experience) {
-        experiences.add(experience);
-    }
+
 
     public static Profile from(MyProfileCreateRequest profileCreateRequest, ProfileImage profileImage, User user) {
-        return Profile.builder()
+        Profile profile = Profile.builder()
                 .job(profileCreateRequest.getJob())
                 .environment(profileCreateRequest.getEnvironment())
                 .people(profileCreateRequest.getPeople())
@@ -78,7 +73,13 @@ public class Profile extends BaseTimeEntity {
                 .profileImage(profileImage)
                 .user(user)
                 .build();
-
+        if (profileCreateRequest.getIsExperience().equals(Boolean.TRUE)) {
+            profileCreateRequest.getExperiences().forEach(experience -> profile.addExperience(Experience.from(experience, profile)));
+        }
+        return profile;
+    }
+    private void addExperience(Experience experience) {
+        experiences.add(experience);
     }
 
     public void update(ProfileUpdateRequest profileUpdateRequest, ProfileImage profileImage) {

@@ -18,7 +18,8 @@ public class FakeApplyRepository implements ApplyRepository {
 
     @Override
     public Page<Apply> findBySellerIdAndPostId(Long sellerId, Long postId, Pageable pageable) {
-        return null;
+        List<Apply> content = data.stream().filter(item -> item.getSeller().getId().equals(sellerId) && item.getPost().getId().equals(postId)).toList();
+        return new PageImpl<>(content, pageable, data.size());
     }
 
     @Override

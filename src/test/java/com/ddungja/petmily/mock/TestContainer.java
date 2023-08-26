@@ -12,10 +12,7 @@ import com.ddungja.petmily.user.controller.UserController;
 import com.ddungja.petmily.user.service.CertificationAttemptService;
 import com.ddungja.petmily.user.service.CertificationService;
 import com.ddungja.petmily.user.service.UserService;
-import com.ddungja.petmily.user.service.port.CertificationAttemptRepository;
-import com.ddungja.petmily.user.service.port.CertificationRepository;
-import com.ddungja.petmily.user.service.port.ProfileImageRepository;
-import com.ddungja.petmily.user.service.port.UserRepository;
+import com.ddungja.petmily.user.service.port.*;
 import lombok.Builder;
 
 public class TestContainer {
@@ -24,6 +21,7 @@ public class TestContainer {
     public final LikeRepository likeRepository;
     public final ApplyRepository applyRepository;
     public final ProfileImageRepository profileImageRepository;
+    public final ProfileRepository profileRepository;
     public final CertificationRepository certificationRepository;
     public final CertificationAttemptRepository certificationAttemptRepository;
     public final UserService userService;
@@ -37,6 +35,7 @@ public class TestContainer {
 
     @Builder
     public TestContainer() {
+        profileRepository = new FakeProfileRepository();
         expireTimeHolder = new TestExpireTimeHolder(3);
         certificationRepository = new FakeCertificationRepository();
         userRepository = new FakeUserRepository();

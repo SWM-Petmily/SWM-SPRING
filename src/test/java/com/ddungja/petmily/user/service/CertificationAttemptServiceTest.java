@@ -29,12 +29,10 @@ class CertificationAttemptServiceTest {
         //when
         testContainer.certificationAttemptService.attempt(user);
 
-
         //then
         CertificationAttempt certificationAttempt = testContainer.certificationAttemptRepository.findByUserIdAndLastAttemptDate(user.getId(), LocalDate.now()).get();
         assertThat(certificationAttempt.getAttemptCount()).isEqualTo(1L);
     }
-
 
     @DisplayName("휴대전화 인증번호 요청이 5번이 넘어가면 에러를 던진다..")
     @Test
@@ -44,15 +42,49 @@ class CertificationAttemptServiceTest {
 
         User user = testContainer.userRepository.save(User.builder()
                 .isCertification(false)
-                .nickname("test")
+                .build());
+
+        testContainer.certificationAttemptRepository.save(CertificationAttempt.builder()
+                .user(user)
+                .lastAttemptDate(LocalDate.now())
+                .attemptCount(5)
                 .build());
 
         //when
-        testContainer.certificationAttemptService.attempt(user);
-        testContainer.certificationAttemptService.attempt(user);
-        testContainer.certificationAttemptService.attempt(user);
-        testContainer.certificationAttemptService.attempt(user);
-        testContainer.certificationAttemptService.attempt(user);
+        assertThatThrownBy(() -> testContainer.certificationAttemptService.attempt(user))
+                .isInstanceOf(CustomException.class);
+
+    }
+    @DisplayName("휴대전화 인증번호 요청이 5번이 넘어가면 에러를 던진다..")
+    @Test
+    void attemptFail_CERTIFICATION_ATTEMPT_EXCEED() {
+        //given
+        TestContainer testContainer = TestContainer.builder().build();
+
+        User user = testContainer.userRepository.save(User.builder()
+                .isCertification(false)
+                .build());
+        testContainer.certificationAttemptRepository.save(CertificationAttempt.builder()
+                .user(user)
+                .lastAttemptDate(LocalDate.now())
+                .attemptCount(5)
+                .build());
+        //when
+        assertThatThrownBy(() -> testContainer.certificationAttemptService.attempt(user))
+                .isInstanceOf(CustomException.class);
+
+    }
+
+    @DisplayName("이미 인증받은 유저라면 에러를 던진다.")
+    @Test
+    void attemptFail_USER_ALREADY_CERTIFICATION() {
+        //given
+        TestContainer testContainer = TestContainer.builder().build();
+
+        User user = testContainer.userRepository.save(User.builder()
+                .isCertification(true)
+                .build());
+        //when
         assertThatThrownBy(() -> testContainer.certificationAttemptService.attempt(user))
                 .isInstanceOf(CustomException.class);
 
