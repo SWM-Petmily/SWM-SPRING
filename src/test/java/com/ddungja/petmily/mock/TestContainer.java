@@ -11,11 +11,17 @@ import com.ddungja.petmily.post.service.port.PostRepository;
 import com.ddungja.petmily.user.controller.UserController;
 import com.ddungja.petmily.user.service.CertificationAttemptService;
 import com.ddungja.petmily.user.service.CertificationService;
+import com.ddungja.petmily.user.service.ProfileService;
 import com.ddungja.petmily.user.service.UserService;
 import com.ddungja.petmily.user.service.port.*;
 import lombok.Builder;
 
 public class TestContainer {
+
+    //etc
+    public final ExpireTimeHolder expireTimeHolder;
+
+    //repository
     public final UserRepository userRepository;
     public final PostRepository postRepository;
     public final LikeRepository likeRepository;
@@ -24,14 +30,21 @@ public class TestContainer {
     public final ProfileRepository profileRepository;
     public final CertificationRepository certificationRepository;
     public final CertificationAttemptRepository certificationAttemptRepository;
+
+
+    //service
     public final UserService userService;
     public final ApplyService applyService;
     public final LikeService likeService;
     public final CertificationService certificationService;
-    public final UserController userController;
     public final CertificationAttemptService certificationAttemptService;
 
-    public final ExpireTimeHolder expireTimeHolder;
+    public final ProfileService profileService;
+
+    //controller
+    public final UserController userController;
+
+
 
     @Builder
     public TestContainer() {
@@ -46,6 +59,11 @@ public class TestContainer {
         certificationAttemptRepository = new FakeCertificationAttemptRepository();
         certificationAttemptService = CertificationAttemptService.builder()
                 .certificationAttemptRepository(certificationAttemptRepository)
+                .build();
+        profileService = ProfileService.builder()
+                .profileRepository(profileRepository)
+                .userRepository(userRepository)
+                .profileImageRepository(profileImageRepository)
                 .build();
         applyService = ApplyService.builder()
                 .applyRepository(applyRepository)

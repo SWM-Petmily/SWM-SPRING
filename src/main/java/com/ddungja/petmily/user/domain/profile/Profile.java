@@ -58,8 +58,6 @@ public class Profile extends BaseTimeEntity {
         this.profileImage = profileImage;
     }
 
-
-
     public static Profile from(MyProfileCreateRequest profileCreateRequest, ProfileImage profileImage, User user) {
         Profile profile = Profile.builder()
                 .job(profileCreateRequest.getJob())
@@ -78,6 +76,7 @@ public class Profile extends BaseTimeEntity {
         }
         return profile;
     }
+
     private void addExperience(Experience experience) {
         experiences.add(experience);
     }
@@ -91,9 +90,13 @@ public class Profile extends BaseTimeEntity {
         this.region = profileUpdateRequest.getRegion();
         this.profileImage = profileImage;
         this.isExperience = profileUpdateRequest.getIsExperience();
+        deleteExperiences();
+        if (!profileUpdateRequest.getExperiences().isEmpty()) {
+            profileUpdateRequest.getExperiences().forEach(experience -> this.experiences.add(Experience.from(experience, this)));
+        }
     }
 
-    public void deleteExperiences() {
+    private void deleteExperiences() {
         this.experiences.clear();
     }
 }

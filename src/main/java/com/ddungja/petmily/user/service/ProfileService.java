@@ -2,16 +2,15 @@ package com.ddungja.petmily.user.service;
 
 
 import com.ddungja.petmily.common.exception.CustomException;
-import com.ddungja.petmily.user.domain.profile.Experience;
 import com.ddungja.petmily.user.domain.profile.Profile;
 import com.ddungja.petmily.user.domain.profile.ProfileImage;
-import com.ddungja.petmily.user.domain.user.User;
 import com.ddungja.petmily.user.domain.request.MyProfileCreateRequest;
 import com.ddungja.petmily.user.domain.request.ProfileUpdateRequest;
-import com.ddungja.petmily.user.repository.ExperienceRepository;
-import com.ddungja.petmily.user.repository.ProfileImageJpaRepository;
-import com.ddungja.petmily.user.repository.UserJpaRepository;
+import com.ddungja.petmily.user.domain.user.User;
+import com.ddungja.petmily.user.service.port.ProfileImageRepository;
 import com.ddungja.petmily.user.service.port.ProfileRepository;
+import com.ddungja.petmily.user.service.port.UserRepository;
+import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,14 +19,14 @@ import static com.ddungja.petmily.common.exception.ExceptionCode.*;
 
 @Service
 @RequiredArgsConstructor
+@Builder
+@Transactional(readOnly = true)
 public class ProfileService {
 
     private final ProfileRepository profileRepository;
-    private final UserJpaRepository userRepository;
-    private final ExperienceRepository experienceRepository;
-    private final ProfileImageJpaRepository profileImageRepository;
+    private final UserRepository userRepository;
+    private final ProfileImageRepository profileImageRepository;
 
-    @Transactional(readOnly = true)
     public Profile get(Long userId) {
         return profileRepository.findByUserId(userId).orElseThrow(() -> new CustomException(PROFILE_NOT_FOUND));
     }
@@ -38,7 +37,6 @@ public class ProfileService {
         if (user.isProfile()) throw new CustomException(PROFILE_ALREADY_EXISTS);
         ProfileImage profileImage = profileImageRepository.findById(profileCreateRequest.getProfileImageId()).orElseThrow(() -> new CustomException(PROFILE_IMAGE_NOT_FOUND));
         Profile profile = Profile.from(profileCreateRequest, profileImage, user);
-
         profileRepository.save(profile);
         user.createProfile();
         return profile;
@@ -49,10 +47,6 @@ public class ProfileService {
         Profile profile = profileRepository.findByUserId(userId).orElseThrow(() -> new CustomException(PROFILE_NOT_FOUND));
         ProfileImage profileImage = profileImageRepository.findById(profileUpdateRequest.getProfileImageId()).orElseThrow(() -> new CustomException(PROFILE_IMAGE_NOT_FOUND));
         profile.update(profileUpdateRequest, profileImage);
-        profile.deleteExperiences();
-        if (!profileUpdateRequest.getExperiences().isEmpty()) {
-            profileUpdateRequest.getExperiences().forEach(experience -> experienceRepository.save(Experience.from(experience, profile)));
-        }
         return profile;
     }
 }
