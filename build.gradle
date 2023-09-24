@@ -37,6 +37,16 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
 
+
+    //websocket
+    implementation group: 'org.webjars', name: 'stomp-websocket', version: '2.3.3-1'
+    implementation 'org.springframework.boot:spring-boot-starter-websocket'
+//    implementation 'org.springframework.boot:spring-boot-starter-websocket'
+//    implementation 'org.webjars:sockjs-client:1.5.1'
+//    implementation 'org.springframework:spring-messaging:6.0.3'
+//    implementation 'org.springframework.security:spring-security-messaging:6.0.2'
+//    implementation 'org.webjars:stomp-websocket:2.3.4'
+
     //lombok
     implementation 'org.projectlombok:lombok'
     compileOnly 'org.projectlombok:lombok'
