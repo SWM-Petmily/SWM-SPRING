@@ -39,6 +39,8 @@ dependencies {
 
 
     //websocket
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation group: 'org.webjars', name: 'stomp-websocket', version: '2.3.3-1'
     implementation 'org.springframework.boot:spring-boot-starter-websocket'
 //    implementation 'org.springframework.boot:spring-boot-starter-websocket'
@@ -83,11 +85,6 @@ dependencies {
     //Sentry
     implementation 'io.sentry:sentry-spring-boot-starter-jakarta:6.25.2'
     implementation 'io.sentry:sentry-logback:6.25.2'
-
-
-
-
-
 }
 
 //yml 서브 모듈에서 가져와서 빌드

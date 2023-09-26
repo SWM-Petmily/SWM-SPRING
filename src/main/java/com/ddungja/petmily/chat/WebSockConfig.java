@@ -1,6 +1,5 @@
-package com.ddungja.petmily.common.config;
+package com.ddungja.petmily.chat;
 
-import com.ddungja.petmily.chat.ChatHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.socket.config.annotation.EnableWebSocket;
@@ -8,15 +7,13 @@ import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
 import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
 
 @Configuration
-@RequiredArgsConstructor
 @EnableWebSocket
-public class WebSocketConfig implements WebSocketConfigurer {
-
-    private final ChatHandler chatHandler;
+@RequiredArgsConstructor
+public class WebSockConfig implements WebSocketConfigurer {
+    private final WebSockChatHandler webSocketHandler;
 
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-        registry.addHandler(chatHandler, "/ws/chat").setAllowedOrigins("*");
+        registry.addHandler(webSocketHandler, "/ws/chat").setAllowedOrigins("*");
     }
 }
-
