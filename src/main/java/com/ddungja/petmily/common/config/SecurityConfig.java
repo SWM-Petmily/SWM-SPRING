@@ -1,6 +1,6 @@
 package com.ddungja.petmily.common.config;
 
-import com.ddungja.petmily.common.jwt.JwtAuthorizationFilter;
+//import com.ddungja.petmily.common.jwt.JwtAuthorizationFilter;
 import com.ddungja.petmily.common.jwt.JwtProvider;
 import com.ddungja.petmily.common.response.SecurityResponse;
 import lombok.RequiredArgsConstructor;
@@ -45,12 +45,13 @@ public class SecurityConfig {
         @Override
         public void configure(HttpSecurity http) {
             AuthenticationManager authenticationManager = http.getSharedObject(AuthenticationManager.class);
-            http.addFilter(new JwtAuthorizationFilter(authenticationManager, jwtProvider));
+//            http.addFilter(new JwtAuthorizationFilter(authenticationManager, jwtProvider));
         }
     }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http.headers(httpSecurityHeadersConfigurer -> httpSecurityHeadersConfigurer.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin));
         http.sessionManagement(configurer -> configurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         http.httpBasic(AbstractHttpConfigurer::disable);
         http.formLogin(AbstractHttpConfigurer::disable);

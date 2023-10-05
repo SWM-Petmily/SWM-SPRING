@@ -27,6 +27,7 @@ ext {
     set('springCloudVersion', "2022.0.3")
 }
 
+
 dependencies {
     // Spring boot
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
@@ -36,6 +37,23 @@ dependencies {
     implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
+
+    //websocket
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation group: 'org.webjars', name: 'stomp-websocket', version: '2.3.3-1'
+    implementation 'org.springframework.boot:spring-boot-starter-websocket'
+    implementation 'org.springframework.boot:spring-boot-starter-freemarker'
+    implementation 'org.springframework.boot:spring-boot-devtools'
+    implementation 'org.webjars.bower:bootstrap:4.3.1'
+    implementation 'org.webjars.bower:vue:2.5.16'
+    implementation 'org.webjars.bower:axios:0.17.1'
+    implementation 'org.webjars:sockjs-client:1.1.2'
+    implementation 'org.webjars:stomp-websocket:2.3.3-1'
+    implementation 'com.google.code.gson:gson:2.8.0'
+
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
     //lombok
     implementation 'org.projectlombok:lombok'
@@ -73,12 +91,8 @@ dependencies {
     //Sentry
     implementation 'io.sentry:sentry-spring-boot-starter-jakarta:6.25.2'
     implementation 'io.sentry:sentry-logback:6.25.2'
-
-
-
-
-
 }
+
 
 //yml 서브 모듈에서 가져와서 빌드
 //task copyYML(type: Copy){
@@ -119,8 +133,6 @@ tasks.withType(JavaCompile) {
 clean.doLast {
     file(querydslDir).deleteDir()
 }
-
-
 
 
 //jacoco {

@@ -9,7 +9,17 @@ server:
 #    whitelabel:
 #      enabled: false
 
+
 spring:
+  devtools:
+    livereload:
+      enabled: true
+    restart:
+      enabled: false
+  freemarker:
+    cache: false
+
+
   servlet:
     multipart:
       enabled: true
