@@ -1,5 +1,6 @@
 package com.ddungja.petmily.common.jwt;
 
+import com.ddungja.petmily.common.response.SecurityResponse;
 import com.ddungja.petmily.user.domain.user.User;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -33,8 +34,10 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
             User user = jwtProvider.accessTokenVerify(accessToken);
             Authentication authentication = new UsernamePasswordAuthenticationToken(user, null, null);
             SecurityContextHolder.getContext().setAuthentication(authentication);
+            chain.doFilter(request, response);
+        } else {
+            SecurityResponse.unAuthentication(response);
         }
-        chain.doFilter(request, response);
     }
 
     private String resolveToken(HttpServletRequest request) {
