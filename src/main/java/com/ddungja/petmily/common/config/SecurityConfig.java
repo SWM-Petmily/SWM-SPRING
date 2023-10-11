@@ -23,12 +23,12 @@ public class SecurityConfig {
     private final JwtProvider jwtProvider;
     private static final String[] AUTHENTICATION_WHITELIST = {
             "/",
-            "/swagger-ui/**",
-            "/api-docs/**",
-            "/api-docs",
-            "/swagger-ui.html",
-            "/swagger-ui/**",
-            "/api/**",
+//            "/swagger-ui/**",
+//            "/api-docs/**",
+//            "/api-docs",
+//            "/swagger-ui.html",
+//            "/swagger-ui/**",
+//            "/api/**",
             "/h2-console",
             "/h2-console/**",
             "/users/kakao",
@@ -62,10 +62,10 @@ public class SecurityConfig {
         http.apply(new CustomSecurityFilterManager(jwtProvider));
         http.exceptionHandling(configurer -> configurer.authenticationEntryPoint((request, response, accessDeniedException) -> SecurityResponse.unAuthentication(response)));
         http.exceptionHandling(configurer -> configurer.accessDeniedHandler((request, response, accessDeniedException) -> SecurityResponse.forbidden(response)));
-//        http.authorizeHttpRequests(authorize -> authorize.requestMatchers(AUTHENTICATION_WHITELIST).permitAll());
-//        http.authorizeHttpRequests(authorize -> authorize.anyRequest().authenticated());
-        http.authorizeHttpRequests(authorize -> authorize.requestMatchers("/authorization").authenticated());
-        http.authorizeHttpRequests(authorize -> authorize.anyRequest().permitAll());
+        http.authorizeHttpRequests(authorize -> authorize.requestMatchers(AUTHENTICATION_WHITELIST).permitAll());
+        http.authorizeHttpRequests(authorize -> authorize.anyRequest().authenticated());
+//        http.authorizeHttpRequests(authorize -> authorize.requestMatchers("/authorization").authenticated());
+//        http.authorizeHttpRequests(authorize -> authorize.anyRequest().permitAll());
         return http.build();
     }
 }

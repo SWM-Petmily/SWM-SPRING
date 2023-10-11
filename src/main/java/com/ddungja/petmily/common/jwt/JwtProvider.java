@@ -22,7 +22,7 @@ public class JwtProvider {
     @Value("${jwt.refresh.secret}")
     private String refreshTokenSecretKey;
     private static final long ACCESS_TOKEN_EXPIRATION_TIME = Duration.ofSeconds(30).toMillis();
-    private static final long REFRESH_TOKEN_EXPIRATION_TIME = Duration.ofDays(30).toMillis();
+    private static final long REFRESH_TOKEN_EXPIRATION_TIME = Duration.ofSeconds(30).toMillis();
     public static final String PREFIX = "Bearer ";
 
     public String createAccessToken(User user) {
@@ -68,12 +68,12 @@ public class JwtProvider {
         }
     }
 
-    public boolean validateRefreshToken(String refreshToken) {
+    public boolean validateRefreshToken(String refreshToken) throws JWTVerificationException  {
         try {
             JWT.require(Algorithm.HMAC512(refreshTokenSecretKey)).build().verify(refreshToken);
             return true;
         } catch (JWTVerificationException e) {
-            return false;
+            throw new JWTVerificationException("리프레시 토큰 검증 실패");
         }
     }
 }
