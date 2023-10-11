@@ -98,7 +98,6 @@ public class PostController {
             Page<MainPostResponse> mainPostResponses = postReadService.getMainPosts(postFilterRequest, pageable).map(MainPostResponse::from);
             MainPostsResponse mainPostsResponses = MainPostsResponse.from(filter,mainPostResponses.getContent(), mainPostResponses.getTotalPages(), mainPostResponses.getTotalElements());
             return ResponseEntity.ok(mainPostsResponses);
-
         }
         log.info("메인 게시글 가져오기 - 로그인 userId = {}", user.getId());
         Page<MainPostResponse> mainPostResponses = postReadService.getMainPosts(user.getId(), postFilterRequest, pageable);

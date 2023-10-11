@@ -23,12 +23,12 @@ public class SecurityConfig {
     private final JwtProvider jwtProvider;
     private static final String[] AUTHENTICATION_WHITELIST = {
             "/",
-//            "/swagger-ui/**",
-//            "/api-docs/**",
-//            "/api-docs",
-//            "/swagger-ui.html",
-//            "/swagger-ui/**",
-//            "/api/**",
+            "/swagger-ui/**",
+            "/api-docs/**",
+            "/api-docs",
+            "/swagger-ui.html",
+            "/swagger-ui/**",
+            "/api/**",
             "/h2-console",
             "/h2-console/**",
             "/users/kakao",
@@ -36,8 +36,8 @@ public class SecurityConfig {
             "/users/test/**",
             "/users/profile/{userId}",
             "/send-one",
-            "/posts/{postId}",
-            "/category/**"
+            "/category/**",
+            "/post/main"
     };
 
     @RequiredArgsConstructor
