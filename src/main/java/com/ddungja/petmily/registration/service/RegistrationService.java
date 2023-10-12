@@ -62,7 +62,7 @@ public class RegistrationService {
     }
 
     public List<Registration> getMyRegister(Long userId) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new CustomException(USER_NOT_FOUND));
+        User user = userRepository.findById(4L).orElseThrow(() -> new CustomException(USER_NOT_FOUND));
         return registrationRepository.findByUserId(user.getId());
     }
 
