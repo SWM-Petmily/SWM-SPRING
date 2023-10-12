@@ -32,6 +32,7 @@ public class SecurityConfig {
             "/h2-console",
             "/h2-console/**",
             "/users/kakao",
+            "/users/apple",
             "/users/refresh",
             "/users/test/**",
             "/users/profile/{userId}",
