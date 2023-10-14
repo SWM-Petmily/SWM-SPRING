@@ -24,7 +24,7 @@ public class Experience extends BaseTimeEntity {
     private String species;
     private int period;
 
-    @JoinColumn(name = "profile_id")
+    @JoinColumn(name = "profile_id", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     @ManyToOne(fetch = FetchType.LAZY)
     private Profile profile;
 

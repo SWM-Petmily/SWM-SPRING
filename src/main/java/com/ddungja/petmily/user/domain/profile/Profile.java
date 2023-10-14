@@ -32,11 +32,11 @@ public class Profile extends BaseTimeEntity {
     private String region;
     private boolean isExperience;
 
-    @JoinColumn(name = "profile_image_id")
+    @JoinColumn(name = "profile_image_id", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     @ManyToOne(fetch = FetchType.LAZY)
     private ProfileImage profileImage;
 
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     @OneToOne(fetch = FetchType.LAZY)
     private User user;
 
@@ -98,5 +98,9 @@ public class Profile extends BaseTimeEntity {
 
     private void deleteExperiences() {
         this.experiences.clear();
+    }
+
+    public void delete() {
+        experiences.clear();
     }
 }

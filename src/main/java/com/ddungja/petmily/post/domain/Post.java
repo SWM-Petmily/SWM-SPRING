@@ -38,15 +38,15 @@ public class Post extends BaseTimeEntity {
     @Column(name = "post_id")
     private Long id;
 
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
-    @JoinColumn(name = "main_category_id")
+    @JoinColumn(name = "main_category_id", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     @ManyToOne(fetch = FetchType.LAZY)
     private MainCategory mainCategory;
 
-    @JoinColumn(name = "sub_category_id")
+    @JoinColumn(name = "sub_category_id", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     @ManyToOne(fetch = FetchType.LAZY)
     private SubCategory subCategory;
 
@@ -155,7 +155,7 @@ public class Post extends BaseTimeEntity {
                 .build();
     }
 
-    public void createThumbnailImage( List<Image> images) {
+    public void createThumbnailImage(List<Image> images) {
         this.thumbnailImage = images.get(0).getUrl();
     }
 
@@ -178,18 +178,24 @@ public class Post extends BaseTimeEntity {
 
     public void deletePost(Long userId) {
         matchUser(userId);
-        if (status == PostStatusType.COMPLETE ) {
+        if (status == PostStatusType.COMPLETE) {
             throw new CustomException(POST_STATUS_COMPLETE);
         }
-        if (status== PostStatusType.REPORT) {
+        if (status == PostStatusType.REPORT) {
             throw new CustomException(POST_STATUS_REPORT);
         }
         this.status = PostStatusType.DELETE;
     }
 
+    //회원탈퇴
+    public void userDeletePost() {
+        this.status = PostStatusType.DELETE;
+
+    }
+
     public void complete(Long userId) {
         matchUser(userId);
-        if(status==PostStatusType.DELETE){
+        if (status == PostStatusType.DELETE) {
             throw new CustomException(POST_STATUS_DELETE);
         }
         this.status = PostStatusType.COMPLETE;

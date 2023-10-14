@@ -23,4 +23,9 @@ public class ProfileRepositoryImpl implements ProfileRepository {
     public Profile save(Profile profile) {
         return profileJpaRepository.save(profile);
     }
+
+    @Override
+    public void deleteByUserId(Long userId) {
+        profileJpaRepository.deleteByUserId(userId);
+    }
 }

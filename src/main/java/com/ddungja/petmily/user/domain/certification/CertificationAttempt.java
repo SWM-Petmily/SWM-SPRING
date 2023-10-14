@@ -23,7 +23,7 @@ public class CertificationAttempt {
     private LocalDate lastAttemptDate;
     private int attemptCount;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private User user;
     @Builder
     public CertificationAttempt(Long id, LocalDate lastAttemptDate, int attemptCount, User user) {

@@ -61,4 +61,9 @@ public class LikeService {
     public int getLikeCountByUser(User user) {
         return likeRepository.countByUserId(user.getId());
     }
+
+    @Transactional
+    public void deleteByUserId(Long userId) {
+        likeRepository.deleteByUserId(userId);
+    }
 }

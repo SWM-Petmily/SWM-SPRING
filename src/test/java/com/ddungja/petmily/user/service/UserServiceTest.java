@@ -1,8 +1,10 @@
 package com.ddungja.petmily.user.service;
 
+import com.ddungja.petmily.common.exception.CustomException;
 import com.ddungja.petmily.mock.TestContainer;
 import com.ddungja.petmily.user.domain.certification.Certification;
 import com.ddungja.petmily.user.domain.kakao.KakaoProfile;
+import com.ddungja.petmily.user.domain.profile.Profile;
 import com.ddungja.petmily.user.domain.profile.ProfileImage;
 import com.ddungja.petmily.user.domain.request.UserCreateRequest;
 import com.ddungja.petmily.user.domain.request.UserUpdateRequest;
@@ -12,6 +14,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class UserServiceTest {
 
@@ -101,19 +104,50 @@ class UserServiceTest {
         //then
         assertThat(sut.getNickname()).isEqualTo("수정된 닉네임");
         assertThat(sut.getProfileImage()).isEqualTo(profileImage2);
+    }
+
+    @DisplayName("유저 회원탈퇴")
+    @Test
+    public void delete() {
+        //given
+        TestContainer testContainer = TestContainer.builder().build();
+        ProfileImage profileImage1 = testContainer.profileImageRepository.save(ProfileImage.builder()
+                .url("https://test.com")
+                .build());
+
+
+        User user = testContainer.userRepository.save(User.builder()
+                .nickname("닉네임")
+                .profileImage(profileImage1)
+                .build());
+
+        testContainer.profileRepository.save(Profile.builder()
+                .user(user)
+                .profileImage(profileImage1)
+                .build());
+
+        testContainer.userService.delete(user.getId());
+
+
+
+        //when
+        assertThatThrownBy(() ->
+                testContainer.userService.delete(user.getId())
+        ).isInstanceOf(CustomException.class);
 
 
     }
 
     @Test
     void appleLogin() {
+
         //given
         //when
         //then
     }
 
     @Test
-     void getMyPage(){
+    void getMyPage() {
         //given
         //when
         //then

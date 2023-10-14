@@ -45,4 +45,9 @@ public class UserRepositoryImpl implements UserRepository {
     public boolean existsById(Long userId) {
         return userJpaRepository.existsById(userId);
     }
+
+    @Override
+    public void delete(User user) {
+        userJpaRepository.delete(user);
+    }
 }

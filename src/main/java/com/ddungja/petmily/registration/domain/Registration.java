@@ -24,7 +24,7 @@ public class Registration extends BaseTimeEntity {
     @Column(name = "registration_id")
     private Long id;
 
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
@@ -32,7 +32,7 @@ public class Registration extends BaseTimeEntity {
 
     private String petName; // 반려동물 이름
 
-    @JoinColumn(name = "sub_category_id")
+    @JoinColumn(name = "sub_category_id", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     @ManyToOne(fetch = FetchType.LAZY)
     private SubCategory petSubCategory;
 

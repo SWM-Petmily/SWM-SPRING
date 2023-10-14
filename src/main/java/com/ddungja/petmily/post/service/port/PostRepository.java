@@ -21,4 +21,9 @@ public interface PostRepository {
     Page<Post> getMainPosts(Long userId, PostFilterRequest postFilterRequest, List<Long> reportPostIds, Pageable pageable);
 
     Page<Post> getMainPosts(PostFilterRequest postFilterRequest, Pageable pageable);
+
+    List<Post> findByUserId(Long userId);
+
+    void deleteByUserId(Long userId);
+
 }

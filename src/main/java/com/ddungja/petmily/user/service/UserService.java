@@ -1,7 +1,10 @@
 package com.ddungja.petmily.user.service;
 
+import com.ddungja.petmily.apply.service.port.ApplyRepository;
 import com.ddungja.petmily.common.exception.CustomException;
 import com.ddungja.petmily.common.exception.ExceptionCode;
+import com.ddungja.petmily.like.service.LikeService;
+import com.ddungja.petmily.post.service.PostCommandService;
 import com.ddungja.petmily.user.domain.apple.AppleOAuthUserProvider;
 import com.ddungja.petmily.user.domain.certification.Certification;
 import com.ddungja.petmily.user.domain.kakao.KakaoProfile;
@@ -34,6 +37,10 @@ public class UserService {
     private final CertificationRepository certificationRepository;
     private final AppleOAuthUserProvider appleOAuthUserProvider;
     private final ProfileImageRepository profileImageRepository;
+    private final ApplyRepository applyRepository;
+    private final PostCommandService postCommandService;
+    private final ProfileService profileService;
+    private final LikeService likeService;
 
     @Transactional
     public User kakagoLogin(KakaoProfile kakaoProfile) {
@@ -83,6 +90,16 @@ public class UserService {
         userRepository.certificationUpdateFalse();
         certificationRepository.deleteAll();
         user.reset();
+    }
+
+    @Transactional
+    public void delete(Long userId) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new CustomException(USER_NOT_FOUND));
+        applyRepository.deleteByUserId(user.getId());
+        profileService.deleteByUserId(user.getId());
+        postCommandService.deleteByUserId(user.getId());
+        likeService.deleteByUserId(user.getId());
+        userRepository.delete(user);
     }
 }
 

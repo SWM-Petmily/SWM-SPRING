@@ -29,7 +29,7 @@ public class Certification {
     private String certificationNumber;
     private boolean isCertification;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private User user;
 
     @Builder

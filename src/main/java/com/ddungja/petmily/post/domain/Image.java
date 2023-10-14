@@ -25,7 +25,7 @@ public class Image extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private ImageType imageType;
 
-    @JoinColumn(name = "post_id")
+    @JoinColumn(name = "post_id", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     @ManyToOne(fetch = FetchType.LAZY)
     private Post post;
 

@@ -23,4 +23,6 @@ public interface ApplyRepository {
     Optional<Apply> findByIdAndUserId(Long applyId, Long userId);
 
     Apply save(Apply apply);
+
+     void deleteByUserId(Long userId);
 }

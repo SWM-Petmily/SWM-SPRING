@@ -112,7 +112,7 @@ public class UserController {
     }
 
     @Operation(summary = "마이페이지 조회")
-    @ApiResponse(responseCode = "200", description = "마이페이지 조회 성공", content = @Content(schema =  @Schema(implementation = UserMyPageResponse.class)))
+    @ApiResponse(responseCode = "200", description = "마이페이지 조회 성공", content = @Content(schema = @Schema(implementation = UserMyPageResponse.class)))
     @GetMapping("/myPage")
     public ResponseEntity<UserMyPageResponse> myPage(@AuthenticationPrincipal User user) {
         log.info("마이페이지 조회 user = {}", user.getId());
@@ -133,5 +133,15 @@ public class UserController {
             return ResponseEntity.ok().body(TokenRefreshResponse.from(accessToken, refreshToken));
         }
         throw new CustomException(REFRESH_TOKEN_VALIDATION_FAILED);
+    }
+
+    @Operation(summary = "회원탈퇴")
+    @ApiResponse(responseCode = "204", description = "회원탈퇴 성공")
+    @DeleteMapping
+    public ResponseEntity<Void> delete(@AuthenticationPrincipal User user) {
+        log.info("회원탈퇴 user = {}", user.getId());
+        userService.delete(user.getId());
+
+        return ResponseEntity.noContent().build();
     }
 }

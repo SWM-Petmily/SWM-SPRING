@@ -62,4 +62,9 @@ public class FakeUserRepository implements UserRepository {
     public boolean existsById(Long userId) {
         return data.stream().anyMatch(item -> item.getId().equals(userId));
     }
+
+    @Override
+    public void delete(User user) {
+        data.removeIf(item -> item.getId().equals(user.getId()));
+    }
 }

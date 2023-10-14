@@ -41,6 +41,7 @@ public class ApplyService {
         User user = userRepository.findById(userId).orElseThrow(() -> new CustomException(USER_NOT_FOUND));
         return applyRepository.getApplyList(user.getId(), approval, pageable);
     }
+
     public int getApplyCount(Long userId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new CustomException(USER_NOT_FOUND));
         return applyRepository.countByUserId(user.getId());
@@ -56,6 +57,7 @@ public class ApplyService {
         apply.approve(approveRequest.getApproval());
         return apply;
     }
+
     @Transactional
     public Apply apply(Long userId, Long postId, ApplyCreateRequest applyCreateRequest) {
         User user = userRepository.findById(userId).orElseThrow(() -> new CustomException(USER_NOT_FOUND));
@@ -74,7 +76,7 @@ public class ApplyService {
     }
 
     @Transactional
-    public Apply modify(Long userId, Long applyId, ApplyUpdateRequest applyUpdateRequest){
+    public Apply modify(Long userId, Long applyId, ApplyUpdateRequest applyUpdateRequest) {
         User user = userRepository.findById(userId).orElseThrow(() -> new CustomException(USER_NOT_FOUND));
         Apply apply = applyRepository.findByIdAndUserId(applyId, user.getId()).orElseThrow(() -> new CustomException(APPLY_NOT_FOUND));
         if (apply.getApproval() != ApprovalType.WAITING) {
@@ -86,5 +88,9 @@ public class ApplyService {
 
     public Boolean isApply(Long userId, Long postId) {
         return applyRepository.findByUserIdAndPostId(userId, postId).isPresent();
+    }
+
+    public void deleteByUserId(Long userId) {
+        applyRepository.deleteByUserId(userId);
     }
 }

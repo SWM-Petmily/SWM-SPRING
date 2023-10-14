@@ -5,7 +5,7 @@ import com.ddungja.petmily.user.domain.user.User;
 import java.util.Optional;
 
 public interface UserRepository {
-     Optional<User> findByEmail(String email);
+    Optional<User> findByEmail(String email);
 
     User save(User user);
 
@@ -18,4 +18,6 @@ public interface UserRepository {
     Optional<User> findByPhone(String phoneNumber);
 
     boolean existsById(Long userId);
+
+    void delete(User user);
 }

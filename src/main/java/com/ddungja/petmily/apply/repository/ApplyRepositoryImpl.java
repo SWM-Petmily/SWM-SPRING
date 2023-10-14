@@ -15,6 +15,7 @@ import java.util.Optional;
 public class ApplyRepositoryImpl implements ApplyRepository {
 
     private final ApplyJpaRepository applyJpaRepository;
+
     @Override
     public Page<Apply> findBySellerIdAndPostId(Long sellerId, Long postId, Pageable pageable) {
         return applyJpaRepository.findBySellerIdAndPostId(sellerId, postId, pageable);
@@ -53,5 +54,10 @@ public class ApplyRepositoryImpl implements ApplyRepository {
     @Override
     public Apply save(Apply apply) {
         return applyJpaRepository.save(apply);
+    }
+
+    @Override
+    public void deleteByUserId(Long userId) {
+        applyJpaRepository.deleteByUserId(userId);
     }
 }

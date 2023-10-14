@@ -55,12 +55,12 @@ public class PostCommandService {
     }
 
     @Transactional
-    public Post certifyCheck(Long postId, Long userId, List<MultipartFile> images, ImageType imageType) throws IOException{
+    public Post certifyCheck(Long postId, Long userId, List<MultipartFile> images, ImageType imageType) throws IOException {
         if (!userRepository.existsById(userId)) throw new CustomException(USER_NOT_FOUND);
         Post post = postRepository.findPostById(postId).orElseThrow(() -> new CustomException(POST_NOT_FOUND));
-        if (images == null || images.isEmpty())  throw new CustomException(IMAGE_NOT_FOUND);
-        if(imageType == VACCINATION) post.certifyVaccination();
-        if(imageType == MEDICAL_CHECK) post.certifyMedicalCheck();
+        if (images == null || images.isEmpty()) throw new CustomException(IMAGE_NOT_FOUND);
+        if (imageType == VACCINATION) post.certifyVaccination();
+        if (imageType == MEDICAL_CHECK) post.certifyMedicalCheck();
         uploadImages(images, post, imageType);
         return post;
     }
@@ -97,5 +97,14 @@ public class PostCommandService {
         post.complete(userId);
         applyRepository.findByPostIdAndApproval(postId, ApprovalType.WAITING).forEach(Apply::rejectApply);
 
+    }
+
+    @Transactional
+    public void deleteByUserId(Long userId) {
+        List<Post> posts = postRepository.findByUserId(userId);
+        for (Post post : posts) {
+            post.userDeletePost();
+        }
+//        postRepository.deleteByUserId(userId);
     }
 }

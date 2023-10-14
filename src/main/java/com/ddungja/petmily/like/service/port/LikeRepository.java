@@ -19,4 +19,6 @@ public interface LikeRepository {
     int countByPostId(Long postId);
 
     int countByUserId(Long userId);
+
+    void deleteByUserId(Long userId);
 }

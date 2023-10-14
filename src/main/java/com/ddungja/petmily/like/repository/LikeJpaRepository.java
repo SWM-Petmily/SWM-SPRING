@@ -13,4 +13,5 @@ public interface LikeJpaRepository extends JpaRepository<Like, Long>, LikeQueryR
 
     int countByUserId(Long userId);
 
+    void deleteByUserId(Long userId);
 }

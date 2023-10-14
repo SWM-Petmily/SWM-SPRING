@@ -8,5 +8,7 @@ public interface ProfileRepository {
     Optional<Profile> findByUserId(Long userId);
 
     Profile save(Profile profile);
+
+    void deleteByUserId(Long userId);
 }
 

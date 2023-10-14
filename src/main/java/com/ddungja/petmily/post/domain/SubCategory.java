@@ -18,7 +18,7 @@ public class SubCategory{
 
     private String name;
 
-    @JoinColumn(name = "main_category_id")
+    @JoinColumn(name = "main_category_id", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     @ManyToOne(fetch = FetchType.LAZY)
     private MainCategory mainCategory;
 

@@ -44,4 +44,9 @@ public class LikeRepositoryImpl implements LikeRepository {
     public int countByUserId(Long userId) {
         return likeJpaRepository.countByUserId(userId);
     }
+
+    @Override
+    public void deleteByUserId(Long userId) {
+        likeJpaRepository.deleteByUserId(userId);
+    }
 }

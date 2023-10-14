@@ -28,4 +28,6 @@ public interface ApplyJpaRepository extends JpaRepository<Apply, Long>, ApplyQue
     int countByUserId(Long userId);
 
     List<Apply> findByPostIdAndApproval(Long postId, ApprovalType approvalType);
+
+    void deleteByUserId(Long userId);
 }

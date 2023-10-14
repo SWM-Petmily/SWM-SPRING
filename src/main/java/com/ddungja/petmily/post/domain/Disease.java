@@ -19,7 +19,7 @@ public class Disease extends BaseTimeEntity {
     @Column(name = "disease_id")
     private Long id;
 
-    @JoinColumn(name = "post_id")
+    @JoinColumn(name = "post_id", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     @ManyToOne(fetch = FetchType.LAZY)
     private Post post;
 

@@ -33,7 +33,7 @@ public class User extends BaseTimeEntity {
     private boolean isCertification;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "profile_image_id")
+    @JoinColumn(name = "profile_image_id", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private ProfileImage profileImage;
 
     @Builder

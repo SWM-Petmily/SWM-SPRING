@@ -49,4 +49,11 @@ public class ProfileService {
         profile.update(profileUpdateRequest, profileImage);
         return profile;
     }
+
+    @Transactional
+    public void deleteByUserId(Long userId) {
+        Profile profile = profileRepository.findByUserId(userId).orElseThrow(() -> new CustomException(PROFILE_NOT_FOUND));
+        profile.delete();
+        profileRepository.deleteByUserId(userId);
+    }
 }

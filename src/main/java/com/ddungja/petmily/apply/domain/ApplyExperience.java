@@ -22,7 +22,7 @@ public class ApplyExperience extends BaseTimeEntity {
     private Long id;
     private String species;
     private int period;
-    @JoinColumn(name = "apply_id")
+    @JoinColumn(name = "apply_id", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     @ManyToOne(fetch = FetchType.LAZY)
     private Apply apply;
     @Builder

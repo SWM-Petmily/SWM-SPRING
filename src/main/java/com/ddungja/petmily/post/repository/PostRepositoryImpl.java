@@ -16,6 +16,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class PostRepositoryImpl implements PostRepository {
     private final PostJpaRepository postJpaRepository;
+
     @Override
     public Post save(Post post) {
         return postJpaRepository.save(post);
@@ -44,5 +45,15 @@ public class PostRepositoryImpl implements PostRepository {
     @Override
     public Page<Post> getMainPosts(PostFilterRequest postFilterRequest, Pageable pageable) {
         return postJpaRepository.getMainPosts(postFilterRequest, pageable);
+    }
+
+    @Override
+    public List<Post> findByUserId(Long userId) {
+        return postJpaRepository.findByUserId(userId);
+    }
+
+    @Override
+    public void deleteByUserId(Long userId) {
+
     }
 }
