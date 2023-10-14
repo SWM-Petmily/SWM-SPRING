@@ -57,4 +57,9 @@ public class FakeLikeRepository implements LikeRepository {
     public int countByUserId(Long userId) {
         return data.stream().filter(item -> item.getUser().getId().equals(userId)).mapToInt(item -> 1).sum();
     }
+
+    @Override
+    public void deleteByUserId(Long userId) {
+        data.removeIf(item -> item.getUser().getId().equals(userId));
+    }
 }

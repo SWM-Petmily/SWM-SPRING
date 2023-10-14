@@ -41,4 +41,9 @@ public class FakeProfileRepository implements ProfileRepository {
         data.add(profile);
         return profile;
     }
+
+    @Override
+    public void deleteByUserId(Long userId) {
+        data.removeIf(item -> item.getUser().getId().equals(userId));
+    }
 }

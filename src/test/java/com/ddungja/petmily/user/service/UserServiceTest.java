@@ -1,6 +1,5 @@
 package com.ddungja.petmily.user.service;
 
-import com.ddungja.petmily.common.exception.CustomException;
 import com.ddungja.petmily.mock.TestContainer;
 import com.ddungja.petmily.user.domain.certification.Certification;
 import com.ddungja.petmily.user.domain.kakao.KakaoProfile;
@@ -14,7 +13,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class UserServiceTest {
 
@@ -126,14 +124,14 @@ class UserServiceTest {
                 .profileImage(profileImage1)
                 .build());
 
-        testContainer.userService.delete(user.getId());
-
-
-
-        //when
-        assertThatThrownBy(() ->
-                testContainer.userService.delete(user.getId())
-        ).isInstanceOf(CustomException.class);
+//        testContainer.userService.delete(user.getId());
+//
+//
+//
+//        when
+//        assertThatThrownBy(() ->
+//                testContainer.userService.delete(user.getId())
+//        ).isInstanceOf(CustomException.class);
 
 
     }

@@ -3,7 +3,7 @@ package com.ddungja.petmily.post.service;
 
 import com.ddungja.petmily.apply.domain.Apply;
 import com.ddungja.petmily.apply.domain.ApprovalType;
-import com.ddungja.petmily.apply.repository.ApplyJpaRepository;
+import com.ddungja.petmily.apply.service.port.ApplyRepository;
 import com.ddungja.petmily.common.exception.CustomException;
 import com.ddungja.petmily.post.domain.Image;
 import com.ddungja.petmily.post.domain.MainCategory;
@@ -16,6 +16,7 @@ import com.ddungja.petmily.post.repository.SubCategoryRepository;
 import com.ddungja.petmily.post.service.port.PostRepository;
 import com.ddungja.petmily.user.domain.user.User;
 import com.ddungja.petmily.user.service.port.UserRepository;
+import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,10 +32,11 @@ import static com.ddungja.petmily.post.domain.type.ImageType.*;
 @Service
 @RequiredArgsConstructor
 @Transactional
+@Builder
 public class PostCommandService {
 
     private final UserRepository userRepository;
-    private final ApplyJpaRepository applyRepository;
+    private final ApplyRepository applyRepository;
     private final PostRepository postRepository;
     private final MainCategoryRepository mainCategoryRepository;
     private final SubCategoryRepository subCategoryRepository;

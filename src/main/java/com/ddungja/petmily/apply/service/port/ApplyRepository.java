@@ -5,6 +5,7 @@ import com.ddungja.petmily.apply.domain.ApprovalType;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface ApplyRepository {
@@ -25,4 +26,7 @@ public interface ApplyRepository {
     Apply save(Apply apply);
 
      void deleteByUserId(Long userId);
+
+    List<Apply> findByPostIdAndApproval(Long postId, ApprovalType approvalType);
+
 }

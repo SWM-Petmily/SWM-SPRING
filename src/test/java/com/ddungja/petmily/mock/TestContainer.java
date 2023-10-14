@@ -44,10 +44,13 @@ public class TestContainer {
     //controller
     public final UserController userController;
 
+//    public final PostCommandService postCommandService;
+
 
 
     @Builder
     public TestContainer() {
+
         profileRepository = new FakeProfileRepository();
         expireTimeHolder = new TestExpireTimeHolder(3);
         certificationRepository = new FakeCertificationRepository();
@@ -82,10 +85,14 @@ public class TestContainer {
                 .certificationRepository(certificationRepository)
                 .certificationAttemptService(certificationAttemptService)
                 .build();
+//        postCommandService = postCommandService.bu;
         userService = UserService.builder()
                 .certificationRepository(certificationRepository)
                 .profileImageRepository(profileImageRepository)
                 .userRepository(userRepository)
+                .applyRepository(applyRepository)
+                .profileService(profileService)
+                .certificationRepository(certificationRepository)
                 .build();
         userController = UserController.builder()
                 .jwtProvider(new JwtProvider())

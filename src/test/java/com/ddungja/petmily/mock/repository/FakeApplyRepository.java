@@ -79,4 +79,14 @@ public class FakeApplyRepository implements ApplyRepository {
         data.add(apply);
         return apply;
     }
+
+    @Override
+    public void deleteByUserId(Long userId) {
+        data.removeIf(item -> item.getUser().getId().equals(userId));
+    }
+
+    @Override
+    public List<Apply> findByPostIdAndApproval(Long postId, ApprovalType approvalType) {
+        return data.stream().filter(item -> item.getPost().getId().equals(postId) && item.getApproval().equals(approvalType)).toList();
+    }
 }

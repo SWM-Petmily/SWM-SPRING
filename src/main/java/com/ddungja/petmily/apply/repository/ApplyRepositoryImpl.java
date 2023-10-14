@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -59,5 +60,10 @@ public class ApplyRepositoryImpl implements ApplyRepository {
     @Override
     public void deleteByUserId(Long userId) {
         applyJpaRepository.deleteByUserId(userId);
+    }
+
+    @Override
+    public List<Apply> findByPostIdAndApproval(Long postId, ApprovalType approvalType) {
+        return applyJpaRepository.findByPostIdAndApproval(postId, approvalType);
     }
 }
