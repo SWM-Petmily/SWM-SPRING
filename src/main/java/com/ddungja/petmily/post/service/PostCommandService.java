@@ -107,6 +107,5 @@ public class PostCommandService {
         for (Post post : posts) {
             post.userDeletePost();
         }
-//        postRepository.deleteByUserId(userId);
     }
 }
