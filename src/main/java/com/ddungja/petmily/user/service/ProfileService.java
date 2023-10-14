@@ -52,8 +52,6 @@ public class ProfileService {
 
     @Transactional
     public void deleteByUserId(Long userId) {
-        Profile profile = profileRepository.findByUserId(userId).orElseThrow(() -> new CustomException(PROFILE_NOT_FOUND));
-        profile.delete();
         profileRepository.deleteByUserId(userId);
     }
 }
