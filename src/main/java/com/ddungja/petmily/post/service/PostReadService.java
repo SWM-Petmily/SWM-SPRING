@@ -46,6 +46,13 @@ public class PostReadService {
     public PostGetResponse getDetail(User user, Long postId){
         Post post = postRepository.findPostById(postId).orElseThrow(() -> new CustomException(POST_NOT_FOUND));
         List<Image> images = imageService.getImages(postId, POST);
+
+        //todo 나중에 주석
+        String thumbnailImage = post.getThumbnailImage();
+        Image image = new Image(thumbnailImage);
+        images.add(0,image);
+        //todo 나중에 주석
+
         int likeCount = likeService.getLikeCountByPostId(postId);
         if(user == null) {
             return PostGetResponse.from(post, images, likeCount);

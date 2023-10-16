@@ -39,6 +39,8 @@ public class Image extends BaseTimeEntity {
         this.updateDate = updateDate;
     }
 
-
-
+    public Image(String thumbnailImage) {
+        this.url = thumbnailImage;
+        imageType = ImageType.POST;
+    }
 }
