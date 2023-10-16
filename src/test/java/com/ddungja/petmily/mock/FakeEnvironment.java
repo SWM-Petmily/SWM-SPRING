@@ -35,7 +35,6 @@ public class FakeEnvironment implements Environment {
         if (key.equals("coolsms.apiKey") || key.equals("coolsms.apiSecretKey") | key.equals("https://api.coolsms.co.kr")) {
             return "1234";
         }
-
         return null;
     }
 
