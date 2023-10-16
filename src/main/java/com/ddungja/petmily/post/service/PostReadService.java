@@ -53,6 +53,7 @@ public class PostReadService {
         images.add(0,image);
         //todo 나중에 주석
 
+
         int likeCount = likeService.getLikeCountByPostId(postId);
         if(user == null) {
             return PostGetResponse.from(post, images, likeCount);
