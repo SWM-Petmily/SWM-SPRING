@@ -12,7 +12,6 @@ insert into users (user_id, profile_image_id, email, nickname, phone, provider, 
 (default, 1, 'aran@naver.com', '김아란', '01012345678', 'KAKAO', now(), now(), false, false),
 (default, 1, 'seongi@naver.com', '오승기', '01011112222', 'KAKAO', now(), now(), false, false);
 
-
 -- profile
 insert into profiles(profile_id, user_id, profile_image_id, job, environment, people, comment,  open_talk, region, is_experience, create_date, update_date) values
 (default, 1 ,1, '학생', '아파트', 4, '잘 키울 자신 있음', 'wwww.opentalk.com', '서울', TRUE, now(), now()),

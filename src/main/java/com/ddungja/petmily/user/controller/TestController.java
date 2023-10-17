@@ -32,6 +32,14 @@ public class TestController {
         return ResponseEntity.ok(testAccessToken);
     }
 
+    @Operation(summary = "테스트용 엑세스토큰 반환")
+    @GetMapping("/test/token/{userId}")
+    public ResponseEntity<String> testAccessToken(Long userId) {
+        String testAccessToken = jwtProvider.createTestAccessToken(userId);
+        return ResponseEntity.ok(testAccessToken);
+    }
+
+
     @Operation(summary = "로컬에서 카카오 로그인 테스트")
     @GetMapping("/kakao/login/test")
     public void login(HttpServletResponse response) throws IOException {

@@ -20,11 +20,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.ddungja.petmily.common.exception.ExceptionCode.POST_NOT_FOUND;
 import static com.ddungja.petmily.common.exception.ExceptionCode.USER_NOT_FOUND;
-import static com.ddungja.petmily.post.domain.type.ImageType.POST;
 
 @Service
 @RequiredArgsConstructor
@@ -45,7 +45,9 @@ public class PostReadService {
 
     public PostGetResponse getDetail(User user, Long postId){
         Post post = postRepository.findPostById(postId).orElseThrow(() -> new CustomException(POST_NOT_FOUND));
-        List<Image> images = imageService.getImages(postId, POST);
+        List<Image> images = new ArrayList<>();
+
+        //List<Image> images = imageService.getImages(postId, POST);
 
         //todo 나중에 주석
         String thumbnailImage = post.getThumbnailImage();
