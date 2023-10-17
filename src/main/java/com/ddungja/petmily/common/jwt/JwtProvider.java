@@ -14,8 +14,6 @@ import java.util.Date;
 
 @Component
 public class JwtProvider {
-
-
     @Value("${jwt.access.secret}")
     private String accessTokenSecretKey;
 
