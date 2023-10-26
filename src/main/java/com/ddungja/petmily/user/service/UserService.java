@@ -14,6 +14,7 @@ import com.ddungja.petmily.user.domain.request.UserCreateRequest;
 import com.ddungja.petmily.user.domain.request.UserUpdateRequest;
 import com.ddungja.petmily.user.domain.user.ProviderType;
 import com.ddungja.petmily.user.domain.user.User;
+import com.ddungja.petmily.user.repository.FcmRepository;
 import com.ddungja.petmily.user.service.port.CertificationRepository;
 import com.ddungja.petmily.user.service.port.ProfileImageRepository;
 import com.ddungja.petmily.user.service.port.UserRepository;
@@ -41,6 +42,7 @@ public class UserService {
     private final PostCommandService postCommandService;
     private final ProfileService profileService;
     private final LikeService likeService;
+    private final FcmRepository fcmRepository;
 
     @Transactional
     public User kakagoLogin(KakaoProfile kakaoProfile) {
@@ -100,6 +102,12 @@ public class UserService {
         postCommandService.deleteByUserId(user.getId());
         likeService.deleteByUserId(user.getId());
         userRepository.delete(user);
+    }
+
+    @Transactional
+    public void registerFcmToken(Long userId, String fcmToken) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new CustomException(USER_NOT_FOUND));
+        user.registerFcmToken(fcmToken);
     }
 }
 

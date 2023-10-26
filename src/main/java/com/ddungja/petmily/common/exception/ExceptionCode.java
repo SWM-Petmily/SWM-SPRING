@@ -71,7 +71,10 @@ public enum ExceptionCode {
 
     //like
     LIKE_NOT_FOUND(11001, HttpStatus.NOT_FOUND, "좋아요를 찾을 수 없습니다.", "제목", "메시지", "exclamationmark.circle", "#fa0515"),
-    LIKE_IS_EXISTS(11002, HttpStatus.BAD_REQUEST, "이미 좋아요를 눌렀습니다.", "제목", "메시지", "exclamationmark.circle", "#fa0515");
+    LIKE_IS_EXISTS(11002, HttpStatus.BAD_REQUEST, "이미 좋아요를 눌렀습니다.", "제목", "메시지", "exclamationmark.circle", "#fa0515"),
+
+    //fcm
+    FCM_SEND_FAIL(12001, HttpStatus.BAD_REQUEST, "FCM 전송에 실패했습니다.", "제목", "메시지", "exclamationmark.circle", "#fa0515");
 
 
     private final int code;

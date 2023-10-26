@@ -12,6 +12,9 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static com.ddungja.petmily.common.exception.ExceptionCode.CERTIFICATION_NOT_COMPLETE;
 import static com.ddungja.petmily.common.exception.ExceptionCode.USER_ALREADY_CERTIFICATION;
 
@@ -38,8 +41,12 @@ public class User extends BaseTimeEntity {
     @JoinColumn(name = "profile_image_id", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private ProfileImage profileImage;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Fcm> fcms = new ArrayList<>();
+
+
     @Builder
-    public User(Long id, String email, String nickname, String phone, ProviderType provider, boolean isProfile, boolean isCertification, ProfileImage profileImage) {
+    public User(Long id, String email, String nickname, String phone, ProviderType provider, boolean isProfile, boolean isCertification, ProfileImage profileImage, List<Fcm> fcms) {
         this.id = id;
         this.email = email;
         this.nickname = nickname;
@@ -48,8 +55,8 @@ public class User extends BaseTimeEntity {
         this.isProfile = isProfile;
         this.isCertification = isCertification;
         this.profileImage = profileImage;
+        this.fcms = fcms;
     }
-
 
     public void createProfile() {
         this.isProfile = true;
@@ -78,5 +85,12 @@ public class User extends BaseTimeEntity {
         this.isProfile = false;
         this.nickname = null;
         this.phone = null;
+    }
+
+    public void registerFcmToken(String fcmToken) {
+        fcms.add(Fcm.builder()
+                .user(this)
+                .token(fcmToken)
+                .build());
     }
 }
