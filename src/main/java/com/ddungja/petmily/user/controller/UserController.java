@@ -153,13 +153,4 @@ public class UserController {
         return ResponseEntity.noContent().build();
     }
 
-    @Operation(summary = "FCM 토큰 등록")
-    @ApiResponse(responseCode = "204", description = "FCM 토큰 등록")
-    @PostMapping("/fcm")
-    public ResponseEntity<Void> registerFcmToken(@AuthenticationPrincipal User user, String fcmToken) {
-        log.info("fcm token  등록 user = {}", user.getId());
-        userService.registerFcmToken(user.getId(), fcmToken);
-        return ResponseEntity.noContent().build();
-    }
-
 }

@@ -86,7 +86,7 @@ public class User extends BaseTimeEntity {
         this.phone = null;
     }
 
-    public void registerFcmToken(String fcmToken) {
+    public void addFcmToken(String fcmToken) {
         fcms.add(Fcm.builder()
                 .user(this)
                 .token(fcmToken)

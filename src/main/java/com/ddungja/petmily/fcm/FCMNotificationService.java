@@ -1,6 +1,7 @@
 package com.ddungja.petmily.fcm;
 
 import com.ddungja.petmily.common.exception.CustomException;
+import com.ddungja.petmily.common.exception.ExceptionCode;
 import com.ddungja.petmily.fcm.request.FCMNotificationRequest;
 import com.ddungja.petmily.user.domain.user.Fcm;
 import com.ddungja.petmily.user.domain.user.User;

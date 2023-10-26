@@ -1,6 +1,7 @@
 package com.ddungja.petmily.fcm;
 
 import com.ddungja.petmily.fcm.request.FCMNotificationRequest;
+import com.google.firebase.messaging.FirebaseMessagingException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -20,7 +21,7 @@ public class FcmNotificationController {
     @Operation(summary = "알림 보내기")
     @ApiResponse(responseCode = "204", description = "알림 보내기 성공")
     @PostMapping("/notification")
-    public ResponseEntity<Void> sendNotificationByToken(@RequestBody FCMNotificationRequest requestDto) {
+    public ResponseEntity<Void> sendNotificationByToken(@RequestBody FCMNotificationRequest requestDto) throws FirebaseMessagingException {
         fcmNotificationService.sendNotificationByToken(requestDto);
         return ResponseEntity.noContent().build();
     }
