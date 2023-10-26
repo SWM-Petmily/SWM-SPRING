@@ -44,9 +44,8 @@ public class User extends BaseTimeEntity {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Fcm> fcms = new ArrayList<>();
 
-
     @Builder
-    public User(Long id, String email, String nickname, String phone, ProviderType provider, boolean isProfile, boolean isCertification, ProfileImage profileImage, List<Fcm> fcms) {
+    public User(Long id, String email, String nickname, String phone, ProviderType provider, boolean isProfile, boolean isCertification, ProfileImage profileImage) {
         this.id = id;
         this.email = email;
         this.nickname = nickname;
@@ -55,8 +54,8 @@ public class User extends BaseTimeEntity {
         this.isProfile = isProfile;
         this.isCertification = isCertification;
         this.profileImage = profileImage;
-        this.fcms = fcms;
     }
+
 
     public void createProfile() {
         this.isProfile = true;
@@ -93,4 +92,6 @@ public class User extends BaseTimeEntity {
                 .token(fcmToken)
                 .build());
     }
+
+
 }

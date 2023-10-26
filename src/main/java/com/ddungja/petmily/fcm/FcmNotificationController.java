@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class FcmNotificationController {
 
-    private final FcmNotificationService fcmNotificationService;
+    private final FCMNotificationService fcmNotificationService;
 
     @Operation(summary = "알림 보내기")
     @ApiResponse(responseCode = "204", description = "알림 보내기 성공")

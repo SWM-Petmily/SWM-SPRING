@@ -10,6 +10,7 @@ import com.ddungja.petmily.user.domain.certification.Certification;
 import com.ddungja.petmily.user.domain.kakao.KakaoProfile;
 import com.ddungja.petmily.user.domain.profile.ProfileImage;
 import com.ddungja.petmily.user.domain.request.AppleLoginRequest;
+import com.ddungja.petmily.user.domain.request.FcmTokenSaveRequest;
 import com.ddungja.petmily.user.domain.request.UserCreateRequest;
 import com.ddungja.petmily.user.domain.request.UserUpdateRequest;
 import com.ddungja.petmily.user.domain.user.ProviderType;
@@ -104,10 +105,12 @@ public class UserService {
         userRepository.delete(user);
     }
 
+
+
     @Transactional
-    public void registerFcmToken(Long userId, String fcmToken) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new CustomException(USER_NOT_FOUND));
-        user.registerFcmToken(fcmToken);
+    public void registerFcmToken(Long id, FcmTokenSaveRequest fcmTokenSaveRequest) {
+        User user = userRepository.findById(id).orElseThrow(() -> new CustomException(USER_NOT_FOUND));
+        user.addFcmToken(fcmTokenSaveRequest.getFcmToken());
     }
 }
 
