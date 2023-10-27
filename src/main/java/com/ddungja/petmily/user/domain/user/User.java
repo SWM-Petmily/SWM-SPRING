@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static com.ddungja.petmily.common.exception.ExceptionCode.CERTIFICATION_NOT_COMPLETE;
 import static com.ddungja.petmily.common.exception.ExceptionCode.USER_ALREADY_CERTIFICATION;
@@ -87,11 +88,13 @@ public class User extends BaseTimeEntity {
     }
 
     public void addFcmToken(String fcmToken) {
-        if(fcms.contains(fcmToken)) return;
-        fcms.add(Fcm.builder()
-                .user(this)
-                .token(fcmToken)
-                .build());
+        Optional<Fcm> token = fcms.stream().filter(fcm -> fcm.getToken().equals(fcmToken)).findAny();
+        if (token.isEmpty()) {
+            fcms.add(Fcm.builder()
+                    .user(this)
+                    .token(fcmToken)
+                    .build());
+        }
     }
 
 
