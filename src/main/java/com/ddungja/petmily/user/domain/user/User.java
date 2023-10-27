@@ -87,6 +87,7 @@ public class User extends BaseTimeEntity {
     }
 
     public void addFcmToken(String fcmToken) {
+        if(fcms.contains(fcmToken)) return;
         fcms.add(Fcm.builder()
                 .user(this)
                 .token(fcmToken)
