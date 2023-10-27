@@ -66,6 +66,15 @@ public class UserController {
         return ResponseEntity.ok().body(UserLoginResponse.from(user, accessToken, refreshToken));
     }
 
+    @Operation(summary = "fcm 토큰 저장")
+    @ApiResponse(responseCode = "204", description = "fcm 토큰 저장 성공")
+    @PostMapping("/fcm")
+    public ResponseEntity<?> fcmTokenSave(@AuthenticationPrincipal User user, @RequestBody FcmTokenSaveRequest fcmTokenSaveRequest) {
+        log.info("fcm 토큰 저장 user = {} fcmTokenSaveRequest = {}", user.getId(), fcmTokenSaveRequest);
+        userService.registerFcmToken(user.getId(), fcmTokenSaveRequest);
+        return ResponseEntity.noContent().build();
+    }
+
     @Operation(summary = "휴대전화 인증번호 발송 20원까임")
     @ApiResponse(responseCode = "204", description = "휴대전화 인증번호 발송 성공")
     @PostMapping("/certification/send")
@@ -141,7 +150,6 @@ public class UserController {
     public ResponseEntity<Void> delete(@AuthenticationPrincipal User user) {
         log.info("회원탈퇴 user = {}", user.getId());
         userService.delete(user.getId());
-
         return ResponseEntity.noContent().build();
     }
 

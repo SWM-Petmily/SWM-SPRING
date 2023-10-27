@@ -7,6 +7,7 @@ import com.ddungja.petmily.common.jwt.JwtProvider;
 import com.ddungja.petmily.common.response.SecurityResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -65,6 +66,7 @@ public class SecurityConfig {
         http.exceptionHandling(configurer -> configurer.authenticationEntryPoint((request, response, accessDeniedException) -> SecurityResponse.unAuthentication(response)));
         http.exceptionHandling(configurer -> configurer.accessDeniedHandler((request, response, accessDeniedException) -> SecurityResponse.forbidden(response)));
         http.authorizeHttpRequests(authorize -> authorize.requestMatchers(AUTHENTICATION_WHITELIST).permitAll());
+        http.authorizeHttpRequests(authorize -> authorize.requestMatchers(PathRequest.toH2Console()).permitAll());
 //        http.authorizeHttpRequests(authorize -> authorize.requestMatchers(PathRequest.toH2Console()).permitAll());
         http.authorizeHttpRequests(authorize -> authorize.anyRequest().authenticated());
 //        http.authorizeHttpRequests(authorize -> authorize.requestMatchers("/authorization").authenticated());

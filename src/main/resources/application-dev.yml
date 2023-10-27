@@ -90,6 +90,7 @@ springdoc:
     path: /ui
     operations-sorter: method
 
+
 kakao:
   restApiKey: ee34f16978b76a36b7c087376c6bbef2
   redirectUrl: http://localhost:8080/users/kakao

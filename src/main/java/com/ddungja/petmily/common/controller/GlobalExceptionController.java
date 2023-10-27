@@ -4,6 +4,7 @@ package com.ddungja.petmily.common.controller;
 import com.amazonaws.AmazonServiceException;
 import com.ddungja.petmily.common.controller.response.FieldErrorResponse;
 import com.ddungja.petmily.common.exception.CustomException;
+import com.google.firebase.messaging.FirebaseMessagingException;
 import io.sentry.Sentry;
 import io.sentry.spring.jakarta.tracing.SentrySpan;
 import lombok.extern.slf4j.Slf4j;
@@ -72,5 +73,12 @@ public class GlobalExceptionController {
         Sentry.captureException(exception);
         log.error("AmazonServiceException = {}", exception);
         return ResponseEntity.badRequest().body("AmazonServiceException");
+    }
+
+    @ExceptionHandler(FirebaseMessagingException.class)
+    public ResponseEntity<Object> fcmException(FirebaseMessagingException exception) {
+        Sentry.captureException(exception);
+        log.error("fcmException = {}", exception);
+        return ResponseEntity.badRequest().body("FirebaseMessagingException");
     }
 }
