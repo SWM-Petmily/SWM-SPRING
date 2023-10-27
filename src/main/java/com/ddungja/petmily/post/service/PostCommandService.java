@@ -98,7 +98,6 @@ public class PostCommandService {
         Post post = postRepository.findPostById(postId).orElseThrow(() -> new CustomException(POST_NOT_FOUND));
         post.complete(userId);
         applyRepository.findByPostIdAndApproval(postId, ApprovalType.WAITING).forEach(Apply::rejectApply);
-
     }
 
     @Transactional
