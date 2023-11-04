@@ -92,9 +92,11 @@ dependencies {
     implementation 'io.sentry:sentry-spring-boot-starter-jakarta:6.25.2'
     implementation 'io.sentry:sentry-logback:6.25.2'
 
-
     //firebase
     implementation 'com.google.firebase:firebase-admin:9.2.0'
+
+    //elastic search
+    implementation 'org.springframework.boot:spring-boot-starter-data-elasticsearch'
 }
 
 
@@ -103,7 +105,7 @@ dependencies {
 //    copy {
 //        from '/yml'
 //        include "*"
-//        into '/src/main/resources'
+//        into '/src/main/resourcses'
 //    }
 //}
 

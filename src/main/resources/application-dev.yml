@@ -54,6 +54,9 @@ spring:
 
 
   data:
+    elasticsearch:
+      repositories:
+        enabled: true
     web:
       pageable:
         default-page-size: 20
@@ -127,5 +130,4 @@ oauth:
     iss: https://appleid.apple.com
     client-id: org.soma.Ddungja
     nonce:
-
 
