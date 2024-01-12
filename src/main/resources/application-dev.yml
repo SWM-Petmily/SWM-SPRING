@@ -122,8 +122,8 @@ cloud:
 
 s3:
   bucket: swm-petmily
-  access-key: AKIA5WZKVIDORJUKNEFV
-  secret-key: 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
+  access-key: AKIA6ODU26FXOOHOSTTA
+  secret-key: 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
 
 oauth:
   apple:
