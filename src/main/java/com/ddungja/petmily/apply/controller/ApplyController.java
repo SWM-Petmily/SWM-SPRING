@@ -30,7 +30,6 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/users/apply")
 public class ApplyController {
     private final ApplyService applyService;
-
     @Operation(summary = "지원 받은 목록")
     @ApiResponse(responseCode = "200", description = "지원 받은 목록 조회 성공", content = @Content(schema = @Schema(implementation = ApplySupportResponse.class)))
     @GetMapping("/{postId}")
