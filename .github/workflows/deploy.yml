@@ -50,8 +50,8 @@ jobs:
         with:
           aws_access_key: ${{ secrets.AWS_ACCESS_KEY }}
           aws_secret_key: ${{ secrets.AWS_SECRET_KEY }}
-          application_name: pet # Elastic Beanstalk 애플리케이션 이름
-          environment_name: Pet-env # Elastic Beanstalk 환경 이름
+          application_name: PETMILY # Elastic Beanstalk 애플리케이션 이름
+          environment_name: PETMILY-env # Elastic Beanstalk 환경 이름
           version_label: pet-${{steps.current-time.outputs.formattedTime}}
           region: ap-northeast-2
           deployment_package: deploy/deploy.zip
