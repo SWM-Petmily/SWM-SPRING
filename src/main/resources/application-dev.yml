@@ -11,6 +11,12 @@ server:
 
 
 spring:
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: admin
+    password: admin123!@#
+
   devtools:
     livereload:
       enabled: true
