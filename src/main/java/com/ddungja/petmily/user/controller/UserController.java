@@ -45,7 +45,7 @@ public class UserController {
     @Operation(summary = "카카오 로그인")
     @ApiResponse(responseCode = "200", description = "카카오 로그인 성공", content = @Content(schema = @Schema(implementation = UserLoginResponse.class)))
     @PostMapping("/kakao")
-    public ResponseEntity<Object> kakaoLogin(@RequestBody KaKaoLoginRequest kaKaoLoginRequest) throws URISyntaxException {
+    public ResponseEntity<UserLoginResponse> kakaoLogin(@RequestBody KaKaoLoginRequest kaKaoLoginRequest) throws URISyntaxException {
         log.info("카카오 로그인 kaKaoLoginRequest = {}", kaKaoLoginRequest);
         KakaoProfile kakaoProfile = kakaoService.getInfo(kaKaoLoginRequest);
         User user = userService.kakagoLogin(kakaoProfile);

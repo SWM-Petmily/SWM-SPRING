@@ -55,8 +55,10 @@ spring:
 
   data:
     elasticsearch:
+      url: localhost:9200
       repositories:
         enabled: true
+
     web:
       pageable:
         default-page-size: 20

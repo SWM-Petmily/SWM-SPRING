@@ -8,7 +8,6 @@ import com.ddungja.petmily.post.controller.response.PostGetResponse;
 import com.ddungja.petmily.post.domain.Image;
 import com.ddungja.petmily.post.domain.Post;
 import com.ddungja.petmily.post.domain.request.PostFilterRequest;
-import com.ddungja.petmily.post.domain.response.MyPostListResponse;
 import com.ddungja.petmily.post.domain.type.PostStatusType;
 import com.ddungja.petmily.post.service.port.PostRepository;
 import com.ddungja.petmily.report.repository.ReportRepository;
@@ -43,7 +42,7 @@ public class PostReadService {
         return postRepository.findPostById(postId).orElseThrow(() -> new CustomException(POST_NOT_FOUND));
     }
 
-    public PostGetResponse getDetail(User user, Long postId){
+    public PostGetResponse getDetail(User user, Long postId) {
         Post post = postRepository.findPostById(postId).orElseThrow(() -> new CustomException(POST_NOT_FOUND));
         List<Image> images = new ArrayList<>();
 
@@ -52,12 +51,12 @@ public class PostReadService {
         //todo 나중에 주석
         String thumbnailImage = post.getThumbnailImage();
         Image image = new Image(thumbnailImage);
-        images.add(0,image);
+        images.add(0, image);
         //todo 나중에 주석
 
 
         int likeCount = likeService.getLikeCountByPostId(postId);
-        if(user == null) {
+        if (user == null) {
             return PostGetResponse.from(post, images, likeCount);
         }
         if (!userRepository.existsById(user.getId())) throw new CustomException(USER_NOT_FOUND);
@@ -67,9 +66,9 @@ public class PostReadService {
     }
 
 
-    public Page<MyPostListResponse> getMyPost(Long userId, PostStatusType postStatusType, Pageable pageable) {
+    public Page<Post> getMyPost(Long userId, PostStatusType postStatusType, Pageable pageable) {
         if (!userRepository.existsById(userId)) throw new CustomException(USER_NOT_FOUND);
-        return postRepository.getMyPost(userId, postStatusType, pageable).map(MyPostListResponse::from);
+        return postRepository.getMyPost(userId, postStatusType, pageable);
     }
 
     public Page<MainPostResponse> getMainPosts(Long userId, PostFilterRequest postFilterRequest, Pageable pageable) {
