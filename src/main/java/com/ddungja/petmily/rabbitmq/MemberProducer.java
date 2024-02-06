@@ -23,6 +23,7 @@ public class MemberProducer {
         log.info("메시지 생성 = {}", memberMessage);
 
         Thread.sleep(5000);
+
         log.info("thread 비동기 작업: {}", Thread.currentThread().getName());
     }
 }
