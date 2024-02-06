@@ -12,7 +12,7 @@ public class MemberController {
 
 
     @PostMapping("/member")
-    public ResponseEntity<?> message() {
+    public ResponseEntity<?> message() throws InterruptedException {
         producer.sendMember(Member.builder()
                 .id(1L)
                 .name("test")
