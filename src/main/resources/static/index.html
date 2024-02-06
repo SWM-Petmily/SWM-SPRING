@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Server Sent Event</h1>
+</body>
+<script>
+    const url = "http://localhost:8080/sse/connect"
+    const eventSource = new EventSource(url); // sse 연결
+
+    eventSource.onopen = event => {
+        console.log("sse connection : " + event.data);
+        console.log(event);
+    }
+    eventSource.onmessage = event => {
+        console.log("receive data : " + event.data);
+    }
+</script>
+</html>
