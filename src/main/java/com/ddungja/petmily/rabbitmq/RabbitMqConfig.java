@@ -23,10 +23,17 @@ public class RabbitMqConfig {
     public Queue queue() {
         return new Queue("petmily.queue");
     }
-
+    @Bean
+    public Queue queue2() {
+        return new Queue("petmily.queue2");
+    }
     @Bean
     public Binding binding(DirectExchange directExchange, Queue queue) {
         return BindingBuilder.bind(queue).to(directExchange).with("petmily.key");
+    }
+    @Bean
+    public Binding binding2(DirectExchange directExchange, Queue queue2) {
+        return BindingBuilder.bind(queue2).to(directExchange).with("petmily.key");
     }
 
     @Bean
