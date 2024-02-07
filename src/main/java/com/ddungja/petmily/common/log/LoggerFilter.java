@@ -23,17 +23,30 @@ public class LoggerFilter implements Filter {
         //request 정보
         Enumeration<String> headerNames = req.getHeaderNames();
         StringBuilder headerValues = new StringBuilder();
-        headerNames.asIterator().forEachRemaining(headerName -> headerValues.append(headerName).append(": ").append(req.getHeader(headerName)).append(","));
+        headerNames.asIterator().forEachRemaining(headerName ->
+                headerValues
+                .append("[")
+                .append(headerName)
+                .append(": ")
+                .append(req.getHeader(headerName))
+                .append("] "));
+
         String requestBody = new String(req.getContentAsByteArray());
         String requestURI = req.getRequestURI();
         String method = req.getMethod();
-        log.info(">>>> uri : {}, method: {}, header: {}, body: {}", requestURI, method, headerValues, requestBody);
+        log.info("request\n uri : {}\n method: {}\n header: {}\n body: {}\n", requestURI, method, headerValues, requestBody);
 
         //response 정보
         StringBuilder responseHeaderValues = new StringBuilder();
-        res.getHeaderNames().forEach(headerKey -> responseHeaderValues.append(headerKey).append(": ").append(res.getHeader(headerKey)).append(","));
+        res.getHeaderNames().forEach(headerKey ->
+                responseHeaderValues
+                        .append("[")
+                        .append(headerKey)
+                        .append(": ")
+                        .append(res.getHeader(headerKey))
+                        .append("] "));
         String responseBody = new String(res.getContentAsByteArray());
-        log.info("<<<< uri : {}, method: {}, header: {}, body: {}", requestURI, method, responseHeaderValues, responseBody);
+        log.info("response\n uri : {}\n method: {}\n header: {}\n body: {}\n", requestURI, method, responseHeaderValues, responseBody);
 
 
         res.copyBodyToResponse();
