@@ -11,13 +11,26 @@ server:
 #      enabled: false
 
 management:
-  endpoint:
+  endpoints:
     web:
       exposure:
         include: "*"
+  info:
+    os:
+      enabled: true
+    java:
+      enabled: true
+    env:
+      enabled: true
     health:
       show-components: always
-
+    endpoint:
+      prometheus:
+        enabled: true
+  prometheus:
+    metrics:
+      export:
+        enabled: true
 spring:
   boot:
     admin:
