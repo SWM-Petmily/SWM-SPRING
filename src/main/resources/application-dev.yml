@@ -10,7 +10,19 @@ server:
 #    whitelabel:
 #      enabled: false
 
+management:
+  endpoint:
+    web:
+      exposure:
+        include: "*"
+    health:
+      show-components: always
+
 spring:
+  boot:
+    admin:
+      client:
+        url: http://localhost:8085
   rabbitmq:
     host: localhost
     port: 5672

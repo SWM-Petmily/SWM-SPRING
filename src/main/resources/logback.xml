@@ -13,10 +13,10 @@
         <file>logFile.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!-- daily rollover -->
-            <fileNamePattern>logFile.%d{yyyy-MM-dd_HH_mm}.log.zip</fileNamePattern>
+            <fileNamePattern>logFile.%d{yyyy-MM-dd}.log.zip</fileNamePattern>
 
             <!-- keep 30 days' worth of history capped at 3GB total size -->
-            <maxHistory>3</maxHistory>
+            <maxHistory>31</maxHistory>
             <totalSizeCap>3GB</totalSizeCap>
 
         </rollingPolicy>
