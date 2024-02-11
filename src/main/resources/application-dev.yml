@@ -1,4 +1,5 @@
 server:
+  name: petmily-api
   port: 8080
   servlet:
     encoding:
@@ -8,7 +9,6 @@ server:
 #  error:
 #    whitelabel:
 #      enabled: false
-
 
 spring:
   rabbitmq:
