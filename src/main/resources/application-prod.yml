@@ -72,7 +72,7 @@ springdoc:
     operations-sorter: method
 
 kakao:
-  restApiKey: ee34f16978b76a36b7c087376c6bbef2
+  restApiKey:
   redirectUrl: https://www.petmily.site/users/kakao
   tokenUrl: https://kauth.kakao.com/oauth/token
   userInfoUrl: https://kapi.kakao.com/v2/user/me
@@ -85,8 +85,8 @@ jwt:
 
 
 coolsms:
-  apiKey: NCSCQ223CUYV65VX
-  apiSecretKey: AVG2RJNRVSA6G4TO5EASUNWPECDLYWJ0
+  apiKey:
+  apiSecretKey:
 
 api:
   serviceKey: iqucPIkN%2Br9Zm%2FI6ALZlkapFDvJIgC1gySMHPDOd0aTP%2BbDajaKTYeE680W97iVo0EEg4PZcEGozg37slj%2FlcA%3D%3D
@@ -101,8 +101,8 @@ cloud:
 
 s3:
   bucket: swm-petmily
-  access-key: AKIA5WZKVIDORJUKNEFV
-  secret-key: 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
+  access-key:
+  secret-key:
 
 oauth:
   apple:
