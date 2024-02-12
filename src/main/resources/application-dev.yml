@@ -31,6 +31,7 @@ management:
     metrics:
       export:
         enabled: true
+
 spring:
   boot:
     admin:
@@ -95,6 +96,10 @@ spring:
         default-page-size: 20
         max-page-size: 2000
         one-indexed-parameters: on # paging 1부터 시작하기
+
+    redis:
+      port: 6379
+      host: localhost
 
   #openfeign 설정
   cloud:
