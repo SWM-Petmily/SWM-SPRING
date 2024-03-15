@@ -18,16 +18,41 @@
 - 정적 분석 도구: Sonarqube
 
 
-# 아키텍처 그림
+# 아키텍처
 ![펫밀리.drawio.png](..%2F..%2F..%2FUsers%2Frldh1%2FOneDrive%2F%EB%B0%94%ED%83%95%20%ED%99%94%EB%A9%B4%2F%ED%8E%AB%EB%B0%80%EB%A6%AC.drawio.png)
 
 # ERD
 ![데이터베이스.png](..%2F..%2F..%2FUsers%2Frldh1%2FOneDrive%2F%EB%B0%94%ED%83%95%20%ED%99%94%EB%A9%B4%2F%EB%8D%B0%EC%9D%B4%ED%84%B0%EB%B2%A0%EC%9D%B4%EC%8A%A4.png)
 
 
+### 동시성 문제 해결
+
+1. 동시성 문제 발생
+   - 상황: 회원 가입 요청이 0.001ms 차이로 두 번 오는 동시성 문제 발생
+   - 최종 해결: Email 컬럼에 unique key 제약조건을 추가하여 공통 예외 처리로 해결.
 
 
-No Offset 문제
+
+### 동시성 이슈 해결하는 방법 정리
+https://github.com/kwongio/race-condition
+
+
+
+# AWS Elastic Beanstalk 배포 문제 해결
+1. 로드밸런서 Health Check 실패:
+   - 문제: 루트 경로(/)에 API가 없어 Health Check가 실패함.
+   - 해결: 루트 경로에 Health Check API를 만들어 문제를 해결함.
+2. Data.sql로 인한 중복 초기값 세팅:
+   - 문제: 초기 데이터 설정 중복.
+   - 해결: application.yml의 설정을 spring.sql.init.mode:never로 변경하여 해결.
+3. GitHub Actions의 Timeout 문제:
+   - 문제: wait_for_environment_recovery의 기본값인 30초 내에 배포가 완료되지 않음.
+   - 해결: GitHub Actions의 wait_for_environment_recovery를 180초로 조정하고, 인스턴스 성능을 향상시켜 문제 해결.  
+https://velog.io/@kjgi73k/Elastic-Beanstalk-Environment-still-has-health-Grey-%ED%95%B4%EA%B2%B0
+
+
+
+### No Offset 성능 이슈
 https://jojoldu.tistory.com/528
 
 ### Page
@@ -45,8 +70,7 @@ https://jojoldu.tistory.com/528
 - **적합한 사용 사례**: 무한 스크롤 또는 "더 보기" 기능이 있는 경우처럼, 사용자가 데이터를 순차적으로 탐색하는 인터페이스
 
 
-Spring Data Jpa에서 해결하기
-
+### Spring Data Jpa에서 해결하기
 
 기존 offset 방식의 페이징 Page사용
 ```java
@@ -202,6 +226,9 @@ public class MyService {
 이 외에도 @Async @Cacheable같은 어노테이션도 스프링에서 프록시로 관리 되기 때문에 주의해서 사용해야한다.
 
 
+
+
+
 ### jpa @Column 어노테이션 제약조건 넣기
 https://deveric.tistory.com/54
 https://ttl-blog.tistory.com/114
@@ -219,7 +246,7 @@ https://www.baeldung.com/spring-boot-bean-validation
 
 
 
-### 일긃 컬렉션
+### 일급 컬렉션 사용하기
 https://jojoldu.tistory.com/412
 
 
