@@ -19,11 +19,10 @@
 
 
 # 아키텍처
-![펫밀리.drawio.png](..%2F..%2F..%2FUsers%2Frldh1%2FOneDrive%2F%EB%B0%94%ED%83%95%20%ED%99%94%EB%A9%B4%2F%ED%8E%AB%EB%B0%80%EB%A6%AC.drawio.png)
+![펫밀리.drawio.png](%ED%8E%AB%EB%B0%80%EB%A6%AC.drawio.png)
 
 # ERD
-![데이터베이스.png](..%2F..%2F..%2FUsers%2Frldh1%2FOneDrive%2F%EB%B0%94%ED%83%95%20%ED%99%94%EB%A9%B4%2F%EB%8D%B0%EC%9D%B4%ED%84%B0%EB%B2%A0%EC%9D%B4%EC%8A%A4.png)
-
+![데이터베이스.png](%EB%8D%B0%EC%9D%B4%ED%84%B0%EB%B2%A0%EC%9D%B4%EC%8A%A4.png)
 
 ### 동시성 문제 해결
 
