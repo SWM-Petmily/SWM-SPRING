@@ -11,7 +11,8 @@
 
 
 # 아키텍처
-![펫밀리.drawio.png](%ED%8E%AB%EB%B0%80%EB%A6%AC.drawio.png)
+![펫밀리 drawio](https://github.com/user-attachments/assets/09c09ace-0d25-40d4-bc09-d9aa04f36b41)
+
 
 # ERD
 ![펫밀리_ERD](https://github.com/user-attachments/assets/2c24fbe9-868d-475f-959a-b028b4955aa9)
