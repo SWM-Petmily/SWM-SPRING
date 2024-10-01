@@ -2,26 +2,38 @@
 - 기간: 2023.05 - 2023.11
 - 인원: Spring 2명, iOS 1명
 
-# 프로젝트 목표
+
+# 프로젝트 목표 
 기존 반려동물 입양/분양 서비스의 문제를 개선하고, 신종 펫숍 피해를 줄이며, 신뢰성 있는 반려동물 분양/입양 서비스를 제공  
-[기획의도](https://github.com/SWM-Petmily/SWM-SPRING/blob/dev/%EC%8B%A0%EC%A2%85%ED%8E%AB%EC%88%8D)
+
 - 신종 펫숍 유의사항 가이드를 제공
 - 반려동물 입양/분양에 필요한 정보들을 필수적으로 작성
 - 동물등록번호 인증, 건강검진정보 인증, 예방접종 인증을 통해 신뢰성을 높힘
 - 계약서 작성을 통해 입양/분양 이후 발생하는 문제해결
+- [기획의도 링크](https://github.com/SWM-Petmily/SWM-SPRING/blob/dev/%EA%B8%B0%ED%9A%8D%EC%9D%98%EB%8F%84.md)  
 
+
+# 주요 기능
+- 반려동물을 입양하려는 사용자에 대한 정보를 작성하는 사용자 프로필
+- 반려동물에 대한 16가지 정보를 필수적으로 작성하는 게시글 등록
+- 반려동물 분양글의 신뢰성을 높히기 위한 3가지 인증 시스템
+  - 동물등록번호 인증
+  - 반려동물 건강검진정보 인증
+  - 반려동물 예방접종 인증 
+
+
+# 개발 스택
+- Java, Spring Boot, Spring Security, Spring Data JPA, QueryDSL, OpenFeign, Validation, Lombok
+- H2, MySQL 
+- AWS ElasticBeanstalk, Github Actions
+- SonarQube, Sentry
 
 
 # 아키텍처
 ![펫밀리 drawio (1)](https://github.com/user-attachments/assets/8b2d59d2-50ef-486f-b43d-a8c1f1331698)
 
+
 # ERD
 ![펫밀리_ERD](https://github.com/user-attachments/assets/2c24fbe9-868d-475f-959a-b028b4955aa9)
 
-
-# 개발 스택
-- Java 17, Spring Boot, Spring Security, Spring Data JPA, QueryDSL, OpenFeign, Validation, Lombok
-- H2, MySQL 
-- AWS ElasticBeanstalk, Github Actions
-- SonarQube, Sentry
 
